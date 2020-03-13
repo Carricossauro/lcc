@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto LA"
+CMAKE_SOURCE_DIR = /home/pedrusphantom/Desktop/Projeto/Projeto-LA
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto LA/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto L
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto LA/cmake-build-debug/CMakeFiles" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto LA/cmake-build-debug/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles /home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto LA/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -150,6 +150,33 @@ dados.c.s:
 	$(MAKE) -f CMakeFiles/Projeto_LA.dir/build.make CMakeFiles/Projeto_LA.dir/dados.c.s
 .PHONY : dados.c.s
 
+logica.o: logica.c.o
+
+.PHONY : logica.o
+
+# target to build an object file
+logica.c.o:
+	$(MAKE) -f CMakeFiles/Projeto_LA.dir/build.make CMakeFiles/Projeto_LA.dir/logica.c.o
+.PHONY : logica.c.o
+
+logica.i: logica.c.i
+
+.PHONY : logica.i
+
+# target to preprocess a source file
+logica.c.i:
+	$(MAKE) -f CMakeFiles/Projeto_LA.dir/build.make CMakeFiles/Projeto_LA.dir/logica.c.i
+.PHONY : logica.c.i
+
+logica.s: logica.c.s
+
+.PHONY : logica.s
+
+# target to generate assembly for a file
+logica.c.s:
+	$(MAKE) -f CMakeFiles/Projeto_LA.dir/build.make CMakeFiles/Projeto_LA.dir/logica.c.s
+.PHONY : logica.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... dados.o"
 	@echo "... dados.i"
 	@echo "... dados.s"
+	@echo "... logica.o"
+	@echo "... logica.i"
+	@echo "... logica.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
