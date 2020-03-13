@@ -1,7 +1,3 @@
-//
-// Created by pedrusphantom on 3/13/20.
-//
-
 #include "logica.h"
 #include "dados.h"
 

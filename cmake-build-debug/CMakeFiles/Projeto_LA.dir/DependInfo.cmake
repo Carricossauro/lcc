@@ -4,9 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/dados.c" "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.o"
-  "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/logica.c" "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.o"
-  "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/main.c" "/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.o"
+  "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/dados.c" "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.obj"
+  "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/interface.c" "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/interface.c.obj"
+  "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/logica.c" "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.obj"
+  "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/main.c" "C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

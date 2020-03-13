@@ -27,8 +27,10 @@ int obter_numero_de_jogadas(ESTADO *e) {
 int obter_estado_casa(ESTADO *e, COORDENADA c) {
     int coluna = c.coluna;
     int linha = c.linha;
+    int lin = e->ultima_jogada.linha;
+    int col = e->ultima_jogada.coluna;
     int r = 0;
-    if (e->tab[linha][coluna] == VAZIO)
+    if (e->tab[linha][coluna] == VAZIO && linha >= lin - 1 && linha <= lin + 1 && coluna >= col - 1 && coluna <= col + 1)
         r = 1;
     return r;
 }

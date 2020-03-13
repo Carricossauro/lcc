@@ -1,3 +1,3 @@
-/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir
-/home/pedrusphantom/Desktop/Projeto/Projeto-LA/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir
+C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Henrique/CLionProjects/LA/Projeto-LA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
