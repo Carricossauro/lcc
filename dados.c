@@ -38,3 +38,12 @@ int obter_estado_casa(ESTADO *e, COORDENADA c) {
 CASA obter_casa(ESTADO *e, int coluna, int linha) {
     return e->tab[linha][coluna];
 }
+
+void mudar_casa(ESTADO *e, COORDENADA c)
+{
+    int linha = e -> ultima_jogada.linha;
+    int coluna = e -> ultima_jogada.coluna;
+
+    e -> tab[linha][coluna] = PRETA;
+    e -> tab[c.linha][c.coluna] = BRANCA;
+}

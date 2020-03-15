@@ -3,14 +3,9 @@
 
 int jogar(ESTADO *e, COORDENADA c)
 {
-    int uLinha = e -> ultima_jogada.linha;
-    int uColuna = e -> ultima_jogada.coluna;
-
     if(obter_estado_casa(e, c))
     {
-        e -> tab[uLinha][uColuna] = PRETA;
-        e -> tab[c.linha][c.coluna] = BRANCA;
-
+        mudar_casa(e, c);
         return 1;
     }
     else

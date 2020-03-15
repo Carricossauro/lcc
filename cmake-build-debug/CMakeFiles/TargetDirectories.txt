@@ -1,3 +1,3 @@
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir
+/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -28,5 +28,6 @@ int obter_jogador_atual(ESTADO *e);
 int obter_numero_de_jogadas(ESTADO *e);
 int obter_estado_casa(ESTADO *e, COORDENADA c);
 CASA obter_casa(ESTADO *e, int linha, int coluna);
+void mudar_casa(ESTADO *e, COORDENADA c);
 
 #endif //PROJETO_LA_DADOS_H
