@@ -27,5 +27,6 @@ ESTADO *inicializar_estado();
 int obter_jogador_atual(ESTADO *e);
 int obter_numero_de_jogadas(ESTADO *e);
 int obter_estado_casa(ESTADO *e, COORDENADA c);
+CASA obter_casa(ESTADO *e, int linha, int coluna);
 
 #endif //PROJETO_LA_DADOS_H

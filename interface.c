@@ -12,7 +12,7 @@ void mostrar_tabuleiro(ESTADO *e) {
             else if (i == 7 && k == 0)
                 printf("1");
             else
-                printf((e->tab[i][k] == VAZIO) ? "." : (e->tab[i][k] == BRANCA) ? "*" : "#" );
+                printf((obter_casa(e, k, i) == VAZIO) ? "." : (obter_casa(e, i, k) == BRANCA) ? "*" : "#" );
         }
         putchar('\n');
     }
@@ -32,5 +32,3 @@ int interpretador(ESTADO *e) {
     }
     return 1;
 }
-
-
