@@ -6,11 +6,43 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Henrique/CLionProjects/LA/Projeto-LA/dados.c
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.c
 dados.h
-C:/Users/Henrique/CLionProjects/LA/Projeto-LA/dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
 stdlib.h
 -
 
-C:/Users/Henrique/CLionProjects/LA/Projeto-LA/dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
+
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/interface.c
+dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
+logica.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/logica.h
+stdio.h
+-
+string.h
+-
+
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/interface.h
+dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
+logica.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/logica.h
+
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/logica.c
+logica.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/logica.h
+dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
+
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/logica.h
+dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
+
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/main.c
+interface.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/interface.h
+dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/Projeto-LA/dados.h
 
