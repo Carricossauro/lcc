@@ -18,8 +18,8 @@ void mostrar_tabuleiro(ESTADO *e) {
     }
 }
 
-void mostar_prompt(ESTADO *e){
-    printf("# %02d",conta_comados(e));
+void mostrar_prompt(ESTADO *e){
+    printf("# %02d",conta_comandos(e));
     printf(" PL%d",obter_jogador_atual(e));
     printf(" (%d)>",obter_numero_de_jogadas(e));
 }

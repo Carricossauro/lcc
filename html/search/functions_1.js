@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['inicializar_5festado',['inicializar_estado',['../dados_8h.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'dados.c']]],
-  ['interpretador',['interpretador',['../interface_8h.html#a24da95ebeede4a540e37790ce8be359b',1,'interface.c']]]
+  ['casa_5festa_5flivre',['casa_esta_livre',['../dados_8h.html#a0529070ac50c4b58c7c2cee1cfff8c28',1,'dados.c']]],
+  ['conta_5fcomandos',['conta_comandos',['../dados_8h.html#aea3ca332b1d5c8d0d3b4285a58cd2d04',1,'dados.c']]],
+  ['cria_5fcoordenada',['cria_coordenada',['../dados_8h.html#aef5216319c153ec749f1d30fe32cbdb4',1,'dados.c']]]
 ];

@@ -15,4 +15,12 @@ Definição das funções que representam a jogabilidade
 */
 int jogar(ESTADO *e, COORDENADA c);
 
+/**
+\brief Função que determina se o jogo foi ganho
+@param e Apontado para o estado do jogo
+@param c Coordenada da última jogada
+@returns 0 - Jogo não acabou \n 1 - Vitória do jogador 1 \n 2 - Vitória do jogador 2
+*/
+int gameOver(ESTADO *e, COORDENADA c);
+
 #endif //PROJETO_LA_LOGICA_H

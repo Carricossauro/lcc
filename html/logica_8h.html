@@ -85,10 +85,53 @@ Functions</h2></td></tr>
 <tr class="memitem:ac313d7e553b1e2b5f266acb9bfff8141"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logica_8h.html#ac313d7e553b1e2b5f266acb9bfff8141">jogar</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e, <a class="el" href="structCOORDENADA.html">COORDENADA</a> c)</td></tr>
 <tr class="memdesc:ac313d7e553b1e2b5f266acb9bfff8141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que recebe uma coordenada e joga quando é válida.  <a href="#ac313d7e553b1e2b5f266acb9bfff8141">More...</a><br /></td></tr>
 <tr class="separator:ac313d7e553b1e2b5f266acb9bfff8141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac0a14f4a34c1290f81a4a17e041df6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logica_8h.html#a0ac0a14f4a34c1290f81a4a17e041df6">gameOver</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e, <a class="el" href="structCOORDENADA.html">COORDENADA</a> c)</td></tr>
+<tr class="memdesc:a0ac0a14f4a34c1290f81a4a17e041df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que determina se o jogo foi ganho.  <a href="#a0ac0a14f4a34c1290f81a4a17e041df6">More...</a><br /></td></tr>
+<tr class="separator:a0ac0a14f4a34c1290f81a4a17e041df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definição das funções que representam a jogabilidade </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a0ac0a14f4a34c1290f81a4a17e041df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ac0a14f4a34c1290f81a4a17e041df6">&#9670;&nbsp;</a></span>gameOver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int gameOver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structCOORDENADA.html">COORDENADA</a>&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que determina se o jogo foi ganho. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Apontado para o estado do jogo </td></tr>
+    <tr><td class="paramname">c</td><td>Coordenada da última jogada </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 - Jogo não acabou <br />
+ 1 - Vitória do jogador 1 <br />
+ 2 - Vitória do jogador 2 </dd></dl>
+
+</div>
+</div>
 <a id="ac313d7e553b1e2b5f266acb9bfff8141"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac313d7e553b1e2b5f266acb9bfff8141">&#9670;&nbsp;</a></span>jogar()</h2>
 

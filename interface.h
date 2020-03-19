@@ -18,4 +18,10 @@ void mostrar_tabuleiro(ESTADO e);
 @param e Apontador para o estado do jogo
 */
 int interpretador(ESTADO *e);
+
+/**
+\brief Função que imprime o prompt
+@param e Apontador para o estado do jogo
+*/
+void mostrar_prompt(ESTADO *e);
 #endif //PROJETO_LA_INTERFACE_H

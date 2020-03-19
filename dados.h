@@ -109,4 +109,32 @@ int conta_comandos(ESTADO *e);
 */
 void muda_jogador(ESTADO *e);
 
+/**
+\brief Devolve a última jogada
+@param e Apontador para o estado do jogo
+@returns Coordenada da última jogada
+*/
+COORDENADA obter_ultima_jogada(ESTADO *e);
+
+/**
+\brief Devolve a linha da coordenada dada
+@param c Coordenada
+@returns Linha de coordenada dada
+ */
+int obter_linha(COORDENADA c);
+
+/**
+\brief Devolve a coluna da coordenada dada
+@param c Coordenada
+@returns Coluna da coordenada dada
+ */
+int obter_coluna(COORDENADA c);
+
+/**
+\brief Cria uma coordenada com a linha e a coluna dados
+@param linha Linha
+@param coluna Coluna
+@returns Coordenada com a linha e coluna dados
+*/
+COORDENADA cria_coordenada(int linha, int coluna);
 #endif //PROJETO_LA_DADOS_H

@@ -40,13 +40,42 @@ int \hyperlink{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}{casa\+\_\+esta\+\_\+l
 C\+A\+SA \hyperlink{dados_8h_a59f6510397fb84dd6b96f6214f7f1d55}{obter\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int linha, int coluna)
 \begin{DoxyCompactList}\small\item\em Devolve o valor de uma casa. \end{DoxyCompactList}\item 
 void \hyperlink{dados_8h_a5ad4c3875eac9182567f7f0a538d5ddf}{mudar\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
-\begin{DoxyCompactList}\small\item\em Muda o valor de uma casa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Muda o valor de uma casa. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_a4fd93bb7585d9f9b9207a7df170a8059}{add\+\_\+comando} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Aumenta o valor do comando. \end{DoxyCompactList}\item 
+int \hyperlink{dados_8h_aea3ca332b1d5c8d0d3b4285a58cd2d04}{conta\+\_\+comandos} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Devolve o número de comandos. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_a9b08ade4b8ead18f34cf3b1e808de712}{muda\+\_\+jogador} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Muda o jogador. \end{DoxyCompactList}\item 
+\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} \hyperlink{dados_8h_a40555aff97afc67bd1866f2785111310}{obter\+\_\+ultima\+\_\+jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Devolve a última jogada. \end{DoxyCompactList}\item 
+int \hyperlink{dados_8h_a9946aa4fcc3bb50874673103b31eca48}{obter\+\_\+linha} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Devolve a linha da coordenada dada. \end{DoxyCompactList}\item 
+int \hyperlink{dados_8h_ab495ce88ee9837a7f7f67b9358659f16}{obter\+\_\+coluna} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Devolve a coluna da coordenada dada. \end{DoxyCompactList}\item 
+\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} \hyperlink{dados_8h_aef5216319c153ec749f1d30fe32cbdb4}{cria\+\_\+coordenada} (int linha, int coluna)
+\begin{DoxyCompactList}\small\item\em Cria uma coordenada com a linha e a coluna dados. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Definição do estado e das funções que o manipulam 
 
 \subsection{Function Documentation}
+\mbox{\Hypertarget{dados_8h_a4fd93bb7585d9f9b9207a7df170a8059}\label{dados_8h_a4fd93bb7585d9f9b9207a7df170a8059}} 
+\index{dados.\+h@{dados.\+h}!add\+\_\+comando@{add\+\_\+comando}}
+\index{add\+\_\+comando@{add\+\_\+comando}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{add\+\_\+comando()}{add\_comando()}}
+{\footnotesize\ttfamily void add\+\_\+comando (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Aumenta o valor do comando. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}\label{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}} 
 \index{dados.\+h@{dados.\+h}!casa\+\_\+esta\+\_\+livre@{casa\+\_\+esta\+\_\+livre}}
 \index{casa\+\_\+esta\+\_\+livre@{casa\+\_\+esta\+\_\+livre}!dados.\+h@{dados.\+h}}
@@ -68,6 +97,44 @@ Verifica se uam certa casa está livre.
 0 -\/ Casa não pode ser jogada ~\newline
  1 -\/ Casa pode ser jogada 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_aea3ca332b1d5c8d0d3b4285a58cd2d04}\label{dados_8h_aea3ca332b1d5c8d0d3b4285a58cd2d04}} 
+\index{dados.\+h@{dados.\+h}!conta\+\_\+comandos@{conta\+\_\+comandos}}
+\index{conta\+\_\+comandos@{conta\+\_\+comandos}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{conta\+\_\+comandos()}{conta\_comandos()}}
+{\footnotesize\ttfamily int conta\+\_\+comandos (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Devolve o número de comandos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Número de comandos 
+\end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_aef5216319c153ec749f1d30fe32cbdb4}\label{dados_8h_aef5216319c153ec749f1d30fe32cbdb4}} 
+\index{dados.\+h@{dados.\+h}!cria\+\_\+coordenada@{cria\+\_\+coordenada}}
+\index{cria\+\_\+coordenada@{cria\+\_\+coordenada}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{cria\+\_\+coordenada()}{cria\_coordenada()}}
+{\footnotesize\ttfamily \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} cria\+\_\+coordenada (\begin{DoxyParamCaption}\item[{int}]{linha,  }\item[{int}]{coluna }\end{DoxyParamCaption})}
+
+
+
+Cria uma coordenada com a linha e a coluna dados. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em linha} & Linha \\
+\hline
+{\em coluna} & Coluna \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Coordenada com a linha e coluna dados 
+\end{DoxyReturn}
 \mbox{\Hypertarget{dados_8h_a7e0c7e26fb685d9ab501e19b05e6954f}\label{dados_8h_a7e0c7e26fb685d9ab501e19b05e6954f}} 
 \index{dados.\+h@{dados.\+h}!inicializar\+\_\+estado@{inicializar\+\_\+estado}}
 \index{inicializar\+\_\+estado@{inicializar\+\_\+estado}!dados.\+h@{dados.\+h}}
@@ -81,6 +148,21 @@ Inicializa o valor do estado.
 \begin{DoxyReturn}{Returns}
 Novo estado 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_a9b08ade4b8ead18f34cf3b1e808de712}\label{dados_8h_a9b08ade4b8ead18f34cf3b1e808de712}} 
+\index{dados.\+h@{dados.\+h}!muda\+\_\+jogador@{muda\+\_\+jogador}}
+\index{muda\+\_\+jogador@{muda\+\_\+jogador}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{muda\+\_\+jogador()}{muda\_jogador()}}
+{\footnotesize\ttfamily void muda\+\_\+jogador (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Muda o jogador. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{dados_8h_a5ad4c3875eac9182567f7f0a538d5ddf}\label{dados_8h_a5ad4c3875eac9182567f7f0a538d5ddf}} 
 \index{dados.\+h@{dados.\+h}!mudar\+\_\+casa@{mudar\+\_\+casa}}
 \index{mudar\+\_\+casa@{mudar\+\_\+casa}!dados.\+h@{dados.\+h}}
@@ -120,6 +202,24 @@ Devolve o valor de uma casa.
 \begin{DoxyReturn}{Returns}
 Valor da casa 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_ab495ce88ee9837a7f7f67b9358659f16}\label{dados_8h_ab495ce88ee9837a7f7f67b9358659f16}} 
+\index{dados.\+h@{dados.\+h}!obter\+\_\+coluna@{obter\+\_\+coluna}}
+\index{obter\+\_\+coluna@{obter\+\_\+coluna}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{obter\+\_\+coluna()}{obter\_coluna()}}
+{\footnotesize\ttfamily int obter\+\_\+coluna (\begin{DoxyParamCaption}\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Devolve a coluna da coordenada dada. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Coluna da coordenada dada 
+\end{DoxyReturn}
 \mbox{\Hypertarget{dados_8h_acc6c25533188a99cb69c12e7f2c406ef}\label{dados_8h_acc6c25533188a99cb69c12e7f2c406ef}} 
 \index{dados.\+h@{dados.\+h}!obter\+\_\+jogador\+\_\+atual@{obter\+\_\+jogador\+\_\+atual}}
 \index{obter\+\_\+jogador\+\_\+atual@{obter\+\_\+jogador\+\_\+atual}!dados.\+h@{dados.\+h}}
@@ -138,6 +238,24 @@ Obtem o jogador atual.
 \begin{DoxyReturn}{Returns}
 Jogador atual 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_a9946aa4fcc3bb50874673103b31eca48}\label{dados_8h_a9946aa4fcc3bb50874673103b31eca48}} 
+\index{dados.\+h@{dados.\+h}!obter\+\_\+linha@{obter\+\_\+linha}}
+\index{obter\+\_\+linha@{obter\+\_\+linha}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{obter\+\_\+linha()}{obter\_linha()}}
+{\footnotesize\ttfamily int obter\+\_\+linha (\begin{DoxyParamCaption}\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Devolve a linha da coordenada dada. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Linha de coordenada dada 
+\end{DoxyReturn}
 \mbox{\Hypertarget{dados_8h_abbfeab93575f20e5867482fd41a71cba}\label{dados_8h_abbfeab93575f20e5867482fd41a71cba}} 
 \index{dados.\+h@{dados.\+h}!obter\+\_\+numero\+\_\+de\+\_\+jogadas@{obter\+\_\+numero\+\_\+de\+\_\+jogadas}}
 \index{obter\+\_\+numero\+\_\+de\+\_\+jogadas@{obter\+\_\+numero\+\_\+de\+\_\+jogadas}!dados.\+h@{dados.\+h}}
@@ -155,4 +273,22 @@ Obtem o número de jogadas.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Número de jogadas 
+\end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_a40555aff97afc67bd1866f2785111310}\label{dados_8h_a40555aff97afc67bd1866f2785111310}} 
+\index{dados.\+h@{dados.\+h}!obter\+\_\+ultima\+\_\+jogada@{obter\+\_\+ultima\+\_\+jogada}}
+\index{obter\+\_\+ultima\+\_\+jogada@{obter\+\_\+ultima\+\_\+jogada}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{obter\+\_\+ultima\+\_\+jogada()}{obter\_ultima\_jogada()}}
+{\footnotesize\ttfamily \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} obter\+\_\+ultima\+\_\+jogada (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Devolve a última jogada. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado do jogo \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Coordenada da última jogada 
 \end{DoxyReturn}

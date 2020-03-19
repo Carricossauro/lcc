@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jogar',['jogar',['../logica_8h.html#ac313d7e553b1e2b5f266acb9bfff8141',1,'logica.c']]]
+  ['gameover',['gameOver',['../logica_8h.html#a0ac0a14f4a34c1290f81a4a17e041df6',1,'logica.c']]]
 ];

@@ -62,4 +62,26 @@ void mudar_casa(ESTADO *e, COORDENADA c)
 
     e -> tab[linha][coluna] = PRETA;
     e -> tab[c.linha][c.coluna] = BRANCA;
+
+    e->ultima_jogada.linha = c.linha;
+    e->ultima_jogada.coluna = c.coluna;
+}
+
+COORDENADA obter_ultima_jogada(ESTADO *e) {
+    return e->ultima_jogada;
+}
+
+int obter_linha(COORDENADA c) {
+    return c.linha;
+}
+
+int obter_coluna(COORDENADA c) {
+    return c.coluna;
+}
+
+COORDENADA cria_coordenada(int linha, int coluna) {
+    COORDENADA c;
+    c.linha = linha;
+    c.coluna = coluna;
+    return c;
 }
