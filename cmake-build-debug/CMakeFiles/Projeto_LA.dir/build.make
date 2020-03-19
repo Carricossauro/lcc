@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/carricossauro/Documents/clion-2019.3.3/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pedrusphantom/Desktop/Projeto-LA
+CMAKE_SOURCE_DIR = "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug
+CMAKE_BINARY_DIR = "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Projeto_LA.dir/depend.make
@@ -59,55 +59,55 @@ include CMakeFiles/Projeto_LA.dir/flags.make
 
 CMakeFiles/Projeto_LA.dir/main.c.o: CMakeFiles/Projeto_LA.dir/flags.make
 CMakeFiles/Projeto_LA.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Projeto_LA.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/main.c.o   -c /home/pedrusphantom/Desktop/Projeto-LA/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Projeto_LA.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/main.c.o   -c "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/main.c"
 
 CMakeFiles/Projeto_LA.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Projeto_LA.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/pedrusphantom/Desktop/Projeto-LA/main.c > CMakeFiles/Projeto_LA.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/main.c" > CMakeFiles/Projeto_LA.dir/main.c.i
 
 CMakeFiles/Projeto_LA.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Projeto_LA.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/pedrusphantom/Desktop/Projeto-LA/main.c -o CMakeFiles/Projeto_LA.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/main.c" -o CMakeFiles/Projeto_LA.dir/main.c.s
 
 CMakeFiles/Projeto_LA.dir/dados.c.o: CMakeFiles/Projeto_LA.dir/flags.make
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../dados.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Projeto_LA.dir/dados.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/dados.c.o   -c /home/pedrusphantom/Desktop/Projeto-LA/dados.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Projeto_LA.dir/dados.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/dados.c.o   -c "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c"
 
 CMakeFiles/Projeto_LA.dir/dados.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Projeto_LA.dir/dados.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/pedrusphantom/Desktop/Projeto-LA/dados.c > CMakeFiles/Projeto_LA.dir/dados.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c" > CMakeFiles/Projeto_LA.dir/dados.c.i
 
 CMakeFiles/Projeto_LA.dir/dados.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Projeto_LA.dir/dados.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/pedrusphantom/Desktop/Projeto-LA/dados.c -o CMakeFiles/Projeto_LA.dir/dados.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c" -o CMakeFiles/Projeto_LA.dir/dados.c.s
 
 CMakeFiles/Projeto_LA.dir/logica.c.o: CMakeFiles/Projeto_LA.dir/flags.make
 CMakeFiles/Projeto_LA.dir/logica.c.o: ../logica.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Projeto_LA.dir/logica.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/logica.c.o   -c /home/pedrusphantom/Desktop/Projeto-LA/logica.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Projeto_LA.dir/logica.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/logica.c.o   -c "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.c"
 
 CMakeFiles/Projeto_LA.dir/logica.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Projeto_LA.dir/logica.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/pedrusphantom/Desktop/Projeto-LA/logica.c > CMakeFiles/Projeto_LA.dir/logica.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.c" > CMakeFiles/Projeto_LA.dir/logica.c.i
 
 CMakeFiles/Projeto_LA.dir/logica.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Projeto_LA.dir/logica.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/pedrusphantom/Desktop/Projeto-LA/logica.c -o CMakeFiles/Projeto_LA.dir/logica.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.c" -o CMakeFiles/Projeto_LA.dir/logica.c.s
 
 CMakeFiles/Projeto_LA.dir/interface.c.o: CMakeFiles/Projeto_LA.dir/flags.make
 CMakeFiles/Projeto_LA.dir/interface.c.o: ../interface.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Projeto_LA.dir/interface.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/interface.c.o   -c /home/pedrusphantom/Desktop/Projeto-LA/interface.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Projeto_LA.dir/interface.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Projeto_LA.dir/interface.c.o   -c "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c"
 
 CMakeFiles/Projeto_LA.dir/interface.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Projeto_LA.dir/interface.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/pedrusphantom/Desktop/Projeto-LA/interface.c > CMakeFiles/Projeto_LA.dir/interface.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c" > CMakeFiles/Projeto_LA.dir/interface.c.i
 
 CMakeFiles/Projeto_LA.dir/interface.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Projeto_LA.dir/interface.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/pedrusphantom/Desktop/Projeto-LA/interface.c -o CMakeFiles/Projeto_LA.dir/interface.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c" -o CMakeFiles/Projeto_LA.dir/interface.c.s
 
 # Object files for target Projeto_LA
 Projeto_LA_OBJECTS = \
@@ -125,7 +125,7 @@ Projeto_LA: CMakeFiles/Projeto_LA.dir/logica.c.o
 Projeto_LA: CMakeFiles/Projeto_LA.dir/interface.c.o
 Projeto_LA: CMakeFiles/Projeto_LA.dir/build.make
 Projeto_LA: CMakeFiles/Projeto_LA.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Projeto_LA"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Projeto_LA"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Projeto_LA.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -138,6 +138,6 @@ CMakeFiles/Projeto_LA.dir/clean:
 .PHONY : CMakeFiles/Projeto_LA.dir/clean
 
 CMakeFiles/Projeto_LA.dir/depend:
-	cd /home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pedrusphantom/Desktop/Projeto-LA /home/pedrusphantom/Desktop/Projeto-LA /home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug /home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug /home/pedrusphantom/Desktop/Projeto-LA/cmake-build-debug/CMakeFiles/Projeto_LA.dir/DependInfo.cmake --color=$(COLOR)
+	cd "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/Projeto_LA.dir/depend
 

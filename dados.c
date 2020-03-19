@@ -24,7 +24,7 @@ int obter_numero_de_jogadas(ESTADO *e) {
     return e->num_jogadas;
 }
 
-int obter_estado_casa(ESTADO *e, COORDENADA c) {
+int casa_esta_livre(ESTADO *e, COORDENADA c) {
     int coluna = c.coluna;
     int linha = c.linha;
     int lin = e->ultima_jogada.linha;
