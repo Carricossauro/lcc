@@ -18,6 +18,12 @@ void mostrar_tabuleiro(ESTADO *e) {
     }
 }
 
+void mostar_prompt(ESTADO *e){
+    printf("# %02d",conta_comados(e));
+    printf(" PL%d",obter_jogador_atual(e));
+    printf(" (%d)>",obter_numero_de_jogadas(e));
+}
+
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
@@ -31,4 +37,5 @@ int interpretador(ESTADO *e) {
         mostrar_tabuleiro(e);
     }
     return 1;
+
 }

@@ -90,4 +90,23 @@ CASA obter_casa(ESTADO *e, int linha, int coluna);
 */
 void mudar_casa(ESTADO *e, COORDENADA c);
 
+/**
+\brief Aumenta o valor do comando
+@param e Apontador para o estado
+*/
+void add_comando(ESTADO *e);
+
+/**
+\brief Devolve o número de comandos
+@param e Apontador para o estado
+@returns Número de comandos
+*/
+int conta_comandos(ESTADO *e);
+
+/**
+\brief Muda o jogador
+@param e Apontador para o estado
+*/
+void muda_jogador(ESTADO *e);
+
 #endif //PROJETO_LA_DADOS_H

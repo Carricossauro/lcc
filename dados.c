@@ -3,6 +3,7 @@
 
 ESTADO *inicializar_estado() {
     ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
+    e->num_comandos = 0;
     e->jogador_atual = 1;
     e->num_jogadas = 0;
     for (int linha = 0; linha < 8; linha++){
@@ -15,12 +16,27 @@ ESTADO *inicializar_estado() {
     e->ultima_jogada.linha = 3;
     return e;
 }
+void muda_jogador(ESTADO *e){
+    if(e->jogador_atual == 1)
+        e->jogador_atual = 2;
+    else e->jogador_atual = 1;
+}
+
+void add_comando(ESTADO *e){
+    e->num_comandos += 1;
+}
+
+int conta_comandos(ESTADO *e){
+    return e->num_comandos;
+}
 
 int obter_jogador_atual(ESTADO *e) {
+
     return e->jogador_atual;
 }
 
 int obter_numero_de_jogadas(ESTADO *e) {
+
     return e->num_jogadas;
 }
 
