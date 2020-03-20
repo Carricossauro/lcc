@@ -137,4 +137,12 @@ int obter_coluna(COORDENADA c);
 @returns Coordenada com a linha e coluna dados
 */
 COORDENADA cria_coordenada(int linha, int coluna);
+
+/**
+\brief Função que recebe uma linha e guarda no estado de jogo
+@param linha linha
+@param numlinha Index da linha
+@param e Apontador para o Estado do jogo
+*/
+void recebelinha(char *linha, int numlinha, ESTADO *e);
 #endif //PROJETO_LA_DADOS_H

@@ -85,3 +85,11 @@ COORDENADA cria_coordenada(int linha, int coluna) {
     c.coluna = coluna;
     return c;
 }
+
+void recebelinha(char *linha, int numlinha, ESTADO *e)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        e -> tab[numlinha][i] = (linha[i] == '*') ? BRANCA : (linha[i] == '#') ? PRETA : VAZIO;
+    }
+}

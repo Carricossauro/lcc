@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
+    <generated>
+      <config projectName="Projeto_LA" targetName="Projeto_LA" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -11,41 +13,20 @@
   <component name="ChangeListManager">
     <list default="true" id="2df596c9-a92f-4b66-9266-652ba32b8314" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projeto_LA.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projeto_LA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projeto_LA.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projeto_LA.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dados.c" beforeDir="false" afterPath="$PROJECT_DIR$/dados.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dados.h" beforeDir="false" afterPath="$PROJECT_DIR$/dados.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/dados_8h.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/dados_8h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/dados_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/dados_8h_source.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/globals.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/globals.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/globals_func.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/globals_func.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/interface_8h.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/interface_8h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/interface_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/interface_8h_source.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/logica_8h.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/logica_8h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/logica_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/logica_8h_source.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_9.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_a.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_a.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/all_b.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/all_b.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/functions_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/functions_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/functions_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/functions_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/functions_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/functions_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/functions_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/functions_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/functions_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/search/searchdata.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/search/searchdata.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface.c" beforeDir="false" afterPath="$PROJECT_DIR$/interface.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interface.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/latex/dados_8h.tex.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/latex/dados_8h.tex.tmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/latex/interface_8h.tex" beforeDir="false" afterPath="$PROJECT_DIR$/latex/interface_8h.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/latex/logica_8h.tex" beforeDir="false" afterPath="$PROJECT_DIR$/latex/logica_8h.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logica.c" beforeDir="false" afterPath="$PROJECT_DIR$/logica.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logica.h" beforeDir="false" afterPath="$PROJECT_DIR$/logica.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +36,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -71,6 +53,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Projeto_LA" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projeto_LA" TARGET_NAME="Projeto_LA" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projeto_LA" RUN_TARGET_NAME="Projeto_LA">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -94,6 +83,7 @@
       <workItem from="1584626946798" duration="145000" />
       <workItem from="1584630686736" duration="1181000" />
       <workItem from="1584634842983" duration="3669000" />
+      <workItem from="1584716853508" duration="7741000" />
     </task>
     <servers />
   </component>
@@ -105,34 +95,34 @@
       <screen x="0" y="0" width="1920" height="1043" />
     </state>
     <state x="742" y="277" width="426" height="481" key="FileChooserDialogImpl/0.0.1920.1043@0.0.1920.1043" timestamp="1584116238650" />
-    <state width="1324" height="173" key="GridCell.Tab.0.bottom" timestamp="1584292231008">
+    <state width="1324" height="173" key="GridCell.Tab.0.bottom" timestamp="1584724432017">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584292231008" />
+    <state width="1324" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584724432017" />
     <state width="1876" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1043@0.0.1920.1043" timestamp="1584290859814" />
-    <state width="1324" height="173" key="GridCell.Tab.0.center" timestamp="1584292231007">
+    <state width="1324" height="173" key="GridCell.Tab.0.center" timestamp="1584724432016">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1584292231007" />
+    <state width="1324" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1584724432016" />
     <state width="1876" height="277" key="GridCell.Tab.0.center/0.0.1920.1043@0.0.1920.1043" timestamp="1584290859809" />
-    <state width="1324" height="173" key="GridCell.Tab.0.left" timestamp="1584292231006">
+    <state width="1324" height="173" key="GridCell.Tab.0.left" timestamp="1584724432015">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1584292231006" />
+    <state width="1324" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1584724432015" />
     <state width="1876" height="277" key="GridCell.Tab.0.left/0.0.1920.1043@0.0.1920.1043" timestamp="1584290859807" />
-    <state width="1324" height="173" key="GridCell.Tab.0.right" timestamp="1584292231008">
+    <state width="1324" height="173" key="GridCell.Tab.0.right" timestamp="1584724432016">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1584292231008" />
+    <state width="1324" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1584724432016" />
     <state width="1876" height="277" key="GridCell.Tab.0.right/0.0.1920.1043@0.0.1920.1043" timestamp="1584290859813" />
     <state x="463" y="155" key="SettingsEditor" timestamp="1584638491156">
       <screen x="0" y="0" width="1920" height="1043" />
     </state>
     <state x="463" y="155" key="SettingsEditor/0.0.1920.1043@0.0.1920.1043" timestamp="1584638491156" />
-    <state x="641" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1584634848757">
-      <screen x="0" y="0" width="1920" height="1043" />
+    <state x="456" y="242" key="com.intellij.ide.util.TipDialog" timestamp="1584716859406">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="456" y="242" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584630687563" />
+    <state x="456" y="242" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584716859406" />
     <state x="641" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1043@0.0.1920.1043" timestamp="1584634848757" />
     <state x="623" y="228" width="672" height="678" key="search.everywhere.popup" timestamp="1584637833280">
       <screen x="0" y="0" width="1920" height="1043" />

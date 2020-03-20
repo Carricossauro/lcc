@@ -1,4 +1,11 @@
-Cannot generate into C:\Users\Henrique\CLionProjects\LA\LA1PL1G4\cmake-build-debug
-It is already used for project \home\carricossauro\Desktop\LCC 1ºano 2ºsemestre\LA1PL1G4
-
-Please either delete it manually or select another generation directory
+/home/pedrusphantom/Desktop/clion-2019.3.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/pedrusphantom/Desktop/LA1PL1G4
+-- The C compiler identification is GNU 7.5.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug

@@ -66,6 +66,8 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="dados_8h_source.html">dados.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="logica_8h_source.html">logica.h</a>&quot;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;bits/types/FILE.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for interface.h:</div>
 <div class="dyncontent">
@@ -77,19 +79,58 @@ Include dependency graph for interface.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9fc929f0b191b7d58d9fd8685d16a4af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#a9fc929f0b191b7d58d9fd8685d16a4af">mostrar_tabuleiro</a> (<a class="el" href="structESTADO.html">ESTADO</a> e)</td></tr>
-<tr class="memdesc:a9fc929f0b191b7d58d9fd8685d16a4af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que mostra o tabuleiro na linha de comandos.  <a href="#a9fc929f0b191b7d58d9fd8685d16a4af">More...</a><br /></td></tr>
-<tr class="separator:a9fc929f0b191b7d58d9fd8685d16a4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3983f7c91f1e753591c3ef1eabb1824"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#af3983f7c91f1e753591c3ef1eabb1824">mostrar_tabuleiro</a> (<a class="el" href="structESTADO.html">ESTADO</a> e, FILE *jogo)</td></tr>
+<tr class="memdesc:af3983f7c91f1e753591c3ef1eabb1824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que mostra o tabuleiro na linha de comandos.  <a href="#af3983f7c91f1e753591c3ef1eabb1824">More...</a><br /></td></tr>
+<tr class="separator:af3983f7c91f1e753591c3ef1eabb1824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24da95ebeede4a540e37790ce8be359b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#a24da95ebeede4a540e37790ce8be359b">interpretador</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
 <tr class="memdesc:a24da95ebeede4a540e37790ce8be359b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que recebe o input do utilizador.  <a href="#a24da95ebeede4a540e37790ce8be359b">More...</a><br /></td></tr>
 <tr class="separator:a24da95ebeede4a540e37790ce8be359b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fd532d3d252ff42d406a15757e2a401"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#a1fd532d3d252ff42d406a15757e2a401">mostrar_prompt</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
 <tr class="memdesc:a1fd532d3d252ff42d406a15757e2a401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que imprime o prompt.  <a href="#a1fd532d3d252ff42d406a15757e2a401">More...</a><br /></td></tr>
 <tr class="separator:a1fd532d3d252ff42d406a15757e2a401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86da472ab10e0eeb84614f53ef2fa83d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#a86da472ab10e0eeb84614f53ef2fa83d">ler</a> (char *ficheiro, <a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
+<tr class="separator:a86da472ab10e0eeb84614f53ef2fa83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27f56c92e1a658039db8848b1255e1a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8h.html#a27f56c92e1a658039db8848b1255e1a9">gravar</a> (char *ficheiro, <a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
+<tr class="separator:a27f56c92e1a658039db8848b1255e1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definição das funçôes que fornecem a ligação ao jogador </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a27f56c92e1a658039db8848b1255e1a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27f56c92e1a658039db8848b1255e1a9">&#9670;&nbsp;</a></span>gravar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void gravar </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ficheiro</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>/brief Função que grava um ficheiro </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ficheiro</td><td>ficheiro </td></tr>
+    <tr><td class="paramname">e</td><td>Apontador para o Estado do jogo </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a24da95ebeede4a540e37790ce8be359b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a24da95ebeede4a540e37790ce8be359b">&#9670;&nbsp;</a></span>interpretador()</h2>
 
@@ -110,6 +151,41 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">e</td><td>Apontador para o estado do jogo </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86da472ab10e0eeb84614f53ef2fa83d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86da472ab10e0eeb84614f53ef2fa83d">&#9670;&nbsp;</a></span>ler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ler </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ficheiro</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>/brief Função que lê um ficheiro </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ficheiro</td><td>ficheiro </td></tr>
+    <tr><td class="paramname">e</td><td>Apontador para o Estado do jogo </td></tr>
   </table>
   </dd>
 </dl>
@@ -142,8 +218,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9fc929f0b191b7d58d9fd8685d16a4af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fc929f0b191b7d58d9fd8685d16a4af">&#9670;&nbsp;</a></span>mostrar_tabuleiro()</h2>
+<a id="af3983f7c91f1e753591c3ef1eabb1824"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3983f7c91f1e753591c3ef1eabb1824">&#9670;&nbsp;</a></span>mostrar_tabuleiro()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,8 +228,18 @@ Functions</h2></td></tr>
           <td class="memname">void mostrar_tabuleiro </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a>&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>jogo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

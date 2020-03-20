@@ -54,7 +54,9 @@ int \hyperlink{dados_8h_a9946aa4fcc3bb50874673103b31eca48}{obter\+\_\+linha} (\h
 int \hyperlink{dados_8h_ab495ce88ee9837a7f7f67b9358659f16}{obter\+\_\+coluna} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
 \begin{DoxyCompactList}\small\item\em Devolve a coluna da coordenada dada. \end{DoxyCompactList}\item 
 \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} \hyperlink{dados_8h_aef5216319c153ec749f1d30fe32cbdb4}{cria\+\_\+coordenada} (int linha, int coluna)
-\begin{DoxyCompactList}\small\item\em Cria uma coordenada com a linha e a coluna dados. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Cria uma coordenada com a linha e a coluna dados. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_ad103cf5680171f3393581b4559b1686b}{recebelinha} (char $\ast$linha, int numlinha, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Função que recebe uma linha e guarda no estado de jogo. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -292,3 +294,22 @@ Devolve a última jogada.
 \begin{DoxyReturn}{Returns}
 Coordenada da última jogada 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_ad103cf5680171f3393581b4559b1686b}\label{dados_8h_ad103cf5680171f3393581b4559b1686b}} 
+\index{dados.\+h@{dados.\+h}!recebelinha@{recebelinha}}
+\index{recebelinha@{recebelinha}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{recebelinha()}{recebelinha()}}
+{\footnotesize\ttfamily void recebelinha (\begin{DoxyParamCaption}\item[{char $\ast$}]{linha,  }\item[{int}]{numlinha,  }\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Função que recebe uma linha e guarda no estado de jogo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em linha} & linha \\
+\hline
+{\em numlinha} & Index da linha \\
+\hline
+{\em e} & Apontador para o Estado do jogo \\
+\hline
+\end{DoxyParams}
