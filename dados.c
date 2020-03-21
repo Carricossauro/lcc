@@ -90,6 +90,18 @@ void recebelinha(char *linha, int numlinha, ESTADO *e)
 {
     for (int i = 0; i < 8; i++)
     {
-        e -> tab[numlinha][i] = (linha[i] == '*') ? BRANCA : (linha[i] == '#') ? PRETA : VAZIO;
+        if (linha[i] == '*') {
+            e->tab[numlinha][i] = BRANCA;
+            e->ultima_jogada.coluna = i;
+            e->ultima_jogada.linha = numlinha;
+            add_jogada(e);
+        } else if (linha[i] == '#') {
+            e->tab[numlinha][i] = PRETA;
+            add_jogada(e);
+        } else e -> tab[numlinha][i] = VAZIO;
     }
+}
+
+void add_jogada(ESTADO *e) {
+    e->num_jogadas++;
 }

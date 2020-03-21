@@ -140,9 +140,15 @@ COORDENADA cria_coordenada(int linha, int coluna);
 
 /**
 \brief Função que recebe uma linha e guarda no estado de jogo
-@param linha linha
+@param linha Linha
 @param numlinha Index da linha
-@param e Apontador para o Estado do jogo
+@param e Apontador para o estado do jogo
 */
 void recebelinha(char *linha, int numlinha, ESTADO *e);
+
+/**
+\brief Função que adiciona 1 ao número de jogadas
+@param e Apontador para o estado do jogo
+*/
+void add_jogada(ESTADO *e);
 #endif //PROJETO_LA_DADOS_H

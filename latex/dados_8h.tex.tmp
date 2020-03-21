@@ -56,7 +56,9 @@ int \hyperlink{dados_8h_ab495ce88ee9837a7f7f67b9358659f16}{obter\+\_\+coluna} (\
 \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} \hyperlink{dados_8h_aef5216319c153ec749f1d30fe32cbdb4}{cria\+\_\+coordenada} (int linha, int coluna)
 \begin{DoxyCompactList}\small\item\em Cria uma coordenada com a linha e a coluna dados. \end{DoxyCompactList}\item 
 void \hyperlink{dados_8h_ad103cf5680171f3393581b4559b1686b}{recebelinha} (char $\ast$linha, int numlinha, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
-\begin{DoxyCompactList}\small\item\em Função que recebe uma linha e guarda no estado de jogo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Função que recebe uma linha e guarda no estado de jogo. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_aeb69a0d9c0cc5412f2f673bbfed975a5}{add\+\_\+jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Função que adiciona 1 ao número de jogadas. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -76,6 +78,21 @@ Aumenta o valor do comando.
 
 \begin{DoxyParams}{Parameters}
 {\em e} & Apontador para o estado \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_aeb69a0d9c0cc5412f2f673bbfed975a5}\label{dados_8h_aeb69a0d9c0cc5412f2f673bbfed975a5}} 
+\index{dados.\+h@{dados.\+h}!add\+\_\+jogada@{add\+\_\+jogada}}
+\index{add\+\_\+jogada@{add\+\_\+jogada}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{add\+\_\+jogada()}{add\_jogada()}}
+{\footnotesize\ttfamily void add\+\_\+jogada (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Função que adiciona 1 ao número de jogadas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado do jogo \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}\label{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}} 
@@ -306,10 +323,10 @@ Função que recebe uma linha e guarda no estado de jogo.
 
 
 \begin{DoxyParams}{Parameters}
-{\em linha} & linha \\
+{\em linha} & Linha \\
 \hline
 {\em numlinha} & Index da linha \\
 \hline
-{\em e} & Apontador para o Estado do jogo \\
+{\em e} & Apontador para o estado do jogo \\
 \hline
 \end{DoxyParams}

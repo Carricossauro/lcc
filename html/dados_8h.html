@@ -148,6 +148,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ad103cf5680171f3393581b4559b1686b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#ad103cf5680171f3393581b4559b1686b">recebelinha</a> (char *linha, int numlinha, <a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
 <tr class="memdesc:ad103cf5680171f3393581b4559b1686b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que recebe uma linha e guarda no estado de jogo.  <a href="#ad103cf5680171f3393581b4559b1686b">More...</a><br /></td></tr>
 <tr class="separator:ad103cf5680171f3393581b4559b1686b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#aeb69a0d9c0cc5412f2f673bbfed975a5">add_jogada</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
+<tr class="memdesc:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que adiciona 1 ao número de jogadas.  <a href="#aeb69a0d9c0cc5412f2f673bbfed975a5">More...</a><br /></td></tr>
+<tr class="separator:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definição do estado e das funções que o manipulam </p>
@@ -172,6 +175,32 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">e</td><td>Apontador para o estado </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb69a0d9c0cc5412f2f673bbfed975a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb69a0d9c0cc5412f2f673bbfed975a5">&#9670;&nbsp;</a></span>add_jogada()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void add_jogada </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que adiciona 1 ao número de jogadas. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Apontador para o estado do jogo </td></tr>
   </table>
   </dd>
 </dl>
@@ -580,9 +609,9 @@ Functions</h2></td></tr>
 <p>Função que recebe uma linha e guarda no estado de jogo. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">linha</td><td>linha </td></tr>
+    <tr><td class="paramname">linha</td><td>Linha </td></tr>
     <tr><td class="paramname">numlinha</td><td>Index da linha </td></tr>
-    <tr><td class="paramname">e</td><td>Apontador para o Estado do jogo </td></tr>
+    <tr><td class="paramname">e</td><td>Apontador para o estado do jogo </td></tr>
   </table>
   </dd>
 </dl>
