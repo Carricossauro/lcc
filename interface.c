@@ -49,6 +49,19 @@ void mostrar_prompt(ESTADO *e){
     printf(" (%d)> ",obter_numero_de_jogadas(e));
 }
 
+void movs(FILE *jogo, ESTADO *e){
+    char j1[32][2];
+    char j2[32][2];
+
+    int r = cord(j1, j2, e);
+
+    for (int i = 0; i < r; ++i) {
+        fprintf(jogo,"%02d: ",i + 1);
+        fprintf(jogo,"%s",(j1[i]));
+        fprintf(jogo,(j2[i][0] == '\0') ? " " : "%s", j2[i]);
+    }    
+}
+
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
@@ -82,6 +95,10 @@ int interpretador(ESTADO *e) {
             gravar(ficheiro, e);
             add_comando(e);
             mostrar_tabuleiro(e,stdout);
+        }
+        else if(!strcmp(comando, "movs")){
+            movs(stdout, e);
+            add_comando(e);
         }
 
     }

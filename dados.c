@@ -65,6 +65,15 @@ void mudar_casa(ESTADO *e, COORDENADA c)
 
     e->ultima_jogada.linha = c.linha;
     e->ultima_jogada.coluna = c.coluna;
+
+    if(e->jogador_atual == 1){
+        e->jogadas[e->num_jogadas].jogador1.coluna = c.coluna;
+        e->jogadas[e->num_jogadas].jogador1.linha = c.linha;
+    } else {
+        e->jogadas[e->num_jogadas].jogador2.coluna = c.coluna;
+        e->jogadas[e->num_jogadas].jogador2.linha = c.linha;
+    }
+
 }
 
 COORDENADA obter_ultima_jogada(ESTADO *e) {
@@ -103,5 +112,35 @@ void recebelinha(char *linha, int numlinha, ESTADO *e)
 }
 
 void add_jogada(ESTADO *e) {
-    e->num_jogadas++;
+    if(e->jogador_atual == 1)
+        e->num_jogadas++;
+}
+
+int cord(char **j1, char **j2, ESTADO *e){
+    int r = 0;
+
+    if(e->jogador_atual == 1){
+
+        for (int i = 0; i < e->num_jogadas; ++i) {
+            j1[i][0] = e->jogadas[e->num_jogadas].jogador1.coluna + 'a';
+            j1[i][1] = e->jogadas[e->num_jogadas].jogador1.linha;
+
+            j2[i][0] = e->jogadas[e->num_jogadas].jogador2.coluna + 'a';
+            j2[i][1] = e->jogadas[e->num_jogadas].jogador2.linha;
+            r++;
+        }
+
+    }else {
+        for (int i = 0; i <= e->num_jogadas; ++i) {
+            j1[i][0] = e->jogadas[e->num_jogadas].jogador1.coluna + 'a';
+            j1[i][1] = e->jogadas[e->num_jogadas].jogador1.linha;
+            r++;
+        }
+        for (int j = 0; j <= e->num_jogadas; ++j) {
+            j2[j][0] = e->jogadas[e->num_jogadas].jogador2.coluna + 'a';
+            j2[j][1] = e->jogadas[e->num_jogadas].jogador2.linha;
+        }
+    }
+
+    return r;
 }

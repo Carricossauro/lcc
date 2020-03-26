@@ -13,6 +13,7 @@ Definição das funçôes que fornecem a ligação ao jogador
 /**
 \brief Função que mostra o tabuleiro na linha de comandos
 @param e Apontador para o estado do jogo
+@param jogo File stream para o output
 */
 void mostrar_tabuleiro(ESTADO e, FILE *jogo);
 
@@ -41,4 +42,11 @@ void ler (char *ficheiro, ESTADO *e);
 @param e Apontador para o Estado do jogo
 */
 void gravar (char *ficheiro, ESTADO *e);
+
+/**
+/brief Função que mostra os movimentos
+@param jogo File stream para o output
+@param e Apontador para o Estado do jogo
+*/
+void movs (FILE *jogo, Estado *e);
 #endif //PROJETO_LA_INTERFACE_H

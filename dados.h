@@ -151,4 +151,12 @@ void recebelinha(char *linha, int numlinha, ESTADO *e);
 @param e Apontador para o estado do jogo
 */
 void add_jogada(ESTADO *e);
+
+/**
+\brief Função que retorna coordenadas
+@param e Apontador para o estado do jogo
+@param j1 array com jogadas do jogador 1
+@param j2 array com jogadas do jogador 2
+*/
+int cord(char **j1, char **j2, ESTADO *e);
 #endif //PROJETO_LA_DADOS_H
