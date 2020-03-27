@@ -139,3 +139,22 @@ char *obter_jogada(ESTADO *e, int i, int p) {
     }
     return str;
 }
+
+void recebe_jogadas(ESTADO *e, int c, int n)
+{
+    if(e -> jogador_atual == 1)
+    {
+        e -> jogadas[e -> num_jogadas].jogador1.coluna = c - 'a';
+        e -> jogadas[e -> num_jogadas].jogador1.linha = n - 1;
+
+        e -> jogador_atual = 2;
+    }
+    else
+    {
+        e -> jogadas[e -> num_jogadas].jogador2.coluna = c - 'a';
+        e -> jogadas[e -> num_jogadas].jogador2.linha = n - 1;
+
+        e -> jogador_atual = 1;
+        e -> num_jogadas++;
+    }
+}

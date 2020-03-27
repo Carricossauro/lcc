@@ -1,5 +1,6 @@
 #include "dados.h"
 #include "logica.h"
+#include "interface.h"
 #include <stdio.h>
 #include <string.h>
 #include <bits/types/FILE.h>
@@ -25,12 +26,28 @@ void ler (char *ficheiro, ESTADO *e)
     FILE *jogo;
     jogo = fopen(ficheiro, "r");
     char linha[25];
+    int c1, n1, c2, n2;
+    char str[25];
+
+    inicializar_estado(e);
 
     e->num_jogadas = -1;
     for (int i = 0; i < 8; i++)
     {
         fgets(linha, 25, jogo);
         recebelinha(linha, i, e);
+    }
+
+    fgets(linha, 25, jogo);
+    while (!feof(linha))
+    {
+        fgets(linha, 25, jogo);
+        if (sscanf(linha, "%s %c%d %c%d", str, &c1, &n1, &c2, &n2) == 5) {
+            recebe_jogadas(e, c1, n1);
+            recebe_jogadas(e, c2, n2);
+        } else if (sscanf(linha, "%s %c%d", str, &c1, &n1) == 3) {
+            recebe_jogadas(e, c1, n1);
+        }
     }
 
     fclose(jogo);
@@ -41,6 +58,8 @@ void gravar (char *ficheiro, ESTADO *e)
     FILE *jogo;
     jogo = fopen(ficheiro, "w");
     mostrar_tabuleiro(e, jogo);
+    fprintf(jogo, "\n");
+    movs(jogo, e);
     fclose(jogo);
 }
 

@@ -6,11 +6,35 @@
 
 #IncludeRegexTransform: 
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.c
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
+interface.h
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.h
+stdio.h
+-
+string.h
+-
+bits/types/FILE.h
+-
 stdlib.h
 -
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.h
+dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
+stdlib.h
+-
+bits/types/FILE.h
+-
+
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
+dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 

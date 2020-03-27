@@ -9,7 +9,7 @@ Include dependency graph for interface.\+h\+:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{interface_8h_af3983f7c91f1e753591c3ef1eabb1824}{mostrar\+\_\+tabuleiro} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} e, F\+I\+LE $\ast$jogo)
+void \hyperlink{interface_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}{mostrar\+\_\+tabuleiro} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, F\+I\+LE $\ast$jogo)
 \begin{DoxyCompactList}\small\item\em Função que mostra o tabuleiro na linha de comandos. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a24da95ebeede4a540e37790ce8be359b}{interpretador} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \begin{DoxyCompactList}\small\item\em Função que recebe o input do utilizador. \end{DoxyCompactList}\item 
@@ -18,6 +18,8 @@ void \hyperlink{interface_8h_a1fd532d3d252ff42d406a15757e2a401}{mostrar\+\_\+pro
 void \hyperlink{interface_8h_a86da472ab10e0eeb84614f53ef2fa83d}{ler} (char $\ast$ficheiro, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \item 
 void \hyperlink{interface_8h_a27f56c92e1a658039db8848b1255e1a9}{gravar} (char $\ast$ficheiro, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\item 
+void \hyperlink{interface_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}{movs} (F\+I\+LE $\ast$jogo, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \end{DoxyCompactItemize}
 
 
@@ -81,11 +83,11 @@ Função que imprime o prompt.
 {\em e} & Apontador para o estado do jogo \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{interface_8h_af3983f7c91f1e753591c3ef1eabb1824}\label{interface_8h_af3983f7c91f1e753591c3ef1eabb1824}} 
+\mbox{\Hypertarget{interface_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}\label{interface_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}} 
 \index{interface.\+h@{interface.\+h}!mostrar\+\_\+tabuleiro@{mostrar\+\_\+tabuleiro}}
 \index{mostrar\+\_\+tabuleiro@{mostrar\+\_\+tabuleiro}!interface.\+h@{interface.\+h}}
 \subsubsection{\texorpdfstring{mostrar\+\_\+tabuleiro()}{mostrar\_tabuleiro()}}
-{\footnotesize\ttfamily void mostrar\+\_\+tabuleiro (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO}}]{e,  }\item[{F\+I\+LE $\ast$}]{jogo }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void mostrar\+\_\+tabuleiro (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{F\+I\+LE $\ast$}]{jogo }\end{DoxyParamCaption})}
 
 
 
@@ -94,5 +96,20 @@ Função que mostra o tabuleiro na linha de comandos.
 
 \begin{DoxyParams}{Parameters}
 {\em e} & Apontador para o estado do jogo \\
+\hline
+{\em jogo} & File stream para o output \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{interface_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}\label{interface_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}} 
+\index{interface.\+h@{interface.\+h}!movs@{movs}}
+\index{movs@{movs}!interface.\+h@{interface.\+h}}
+\subsubsection{\texorpdfstring{movs()}{movs()}}
+{\footnotesize\ttfamily void movs (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{jogo,  }\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+/brief Função que mostra os movimentos 
+\begin{DoxyParams}{Parameters}
+{\em jogo} & File stream para o output \\
+\hline
+{\em e} & Apontador para o Estado do jogo \\
 \hline
 \end{DoxyParams}

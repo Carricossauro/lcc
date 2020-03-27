@@ -151,6 +151,15 @@ Functions</h2></td></tr>
 <tr class="memitem:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#aeb69a0d9c0cc5412f2f673bbfed975a5">add_jogada</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e)</td></tr>
 <tr class="memdesc:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que adiciona 1 ao número de jogadas.  <a href="#aeb69a0d9c0cc5412f2f673bbfed975a5">More...</a><br /></td></tr>
 <tr class="separator:aeb69a0d9c0cc5412f2f673bbfed975a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0429550be6d7690e2ee9c43084968953"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#a0429550be6d7690e2ee9c43084968953">jogada_existe</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e, int i, int p)</td></tr>
+<tr class="memdesc:a0429550be6d7690e2ee9c43084968953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que retorna coordenadas.  <a href="#a0429550be6d7690e2ee9c43084968953">More...</a><br /></td></tr>
+<tr class="separator:a0429550be6d7690e2ee9c43084968953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a66b7cad1e94cf6be91184a33be627d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#a3a66b7cad1e94cf6be91184a33be627d">obter_jogada</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e, int i, int p)</td></tr>
+<tr class="memdesc:a3a66b7cad1e94cf6be91184a33be627d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que retorna a jogada a imprimir.  <a href="#a3a66b7cad1e94cf6be91184a33be627d">More...</a><br /></td></tr>
+<tr class="separator:a3a66b7cad1e94cf6be91184a33be627d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b06caac5cf5082ea4e15353caca565"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dados_8h.html#a58b06caac5cf5082ea4e15353caca565">recebe_jogadas</a> (<a class="el" href="structESTADO.html">ESTADO</a> *e, int c, int n)</td></tr>
+<tr class="memdesc:a58b06caac5cf5082ea4e15353caca565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que recebe a jogada a ler.  <a href="#a58b06caac5cf5082ea4e15353caca565">More...</a><br /></td></tr>
+<tr class="separator:a58b06caac5cf5082ea4e15353caca565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definição do estado e das funções que o manipulam </p>
@@ -331,6 +340,52 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0429550be6d7690e2ee9c43084968953"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0429550be6d7690e2ee9c43084968953">&#9670;&nbsp;</a></span>jogada_existe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int jogada_existe </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que retorna coordenadas. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Apontador para o estado do jogo </td></tr>
+    <tr><td class="paramname">i</td><td>Número da jogada </td></tr>
+    <tr><td class="paramname">p</td><td>Jogador atual </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 - Jogada não existe<br />
+ 1 - Jogada existe </dd></dl>
+
+</div>
+</div>
 <a id="a9b08ade4b8ead18f34cf3b1e808de712"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b08ade4b8ead18f34cf3b1e808de712">&#9670;&nbsp;</a></span>muda_jogador()</h2>
 
@@ -466,6 +521,51 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3a66b7cad1e94cf6be91184a33be627d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a66b7cad1e94cf6be91184a33be627d">&#9670;&nbsp;</a></span>obter_jogada()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* obter_jogada </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que retorna a jogada a imprimir. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Apontado rpara o estado do jogo </td></tr>
+    <tr><td class="paramname">i</td><td>Número da jogada </td></tr>
+    <tr><td class="paramname">p</td><td>Jogador atual </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String com a jogada </dd></dl>
+
+</div>
+</div>
 <a id="acc6c25533188a99cb69c12e7f2c406ef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acc6c25533188a99cb69c12e7f2c406ef">&#9670;&nbsp;</a></span>obter_jogador_atual()</h2>
 
@@ -571,6 +671,50 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Coordenada da última jogada </dd></dl>
+
+</div>
+</div>
+<a id="a58b06caac5cf5082ea4e15353caca565"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58b06caac5cf5082ea4e15353caca565">&#9670;&nbsp;</a></span>recebe_jogadas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void recebe_jogadas </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structESTADO.html">ESTADO</a> *&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que recebe a jogada a ler. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Apontador para o estado do jogo </td></tr>
+    <tr><td class="paramname">c</td><td>coluna </td></tr>
+    <tr><td class="paramname">n</td><td>linha </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

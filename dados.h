@@ -169,4 +169,12 @@ int jogada_existe(ESTADO *e, int i, int p);
 @returns String com a jogada
  */
 char *obter_jogada(ESTADO *e, int i, int p);
+
+/**
+\brief Função que recebe a jogada a ler
+@param e Apontador para o estado do jogo
+@param c coluna
+@param n linha
+*/
+void recebe_jogadas(ESTADO *e, int c, int n);
 #endif //PROJETO_LA_DADOS_H

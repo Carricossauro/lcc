@@ -15,7 +15,7 @@ Definição das funçôes que fornecem a ligação ao jogador
 @param e Apontador para o estado do jogo
 @param jogo File stream para o output
 */
-void mostrar_tabuleiro(ESTADO e, FILE *jogo);
+void mostrar_tabuleiro(ESTADO *e, FILE *jogo);
 
 /**
 \brief Função que recebe o input do utilizador
@@ -49,4 +49,6 @@ void gravar (char *ficheiro, ESTADO *e);
 @param e Apontador para o Estado do jogo
 */
 void movs (FILE *jogo, ESTADO *e);
+
+
 #endif //PROJETO_LA_INTERFACE_H
