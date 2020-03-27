@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <bits/types/FILE.h>
+#include <stdlib.h>
 #define BUF_SIZE 1024
 
 void mostrar_tabuleiro(ESTADO *e, FILE *jogo) {
@@ -50,24 +51,27 @@ void mostrar_prompt(ESTADO *e){
 }
 
 void movs(FILE *jogo, ESTADO *e){
-    char j1[32][2];
-    char j2[32][2];
+    char *str;
+    for (int i = 0; i <= obter_numero_de_jogadas(e); i++) {
+        if (jogada_existe(e, i, 1)) {
+            fprintf(jogo, "%02d: %s", i+1, (str = obter_jogada(e, i, 1)));
+            free(str);
+        } else break;
 
-    int r = cord(j1, j2, e);
-
-    for (int i = 0; i < r; ++i) {
-        fprintf(jogo,"%02d: ",i + 1);
-        fprintf(jogo,"%s",(j1[i]));
-        fprintf(jogo,(j2[i][0] == '\0') ? " " : "%s", j2[i]);
-    }    
+        if (jogada_existe(e, i, 2)) {
+            fprintf(jogo, " %s\n", (str = obter_jogada(e, i, 2)));
+            free(str);
+        } else break;
+    }
 }
 
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
-    char comando[3];
+    char comando[5];
     char ficheiro[BUF_SIZE];
 
+    mostrar_tabuleiro(e, stdout);
     mostrar_prompt(e);
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return 0;
@@ -76,7 +80,6 @@ int interpretador(ESTADO *e) {
         COORDENADA coord = {*col - 'a', *lin - '1'};
         jogar(e, coord);
         add_comando(e);
-        mostrar_tabuleiro(e, stdout);
     }
     else if(!strcmp(linha, "Q\n"))
     {
@@ -88,19 +91,18 @@ int interpretador(ESTADO *e) {
         {
             ler(ficheiro, e);
             add_comando(e);
-            mostrar_tabuleiro(e,stdout);
         }
         else if (!strcmp(comando, "gr"))
         {
             gravar(ficheiro, e);
             add_comando(e);
-            mostrar_tabuleiro(e,stdout);
         }
-        else if(!strcmp(comando, "movs")){
-            movs(stdout, e);
-            add_comando(e);
-        }
-
+    }
+    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "movs"))
+    {
+        movs(stdout, e);
+        add_comando(e);
+        putchar('\n');
     }
     return 1;
 }

@@ -155,8 +155,18 @@ void add_jogada(ESTADO *e);
 /**
 \brief Função que retorna coordenadas
 @param e Apontador para o estado do jogo
-@param j1 array com jogadas do jogador 1
-@param j2 array com jogadas do jogador 2
+@param i Número da jogada
+@param p Jogador atual
+@returns 0 - Jogada não existe\n 1 - Jogada existe
 */
-int cord(char **j1, char **j2, ESTADO *e);
+int jogada_existe(ESTADO *e, int i, int p);
+
+/**
+\brief Função que retorna a jogada a imprimir
+@param e Apontado rpara o estado do jogo
+@param i Número da jogada
+@param p Jogador atual
+@returns String com a jogada
+ */
+char *obter_jogada(ESTADO *e, int i, int p);
 #endif //PROJETO_LA_DADOS_H

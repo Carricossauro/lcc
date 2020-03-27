@@ -48,5 +48,5 @@ void gravar (char *ficheiro, ESTADO *e);
 @param jogo File stream para o output
 @param e Apontador para o Estado do jogo
 */
-void movs (FILE *jogo, Estado *e);
+void movs (FILE *jogo, ESTADO *e);
 #endif //PROJETO_LA_INTERFACE_H

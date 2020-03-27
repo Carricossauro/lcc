@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.c" "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.obj"
-  "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/interface.c" "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/interface.c.obj"
-  "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/logica.c" "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.obj"
-  "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/main.c" "C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.obj"
+  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.o"
+  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/interface.c.o"
+  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.o"
+  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/main.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

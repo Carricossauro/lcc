@@ -6,27 +6,11 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.c
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c
 dados.h
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
 stdlib.h
 -
 
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.h
-
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/interface.c
-dados.h
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.h
-logica.h
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/logica.h
-stdio.h
--
-string.h
--
-bits/types/FILE.h
--
-
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/logica.h
-dados.h
-C:/Users/Henrique/CLionProjects/LA/LA1PL1G4/dados.h
+/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
 

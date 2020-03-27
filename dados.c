@@ -116,31 +116,26 @@ void add_jogada(ESTADO *e) {
         e->num_jogadas++;
 }
 
-int cord(char **j1, char **j2, ESTADO *e){
-    int r = 0;
-
-    if(e->jogador_atual == 1){
-
-        for (int i = 0; i < e->num_jogadas; ++i) {
-            j1[i][0] = e->jogadas[e->num_jogadas].jogador1.coluna + 'a';
-            j1[i][1] = e->jogadas[e->num_jogadas].jogador1.linha;
-
-            j2[i][0] = e->jogadas[e->num_jogadas].jogador2.coluna + 'a';
-            j2[i][1] = e->jogadas[e->num_jogadas].jogador2.linha;
-            r++;
-        }
-
-    }else {
-        for (int i = 0; i <= e->num_jogadas; ++i) {
-            j1[i][0] = e->jogadas[e->num_jogadas].jogador1.coluna + 'a';
-            j1[i][1] = e->jogadas[e->num_jogadas].jogador1.linha;
-            r++;
-        }
-        for (int j = 0; j <= e->num_jogadas; ++j) {
-            j2[j][0] = e->jogadas[e->num_jogadas].jogador2.coluna + 'a';
-            j2[j][1] = e->jogadas[e->num_jogadas].jogador2.linha;
-        }
+int jogada_existe(ESTADO *e, int i, int p) {
+    if (i < e->num_jogadas)
+        return 1;
+    else if (e->num_jogadas == i) {
+        if (e->jogador_atual == 1)
+            return 0;
+        else if (p == 1)
+            return 1;
     }
+    return 0;
+}
 
-    return r;
+char *obter_jogada(ESTADO *e, int i, int p) {
+    char *str = malloc(2 * sizeof(char));
+    if (p == 1) {
+        str[0] = e->jogadas[i].jogador1.coluna + 'a';
+        str[1] = e->jogadas[i].jogador1.linha + '1';
+    } else {
+        str[0] = e->jogadas[i].jogador2.coluna + 'a';
+        str[1] = e->jogadas[i].jogador2.linha + '1';
+    }
+    return str;
 }
