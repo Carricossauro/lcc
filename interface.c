@@ -26,12 +26,13 @@ void ler (char *ficheiro, ESTADO *e)
     FILE *jogo;
     jogo = fopen(ficheiro, "r");
     char linha[25];
-    int c1, n1, c2, n2;
+    char c1, c2;
+    int n1, n2;
     char str[25];
 
-    inicializar_estado(e);
+    free(e);
+    e = inicializar_estado();
 
-    e->num_jogadas = -1;
     for (int i = 0; i < 8; i++)
     {
         fgets(linha, 25, jogo);
@@ -39,13 +40,14 @@ void ler (char *ficheiro, ESTADO *e)
     }
 
     fgets(linha, 25, jogo);
-    while (!feof(linha))
+    while (fgets(linha, 25, jogo) != NULL)
     {
-        fgets(linha, 25, jogo);
         if (sscanf(linha, "%s %c%d %c%d", str, &c1, &n1, &c2, &n2) == 5) {
+            printf("#Linha 46\n");
             recebe_jogadas(e, c1, n1);
             recebe_jogadas(e, c2, n2);
         } else if (sscanf(linha, "%s %c%d", str, &c1, &n1) == 3) {
+            printf("#Linha 49\n");
             recebe_jogadas(e, c1, n1);
         }
     }

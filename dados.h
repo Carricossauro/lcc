@@ -176,5 +176,5 @@ char *obter_jogada(ESTADO *e, int i, int p);
 @param c coluna
 @param n linha
 */
-void recebe_jogadas(ESTADO *e, int c, int n);
+void recebe_jogadas(ESTADO *e, char c, int n);
 #endif //PROJETO_LA_DADOS_H

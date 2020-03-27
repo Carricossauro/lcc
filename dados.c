@@ -1,5 +1,6 @@
 #include "dados.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 ESTADO *inicializar_estado() {
     ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
@@ -103,10 +104,8 @@ void recebelinha(char *linha, int numlinha, ESTADO *e)
             e->tab[numlinha][i] = BRANCA;
             e->ultima_jogada.coluna = i;
             e->ultima_jogada.linha = numlinha;
-            add_jogada(e);
         } else if (linha[i] == '#') {
             e->tab[numlinha][i] = PRETA;
-            add_jogada(e);
         } else e -> tab[numlinha][i] = VAZIO;
     }
 }
@@ -129,7 +128,7 @@ int jogada_existe(ESTADO *e, int i, int p) {
 }
 
 char *obter_jogada(ESTADO *e, int i, int p) {
-    char *str = malloc(2 * sizeof(char));
+    char *str = calloc(3, sizeof(char));
     if (p == 1) {
         str[0] = e->jogadas[i].jogador1.coluna + 'a';
         str[1] = e->jogadas[i].jogador1.linha + '1';
@@ -140,7 +139,7 @@ char *obter_jogada(ESTADO *e, int i, int p) {
     return str;
 }
 
-void recebe_jogadas(ESTADO *e, int c, int n)
+void recebe_jogadas(ESTADO *e, char c, int n)
 {
     if(e -> jogador_atual == 1)
     {
