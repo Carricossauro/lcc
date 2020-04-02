@@ -8,12 +8,12 @@
 #define BUF_SIZE 1024
 
 void mostrar_tabuleiro(ESTADO *e, FILE *jogo) {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 7; i >= 0; i--) {
         for (int k = 0; k < 8; k++) {
-            if (i == 0 && k == 7)
-                fprintf(jogo, "2");
-            else if (i == 7 && k == 0)
+            if (i == 0 && k == 0)
                 fprintf(jogo, "1");
+            else if (i == 7 && k == 7)
+                fprintf(jogo, "2");
             else
                 fprintf(jogo, ((obter_casa(e, k, i) == PRETA) ? "#" : ((obter_casa(e, k, i) == BRANCA) ? "*" : ".")));
         }
@@ -33,7 +33,7 @@ void ler (char *ficheiro, ESTADO *e)
     free(e);
     e = inicializar_estado();
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 7; i >= 0; i--)
     {
         fgets(linha, 25, jogo);
         recebelinha(linha, i, e);
@@ -43,11 +43,9 @@ void ler (char *ficheiro, ESTADO *e)
     while (fgets(linha, 25, jogo) != NULL)
     {
         if (sscanf(linha, "%s %c%d %c%d", str, &c1, &n1, &c2, &n2) == 5) {
-            printf("#Linha 46\n");
             recebe_jogadas(e, c1, n1);
             recebe_jogadas(e, c2, n2);
         } else if (sscanf(linha, "%s %c%d", str, &c1, &n1) == 3) {
-            printf("#Linha 49\n");
             recebe_jogadas(e, c1, n1);
         }
     }

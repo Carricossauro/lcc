@@ -12,9 +12,9 @@ ESTADO *inicializar_estado() {
             e->tab[coluna][linha] = VAZIO;
         }
     }
-    e->tab[3][4] = BRANCA;
+    e->tab[4][4] = BRANCA;
     e->ultima_jogada.coluna = 4;
-    e->ultima_jogada.linha = 3;
+    e->ultima_jogada.linha = 4;
     return e;
 }
 void muda_jogador(ESTADO *e){
@@ -47,7 +47,10 @@ int casa_esta_livre(ESTADO *e, COORDENADA c) {
     int lin = e->ultima_jogada.linha;
     int col = e->ultima_jogada.coluna;
     int r = 0;
-    if (e->tab[linha][coluna] == VAZIO && linha >= lin - 1 && linha <= lin + 1 && coluna >= col - 1 && coluna <= col + 1)
+
+    if (linha < 0 || linha > 7 || coluna < 0 || coluna > 7)
+        r = 0;
+    else if (e->tab[linha][coluna] == VAZIO && linha >= lin - 1 && linha <= lin + 1 && coluna >= col - 1 && coluna <= col + 1)
         r = 1;
     return r;
 }

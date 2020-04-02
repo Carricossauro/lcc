@@ -16,8 +16,8 @@ int jogar(ESTADO *e, COORDENADA c)
 
 int gameOver(ESTADO *e, COORDENADA c) {
     COORDENADA co;
-    if (c.linha == 0 && c.coluna == 7) return 2;
-    if (c.linha == 7 && c.coluna == 0) return 1;
+    if (c.linha == 7 && c.coluna == 7) return 2;
+    if (c.linha == 0 && c.coluna == 0) return 1;
 
     int lin = obter_linha(c), col = obter_coluna(c);
     for (int i = lin - 1; i <= lin + 1; i++) {
