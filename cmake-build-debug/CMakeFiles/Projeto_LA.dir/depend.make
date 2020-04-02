@@ -3,6 +3,8 @@
 
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../dados.c
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../dados.h
+CMakeFiles/Projeto_LA.dir/dados.c.o: ../interface.h
+CMakeFiles/Projeto_LA.dir/dados.c.o: ../logica.h
 
 CMakeFiles/Projeto_LA.dir/interface.c.o: ../dados.h
 CMakeFiles/Projeto_LA.dir/interface.c.o: ../interface.c

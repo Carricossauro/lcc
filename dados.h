@@ -45,6 +45,8 @@ typedef struct {
     int jogador_atual;
     /** Numero de comandos */
     int num_comandos;
+    /** Numero de movimento*/
+    int num_movimento;
 } ESTADO;
 
 /**
@@ -64,7 +66,7 @@ int obter_jogador_atual(ESTADO *e);
 @param e Apontador para o estado
 @returns Número de jogadas
 */
-int obter_numero_de_jogadas(ESTADO *e);
+int obter_numero_de_movimentos(ESTADO *e);
 
 /**
 \brief Verifica se uam certa casa está livre
@@ -177,4 +179,23 @@ char *obter_jogada(ESTADO *e, int i, int p);
 @param n linha
 */
 void recebe_jogadas(ESTADO *e, char c, int n);
+
+/**
+\brief Função que altera número da jogada atual
+@param e Apontador para o estado do jogo
+@param num_mov numero do movimento para onde se altera a jogada atual
+*/
+void pos(ESTADO *e, int num_mov);
+
+/**
+\brief Função que dá reset ao tabuleiro
+@param e Apontador para o estado do jogo
+*/
+void reset_tab(ESTADO *e);
+
+/**
+\brief Função que verifica o número de jogadas
+@param e Apontador para o estado de jogo
+*/
+void verifica_njogadas(ESTADO *e);
 #endif //PROJETO_LA_DADOS_H

@@ -1,4 +1,6 @@
+#include "interface.h"
 #include "dados.h"
+#include "logica.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -15,6 +17,7 @@ ESTADO *inicializar_estado() {
     e->tab[4][4] = BRANCA;
     e->ultima_jogada.coluna = 4;
     e->ultima_jogada.linha = 4;
+    e->num_movimento = 0;
     return e;
 }
 void muda_jogador(ESTADO *e){
@@ -36,9 +39,9 @@ int obter_jogador_atual(ESTADO *e) {
     return e->jogador_atual;
 }
 
-int obter_numero_de_jogadas(ESTADO *e) {
+int obter_numero_de_movimentos(ESTADO *e) {
 
-    return e->num_jogadas;
+    return e->num_movimento;
 }
 
 int casa_esta_livre(ESTADO *e, COORDENADA c) {
@@ -116,6 +119,7 @@ void recebelinha(char *linha, int numlinha, ESTADO *e)
 void add_jogada(ESTADO *e) {
     if(e->jogador_atual == 1)
         e->num_jogadas++;
+        e->num_movimento++;
 }
 
 int jogada_existe(ESTADO *e, int i, int p) {
@@ -158,5 +162,39 @@ void recebe_jogadas(ESTADO *e, char c, int n)
 
         e -> jogador_atual = 1;
         e -> num_jogadas++;
+        e -> num_movimento++;
+    }
+}
+
+void reset_tab(ESTADO *e)
+{
+    e->jogador_atual = 1;
+    for (int linha = 0; linha < 8; linha++){
+        for (int coluna = 0; coluna < 8; coluna++){
+            e->tab[coluna][linha] = VAZIO;
+        }
+    }
+    e->tab[4][4] = BRANCA;
+    e->ultima_jogada.coluna = 4;
+    e->ultima_jogada.linha = 4;
+    e -> num_jogadas = 0;
+}
+
+void pos(ESTADO *e, int num_mov)
+{
+    reset_tab(e);
+    mostrar_tabuleiro(e, stdout);
+    for (int i = 0; i < num_mov; i++)
+    {
+        jogar(e, e->jogadas[i].jogador1);
+        jogar(e, e->jogadas[i].jogador2);
+    }
+}
+
+void verifica_njogadas(ESTADO *e)
+{
+    if(e -> num_movimento != e -> num_jogadas)
+    {
+        e -> num_movimento = e -> num_jogadas;
     }
 }

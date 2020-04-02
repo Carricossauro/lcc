@@ -66,12 +66,12 @@ void gravar (char *ficheiro, ESTADO *e)
 void mostrar_prompt(ESTADO *e){
     printf("# %02d",conta_comandos(e));
     printf(" PL%d",obter_jogador_atual(e));
-    printf(" (%d)> ",obter_numero_de_jogadas(e));
+    printf(" (%d)> ",obter_numero_de_movimentos(e));
 }
 
 void movs(FILE *jogo, ESTADO *e){
     char *str;
-    for (int i = 0; i <= obter_numero_de_jogadas(e); i++) {
+    for (int i = 0; i <= obter_numero_de_movimentos(e); i++) {
         if (jogada_existe(e, i, 1)) {
             fprintf(jogo, "%02d: %s", i+1, (str = obter_jogada(e, i, 1)));
             free(str);
@@ -89,6 +89,7 @@ int interpretador(ESTADO *e) {
     char col[2], lin[2];
     char comando[5];
     char ficheiro[BUF_SIZE];
+    int num_mov;
 
     mostrar_tabuleiro(e, stdout);
     mostrar_prompt(e);
@@ -96,6 +97,7 @@ int interpretador(ESTADO *e) {
         return 0;
 
     if(strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
+        verifica_njogadas(e);
         COORDENADA coord = {*col - 'a', *lin - '1'};
         jogar(e, coord);
         add_comando(e);
@@ -116,12 +118,23 @@ int interpretador(ESTADO *e) {
             gravar(ficheiro, e);
             add_comando(e);
         }
+        else if (!strcmp(comando, "pos"))
+        {
+            pos(e, 1);
+        }
     }
     else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "movs"))
     {
-        movs(stdout, e);
+            movs(stdout, e);
+            add_comando(e);
+            putchar('\n');
+    }
+    else if (sscanf(linha, "%s %d", comando, &num_mov) == 2 && !strcmp(comando, "pos"))
+    {
+        pos(e, num_mov);
         add_comando(e);
         putchar('\n');
     }
+
     return 1;
 }
