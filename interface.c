@@ -122,7 +122,9 @@ int interpretador(ESTADO *e) {
         }
         else if (!strcmp(comando, "pos"))
         {
-            pos(e, 1);
+            pos(e, atoi(ficheiro));
+            add_comando(e);
+            putchar('\n');
         }
     }
     else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "movs"))
@@ -131,12 +133,5 @@ int interpretador(ESTADO *e) {
             add_comando(e);
             putchar('\n');
     }
-    else if (sscanf(linha, "%s %d", comando, &num_mov) == 2 && !strcmp(comando, "pos"))
-    {
-        pos(e, num_mov);
-        add_comando(e);
-        putchar('\n');
-    }
-
     return 1;
 }

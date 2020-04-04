@@ -118,8 +118,10 @@ void recebelinha(char *linha, int numlinha, ESTADO *e)
 
 void add_jogada(ESTADO *e) {
     if(e->jogador_atual == 1)
-        e->num_jogadas++;
-        e->num_movimento++;
+    {
+        if(e -> num_jogadas++ < e -> num_movimento++)
+            e -> num_movimento--;
+    }
 }
 
 int jogada_existe(ESTADO *e, int i, int p) {
