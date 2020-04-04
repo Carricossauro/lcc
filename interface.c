@@ -55,6 +55,7 @@ void ler (char *ficheiro, ESTADO *e)
 
 void gravar (char *ficheiro, ESTADO *e)
 {
+    pos(e, obter_numero_de_movimentos(e));
     FILE *jogo;
     jogo = fopen(ficheiro, "w");
     mostrar_tabuleiro(e, jogo);
@@ -70,6 +71,7 @@ void mostrar_prompt(ESTADO *e){
 }
 
 void movs(FILE *jogo, ESTADO *e){
+    pos(e, obter_numero_de_movimentos(e));
     char *str;
     for (int i = 0; i <= obter_numero_de_movimentos(e); i++) {
         if (jogada_existe(e, i, 1)) {

@@ -182,12 +182,17 @@ void reset_tab(ESTADO *e)
 
 void pos(ESTADO *e, int num_mov)
 {
+    int k = (e -> jogador_atual == 2 && num_mov == e -> num_movimento);
+
     reset_tab(e);
-    mostrar_tabuleiro(e, stdout);
     for (int i = 0; i < num_mov; i++)
     {
         jogar(e, e->jogadas[i].jogador1);
         jogar(e, e->jogadas[i].jogador2);
+    }
+    if (k)
+    {
+        jogar(e, e -> jogadas[num_mov].jogador1);
     }
 }
 
