@@ -9,10 +9,15 @@ LISTA criar_lista() {
 }
 
 LISTA insere_cabeca(LISTA l, void *valor) {
-    LISTA t = malloc(sizeof(NODO));
-    t->valor = valor;
-    t->proximo = l;
-    return t;
+    if (l->valor == NULL) {
+        l->valor = valor;
+        return l;
+    } else {
+        LISTA t = malloc(sizeof(NODO));
+        t->valor = valor;
+        t->proximo = l;
+        return t;
+    }
 }
 
 void *devolve_cabeca(LISTA l) {

@@ -1,3 +1,4 @@
+#include "listas.h"
 /**
 @file dados.h
 Definição do estado e das funções que o manipulam
@@ -198,4 +199,19 @@ void reset_tab(ESTADO *e);
 @param e Apontador para o estado de jogo
 */
 void verifica_njogadas(ESTADO *e);
+
+/**
+\brief Função que ve as jogadas possiveis
+@param e Apontador para o estado de jogo
+@param l Uma lista
+*/
+void potenciais_jogadas(ESTADO *e, LISTA l);
+
+/**
+\brief Função que calcula a distancia
+@param a Coordenada
+@param b Coordenada
+*/
+int distancia(COORDENADA a, COORDENADA b);
+
 #endif //PROJETO_LA_DADOS_H

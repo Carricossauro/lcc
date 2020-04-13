@@ -50,5 +50,10 @@ void gravar (char *ficheiro, ESTADO *e);
 */
 void movs (FILE *jogo, ESTADO *e);
 
+/**
+/brief Função que joga pelo jogador
+@param e Apontador para o Estado do jogo
+*/
+void jog (ESTADO *e);
 
 #endif //PROJETO_LA_INTERFACE_H

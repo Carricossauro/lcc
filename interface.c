@@ -1,6 +1,7 @@
 #include "dados.h"
 #include "logica.h"
 #include "interface.h"
+#include "listas.h"
 #include <stdio.h>
 #include <string.h>
 #include <bits/types/FILE.h>
@@ -86,6 +87,37 @@ void movs(FILE *jogo, ESTADO *e){
     }
 }
 
+void jog(ESTADO *e){
+    int d = INT_MAX;
+
+    COORDENADA c, origem, *a;
+
+    LISTA l = criar_lista();
+    potenciais_jogadas(e, l);
+
+    LISTA t = l;
+
+    if (obter_jogador_atual(e) == 1){
+        origem.linha = 0;
+        origem.coluna = 0;
+    }
+    else {
+        origem.linha = 7;
+        origem.coluna = 7;
+    }
+
+    while (t != NULL){
+        a = (COORDENADA*) t->valor;
+        distancia(*a, origem);
+        if (distancia(*a, origem) < d){
+            d = distancia(*a, origem);
+            c = *a;
+        }
+    }
+
+    jogar(e, c);
+}
+
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
@@ -132,6 +164,14 @@ int interpretador(ESTADO *e) {
             movs(stdout, e);
             add_comando(e);
             putchar('\n');
+    }
+    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "jog"))
+    {
+        jog(e);
+        add_comando(e);
+        putchar('\n');
+
+
     }
     return 1;
 }

@@ -1,8 +1,10 @@
 #include "interface.h"
 #include "dados.h"
 #include "logica.h"
+#include "listas.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 ESTADO *inicializar_estado() {
     ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
@@ -168,8 +170,7 @@ void recebe_jogadas(ESTADO *e, char c, int n)
     }
 }
 
-void reset_tab(ESTADO *e)
-{
+void reset_tab(ESTADO *e){
     e->jogador_atual = 1;
     for (int linha = 0; linha < 8; linha++){
         for (int coluna = 0; coluna < 8; coluna++){
@@ -182,8 +183,7 @@ void reset_tab(ESTADO *e)
     e -> num_jogadas = 0;
 }
 
-void pos(ESTADO *e, int num_mov)
-{
+void pos(ESTADO *e, int num_mov){
     int k = (e -> jogador_atual == 2 && num_mov == e -> num_movimento);
 
     reset_tab(e);
@@ -198,10 +198,38 @@ void pos(ESTADO *e, int num_mov)
     }
 }
 
-void verifica_njogadas(ESTADO *e)
-{
+void verifica_njogadas(ESTADO *e){
     if(e -> num_movimento != e -> num_jogadas)
     {
         e -> num_movimento = e -> num_jogadas;
     }
 }
+
+void potenciais_jogadas(ESTADO *e, LISTA l){
+
+    COORDENADA c1 = obter_ultima_jogada(e);
+    COORDENADA c2;
+    COORDENADA *c;
+
+    for (int i = c1.linha - 1; i <= c1.linha + 1; i++){
+        for (int j = c1.coluna - 1; j <= c1.coluna + 1; ++j) {
+            c2.linha = i;
+            c2.coluna = j;
+            if (casa_esta_livre(e, c2)){
+                c = malloc(sizeof(COORDENADA));
+                c->linha = c2.linha;
+                c->coluna = c2.coluna;
+                l = insere_cabeca(l, c);
+            }
+        }
+    }
+}
+
+int distancia(COORDENADA c1 ,COORDENADA c2){
+
+    int d;
+    sqrtf(pow(c1.linha - c2.linha, 2) + pow(c1.coluna - c2.coluna, 2));
+
+    return d;
+}
+
