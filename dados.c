@@ -205,7 +205,7 @@ void verifica_njogadas(ESTADO *e){
     }
 }
 
-void potenciais_jogadas(ESTADO *e, LISTA l){
+LISTA potenciais_jogadas(ESTADO *e, LISTA l){
 
     COORDENADA c1 = obter_ultima_jogada(e);
     COORDENADA c2;
@@ -223,12 +223,15 @@ void potenciais_jogadas(ESTADO *e, LISTA l){
             }
         }
     }
+
+
+    return l;
 }
 
-int distancia(COORDENADA c1 ,COORDENADA c2){
+float distancia(COORDENADA c1 ,COORDENADA c2){
 
-    int d;
-    sqrtf(pow(c1.linha - c2.linha, 2) + pow(c1.coluna - c2.coluna, 2));
+    float d;
+    d = sqrtf(pow(c1.linha - c2.linha, 2) + pow(c1.coluna - c2.coluna, 2));
 
     return d;
 }

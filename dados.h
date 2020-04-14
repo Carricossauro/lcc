@@ -205,13 +205,13 @@ void verifica_njogadas(ESTADO *e);
 @param e Apontador para o estado de jogo
 @param l Uma lista
 */
-void potenciais_jogadas(ESTADO *e, LISTA l);
+LISTA potenciais_jogadas(ESTADO *e, LISTA l);
 
 /**
 \brief Função que calcula a distancia
 @param a Coordenada
 @param b Coordenada
 */
-int distancia(COORDENADA a, COORDENADA b);
+float distancia(COORDENADA a, COORDENADA b);
 
 #endif //PROJETO_LA_DADOS_H

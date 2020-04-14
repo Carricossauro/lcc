@@ -2,6 +2,7 @@
 #include "logica.h"
 #include "interface.h"
 #include "listas.h"
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <bits/types/FILE.h>
@@ -93,7 +94,7 @@ void jog(ESTADO *e){
     COORDENADA c, origem, *a;
 
     LISTA l = criar_lista();
-    potenciais_jogadas(e, l);
+    l = potenciais_jogadas(e, l);
 
     LISTA t = l;
 
@@ -106,16 +107,21 @@ void jog(ESTADO *e){
         origem.coluna = 7;
     }
 
-    while (t != NULL){
-        a = (COORDENADA*) t->valor;
+    while (!lista_esta_vazia(t)){
+        a = (COORDENADA*) devolve_cabeca(t);
         distancia(*a, origem);
         if (distancia(*a, origem) < d){
             d = distancia(*a, origem);
             c = *a;
         }
+        t = proximo(t);
     }
 
     jogar(e, c);
+
+    while (!lista_esta_vazia(l)) {
+        l = remove_cabeca(l);
+    }
 }
 
 int interpretador(ESTADO *e) {
