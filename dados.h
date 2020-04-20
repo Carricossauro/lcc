@@ -214,4 +214,10 @@ LISTA potenciais_jogadas(ESTADO *e, LISTA l);
 */
 float distancia(COORDENADA a, COORDENADA b);
 
+/**
+\brief Função q retira a última jogada
+@param e Apontador para o estadp do jogo
+*/
+void retirar_ultima_jogada(ESTADO *e);
+
 #endif //PROJETO_LA_DADOS_H

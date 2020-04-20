@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gameover',['gameOver',['../logica_8h.html#a0ac0a14f4a34c1290f81a4a17e041df6',1,'logica.c']]],
-  ['gravar',['gravar',['../interface_8h.html#a27f56c92e1a658039db8848b1255e1a9',1,'interface.c']]]
+  ['devolve_5fcabeca',['devolve_cabeca',['../listas_8h.html#af90a7ac214fd566bfb7288d744c94185',1,'listas.c']]],
+  ['distancia',['distancia',['../dados_8h.html#a587aa5bfe9c3f95a078781fc230784ef',1,'dados.c']]]
 ];

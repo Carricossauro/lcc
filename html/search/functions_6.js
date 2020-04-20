@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['mostrar_5fprompt',['mostrar_prompt',['../interface_8h.html#a1fd532d3d252ff42d406a15757e2a401',1,'interface.c']]],
-  ['mostrar_5ftabuleiro',['mostrar_tabuleiro',['../interface_8h.html#a3bbce6c80cbd5b35f09bff9b27dacf6c',1,'interface.c']]],
-  ['movs',['movs',['../interface_8h.html#a52f8eb7a7c3f4118a8a7287d00476c1c',1,'interface.c']]],
-  ['muda_5fjogador',['muda_jogador',['../dados_8h.html#a9b08ade4b8ead18f34cf3b1e808de712',1,'dados.c']]],
-  ['mudar_5fcasa',['mudar_casa',['../dados_8h.html#a5ad4c3875eac9182567f7f0a538d5ddf',1,'dados.c']]]
+  ['ler',['ler',['../interface_8h.html#a86da472ab10e0eeb84614f53ef2fa83d',1,'interface.c']]],
+  ['lista_5festa_5fvazia',['lista_esta_vazia',['../listas_8h.html#a4c10928f7acaa4e3de3760cea0dfd9c0',1,'listas.c']]]
 ];

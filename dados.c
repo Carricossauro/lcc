@@ -236,3 +236,9 @@ float distancia(COORDENADA c1 ,COORDENADA c2){
     return d;
 }
 
+void retirar_ultima_jogada(ESTADO *e)
+{
+    muda_jogador(e);
+    pos(e, e->num_movimento);
+    e -> num_movimento = e -> num_jogadas;
+}

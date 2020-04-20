@@ -28,3 +28,4 @@ int gameOver(ESTADO *e, COORDENADA c) {
     }
     return (obter_jogador_atual(e) == 1 ? 2 : 1);
 }
+

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['inicializar_5festado',['inicializar_estado',['../dados_8h.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'dados.c']]],
-  ['interpretador',['interpretador',['../interface_8h.html#a24da95ebeede4a540e37790ce8be359b',1,'interface.c']]]
+  ['gameover',['gameOver',['../logica_8h.html#a0ac0a14f4a34c1290f81a4a17e041df6',1,'logica.c']]],
+  ['gravar',['gravar',['../interface_8h.html#a27f56c92e1a658039db8848b1255e1a9',1,'interface.c']]]
 ];

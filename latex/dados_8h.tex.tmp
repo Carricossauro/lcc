@@ -1,7 +1,10 @@
 \hypertarget{dados_8h}{}\section{dados.\+h File Reference}
 \label{dados_8h}\index{dados.\+h@{dados.\+h}}
-This graph shows which files directly or indirectly include this file\+:
+{\ttfamily \#include \char`\"{}listas.\+h\char`\"{}}\newline
+Include dependency graph for dados.\+h\+:
 % FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -33,7 +36,7 @@ enum {\bfseries C\+A\+SA} \{ {\bfseries V\+A\+Z\+IO},
 \begin{DoxyCompactList}\small\item\em Inicializa o valor do estado. \end{DoxyCompactList}\item 
 int \hyperlink{dados_8h_acc6c25533188a99cb69c12e7f2c406ef}{obter\+\_\+jogador\+\_\+atual} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \begin{DoxyCompactList}\small\item\em Obtem o jogador atual. \end{DoxyCompactList}\item 
-int \hyperlink{dados_8h_abbfeab93575f20e5867482fd41a71cba}{obter\+\_\+numero\+\_\+de\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+int \hyperlink{dados_8h_aec4268e4f42612fdf38cae436f01855f}{obter\+\_\+numero\+\_\+de\+\_\+movimentos} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \begin{DoxyCompactList}\small\item\em Obtem o número de jogadas. \end{DoxyCompactList}\item 
 int \hyperlink{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}{casa\+\_\+esta\+\_\+livre} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
 \begin{DoxyCompactList}\small\item\em Verifica se uam certa casa está livre. \end{DoxyCompactList}\item 
@@ -63,8 +66,20 @@ int \hyperlink{dados_8h_a0429550be6d7690e2ee9c43084968953}{jogada\+\_\+existe} (
 \begin{DoxyCompactList}\small\item\em Função que retorna coordenadas. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{dados_8h_a3a66b7cad1e94cf6be91184a33be627d}{obter\+\_\+jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int i, int p)
 \begin{DoxyCompactList}\small\item\em Função que retorna a jogada a imprimir. \end{DoxyCompactList}\item 
-void \hyperlink{dados_8h_a58b06caac5cf5082ea4e15353caca565}{recebe\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int c, int n)
-\begin{DoxyCompactList}\small\item\em Função que recebe a jogada a ler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{dados_8h_ab6f7d63be6c1c563b4095b09e4d7d955}{recebe\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, char c, int n)
+\begin{DoxyCompactList}\small\item\em Função que recebe a jogada a ler. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_a6f1e5d20234aa1a45108e437be964783}{pos} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int num\+\_\+mov)
+\begin{DoxyCompactList}\small\item\em Função que altera número da jogada atual. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_a32ced9c7ca77445bebb4ea50477c4642}{reset\+\_\+tab} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Função que dá reset ao tabuleiro. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_a25b041eab737b0ea6ae616d18d1c6e51}{verifica\+\_\+njogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Função que verifica o número de jogadas. \end{DoxyCompactList}\item 
+\hyperlink{structnodo}{L\+I\+S\+TA} \hyperlink{dados_8h_af8bf408a57722e47483ef6777e92d49c}{potenciais\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structnodo}{L\+I\+S\+TA} l)
+\begin{DoxyCompactList}\small\item\em Função que ve as jogadas possiveis. \end{DoxyCompactList}\item 
+float \hyperlink{dados_8h_a587aa5bfe9c3f95a078781fc230784ef}{distancia} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} a, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} b)
+\begin{DoxyCompactList}\small\item\em Função que calcula a distancia. \end{DoxyCompactList}\item 
+void \hyperlink{dados_8h_ac3accda3cbe3bb04f9ed7f4d77aac595}{retirar\+\_\+ultima\+\_\+jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Função q retira a última jogada. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -160,6 +175,23 @@ Cria uma coordenada com a linha e a coluna dados.
 \begin{DoxyReturn}{Returns}
 Coordenada com a linha e coluna dados 
 \end{DoxyReturn}
+\mbox{\Hypertarget{dados_8h_a587aa5bfe9c3f95a078781fc230784ef}\label{dados_8h_a587aa5bfe9c3f95a078781fc230784ef}} 
+\index{dados.\+h@{dados.\+h}!distancia@{distancia}}
+\index{distancia@{distancia}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{distancia()}{distancia()}}
+{\footnotesize\ttfamily float distancia (\begin{DoxyParamCaption}\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{a,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{b }\end{DoxyParamCaption})}
+
+
+
+Função que calcula a distancia. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Coordenada \\
+\hline
+{\em b} & Coordenada \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{dados_8h_a7e0c7e26fb685d9ab501e19b05e6954f}\label{dados_8h_a7e0c7e26fb685d9ab501e19b05e6954f}} 
 \index{dados.\+h@{dados.\+h}!inicializar\+\_\+estado@{inicializar\+\_\+estado}}
 \index{inicializar\+\_\+estado@{inicializar\+\_\+estado}!dados.\+h@{dados.\+h}}
@@ -326,11 +358,11 @@ Devolve a linha da coordenada dada.
 \begin{DoxyReturn}{Returns}
 Linha de coordenada dada 
 \end{DoxyReturn}
-\mbox{\Hypertarget{dados_8h_abbfeab93575f20e5867482fd41a71cba}\label{dados_8h_abbfeab93575f20e5867482fd41a71cba}} 
-\index{dados.\+h@{dados.\+h}!obter\+\_\+numero\+\_\+de\+\_\+jogadas@{obter\+\_\+numero\+\_\+de\+\_\+jogadas}}
-\index{obter\+\_\+numero\+\_\+de\+\_\+jogadas@{obter\+\_\+numero\+\_\+de\+\_\+jogadas}!dados.\+h@{dados.\+h}}
-\subsubsection{\texorpdfstring{obter\+\_\+numero\+\_\+de\+\_\+jogadas()}{obter\_numero\_de\_jogadas()}}
-{\footnotesize\ttfamily int obter\+\_\+numero\+\_\+de\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{dados_8h_aec4268e4f42612fdf38cae436f01855f}\label{dados_8h_aec4268e4f42612fdf38cae436f01855f}} 
+\index{dados.\+h@{dados.\+h}!obter\+\_\+numero\+\_\+de\+\_\+movimentos@{obter\+\_\+numero\+\_\+de\+\_\+movimentos}}
+\index{obter\+\_\+numero\+\_\+de\+\_\+movimentos@{obter\+\_\+numero\+\_\+de\+\_\+movimentos}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{obter\+\_\+numero\+\_\+de\+\_\+movimentos()}{obter\_numero\_de\_movimentos()}}
+{\footnotesize\ttfamily int obter\+\_\+numero\+\_\+de\+\_\+movimentos (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
 
 
 
@@ -362,11 +394,45 @@ Devolve a última jogada.
 \begin{DoxyReturn}{Returns}
 Coordenada da última jogada 
 \end{DoxyReturn}
-\mbox{\Hypertarget{dados_8h_a58b06caac5cf5082ea4e15353caca565}\label{dados_8h_a58b06caac5cf5082ea4e15353caca565}} 
+\mbox{\Hypertarget{dados_8h_a6f1e5d20234aa1a45108e437be964783}\label{dados_8h_a6f1e5d20234aa1a45108e437be964783}} 
+\index{dados.\+h@{dados.\+h}!pos@{pos}}
+\index{pos@{pos}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{pos()}{pos()}}
+{\footnotesize\ttfamily void pos (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{num\+\_\+mov }\end{DoxyParamCaption})}
+
+
+
+Função que altera número da jogada atual. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado do jogo \\
+\hline
+{\em num\+\_\+mov} & numero do movimento para onde se altera a jogada atual \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_af8bf408a57722e47483ef6777e92d49c}\label{dados_8h_af8bf408a57722e47483ef6777e92d49c}} 
+\index{dados.\+h@{dados.\+h}!potenciais\+\_\+jogadas@{potenciais\+\_\+jogadas}}
+\index{potenciais\+\_\+jogadas@{potenciais\+\_\+jogadas}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{potenciais\+\_\+jogadas()}{potenciais\_jogadas()}}
+{\footnotesize\ttfamily \hyperlink{structnodo}{L\+I\+S\+TA} potenciais\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structnodo}{L\+I\+S\+TA}}]{l }\end{DoxyParamCaption})}
+
+
+
+Função que ve as jogadas possiveis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado de jogo \\
+\hline
+{\em l} & Uma lista \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_ab6f7d63be6c1c563b4095b09e4d7d955}\label{dados_8h_ab6f7d63be6c1c563b4095b09e4d7d955}} 
 \index{dados.\+h@{dados.\+h}!recebe\+\_\+jogadas@{recebe\+\_\+jogadas}}
 \index{recebe\+\_\+jogadas@{recebe\+\_\+jogadas}!dados.\+h@{dados.\+h}}
 \subsubsection{\texorpdfstring{recebe\+\_\+jogadas()}{recebe\_jogadas()}}
-{\footnotesize\ttfamily void recebe\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{c,  }\item[{int}]{n }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void recebe\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{char}]{c,  }\item[{int}]{n }\end{DoxyParamCaption})}
 
 
 
@@ -398,5 +464,50 @@ Função que recebe uma linha e guarda no estado de jogo.
 {\em numlinha} & Index da linha \\
 \hline
 {\em e} & Apontador para o estado do jogo \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_a32ced9c7ca77445bebb4ea50477c4642}\label{dados_8h_a32ced9c7ca77445bebb4ea50477c4642}} 
+\index{dados.\+h@{dados.\+h}!reset\+\_\+tab@{reset\+\_\+tab}}
+\index{reset\+\_\+tab@{reset\+\_\+tab}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{reset\+\_\+tab()}{reset\_tab()}}
+{\footnotesize\ttfamily void reset\+\_\+tab (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Função que dá reset ao tabuleiro. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado do jogo \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_ac3accda3cbe3bb04f9ed7f4d77aac595}\label{dados_8h_ac3accda3cbe3bb04f9ed7f4d77aac595}} 
+\index{dados.\+h@{dados.\+h}!retirar\+\_\+ultima\+\_\+jogada@{retirar\+\_\+ultima\+\_\+jogada}}
+\index{retirar\+\_\+ultima\+\_\+jogada@{retirar\+\_\+ultima\+\_\+jogada}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{retirar\+\_\+ultima\+\_\+jogada()}{retirar\_ultima\_jogada()}}
+{\footnotesize\ttfamily void retirar\+\_\+ultima\+\_\+jogada (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Função q retira a última jogada. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estadp do jogo \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{dados_8h_a25b041eab737b0ea6ae616d18d1c6e51}\label{dados_8h_a25b041eab737b0ea6ae616d18d1c6e51}} 
+\index{dados.\+h@{dados.\+h}!verifica\+\_\+njogadas@{verifica\+\_\+njogadas}}
+\index{verifica\+\_\+njogadas@{verifica\+\_\+njogadas}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{verifica\+\_\+njogadas()}{verifica\_njogadas()}}
+{\footnotesize\ttfamily void verifica\+\_\+njogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Função que verifica o número de jogadas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado de jogo \\
 \hline
 \end{DoxyParams}

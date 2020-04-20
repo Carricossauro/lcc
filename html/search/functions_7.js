@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['obter_5fcasa',['obter_casa',['../dados_8h.html#a59f6510397fb84dd6b96f6214f7f1d55',1,'dados.c']]],
-  ['obter_5fcoluna',['obter_coluna',['../dados_8h.html#ab495ce88ee9837a7f7f67b9358659f16',1,'dados.c']]],
-  ['obter_5fjogada',['obter_jogada',['../dados_8h.html#a3a66b7cad1e94cf6be91184a33be627d',1,'dados.c']]],
-  ['obter_5fjogador_5fatual',['obter_jogador_atual',['../dados_8h.html#acc6c25533188a99cb69c12e7f2c406ef',1,'dados.c']]],
-  ['obter_5flinha',['obter_linha',['../dados_8h.html#a9946aa4fcc3bb50874673103b31eca48',1,'dados.c']]],
-  ['obter_5fnumero_5fde_5fjogadas',['obter_numero_de_jogadas',['../dados_8h.html#abbfeab93575f20e5867482fd41a71cba',1,'dados.c']]],
-  ['obter_5fultima_5fjogada',['obter_ultima_jogada',['../dados_8h.html#a40555aff97afc67bd1866f2785111310',1,'dados.c']]]
+  ['mostrar_5fprompt',['mostrar_prompt',['../interface_8h.html#a1fd532d3d252ff42d406a15757e2a401',1,'interface.c']]],
+  ['mostrar_5ftabuleiro',['mostrar_tabuleiro',['../interface_8h.html#a3bbce6c80cbd5b35f09bff9b27dacf6c',1,'interface.c']]],
+  ['movs',['movs',['../interface_8h.html#a52f8eb7a7c3f4118a8a7287d00476c1c',1,'interface.c']]],
+  ['muda_5fjogador',['muda_jogador',['../dados_8h.html#a9b08ade4b8ead18f34cf3b1e808de712',1,'dados.c']]],
+  ['mudar_5fcasa',['mudar_casa',['../dados_8h.html#a5ad4c3875eac9182567f7f0a538d5ddf',1,'dados.c']]]
 ];

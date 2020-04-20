@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Projeto_LA.dir/listas.c.o"
   "CMakeFiles/Projeto_LA.dir/logica.c.o"
   "CMakeFiles/Projeto_LA.dir/main.c.o"
+  "CMakeFiles/Projeto_LA.dir/minimax.c.o"
   "Projeto_LA"
   "Projeto_LA.pdb"
 )
