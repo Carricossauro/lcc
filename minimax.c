@@ -43,7 +43,7 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c)
 }
 
 
-int Minimax(int altura, COORDENADA c, ESTADO *e)
+int minimax(int altura, COORDENADA c, ESTADO *e)
 {
     int j = obter_jogador_atual(e);
     int k;
@@ -54,46 +54,32 @@ int Minimax(int altura, COORDENADA c, ESTADO *e)
     if(altura == 0 || gameOver(e, c))
         return valor_jogada(e, c);
 
-    if(j == 1)
+
+    k = -9999;
+
+    for (int i = 0; i < 8; i++)
     {
-        k = -9999;
-
-        for (int i = 0; i < 8; i++)
+        if(tree->proximo[i] != NULL)
         {
-            if(tree->proximo[i] != NULL)
+            jogar(e, c);
+            valor = Minimax(altura - 1, *tree->proximo[i], e);
+            retirar_ultima_jogada(e);
+
+            if(valor > k)
             {
-                jogar(e, c);
-                valor = Minimax(altura - 1, *tree->proximo[i], e);
-                retirar_ultima_jogada(e);
-
-                if(valor > k)
-                {
-                    k = valor;
-                }
-
+                k = valor;
             }
         }
     }
-    else if(j == 2)
-    {
-        k = 9999;
-
-        for (int i = 0; i < 8; i++)
-        {
-            if(tree->proximo[i] != NULL)
-            {
-                jogar(e, c);
-                valor = Minimax(altura - 1, *tree->proximo[i], e);
-                retirar_ultima_jogada(e);
-
-                if(valor < k)
-                {
-                    k = valor;
-                }
-
-            }
-        }
-    }
-
     return k;
+}
+
+int valor_jogada(COORDENADA c, ESTADO *e){
+
+    if(gameOver(e, c) == obter_jogador_atual(e)) {
+        return 1000;
+    }else if (gameOver(e, c) != obter_jogador_atual(e)) {
+        return -1000;
+    }else if (gameOver(e, c) == 0)
+        return distancia(c, origem);
 }

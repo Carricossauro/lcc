@@ -7,6 +7,8 @@
 #include <string.h>
 #include <bits/types/FILE.h>
 #include <stdlib.h>
+#include "minimax.h"
+
 #define BUF_SIZE 1024
 
 void mostrar_tabuleiro(ESTADO *e, FILE *jogo) {
@@ -124,6 +126,30 @@ void jog(ESTADO *e){
     }
 }
 
+void jog2(ESTADO *e){
+
+    COORDENADA c = obter_ultima_jogada(e), *a, *p = NULL;
+    int x = -1002;
+
+
+    for (int i = obter_linha(c) - 1; i < obter_linha(c) + 1 ; i++) {
+        for (int j = obter_coluna(c) - 1; j < obter_coluna(c) + 1 ; j++) {
+            a = malloc(sizeof(COORDENADA));
+            a->linha = i;
+            a->coluna = j;
+            minimax(3 ,obter_ultima_jogada(e), e);
+            if(minimax(2, c, e) > x && casa_esta_livre(e, a)){
+                p = a;
+            }else free(a);
+        }
+    }
+    if( p != NULL){
+        jogar(e, *p);
+        free(p);
+    }
+
+}
+
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
@@ -179,5 +205,13 @@ int interpretador(ESTADO *e) {
 
 
     }
+    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "jog2"))
+    {
+        jog2(e);
+        add_comando(e);
+        putchar('\n');
+    }
+        
     return 1;
+    
 }
