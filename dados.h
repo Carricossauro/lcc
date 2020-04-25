@@ -48,6 +48,7 @@ typedef struct {
     int num_comandos;
     /** Numero de movimento*/
     int num_movimento;
+    int inc;
 } ESTADO;
 
 /**

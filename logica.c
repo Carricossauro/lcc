@@ -1,5 +1,6 @@
 #include "logica.h"
 #include "dados.h"
+#include <stdio.h>
 
 int jogar(ESTADO *e, COORDENADA c)
 {

@@ -10,7 +10,6 @@ ESTADO *inicializar_estado() {
     ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
     e->num_comandos = 0;
     e->jogador_atual = 1;
-    e->num_jogadas = 0;
     for (int linha = 0; linha < 8; linha++){
         for (int coluna = 0; coluna < 8; coluna++){
             e->tab[coluna][linha] = VAZIO;
@@ -19,13 +18,17 @@ ESTADO *inicializar_estado() {
     e->tab[4][4] = BRANCA;
     e->ultima_jogada.coluna = 4;
     e->ultima_jogada.linha = 4;
-    e->num_movimento = 0;
+    e->num_movimento = 1;
+    e->num_jogadas = 1;
     return e;
 }
 void muda_jogador(ESTADO *e){
-    if(e->jogador_atual == 1)
+    if(e->jogador_atual == 1) {
         e->jogador_atual = 2;
-    else e->jogador_atual = 1;
+    }
+    else {
+        e->jogador_atual = 1;
+    }
 }
 
 void add_comando(ESTADO *e){
@@ -76,11 +79,11 @@ void mudar_casa(ESTADO *e, COORDENADA c)
     e->ultima_jogada.coluna = c.coluna;
 
     if(e->jogador_atual == 1){
-        e->jogadas[e->num_jogadas].jogador1.coluna = c.coluna;
-        e->jogadas[e->num_jogadas].jogador1.linha = c.linha;
+        e->jogadas[e->num_jogadas-1].jogador1.coluna = c.coluna;
+        e->jogadas[e->num_jogadas-1].jogador1.linha = c.linha;
     } else {
-        e->jogadas[e->num_jogadas].jogador2.coluna = c.coluna;
-        e->jogadas[e->num_jogadas].jogador2.linha = c.linha;
+        e->jogadas[e->num_jogadas-1].jogador2.coluna = c.coluna;
+        e->jogadas[e->num_jogadas-1].jogador2.linha = c.linha;
     }
 
 }
@@ -127,12 +130,12 @@ void add_jogada(ESTADO *e) {
 }
 
 int jogada_existe(ESTADO *e, int i, int p) {
-    if (i < e->num_jogadas)
+    if (i < e->num_movimento-1)
         return 1;
-    else if (e->num_jogadas == i) {
-        if (e->jogador_atual == 1)
+    else if (e->num_movimento-1 == i) {
+        if (p == 2)
             return 0;
-        else if (p == 1)
+        else if (e->jogador_atual == 2)
             return 1;
     }
     return 0;
@@ -154,15 +157,15 @@ void recebe_jogadas(ESTADO *e, char c, int n)
 {
     if(e -> jogador_atual == 1)
     {
-        e -> jogadas[e -> num_jogadas].jogador1.coluna = c - 'a';
-        e -> jogadas[e -> num_jogadas].jogador1.linha = n - 1;
+        e -> jogadas[e -> num_jogadas-1].jogador1.coluna = c - 'a';
+        e -> jogadas[e -> num_jogadas-1].jogador1.linha = n - 1;
 
         e -> jogador_atual = 2;
     }
     else
     {
-        e -> jogadas[e -> num_jogadas].jogador2.coluna = c - 'a';
-        e -> jogadas[e -> num_jogadas].jogador2.linha = n - 1;
+        e -> jogadas[e -> num_jogadas-1].jogador2.coluna = c - 'a';
+        e -> jogadas[e -> num_jogadas-1].jogador2.linha = n - 1;
 
         e -> jogador_atual = 1;
         e -> num_jogadas++;
@@ -180,21 +183,30 @@ void reset_tab(ESTADO *e){
     e->tab[4][4] = BRANCA;
     e->ultima_jogada.coluna = 4;
     e->ultima_jogada.linha = 4;
-    e -> num_jogadas = 0;
+    e -> num_jogadas = 1;
 }
 
 void pos(ESTADO *e, int num_mov){
-    int k = (e -> jogador_atual == 2 && num_mov == e -> num_movimento);
+    int k = (e ->inc == 2 && num_mov == e -> num_movimento);
 
     reset_tab(e);
-    for (int i = 0; i < num_mov; i++)
+    int i=0;
+    if (e->num_movimento != 1) {
+        do {
+            if (num_mov != 0) {
+                jogar(e, e->jogadas[i].jogador1);
+                jogar(e, e->jogadas[i].jogador2);
+            }
+        } while (i++ < num_mov-1 && i != e->num_movimento-1);
+    }
+    /*for (int i = 0; i < num_mov-1 || i == 0; i++)
     {
         jogar(e, e->jogadas[i].jogador1);
         jogar(e, e->jogadas[i].jogador2);
-    }
+    }*/
     if (k)
     {
-        jogar(e, e -> jogadas[num_mov].jogador1);
+        jogar(e, e -> jogadas[num_mov-1].jogador1);
     }
 }
 
@@ -224,7 +236,6 @@ LISTA potenciais_jogadas(ESTADO *e, LISTA l){
         }
     }
 
-
     return l;
 }
 
@@ -238,7 +249,19 @@ float distancia(COORDENADA c1 ,COORDENADA c2){
 
 void retirar_ultima_jogada(ESTADO *e)
 {
-    muda_jogador(e);
+    if (e->num_movimento == 2 && e->jogador_atual == 1) {
+        e->num_movimento = 1;
+        e->jogador_atual = 2;
+        e->inc = 2;
+    }
+    else if (e->jogador_atual == 2) {
+        e->jogador_atual = 1;
+    } else {
+        e->num_movimento--;
+        e->jogador_atual = 2;
+        e->inc = 2;
+    }
     pos(e, e->num_movimento);
-    e -> num_movimento = e -> num_jogadas;
+    e -> num_jogadas = e -> num_movimento;
+    e->inc = 0;
 }

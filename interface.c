@@ -77,7 +77,7 @@ void mostrar_prompt(ESTADO *e){
 void movs(FILE *jogo, ESTADO *e){
     pos(e, obter_numero_de_movimentos(e));
     char *str;
-    for (int i = 0; i <= obter_numero_de_movimentos(e); i++) {
+    for (int i = 0; i < obter_numero_de_movimentos(e); i++) {
         if (jogada_existe(e, i, 1)) {
             fprintf(jogo, "%02d: %s", i+1, (str = obter_jogada(e, i, 1)));
             free(str);
@@ -91,7 +91,7 @@ void movs(FILE *jogo, ESTADO *e){
 }
 
 void jog(ESTADO *e){
-    int d = INT_MAX;
+    float d = INT_MAX;
 
     COORDENADA c, origem, *a;
 
@@ -129,7 +129,8 @@ void jog(ESTADO *e){
 void jog2(ESTADO *e){
 
     COORDENADA c = obter_ultima_jogada(e), *a, *p = NULL;
-    int x = -1002;
+    float x = INT_MIN;
+    float y;
 
 
     for (int i = obter_linha(c) - 1; i < obter_linha(c) + 1 ; i++) {
@@ -137,13 +138,13 @@ void jog2(ESTADO *e){
             a = malloc(sizeof(COORDENADA));
             a->linha = i;
             a->coluna = j;
-            minimax(3 ,obter_ultima_jogada(e), e);
-            if(minimax(2, c, e) > x && casa_esta_livre(e, a)){
+            if((y = Minimax(10, c, e, obter_jogador_atual(e))) > x && casa_esta_livre(e, *a)){
                 p = a;
+                x = y;
             }else free(a);
         }
     }
-    if( p != NULL){
+    if(p != NULL){
         jogar(e, *p);
         free(p);
     }
@@ -153,7 +154,7 @@ void jog2(ESTADO *e){
 int interpretador(ESTADO *e) {
     char linha[BUF_SIZE];
     char col[2], lin[2];
-    char comando[5];
+    char comando[10];
     char ficheiro[BUF_SIZE];
     int num_mov;
 
@@ -186,30 +187,38 @@ int interpretador(ESTADO *e) {
         }
         else if (!strcmp(comando, "pos"))
         {
+            if (e->inc == 0)
+                e->inc = e->jogador_atual;
             pos(e, atoi(ficheiro));
             add_comando(e);
             putchar('\n');
         }
     }
-    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "movs"))
+    else if(sscanf(linha, "%s", comando) == 1)
     {
+        if (!strcmp(comando, "movs")) {
+            if (e->inc == 0)
+                e->inc = e->jogador_atual;
             movs(stdout, e);
             add_comando(e);
+            e->inc = 0;
             putchar('\n');
-    }
-    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "jog"))
-    {
-        jog(e);
-        add_comando(e);
-        putchar('\n');
-
-
-    }
-    else if(sscanf(linha, "%s", comando) == 1 && !strcmp(comando, "jog2"))
-    {
-        jog2(e);
-        add_comando(e);
-        putchar('\n');
+        }
+        else if (!strcmp(comando, "jog")) {
+            jog(e);
+            add_comando(e);
+            putchar('\n');
+        }
+        else if (!strcmp(comando, "jog2")) {
+            jog2(e);
+            add_comando(e);
+            putchar('\n');
+        }
+        else if (!strcmp(comando, "retira")) {
+            retirar_ultima_jogada(e);
+            add_comando(e);
+            putchar('\n');
+        }
     }
         
     return 1;

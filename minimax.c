@@ -3,6 +3,7 @@
 #include "dados.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 arvore inicializa_arvore(ESTADO *e, COORDENADA c)
 {
@@ -43,43 +44,57 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c)
 }
 
 
-int minimax(int altura, COORDENADA c, ESTADO *e)
+float Minimax(int altura, COORDENADA c, ESTADO *e, int jog)
 {
-    int j = obter_jogador_atual(e);
-    int k;
-    int valor;
-
+    float k;
+    float valor;
+    jogar(e, c);
     arvore tree = inicializa_arvore(e, c);
 
     if(altura == 0 || gameOver(e, c))
-        return valor_jogada(e, c);
+        return valor_jogada(c, e, altura, jog);
 
 
-    k = -9999;
+    k = -INT_MIN;
 
     for (int i = 0; i < 8; i++)
     {
         if(tree->proximo[i] != NULL)
         {
-            jogar(e, c);
-            valor = Minimax(altura - 1, *tree->proximo[i], e);
-            retirar_ultima_jogada(e);
-
-            if(valor > k)
-            {
-                k = valor;
+            if (jogar(e, *tree->proximo[i])) {
+                valor = Minimax(altura - 1, *tree->proximo[i], e, (jog == 1) ? 2 : 1);
+                if(valor > k)
+                {
+                    k = valor;
+                }
             }
+
         }
     }
+    retirar_ultima_jogada(e);
     return k;
 }
 
-int valor_jogada(COORDENADA c, ESTADO *e){
-
-    if(gameOver(e, c) == obter_jogador_atual(e)) {
-        return 1000;
-    }else if (gameOver(e, c) != obter_jogador_atual(e)) {
-        return -1000;
-    }else if (gameOver(e, c) == 0)
-        return distancia(c, origem);
+float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog){
+    float a = 1;
+    int x = gameOver(e,c);
+    if (x != 0) {
+        if(x == jog)
+            a = -100*altura;
+        else if (x != jog)
+            a = -10000+altura;
+    }
+    /*}else if (gameOver(e, c) == 0) {
+        COORDENADA origem;
+        if (obter_jogador_atual(e) == 1){
+            origem.linha = 0;
+            origem.coluna = 0;
+        }
+        else {
+            origem.linha = 7;
+            origem.coluna = 7;
+        }
+        a = -distancia(c, origem);
+    }*/
+    return a;
 }

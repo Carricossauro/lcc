@@ -27,6 +27,8 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c);
 @param e apontador para o estado de jogo
 @return valor da jogada
 */
-int Minimax(int altura, COORDENADA c, ESTADO *e);
+float Minimax(int altura, COORDENADA c, ESTADO *e, int jog);
+
+float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog);
 
 #endif //PROJETO_LA_MINIMAX_H
