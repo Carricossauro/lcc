@@ -199,11 +199,6 @@ void pos(ESTADO *e, int num_mov){
             }
         } while (i++ < num_mov-1 && i != e->num_movimento-1);
     }
-    /*for (int i = 0; i < num_mov-1 || i == 0; i++)
-    {
-        jogar(e, e->jogadas[i].jogador1);
-        jogar(e, e->jogadas[i].jogador2);
-    }*/
     if (k)
     {
         jogar(e, e -> jogadas[num_mov-1].jogador1);
@@ -264,5 +259,4 @@ void retirar_ultima_jogada(ESTADO *e)
     pos(e, e->num_movimento);
     e -> num_jogadas = e -> num_movimento;
     e->inc = 0;
-    //printf("#Jogada retirada\n");
 }

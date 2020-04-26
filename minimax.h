@@ -31,12 +31,12 @@ float Minimax(int altura, COORDENADA c, ESTADO *e, int jog);
 
 /**
 \brief Função que determina o valor de uma jogada
-@param c
-@param e
-@param altura
-@param jog
+@param c coordenada da última jogada
+@param e apontador para o estdo de jogo
+@param altura altura da árvore
+@param jogador jogador 1 ou 2
 @return
 */
-float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog);
+float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jogador);
 
 #endif //PROJETO_LA_MINIMAX_H

@@ -103,7 +103,7 @@ float Minimax(int altura, COORDENADA c, ESTADO *e, int jog)
     return k;
 }
 
-float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog){
+float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jogador){
     float a = 1;
     int x = gameOver(e,c);
     if (x != 0) {
@@ -112,17 +112,5 @@ float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog){
         else if (x != jog)
             a = -100;
     }
-    /*}else if (gameOver(e, c) == 0) {
-        COORDENADA origem;
-        if (obter_jogador_atual(e) == 1){
-            origem.linha = 0;
-            origem.coluna = 0;
-        }
-        else {
-            origem.linha = 7;
-            origem.coluna = 7;
-        }
-        a = -distancia(c, origem);
-    }*/
     return a;
 }

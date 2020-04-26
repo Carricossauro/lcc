@@ -56,4 +56,10 @@ void movs (FILE *jogo, ESTADO *e);
 */
 void jog (ESTADO *e);
 
+/**
+/brief Função que joga pelo jogador
+@param e Apontador para o Estado do jogo
+*/
+void jog2(ESTADO *e);
+
 #endif //PROJETO_LA_INTERFACE_H

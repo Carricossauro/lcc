@@ -13,9 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2df596c9-a92f-4b66-9266-652ba32b8314" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projeto_LA" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Projeto_LA" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dados.c" beforeDir="false" afterPath="$PROJECT_DIR$/dados.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interface.c" beforeDir="false" afterPath="$PROJECT_DIR$/interface.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logica.c" beforeDir="false" afterPath="$PROJECT_DIR$/logica.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minimax.c" beforeDir="false" afterPath="$PROJECT_DIR$/minimax.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minimax.h" beforeDir="false" afterPath="$PROJECT_DIR$/minimax.h" afterDir="false" />
@@ -28,7 +27,6 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -106,6 +104,7 @@
       <workItem from="1587654100131" duration="10855000" />
       <workItem from="1587823655126" duration="13872000" />
       <workItem from="1587909880924" duration="8161000" />
+      <workItem from="1587918746936" duration="696000" />
     </task>
     <servers />
   </component>
@@ -203,25 +202,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="466" y="55" width="424" height="611" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1587396784665" />
-    <state x="623" y="228" width="672" height="678" key="search.everywhere.popup" timestamp="1584637833280">
-      <screen x="0" y="0" width="1920" height="1043" />
+    <state x="443" y="168" width="672" height="500" key="search.everywhere.popup" timestamp="1587919303837">
+      <screen x="0" y="0" width="1366" height="768" />
     </state>
+    <state x="443" y="168" width="672" height="500" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1587919303837" />
     <state x="623" y="228" width="672" height="678" key="search.everywhere.popup/0.0.1920.1043@0.0.1920.1043" timestamp="1584637833280" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/interface.c</url>
-          <line>129</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/minimax.c</url>
-          <line>77</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
