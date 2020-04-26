@@ -5,38 +5,69 @@
 #include <stdlib.h>
 #include <limits.h>
 
-arvore inicializa_arvore(ESTADO *e, COORDENADA c)
+arvore inicializa_arvore(ESTADO *e, COORDENADA c, int jog)
 {
     arvore tree = malloc(sizeof(struct Tree));
     tree->nodo = c;
     COORDENADA *c1;
     int a = 0;
-
-    for (int i = c.linha - 1; i < c.linha + 1 ; i++)
-    {
-        for (int j = c.coluna - 1; j < c.coluna; j++)
+    if (jog == 1) {
+        for (int i = c.linha - 1; i <= c.linha + 1 ; i++)
         {
-            c1 = malloc(sizeof(COORDENADA));
-            c1->linha = i;
-            c1->coluna = j;
-
-            if(c1->linha != c.linha && c1->coluna != c.coluna)
+            for (int j = c.coluna - 1; j <= c.coluna + 1; j++)
             {
-                if(casa_esta_livre(e, *c1))
+                c1 = malloc(sizeof(COORDENADA));
+                c1->linha = i;
+                c1->coluna = j;
+
+                if(c1->linha != c.linha || c1->coluna != c.coluna)
                 {
-                    tree->proximo[a] = c1;
-                    a++;
+                    if(casa_esta_livre(e, *c1))
+                    {
+                        tree->proximo[a] = c1;
+                        a++;
+                    }
+                    else
+                    {
+                        tree->proximo[a] = NULL;
+                        a++;
+                        free(c1);
+                    }
                 }
                 else
                 {
-                    tree->proximo[a] = NULL;
-                    a++;
                     free(c1);
                 }
             }
-            else
+        }
+    }
+    else {
+        for (int i = c.linha + 1; i >= c.linha - 1 ; i--)
+        {
+            for (int j = c.coluna + 1; j >= c.coluna - 1; j--)
             {
-                free(c1);
+                c1 = malloc(sizeof(COORDENADA));
+                c1->linha = i;
+                c1->coluna = j;
+
+                if(c1->linha != c.linha || c1->coluna != c.coluna)
+                {
+                    if(casa_esta_livre(e, *c1))
+                    {
+                        tree->proximo[a] = c1;
+                        a++;
+                    }
+                    else
+                    {
+                        tree->proximo[a] = NULL;
+                        a++;
+                        free(c1);
+                    }
+                }
+                else
+                {
+                    free(c1);
+                }
             }
         }
     }
@@ -46,32 +77,29 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c)
 
 float Minimax(int altura, COORDENADA c, ESTADO *e, int jog)
 {
-    float k;
+    float k = -INT_MIN;
     float valor;
-    jogar(e, c);
-    arvore tree = inicializa_arvore(e, c);
+    if (jogar(e, c)) {
+        arvore tree = inicializa_arvore(e, c, jog);
 
-    if(altura == 0 || gameOver(e, c))
-        return valor_jogada(c, e, altura, jog);
+        if(altura == 0 || gameOver(e, c))
+            k = valor_jogada(c, e, altura, jog);
+        else {
 
-
-    k = -INT_MIN;
-
-    for (int i = 0; i < 8; i++)
-    {
-        if(tree->proximo[i] != NULL)
-        {
-            if (jogar(e, *tree->proximo[i])) {
-                valor = Minimax(altura - 1, *tree->proximo[i], e, (jog == 1) ? 2 : 1);
-                if(valor > k)
+            for (int i = 0; i < 8; i++)
+            {
+                if(tree->proximo[i] != NULL)
                 {
-                    k = valor;
+                    valor = Minimax(altura - 1, *tree->proximo[i], e, (jog == 1) ? 2 : 1);
+                    if(valor > k)
+                    {
+                        k = valor;
+                    }
                 }
             }
-
         }
+        retirar_ultima_jogada(e);
     }
-    retirar_ultima_jogada(e);
     return k;
 }
 
@@ -80,9 +108,9 @@ float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog){
     int x = gameOver(e,c);
     if (x != 0) {
         if(x == jog)
-            a = -100*altura;
+            a = 100;
         else if (x != jog)
-            a = -10000+altura;
+            a = -100;
     }
     /*}else if (gameOver(e, c) == 0) {
         COORDENADA origem;

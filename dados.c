@@ -264,4 +264,5 @@ void retirar_ultima_jogada(ESTADO *e)
     pos(e, e->num_movimento);
     e -> num_jogadas = e -> num_movimento;
     e->inc = 0;
+    //printf("#Jogada retirada\n");
 }

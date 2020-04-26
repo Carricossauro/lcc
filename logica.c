@@ -6,6 +6,7 @@ int jogar(ESTADO *e, COORDENADA c)
 {
     if(casa_esta_livre(e, c))
     {
+        //printf("#Jogada feita\n");
         mudar_casa(e, c);
         muda_jogador(e);
         add_jogada(e);

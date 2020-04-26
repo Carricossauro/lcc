@@ -8,6 +8,7 @@
 #include <bits/types/FILE.h>
 #include <stdlib.h>
 #include "minimax.h"
+#include <time.h>
 
 #define BUF_SIZE 1024
 
@@ -127,26 +128,42 @@ void jog(ESTADO *e){
 }
 
 void jog2(ESTADO *e){
-
     COORDENADA c = obter_ultima_jogada(e), *a, *p = NULL;
     float x = INT_MIN;
     float y;
 
-
-    for (int i = obter_linha(c) - 1; i < obter_linha(c) + 1 ; i++) {
-        for (int j = obter_coluna(c) - 1; j < obter_coluna(c) + 1 ; j++) {
-            a = malloc(sizeof(COORDENADA));
-            a->linha = i;
-            a->coluna = j;
-            if((y = Minimax(10, c, e, obter_jogador_atual(e))) > x && casa_esta_livre(e, *a)){
-                p = a;
-                x = y;
-            }else free(a);
+    if (obter_jogador_atual(e) == 1) {
+        for (int i = obter_linha(c) - 1; i <= obter_linha(c) + 1 ; i++) {
+            for (int j = obter_coluna(c) - 1; j <= obter_coluna(c) + 1 ; j++) {
+                a = malloc(sizeof(COORDENADA));
+                a->linha = i;
+                a->coluna = j;
+                if((y = Minimax(6, *a, e, 1)) > x && casa_esta_livre(e, *a)){
+                    p = a;
+                    x = y;
+                }else free(a);
+            }
+        }
+    } else {
+        for (int i = obter_linha(c) + 1; i >= obter_linha(c) - 1; i--) {
+            for (int j = obter_coluna(c) + 1; j >= obter_coluna(c) - 1 ; j--) {
+                a = malloc(sizeof(COORDENADA));
+                a->linha = i;
+                a->coluna = j;
+                if((y = Minimax(6, *a, e, 1)) > x && casa_esta_livre(e, *a)){
+                    p = a;
+                    x = y;
+                }else free(a);
+            }
         }
     }
-    if(p != NULL){
-        jogar(e, *p);
-        free(p);
+    if (x != 1) {
+        if(p != NULL){
+            jogar(e, *p);
+            free(p);
+        }
+    } else {
+        jog(e);
     }
 
 }

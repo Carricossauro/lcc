@@ -18,7 +18,7 @@ typedef struct Tree{
 @param c coordenada da última jogada
 @return árvore das jogadas
 */
-arvore inicializa_arvore(ESTADO *e, COORDENADA c);
+arvore inicializa_arvore(ESTADO *e, COORDENADA c, int jog);
 
 /**
 \brief Função que implementa o algoritmo minimax
@@ -29,6 +29,14 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c);
 */
 float Minimax(int altura, COORDENADA c, ESTADO *e, int jog);
 
+/**
+\brief Função que determina o valor de uma jogada
+@param c
+@param e
+@param altura
+@param jog
+@return
+*/
 float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jog);
 
 #endif //PROJETO_LA_MINIMAX_H
