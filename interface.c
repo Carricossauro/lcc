@@ -8,7 +8,6 @@
 #include <bits/types/FILE.h>
 #include <stdlib.h>
 #include "minimax.h"
-#include <time.h>
 
 #define BUF_SIZE 1024
 
@@ -40,18 +39,19 @@ void ler (char *ficheiro, ESTADO *e)
 
     for (int i = 7; i >= 0; i--)
     {
-        fgets(linha, 25, jogo);
-        recebelinha(linha, i, e);
+        if(fgets(linha, 25, jogo)) {
+            recebelinha(linha, i, e);
+        }
     }
 
-    fgets(linha, 25, jogo);
-    while (fgets(linha, 25, jogo) != NULL)
-    {
-        if (sscanf(linha, "%s %c%d %c%d", str, &c1, &n1, &c2, &n2) == 5) {
-            recebe_jogadas(e, c1, n1);
-            recebe_jogadas(e, c2, n2);
-        } else if (sscanf(linha, "%s %c%d", str, &c1, &n1) == 3) {
-            recebe_jogadas(e, c1, n1);
+    if(fgets(linha, 25, jogo)) {
+        while (fgets(linha, 25, jogo) != NULL) {
+            if (sscanf(linha, "%s %c%d %c%d", str, &c1, &n1, &c2, &n2) == 5) {
+                recebe_jogadas(e, c1, n1);
+                recebe_jogadas(e, c2, n2);
+            } else if (sscanf(linha, "%s %c%d", str, &c1, &n1) == 3) {
+                recebe_jogadas(e, c1, n1);
+            }
         }
     }
 
@@ -175,7 +175,6 @@ int interpretador(ESTADO *e) {
     char col[2], lin[2];
     char comando[10];
     char ficheiro[BUF_SIZE];
-    int num_mov;
 
     mostrar_tabuleiro(e, stdout);
     mostrar_prompt(e);

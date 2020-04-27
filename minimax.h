@@ -35,10 +35,9 @@ float Minimax(int altura, COORDENADA c, ESTADO *e, int jog);
 \brief Função que determina o valor de uma jogada
 @param c Coordenada da última jogada
 @param e Apontador para o estado de jogo
-@param altura Comprimento da lista
 @param jogador Jogador 1 ou 2
 @returns valor que uma jogada tem
 */
-float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jogador);
+float valor_jogada(COORDENADA c, ESTADO *e, int jogador);
 
 #endif //PROJETO_LA_MINIMAX_H

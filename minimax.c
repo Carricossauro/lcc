@@ -77,13 +77,13 @@ arvore inicializa_arvore(ESTADO *e, COORDENADA c, int jog)
 
 float Minimax(int altura, COORDENADA c, ESTADO *e, int jog)
 {
-    float k = -INT_MIN;
+    float k = INT_MIN;
     float valor;
     if (jogar(e, c)) {
         arvore tree = inicializa_arvore(e, c, jog);
 
         if(altura == 0 || gameOver(e, c))
-            k = valor_jogada(c, e, altura, jog);
+            k = valor_jogada(c, e, jog);
         else {
 
             for (int i = 0; i < 8; i++)
@@ -103,13 +103,13 @@ float Minimax(int altura, COORDENADA c, ESTADO *e, int jog)
     return k;
 }
 
-float valor_jogada(COORDENADA c, ESTADO *e, int altura, int jogador){
+float valor_jogada(COORDENADA c, ESTADO *e, int jogador){
     float a = 1;
     int x = gameOver(e,c);
     if (x != 0) {
-        if(x == jog)
+        if(x == jogador)
             a = 100;
-        else if (x != jog)
+        else if (x != jogador)
             a = -100;
     }
     return a;
