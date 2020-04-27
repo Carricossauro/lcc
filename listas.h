@@ -10,7 +10,9 @@ Definição das listas ligadas usadas na heurística
 \brief Definição da lista ligada genérica
 */
 typedef struct nodo {
+    /** Apontador para um valor genérico*/
     void *valor;
+    /** Apontador para o próximo elemento da lista*/
     struct nodo *proximo;
 } NODO, *LISTA;
 
@@ -52,7 +54,7 @@ LISTA remove_cabeca(LISTA L);
 /**
 \brief Função que verifica se a lista está vazia
 @param L Lista ligada
-@returns 1 - Lista está vazia | 0 - Lista não está vazia
+@returns 1 - Lista está vazia |n 0 - Lista não está vazia
  */
 int lista_esta_vazia(LISTA L);
 

@@ -21,7 +21,9 @@ typedef struct {
 \brief Tipo de dados para a jogada
 */
 typedef struct {
+    /** Coordenada do jogador 1 */
     COORDENADA jogador1;
+    /** Coordenada do jogador 2 */
     COORDENADA jogador2;
 } JOGADA;
 
@@ -36,18 +38,19 @@ typedef JOGADA JOGADAS[32];
 typedef struct {
     /** Tabuleiro */
     CASA tab[8][8];
-    /** Ultima Jogada */
+    /** Última Jogada */
     COORDENADA ultima_jogada;
     /** Jogadas */
     JOGADAS jogadas;
-    /** Numero de jogadas */
+    /** Número de jogadas */
     int num_jogadas;
     /** Jogador Atual */
     int jogador_atual;
-    /** Numero de comandos */
+    /** Número de comandos */
     int num_comandos;
-    /** Numero de movimento*/
+    /** Número de movimento*/
     int num_movimento;
+    /** Verifica se a última jogada esta completa */
     int inc;
 } ESTADO;
 
@@ -57,14 +60,14 @@ typedef struct {
 */
 ESTADO *inicializar_estado();
 /**
-\brief Obtem o jogador atual
+\brief Obtém o jogador atual
 @param e Apontador para o estado
 @returns Jogador atual
 */
 int obter_jogador_atual(ESTADO *e);
 
 /**
-\brief Obtem o número de jogadas
+\brief Obtém o número de jogadas
 @param e Apontador para o estado
 @returns Número de jogadas
 */
@@ -81,8 +84,8 @@ int casa_esta_livre(ESTADO *e, COORDENADA c);
 /**
 \brief Devolve o valor de uma casa
 @param e Apontador para o estado
-@param linha Linha da jogada
-@param coluna Coluna da jogada
+@param Linha Linha da jogada
+@param Coluna Coluna da jogada
 @returns Valor da casa
 */
 CASA obter_casa(ESTADO *e, int linha, int coluna);
@@ -145,7 +148,7 @@ COORDENADA cria_coordenada(int linha, int coluna);
 /**
 \brief Função que recebe uma linha e guarda no estado de jogo
 @param linha Linha
-@param numlinha Index da linha
+@param numlinha Índice da linha
 @param e Apontador para o estado do jogo
 */
 void recebelinha(char *linha, int numlinha, ESTADO *e);
@@ -167,7 +170,7 @@ int jogada_existe(ESTADO *e, int i, int p);
 
 /**
 \brief Função que retorna a jogada a imprimir
-@param e Apontado rpara o estado do jogo
+@param e Apontador para o estado do jogo
 @param i Número da jogada
 @param p Jogador atual
 @returns String com a jogada
@@ -177,15 +180,15 @@ char *obter_jogada(ESTADO *e, int i, int p);
 /**
 \brief Função que recebe a jogada a ler
 @param e Apontador para o estado do jogo
-@param c coluna
-@param n linha
+@param c Coluna
+@param n Linha
 */
 void recebe_jogadas(ESTADO *e, char c, int n);
 
 /**
 \brief Função que altera número da jogada atual
 @param e Apontador para o estado do jogo
-@param num_mov numero do movimento para onde se altera a jogada atual
+@param num_mov Número do movimento para onde se altera a jogada atual
 */
 void pos(ESTADO *e, int num_mov);
 
@@ -205,6 +208,7 @@ void verifica_njogadas(ESTADO *e);
 \brief Função que ve as jogadas possiveis
 @param e Apontador para o estado de jogo
 @param l Uma lista
+@returns Lista com as potenciais jogadas
 */
 LISTA potenciais_jogadas(ESTADO *e, LISTA l);
 
@@ -212,13 +216,21 @@ LISTA potenciais_jogadas(ESTADO *e, LISTA l);
 \brief Função que calcula a distancia
 @param a Coordenada
 @param b Coordenada
+@returns Distância entre duas casas do tabuleiro
 */
 float distancia(COORDENADA a, COORDENADA b);
 
 /**
-\brief Função q retira a última jogada
+\brief Função que retira a última jogada
 @param e Apontador para o estadp do jogo
 */
 void retirar_ultima_jogada(ESTADO *e);
+
+/**
+\brief Função que altera o valor do inc
+@param e Apontador para o estadp do jogo
+@param c Inteiro que pode ser um ou dois consoante o jogador atual
+*/
+void muda_inc(ESTADO *e, int c);
 
 #endif //PROJETO_LA_DADOS_H

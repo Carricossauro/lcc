@@ -1,6 +1,6 @@
 # Projeto-LA
 
-Laboratórios de Algoritmia PL1 Grupo 4
+LCC Laboratórios de Algoritmia PL1 Grupo 4
 
 Alunos:
   - A91695 Tiago dos Santos Silva Peixoto Carriço;

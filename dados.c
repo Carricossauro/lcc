@@ -260,3 +260,10 @@ void retirar_ultima_jogada(ESTADO *e)
     e -> num_jogadas = e -> num_movimento;
     e->inc = 0;
 }
+
+void muda_inc(ESTADO *e, int c) {
+    if (e->inc == 0)
+        e->inc = c;
+    else if (c == 0)
+        e->inc = 0;
+}

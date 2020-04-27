@@ -60,6 +60,7 @@ void ler (char *ficheiro, ESTADO *e)
 
 void gravar (char *ficheiro, ESTADO *e)
 {
+    muda_inc(e, obter_jogador_atual(e));
     pos(e, obter_numero_de_movimentos(e));
     FILE *jogo;
     jogo = fopen(ficheiro, "w");
@@ -67,6 +68,7 @@ void gravar (char *ficheiro, ESTADO *e)
     fprintf(jogo, "\n");
     movs(jogo, e);
     fclose(jogo);
+    muda_inc(e, 0);
 }
 
 void mostrar_prompt(ESTADO *e){
@@ -204,8 +206,7 @@ int interpretador(ESTADO *e) {
         }
         else if (!strcmp(comando, "pos"))
         {
-            if (e->inc == 0)
-                e->inc = e->jogador_atual;
+            muda_inc(e, obter_jogador_atual(e));
             pos(e, atoi(ficheiro));
             add_comando(e);
             putchar('\n');
@@ -214,11 +215,11 @@ int interpretador(ESTADO *e) {
     else if(sscanf(linha, "%s", comando) == 1)
     {
         if (!strcmp(comando, "movs")) {
-            if (e->inc == 0)
-                e->inc = e->jogador_atual;
+
+            muda_inc(e, obter_jogador_atual(e));
             movs(stdout, e);
             add_comando(e);
-            e->inc = 0;
+            muda_inc(e, 0);
             putchar('\n');
         }
         else if (!strcmp(comando, "jog")) {
@@ -237,7 +238,5 @@ int interpretador(ESTADO *e) {
             putchar('\n');
         }
     }
-        
     return 1;
-    
 }

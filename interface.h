@@ -20,6 +20,7 @@ void mostrar_tabuleiro(ESTADO *e, FILE *jogo);
 /**
 \brief Função que recebe o input do utilizador
 @param e Apontador para o estado do jogo
+@returns 0 - Jogo não contina /n 1 - Jogo continua
 */
 int interpretador(ESTADO *e);
 
@@ -31,14 +32,14 @@ void mostrar_prompt(ESTADO *e);
 
 /**
 /brief Função que lê um ficheiro
-@param ficheiro ficheiro
+@param ficheiro Ficheiro
 @param e Apontador para o Estado do jogo
 */
 void ler (char *ficheiro, ESTADO *e);
 
 /**
 /brief Função que grava um ficheiro
-@param ficheiro ficheiro
+@param ficheiro Ficheiro
 @param e Apontador para o Estado do jogo
 */
 void gravar (char *ficheiro, ESTADO *e);
