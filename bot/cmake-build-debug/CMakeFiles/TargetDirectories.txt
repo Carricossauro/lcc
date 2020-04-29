@@ -1,0 +1,3 @@
+/home/pedrusphantom/Desktop/LA1PL1G4/bot/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pedrusphantom/Desktop/LA1PL1G4/bot/cmake-build-debug/CMakeFiles/bot.dir
+/home/pedrusphantom/Desktop/LA1PL1G4/bot/cmake-build-debug/CMakeFiles/edit_cache.dir
