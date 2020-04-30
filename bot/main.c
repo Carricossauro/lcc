@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "bot.h"
 
 int main(int argc, char **argv) {
@@ -7,7 +6,8 @@ int main(int argc, char **argv) {
 
         ESTADO *e = inicializar_estado();
         ler(argv[1], e);
-        mostrar_tabuleiro(e, stdout);
-        movs(stdout, e);
+        jog2(e);
+        muda_inc(e, obter_jogador_atual(e));
+        gravar(argv[2], e);
     }
 }

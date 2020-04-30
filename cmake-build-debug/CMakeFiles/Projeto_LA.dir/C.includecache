@@ -6,19 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
-listas.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/listas.h
-
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.c
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 logica.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.h
-interface.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
 listas.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/listas.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.h
+stdlib.h
+-
+math.h
+-
+
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+listas.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.h
+
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.c
+dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
+interface.h
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.h
+listas.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.h
 limits.h
 -
 stdio.h
@@ -30,33 +42,49 @@ bits/types/FILE.h
 stdlib.h
 -
 minimax.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/minimax.h
-time.h
--
+/home/pedrusphantom/Desktop/LA1PL1G4/minimax.h
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.h
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.h
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 logica.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
 stdlib.h
 -
 bits/types/FILE.h
 -
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/listas.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.c
+listas.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.h
+stdlib.h
+-
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/listas.h
+
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.c
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/minimax.c
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
+dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+
+/home/pedrusphantom/Desktop/LA1PL1G4/main.c
+interface.h
+/home/pedrusphantom/Desktop/LA1PL1G4/interface.h
+dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
+stdio.h
+-
+
+/home/pedrusphantom/Desktop/LA1PL1G4/minimax.c
 minimax.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/minimax.h
+/home/pedrusphantom/Desktop/LA1PL1G4/minimax.h
 logica.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 stdio.h
 -
 stdlib.h
@@ -64,9 +92,9 @@ stdlib.h
 limits.h
 -
 
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/minimax.h
+/home/pedrusphantom/Desktop/LA1PL1G4/minimax.h
 dados.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.h
+/home/pedrusphantom/Desktop/LA1PL1G4/dados.h
 logica.h
-/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.h
+/home/pedrusphantom/Desktop/LA1PL1G4/logica.h
 

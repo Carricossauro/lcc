@@ -4,12 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/dados.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.o"
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/interface.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/interface.c.o"
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/listas.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/listas.c.o"
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/logica.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.o"
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/main.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.o"
-  "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/minimax.c" "/home/carricossauro/Desktop/LCC 1ºano 2ºsemestre/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/minimax.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/dados.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/dados.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/interface.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/interface.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/listas.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/listas.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/logica.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/logica.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/main.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/main.c.o"
+  "/home/pedrusphantom/Desktop/LA1PL1G4/minimax.c" "/home/pedrusphantom/Desktop/LA1PL1G4/cmake-build-debug/CMakeFiles/Projeto_LA.dir/minimax.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

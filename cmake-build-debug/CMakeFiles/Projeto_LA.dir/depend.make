@@ -3,7 +3,6 @@
 
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../dados.c
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../dados.h
-CMakeFiles/Projeto_LA.dir/dados.c.o: ../interface.h
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../listas.h
 CMakeFiles/Projeto_LA.dir/dados.c.o: ../logica.h
 
@@ -20,7 +19,6 @@ CMakeFiles/Projeto_LA.dir/listas.c.o: ../listas.h
 CMakeFiles/Projeto_LA.dir/logica.c.o: ../dados.h
 CMakeFiles/Projeto_LA.dir/logica.c.o: ../listas.h
 CMakeFiles/Projeto_LA.dir/logica.c.o: ../logica.c
-CMakeFiles/Projeto_LA.dir/logica.c.o: ../logica.h
 
 CMakeFiles/Projeto_LA.dir/main.c.o: ../dados.h
 CMakeFiles/Projeto_LA.dir/main.c.o: ../interface.h
