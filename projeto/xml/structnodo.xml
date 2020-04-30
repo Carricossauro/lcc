@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structnodo" kind="struct" language="C++" prot="public">
+    <compoundname>nodo</compoundname>
+    <includes refid="listas_8h" local="no">listas.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structnodo_1ab63adcdb83ea1fdcf4fa10f3cafc4a6a" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* nodo::valor</definition>
+        <argsstring></argsstring>
+        <name>valor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Apontador para um valor genérico </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="listas.h" line="14" column="1" bodyfile="listas.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structnodo_1aaaabdcb6641ddcdac8990402242b154a" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnodo" kindref="compound">nodo</ref> *</type>
+        <definition>struct nodo* nodo::proximo</definition>
+        <argsstring></argsstring>
+        <name>proximo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Apontador para o próximo elemento da lista </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="listas.h" line="16" column="1" bodyfile="listas.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Definição da lista ligada genérica. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="10">
+        <label>nodo</label>
+        <link refid="structnodo"/>
+        <childnode refid="10" relation="usage">
+          <edgelabel>proximo</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="listas.h" line="12" column="1" bodyfile="listas.h" bodystart="12" bodyend="17"/>
+    <listofallmembers>
+      <member refid="structnodo_1aaaabdcb6641ddcdac8990402242b154a" prot="public" virt="non-virtual"><scope>nodo</scope><name>proximo</name></member>
+      <member refid="structnodo_1ab63adcdb83ea1fdcf4fa10f3cafc4a6a" prot="public" virt="non-virtual"><scope>nodo</scope><name>valor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

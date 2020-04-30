@@ -1,3 +1,8 @@
+/**
+@file bot.h
+Definição do estado e das funções que o manipulam
+*/
+
 #ifndef BOT_BOT_H
 #define BOT_BOT_H
 

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structnodo" kind="struct" language="C++" prot="public">
+    <compoundname>nodo</compoundname>
+    <includes refid="bot_8h" local="no">bot.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structnodo_1a344b5b1cb9597ce38786e9d21bb6f42d" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void * nodo::valor</definition>
+        <argsstring></argsstring>
+        <name>valor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Apontador para um valor genérico </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="bot.h" line="286" column="1" bodyfile="bot.h" bodystart="286" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structnodo_1a89841e92650be541e8bc568a20765e82" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnodo" kindref="compound">nodo</ref> *</type>
+        <definition>struct nodo * nodo::proximo</definition>
+        <argsstring></argsstring>
+        <name>proximo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Apontador para o próximo elemento da lista </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="bot.h" line="288" column="1" bodyfile="bot.h" bodystart="288" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Definição da lista ligada genérica. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="10">
+        <label>nodo</label>
+        <link refid="structnodo"/>
+        <childnode refid="10" relation="usage">
+          <edgelabel>proximo</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="bot.h" line="284" column="1" bodyfile="bot.h" bodystart="284" bodyend="289"/>
+    <listofallmembers>
+      <member refid="structnodo_1a89841e92650be541e8bc568a20765e82" prot="public" virt="non-virtual"><scope>nodo</scope><name>proximo</name></member>
+      <member refid="structnodo_1a344b5b1cb9597ce38786e9d21bb6f42d" prot="public" virt="non-virtual"><scope>nodo</scope><name>valor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

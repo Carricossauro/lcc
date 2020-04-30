@@ -267,7 +267,7 @@ void jog2(ESTADO *e){
                 a = malloc(sizeof(COORDENADA));
                 a->linha = i;
                 a->coluna = j;
-                if((y = Minimax(6, *a, e, 1)) > x && casa_esta_livre(e, *a)){
+                if((y = Minimax(7, *a, e, 1)) > x && casa_esta_livre(e, *a)){
                     p = a;
                     x = y;
                 }else free(a);
@@ -279,7 +279,7 @@ void jog2(ESTADO *e){
                 a = malloc(sizeof(COORDENADA));
                 a->linha = i;
                 a->coluna = j;
-                if((y = Minimax(6, *a, e, 1)) > x && casa_esta_livre(e, *a)){
+                if((y = Minimax(7, *a, e, 1)) > x && casa_esta_livre(e, *a)){
                     p = a;
                     x = y;
                 }else free(a);
@@ -580,4 +580,16 @@ void mostrar_tabuleiro(ESTADO *e, FILE *jogo) {
 
 CASA obter_casa(ESTADO *e, int coluna, int linha) {
     return e->tab[linha][coluna];
+}
+
+int main(int argc, char **argv) {
+
+    if(argc == 3){
+
+        ESTADO *e = inicializar_estado();
+        ler(argv[1], e);
+        jog2(e);
+        muda_inc(e, obter_jogador_atual(e));
+        gravar(argv[2], e);
+    }
 }
