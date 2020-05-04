@@ -15,7 +15,7 @@
 <para>Coordenada do jogador 1 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="bot.h" line="26" column="1" bodyfile="bot.h" bodystart="26" bodyend="-1"/>
+        <location file="bot.h" line="32" column="1" bodyfile="bot.h" bodystart="32" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structJOGADA_1ab46b16dfbdc7f2af9430c8dcdac0914b" prot="public" static="no" mutable="no">
         <type><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref></type>
@@ -28,7 +28,7 @@
 <para>Coordenada do jogador 2 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="bot.h" line="28" column="1" bodyfile="bot.h" bodystart="28" bodyend="-1"/>
+        <location file="bot.h" line="34" column="1" bodyfile="bot.h" bodystart="34" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -49,7 +49,7 @@
         <link refid="structCOORDENADA"/>
       </node>
     </collaborationgraph>
-    <location file="bot.h" line="24" column="1" bodyfile="bot.h" bodystart="24" bodyend="29"/>
+    <location file="bot.h" line="30" column="1" bodyfile="bot.h" bodystart="30" bodyend="35"/>
     <listofallmembers>
       <member refid="structJOGADA_1a93d9306cb0c49b66b7d9a615bffe0149" prot="public" virt="non-virtual"><scope>JOGADA</scope><name>jogador1</name></member>
       <member refid="structJOGADA_1ab46b16dfbdc7f2af9430c8dcdac0914b" prot="public" virt="non-virtual"><scope>JOGADA</scope><name>jogador2</name></member>

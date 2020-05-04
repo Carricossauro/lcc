@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['minimax',['Minimax',['../minimax_8h.html#a4cead19a79190663454d2f9ebada82fa',1,'minimax.c']]],
-  ['minimax_2eh',['minimax.h',['../minimax_8h.html',1,'']]],
-  ['mostrar_5fprompt',['mostrar_prompt',['../interface_8h.html#a1fd532d3d252ff42d406a15757e2a401',1,'interface.c']]],
-  ['mostrar_5ftabuleiro',['mostrar_tabuleiro',['../interface_8h.html#a3bbce6c80cbd5b35f09bff9b27dacf6c',1,'interface.c']]],
-  ['movs',['movs',['../interface_8h.html#a52f8eb7a7c3f4118a8a7287d00476c1c',1,'interface.c']]],
-  ['muda_5finc',['muda_inc',['../dados_8h.html#aa07ecdd11cce3fa5b7a247690b179aae',1,'dados.c']]],
-  ['muda_5fjogador',['muda_jogador',['../dados_8h.html#a9b08ade4b8ead18f34cf3b1e808de712',1,'dados.c']]],
-  ['mudar_5fcasa',['mudar_casa',['../dados_8h.html#a5ad4c3875eac9182567f7f0a538d5ddf',1,'dados.c']]]
+  ['ler',['ler',['../bot_8c.html#a86da472ab10e0eeb84614f53ef2fa83d',1,'ler(char *ficheiro, ESTADO *e):&#160;bot.c'],['../bot_8h.html#a86da472ab10e0eeb84614f53ef2fa83d',1,'ler(char *ficheiro, ESTADO *e):&#160;bot.c'],['../interface_8c.html#a86da472ab10e0eeb84614f53ef2fa83d',1,'ler(char *ficheiro, ESTADO *e):&#160;interface.c'],['../interface_8h.html#a86da472ab10e0eeb84614f53ef2fa83d',1,'ler(char *ficheiro, ESTADO *e):&#160;bot.c']]],
+  ['linha',['linha',['../structCOORDENADA.html#aefe14bcc5a066ac3b21500cc3d28c06f',1,'COORDENADA']]],
+  ['lista',['LISTA',['../bot_8h.html#a2ed03b19209dd10718380b31b09a69f5',1,'LISTA():&#160;bot.h'],['../listas_8h.html#a2ed03b19209dd10718380b31b09a69f5',1,'LISTA():&#160;listas.h']]],
+  ['lista_5festa_5fvazia',['lista_esta_vazia',['../bot_8c.html#a7e919af230d184128c5465451ea64a79',1,'lista_esta_vazia(LISTA l):&#160;bot.c'],['../bot_8h.html#a4c10928f7acaa4e3de3760cea0dfd9c0',1,'lista_esta_vazia(LISTA L):&#160;bot.c'],['../listas_8c.html#a7e919af230d184128c5465451ea64a79',1,'lista_esta_vazia(LISTA l):&#160;listas.c'],['../listas_8h.html#a4c10928f7acaa4e3de3760cea0dfd9c0',1,'lista_esta_vazia(LISTA L):&#160;bot.c']]],
+  ['listas_2ec',['listas.c',['../listas_8c.html',1,'']]],
+  ['listas_2eh',['listas.h',['../listas_8h.html',1,'']]],
+  ['logica_2ec',['logica.c',['../logica_8c.html',1,'']]],
+  ['logica_2eh',['logica.h',['../logica_8h.html',1,'']]]
 ];

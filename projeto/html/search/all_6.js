@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['jog',['jog',['../interface_8h.html#a9dfbc982d23a619e36575d8e7ec8e41c',1,'interface.c']]],
-  ['jog2',['jog2',['../interface_8h.html#a75a3c6feb2f2ec713f96559558b136d0',1,'interface.c']]],
-  ['jogada',['JOGADA',['../structJOGADA.html',1,'']]],
-  ['jogada_5fexiste',['jogada_existe',['../dados_8h.html#a0429550be6d7690e2ee9c43084968953',1,'dados.c']]],
-  ['jogadas',['jogadas',['../structESTADO.html#afae43b87a488fad0f2b56a18bad31d18',1,'ESTADO::jogadas()'],['../dados_8h.html#a94c221d29a1760f008b7834093259b7d',1,'JOGADAS():&#160;dados.h']]],
-  ['jogador1',['jogador1',['../structJOGADA.html#a93d9306cb0c49b66b7d9a615bffe0149',1,'JOGADA']]],
-  ['jogador2',['jogador2',['../structJOGADA.html#ab46b16dfbdc7f2af9430c8dcdac0914b',1,'JOGADA']]],
-  ['jogador_5fatual',['jogador_atual',['../structESTADO.html#a5dd28e2e68b7aef2b6b7ea88e02eff58',1,'ESTADO']]],
-  ['jogar',['jogar',['../logica_8h.html#ac313d7e553b1e2b5f266acb9bfff8141',1,'logica.c']]]
+  ['inc',['inc',['../structESTADO.html#a5ecb2febdc1bc87fcd87fdb22fffd237',1,'ESTADO']]],
+  ['inicializa_5farvore',['inicializa_arvore',['../bot_8c.html#a8bf0b34bd37e32823d5781688f5646e5',1,'inicializa_arvore(ESTADO *e, COORDENADA c, int jog):&#160;bot.c'],['../bot_8h.html#a8bf0b34bd37e32823d5781688f5646e5',1,'inicializa_arvore(ESTADO *e, COORDENADA c, int jog):&#160;bot.c'],['../minimax_8c.html#a8bf0b34bd37e32823d5781688f5646e5',1,'inicializa_arvore(ESTADO *e, COORDENADA c, int jog):&#160;minimax.c'],['../minimax_8h.html#a8bf0b34bd37e32823d5781688f5646e5',1,'inicializa_arvore(ESTADO *e, COORDENADA c, int jog):&#160;bot.c']]],
+  ['inicializar_5festado',['inicializar_estado',['../bot_8c.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'inicializar_estado():&#160;bot.c'],['../bot_8h.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'inicializar_estado():&#160;bot.c'],['../dados_8c.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'inicializar_estado():&#160;dados.c'],['../dados_8h.html#a7e0c7e26fb685d9ab501e19b05e6954f',1,'inicializar_estado():&#160;bot.c']]],
+  ['insere_5fcabeca',['insere_cabeca',['../bot_8c.html#a6ec793087950b61f792d8e184bf04d9d',1,'insere_cabeca(LISTA l, void *valor):&#160;bot.c'],['../bot_8h.html#a6ec793087950b61f792d8e184bf04d9d',1,'insere_cabeca(LISTA l, void *valor):&#160;bot.c'],['../listas_8c.html#a6ec793087950b61f792d8e184bf04d9d',1,'insere_cabeca(LISTA l, void *valor):&#160;listas.c'],['../listas_8h.html#a6ec793087950b61f792d8e184bf04d9d',1,'insere_cabeca(LISTA l, void *valor):&#160;bot.c']]],
+  ['interface_2ec',['interface.c',['../interface_8c.html',1,'']]],
+  ['interface_2eh',['interface.h',['../interface_8h.html',1,'']]],
+  ['interpretador',['interpretador',['../interface_8c.html#a24da95ebeede4a540e37790ce8be359b',1,'interpretador(ESTADO *e):&#160;interface.c'],['../interface_8h.html#a24da95ebeede4a540e37790ce8be359b',1,'interpretador(ESTADO *e):&#160;interface.c']]]
 ];

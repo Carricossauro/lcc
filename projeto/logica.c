@@ -1,3 +1,8 @@
+/**
+@file logica.c
+Definição das funções que representam a jogabilidade
+*/
+
 #include "dados.h"
 
 int jogar(ESTADO *e, COORDENADA c)

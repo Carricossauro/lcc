@@ -66,6 +66,7 @@
     <member refid="bot_8c_1a200da50d6654cbecf88969090c0fed2c" kind="function"><name>distancia</name></member>
     <member refid="bot_8c_1a3bbce6c80cbd5b35f09bff9b27dacf6c" kind="function"><name>mostrar_tabuleiro</name></member>
     <member refid="bot_8c_1aebb8e96d1acfefeac80737d6a2f4c03f" kind="function"><name>obter_casa</name></member>
+    <member refid="bot_8c_1a3c04138a5bfe5d72780bb7e82a18e627" kind="function"><name>main</name></member>
   </compound>
   <compound refid="bot_8h" kind="file"><name>bot.h</name>
     <member refid="bot_8h_1aba91601f16d4c485b2d9b8c429f27039" kind="enum"><name>CASA</name></member>
@@ -241,9 +242,5 @@
     <member refid="minimax_8h_1a8bf0b34bd37e32823d5781688f5646e5" kind="function"><name>inicializa_arvore</name></member>
     <member refid="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" kind="function"><name>Minimax</name></member>
     <member refid="minimax_8h_1a9be064cca25e77be78017233c66e1ec9" kind="function"><name>valor_jogada</name></member>
-  </compound>
-  <compound refid="README_8md" kind="file"><name>README.md</name>
-  </compound>
-  <compound refid="md_README" kind="page"><name>md_README</name>
   </compound>
 </doxygenindex>

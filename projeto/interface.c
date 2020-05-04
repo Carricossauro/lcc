@@ -1,3 +1,8 @@
+/**
+@file interface.c
+Definição das funçôes que fornecem a ligação ao jogador
+*/
+
 #include "dados.h"
 #include "logica.h"
 #include "interface.h"
@@ -9,6 +14,7 @@
 #include <stdlib.h>
 #include "minimax.h"
 
+/** Definição de um buf size para ser usado mais tarde */
 #define BUF_SIZE 1024
 
 void mostrar_tabuleiro(ESTADO *e, FILE *jogo) {

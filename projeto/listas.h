@@ -14,7 +14,7 @@ typedef struct nodo {
     void *valor;
     /** Apontador para o próximo elemento da lista*/
     struct nodo *proximo;
-} NODO, *LISTA;
+} /** Lista */ NODO, /** Apontador para um lista */ *LISTA;
 
 /**
 \brief Função que cria um lista ligada

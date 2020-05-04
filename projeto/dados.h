@@ -7,13 +7,21 @@ Definição do estado e das funções que o manipulam
 #ifndef PROJETO_LA_DADOS_H
 #define PROJETO_LA_DADOS_H
 
-typedef enum {VAZIO, BRANCA, PRETA} CASA;
+/**
+\brief Tipo de dados para as casa do tabuleiro
+*/
+typedef enum {
+    /** Casa vazia */ VAZIO,
+    /** Casa branca */ BRANCA,
+    /** Casa preta */ PRETA} CASA;
 
 /**
 \brief Tipo de dados para as coordenadas
 */
 typedef struct {
+    /** Coluna da coordenada */
     int coluna;
+    /** Linha da coordenada */
     int linha;
 } COORDENADA;
 

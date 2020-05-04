@@ -35,7 +35,7 @@ typedef struct \hyperlink{structnodo}{nodo} $\ast$ {\bfseries L\+I\+S\+TA}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{bot_8h_aba91601f16d4c485b2d9b8c429f27039}\label{bot_8h_aba91601f16d4c485b2d9b8c429f27039}} 
-enum {\bfseries C\+A\+SA} \{ \newline
+enum \hyperlink{bot_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} \{ \newline
 {\bfseries V\+A\+Z\+IO}, 
 {\bfseries B\+R\+A\+N\+CA}, 
 {\bfseries P\+R\+E\+TA}, 
@@ -43,7 +43,7 @@ enum {\bfseries C\+A\+SA} \{ \newline
 \newline
 {\bfseries B\+R\+A\+N\+CA}, 
 {\bfseries P\+R\+E\+TA}
- \}
+ \}\begin{DoxyCompactList}\small\item\em Tipo de dados para as casas do tabuleiro. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -56,9 +56,8 @@ void \hyperlink{bot_8h_a27f56c92e1a658039db8848b1255e1a9}{gravar} (char $\ast$fi
 \item 
 void \hyperlink{bot_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}{movs} (F\+I\+LE $\ast$jogo, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \item 
-\mbox{\Hypertarget{bot_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}\label{bot_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}} 
-void {\bfseries mostrar\+\_\+tabuleiro} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, F\+I\+LE $\ast$jogo)
-\item 
+void \hyperlink{bot_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}{mostrar\+\_\+tabuleiro} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, F\+I\+LE $\ast$jogo)
+\begin{DoxyCompactList}\small\item\em Função que mostra o tabuleiro atual. \end{DoxyCompactList}\item 
 void \hyperlink{bot_8h_ad103cf5680171f3393581b4559b1686b}{recebelinha} (char $\ast$linha, int numlinha, \hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \begin{DoxyCompactList}\small\item\em Função que recebe uma linha e guarda no estado de jogo. \end{DoxyCompactList}\item 
 void \hyperlink{bot_8h_ab6f7d63be6c1c563b4095b09e4d7d955}{recebe\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, char c, int n)
@@ -125,7 +124,7 @@ int \hyperlink{bot_8h_a4c10928f7acaa4e3de3760cea0dfd9c0}{lista\+\_\+esta\+\_\+va
 \begin{DoxyCompactList}\small\item\em Função que ve as jogadas possiveis. \end{DoxyCompactList}\item 
 float \hyperlink{bot_8h_a587aa5bfe9c3f95a078781fc230784ef}{distancia} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} a, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} b)
 \begin{DoxyCompactList}\small\item\em Função que calcula a distancia. \end{DoxyCompactList}\item 
-C\+A\+SA \hyperlink{bot_8h_a59f6510397fb84dd6b96f6214f7f1d55}{obter\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int linha, int coluna)
+\hyperlink{bot_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} \hyperlink{bot_8h_a59f6510397fb84dd6b96f6214f7f1d55}{obter\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int linha, int coluna)
 \begin{DoxyCompactList}\small\item\em Devolve o valor de uma casa. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -447,6 +446,23 @@ Função que implementa o algoritmo minimax.
 \begin{DoxyReturn}{Returns}
 Valor da jogada 
 \end{DoxyReturn}
+\mbox{\Hypertarget{bot_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}\label{bot_8h_a3bbce6c80cbd5b35f09bff9b27dacf6c}} 
+\index{bot.\+h@{bot.\+h}!mostrar\+\_\+tabuleiro@{mostrar\+\_\+tabuleiro}}
+\index{mostrar\+\_\+tabuleiro@{mostrar\+\_\+tabuleiro}!bot.\+h@{bot.\+h}}
+\subsubsection{\texorpdfstring{mostrar\+\_\+tabuleiro()}{mostrar\_tabuleiro()}}
+{\footnotesize\ttfamily void mostrar\+\_\+tabuleiro (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{F\+I\+LE $\ast$}]{jogo }\end{DoxyParamCaption})}
+
+
+
+Função que mostra o tabuleiro atual. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado de jogo \\
+\hline
+{\em jogo} & File stream para o output \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{bot_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}\label{bot_8h_a52f8eb7a7c3f4118a8a7287d00476c1c}} 
 \index{bot.\+h@{bot.\+h}!movs@{movs}}
 \index{movs@{movs}!bot.\+h@{bot.\+h}}
@@ -513,7 +529,7 @@ Muda o valor de uma casa.
 \index{bot.\+h@{bot.\+h}!obter\+\_\+casa@{obter\+\_\+casa}}
 \index{obter\+\_\+casa@{obter\+\_\+casa}!bot.\+h@{bot.\+h}}
 \subsubsection{\texorpdfstring{obter\+\_\+casa()}{obter\_casa()}}
-{\footnotesize\ttfamily C\+A\+SA obter\+\_\+casa (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{linha,  }\item[{int}]{coluna }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \hyperlink{bot_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} obter\+\_\+casa (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{linha,  }\item[{int}]{coluna }\end{DoxyParamCaption})}
 
 
 

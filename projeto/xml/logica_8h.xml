@@ -9,39 +9,69 @@
     <includedby refid="minimax_8h" local="yes">minimax.h</includedby>
     <includedby refid="minimax_8c" local="yes">minimax.c</includedby>
     <incdepgraph>
-      <node id="46">
+      <node id="71">
         <label>logica.h</label>
         <link refid="logica_8h"/>
-        <childnode refid="47" relation="include">
+        <childnode refid="72" relation="include">
         </childnode>
       </node>
-      <node id="48">
+      <node id="73">
         <label>listas.h</label>
         <link refid="listas_8h"/>
       </node>
-      <node id="47">
+      <node id="72">
         <label>dados.h</label>
         <link refid="dados_8h"/>
-        <childnode refid="48" relation="include">
+        <childnode refid="73" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="50">
+      <node id="76">
+        <label>interface.c</label>
+        <link refid="interface_8c"/>
+      </node>
+      <node id="77">
         <label>interface.h</label>
         <link refid="interface_8h"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
       </node>
-      <node id="49">
+      <node id="74">
         <label>logica.h</label>
         <link refid="logica_8h"/>
-        <childnode refid="50" relation="include">
+        <childnode refid="75" relation="include">
         </childnode>
-        <childnode refid="51" relation="include">
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
         </childnode>
       </node>
-      <node id="51">
+      <node id="78">
+        <label>main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="75">
+        <label>dados.c</label>
+        <link refid="dados_8c"/>
+      </node>
+      <node id="80">
+        <label>minimax.c</label>
+        <link refid="minimax_8c"/>
+      </node>
+      <node id="79">
         <label>minimax.h</label>
         <link refid="minimax_8h"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
       <sectiondef kind="func">
@@ -81,7 +111,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="logica.h" line="16" column="1" bodyfile="logica.c" bodystart="3" bodyend="14"/>
+        <location file="logica.h" line="16" column="1" bodyfile="bot.c" bodystart="200" bodyend="211"/>
       </memberdef>
       <memberdef kind="function" id="logica_8h_1a0ac0a14f4a34c1290f81a4a17e041df6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -120,7 +150,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="logica.h" line="24" column="1" bodyfile="logica.c" bodystart="16" bodyend="29"/>
+        <location file="logica.h" line="24" column="1" bodyfile="bot.c" bodystart="426" bodyend="439"/>
       </memberdef>
       </sectiondef>
     <briefdescription>

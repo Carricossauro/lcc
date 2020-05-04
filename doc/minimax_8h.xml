@@ -7,31 +7,49 @@
     <includedby refid="interface_8c" local="yes">interface.c</includedby>
     <includedby refid="minimax_8c" local="yes">minimax.c</includedby>
     <incdepgraph>
-      <node id="84">
+      <node id="102">
         <label>logica.h</label>
         <link refid="logica_8h"/>
-        <childnode refid="82" relation="include">
+        <childnode refid="100" relation="include">
         </childnode>
       </node>
-      <node id="82">
-        <label>dados.h</label>
-        <link refid="dados_8h"/>
-        <childnode refid="83" relation="include">
-        </childnode>
-      </node>
-      <node id="83">
+      <node id="101">
         <label>listas.h</label>
         <link refid="listas_8h"/>
       </node>
-      <node id="81">
+      <node id="100">
+        <label>dados.h</label>
+        <link refid="dados_8h"/>
+        <childnode refid="101" relation="include">
+        </childnode>
+      </node>
+      <node id="99">
         <label>minimax.h</label>
         <link refid="minimax_8h"/>
-        <childnode refid="82" relation="include">
+        <childnode refid="100" relation="include">
         </childnode>
-        <childnode refid="84" relation="include">
+        <childnode refid="102" relation="include">
         </childnode>
       </node>
     </incdepgraph>
+    <invincdepgraph>
+      <node id="104">
+        <label>interface.c</label>
+        <link refid="interface_8c"/>
+      </node>
+      <node id="105">
+        <label>minimax.c</label>
+        <link refid="minimax_8c"/>
+      </node>
+      <node id="103">
+        <label>minimax.h</label>
+        <link refid="minimax_8h"/>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
     <innerclass refid="structTree" prot="public">Tree</innerclass>
       <sectiondef kind="typedef">
       <memberdef kind="typedef" id="minimax_8h_1a24532c506fa8dbf48e8d188f7f991d67" prot="public" static="no">
@@ -88,7 +106,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="minimax.h" line="28" column="1" bodyfile="bot.c" bodystart="312" bodyend="379"/>
+        <location file="minimax.h" line="28" column="1" bodyfile="bot.c" bodystart="317" bodyend="384"/>
       </memberdef>
       <memberdef kind="function" id="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>float</type>
@@ -140,7 +158,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="minimax.h" line="37" column="1" bodyfile="bot.c" bodystart="381" bodyend="407"/>
+        <location file="minimax.h" line="37" column="1" bodyfile="bot.c" bodystart="386" bodyend="412"/>
       </memberdef>
       <memberdef kind="function" id="minimax_8h_1a9be064cca25e77be78017233c66e1ec9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>float</type>
@@ -188,7 +206,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="minimax.h" line="46" column="1" bodyfile="bot.c" bodystart="409" bodyend="419"/>
+        <location file="minimax.h" line="46" column="1" bodyfile="bot.c" bodystart="414" bodyend="424"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -208,9 +226,9 @@
 <codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>*<ref refid="structTree_1a47973c3f53684bf12072870d6b5239fb" kindref="member">proximo</ref>[8];</highlight></codeline>
 <codeline lineno="20"><highlight class="normal">}*<ref refid="minimax_8h_1a24532c506fa8dbf48e8d188f7f991d67" kindref="member">arvore</ref>;</highlight></codeline>
 <codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="28"><highlight class="normal"><ref refid="structTree" kindref="compound">arvore</ref><sp/><ref refid="minimax_8h_1a8bf0b34bd37e32823d5781688f5646e5" kindref="member">inicializa_arvore</ref>(<ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8h_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><ref refid="structTree" kindref="compound">arvore</ref><sp/><ref refid="minimax_8h_1a8bf0b34bd37e32823d5781688f5646e5" kindref="member">inicializa_arvore</ref>(<ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
 <codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" kindref="member">Minimax</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>altura,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8h_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
+<codeline lineno="37"><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" kindref="member">Minimax</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>altura,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
 <codeline lineno="38"><highlight class="normal"></highlight></codeline>
 <codeline lineno="46"><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="minimax_8h_1a9be064cca25e77be78017233c66e1ec9" kindref="member">valor_jogada</ref>(<ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogador);</highlight></codeline>
 <codeline lineno="47"><highlight class="normal"></highlight></codeline>

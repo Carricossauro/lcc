@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['obter_5fcasa',['obter_casa',['../dados_8h.html#a59f6510397fb84dd6b96f6214f7f1d55',1,'dados.c']]],
-  ['obter_5fcoluna',['obter_coluna',['../dados_8h.html#ab495ce88ee9837a7f7f67b9358659f16',1,'dados.c']]],
-  ['obter_5fjogada',['obter_jogada',['../dados_8h.html#a3a66b7cad1e94cf6be91184a33be627d',1,'dados.c']]],
-  ['obter_5fjogador_5fatual',['obter_jogador_atual',['../dados_8h.html#acc6c25533188a99cb69c12e7f2c406ef',1,'dados.c']]],
-  ['obter_5flinha',['obter_linha',['../dados_8h.html#a9946aa4fcc3bb50874673103b31eca48',1,'dados.c']]],
-  ['obter_5fnumero_5fde_5fmovimentos',['obter_numero_de_movimentos',['../dados_8h.html#aec4268e4f42612fdf38cae436f01855f',1,'dados.c']]],
-  ['obter_5fultima_5fjogada',['obter_ultima_jogada',['../dados_8h.html#a40555aff97afc67bd1866f2785111310',1,'dados.c']]]
+  ['nodo',['nodo',['../structnodo.html',1,'nodo'],['../structTree.html#abc891f05ffdda2289c85cf805b12ab64',1,'Tree::nodo()'],['../bot_8h.html#ab74c40cea97ab9b24f68471bb1ded1a2',1,'NODO():&#160;bot.h'],['../listas_8h.html#ab74c40cea97ab9b24f68471bb1ded1a2',1,'NODO():&#160;listas.h']]],
+  ['num_5fcomandos',['num_comandos',['../structESTADO.html#abe6faacdd6111160bf9a354f44b95b38',1,'ESTADO']]],
+  ['num_5fjogadas',['num_jogadas',['../structESTADO.html#a261495728744647e618b4e623f5a4b7a',1,'ESTADO']]],
+  ['num_5fmovimento',['num_movimento',['../structESTADO.html#a2a04cf6054f85e3dbee5fb8cc08e7264',1,'ESTADO']]]
 ];

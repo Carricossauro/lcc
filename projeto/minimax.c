@@ -1,3 +1,8 @@
+/**
+@file minimax.c
+Definição do estado e das funções que o manipulam
+*/
+
 #include "minimax.h"
 #include "logica.h"
 #include "dados.h"

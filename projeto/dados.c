@@ -1,3 +1,8 @@
+/**
+@file dados.c
+Definição do estado e das funções que o manipulam
+*/
+
 #include "dados.h"
 #include "logica.h"
 #include "listas.h"

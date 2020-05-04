@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['recebe_5fjogadas',['recebe_jogadas',['../dados_8h.html#ab6f7d63be6c1c563b4095b09e4d7d955',1,'dados.c']]],
-  ['recebelinha',['recebelinha',['../dados_8h.html#ad103cf5680171f3393581b4559b1686b',1,'dados.c']]],
-  ['remove_5fcabeca',['remove_cabeca',['../listas_8h.html#a9026a681a68322b5ec7f07137b864cbd',1,'listas.c']]],
-  ['reset_5ftab',['reset_tab',['../dados_8h.html#a32ced9c7ca77445bebb4ea50477c4642',1,'dados.c']]],
-  ['retirar_5fultima_5fjogada',['retirar_ultima_jogada',['../dados_8h.html#ac3accda3cbe3bb04f9ed7f4d77aac595',1,'dados.c']]]
+  ['pos',['pos',['../bot_8c.html#a6f1e5d20234aa1a45108e437be964783',1,'pos(ESTADO *e, int num_mov):&#160;bot.c'],['../bot_8h.html#a6f1e5d20234aa1a45108e437be964783',1,'pos(ESTADO *e, int num_mov):&#160;bot.c'],['../dados_8c.html#a6f1e5d20234aa1a45108e437be964783',1,'pos(ESTADO *e, int num_mov):&#160;dados.c'],['../dados_8h.html#a6f1e5d20234aa1a45108e437be964783',1,'pos(ESTADO *e, int num_mov):&#160;bot.c']]],
+  ['potenciais_5fjogadas',['potenciais_jogadas',['../bot_8c.html#af8bf408a57722e47483ef6777e92d49c',1,'potenciais_jogadas(ESTADO *e, LISTA l):&#160;bot.c'],['../bot_8h.html#af8bf408a57722e47483ef6777e92d49c',1,'potenciais_jogadas(ESTADO *e, LISTA l):&#160;bot.c'],['../dados_8c.html#af8bf408a57722e47483ef6777e92d49c',1,'potenciais_jogadas(ESTADO *e, LISTA l):&#160;dados.c'],['../dados_8h.html#af8bf408a57722e47483ef6777e92d49c',1,'potenciais_jogadas(ESTADO *e, LISTA l):&#160;bot.c']]],
+  ['preta',['PRETA',['../bot_8h.html#aba91601f16d4c485b2d9b8c429f27039a007278eb3827d19891b47cdd3ac8846d',1,'PRETA():&#160;bot.h'],['../dados_8h.html#aba91601f16d4c485b2d9b8c429f27039a007278eb3827d19891b47cdd3ac8846d',1,'PRETA():&#160;dados.h']]],
+  ['proximo',['proximo',['../structTree.html#a47973c3f53684bf12072870d6b5239fb',1,'Tree::proximo()'],['../structnodo.html#a89841e92650be541e8bc568a20765e82',1,'nodo::proximo()'],['../bot_8c.html#affb39e37aef63ab00b6df8f9336f6673',1,'proximo(LISTA l):&#160;bot.c'],['../bot_8h.html#affb39e37aef63ab00b6df8f9336f6673',1,'proximo(LISTA l):&#160;bot.c'],['../listas_8c.html#affb39e37aef63ab00b6df8f9336f6673',1,'proximo(LISTA l):&#160;listas.c'],['../listas_8h.html#affb39e37aef63ab00b6df8f9336f6673',1,'proximo(LISTA l):&#160;bot.c']]]
 ];

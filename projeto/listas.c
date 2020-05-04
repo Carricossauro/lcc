@@ -1,3 +1,8 @@
+/**
+@file listas.c
+Definição das listas ligadas usadas na heurística
+*/
+
 #include "listas.h"
 #include <stdlib.h>
 

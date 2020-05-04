@@ -23,11 +23,10 @@ typedef \hyperlink{structJOGADA}{J\+O\+G\+A\+DA} \hyperlink{dados_8h_a94c221d29a
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{dados_8h_aba91601f16d4c485b2d9b8c429f27039}\label{dados_8h_aba91601f16d4c485b2d9b8c429f27039}} 
-enum {\bfseries C\+A\+SA} \{ {\bfseries V\+A\+Z\+IO}, 
-{\bfseries B\+R\+A\+N\+CA}, 
-{\bfseries P\+R\+E\+TA}
- \}
+enum \hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} \{ \hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039abc711f491a56ec7af7a688be508c5113}{V\+A\+Z\+IO}, 
+\hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039ad24485fddec75419fd4a0cc9edda0ca5}{B\+R\+A\+N\+CA}, 
+\hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039a007278eb3827d19891b47cdd3ac8846d}{P\+R\+E\+TA}
+ \}\begin{DoxyCompactList}\small\item\em Tipo de dados para as casa do tabuleiro. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -40,7 +39,7 @@ int \hyperlink{dados_8h_aec4268e4f42612fdf38cae436f01855f}{obter\+\_\+numero\+\_
 \begin{DoxyCompactList}\small\item\em Obtém o número de jogadas. \end{DoxyCompactList}\item 
 int \hyperlink{dados_8h_a0529070ac50c4b58c7c2cee1cfff8c28}{casa\+\_\+esta\+\_\+livre} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
 \begin{DoxyCompactList}\small\item\em Verifica se uam certa casa está livre. \end{DoxyCompactList}\item 
-C\+A\+SA \hyperlink{dados_8h_a59f6510397fb84dd6b96f6214f7f1d55}{obter\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int linha, int coluna)
+\hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} \hyperlink{dados_8h_a59f6510397fb84dd6b96f6214f7f1d55}{obter\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, int linha, int coluna)
 \begin{DoxyCompactList}\small\item\em Devolve o valor de uma casa. \end{DoxyCompactList}\item 
 void \hyperlink{dados_8h_a5ad4c3875eac9182567f7f0a538d5ddf}{mudar\+\_\+casa} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
 \begin{DoxyCompactList}\small\item\em Muda o valor de uma casa. \end{DoxyCompactList}\item 
@@ -74,7 +73,7 @@ void \hyperlink{dados_8h_a32ced9c7ca77445bebb4ea50477c4642}{reset\+\_\+tab} (\hy
 \begin{DoxyCompactList}\small\item\em Função que dá reset ao tabuleiro. \end{DoxyCompactList}\item 
 void \hyperlink{dados_8h_a25b041eab737b0ea6ae616d18d1c6e51}{verifica\+\_\+njogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e)
 \begin{DoxyCompactList}\small\item\em Função que verifica o número de jogadas. \end{DoxyCompactList}\item 
-\hyperlink{structnodo}{L\+I\+S\+TA} \hyperlink{dados_8h_af8bf408a57722e47483ef6777e92d49c}{potenciais\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structnodo}{L\+I\+S\+TA} l)
+\hyperlink{listas_8h_a2ed03b19209dd10718380b31b09a69f5}{L\+I\+S\+TA} \hyperlink{dados_8h_af8bf408a57722e47483ef6777e92d49c}{potenciais\+\_\+jogadas} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{listas_8h_a2ed03b19209dd10718380b31b09a69f5}{L\+I\+S\+TA} l)
 \begin{DoxyCompactList}\small\item\em Função que ve as jogadas possiveis. \end{DoxyCompactList}\item 
 float \hyperlink{dados_8h_a587aa5bfe9c3f95a078781fc230784ef}{distancia} (\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} a, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} b)
 \begin{DoxyCompactList}\small\item\em Função que calcula a distancia. \end{DoxyCompactList}\item 
@@ -86,6 +85,33 @@ void \hyperlink{dados_8h_aa07ecdd11cce3fa5b7a247690b179aae}{muda\+\_\+inc} (\hyp
 
 \subsection{Detailed Description}
 Definição do estado e das funções que o manipulam 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{dados_8h_aba91601f16d4c485b2d9b8c429f27039}\label{dados_8h_aba91601f16d4c485b2d9b8c429f27039}} 
+\index{dados.\+h@{dados.\+h}!C\+A\+SA@{C\+A\+SA}}
+\index{C\+A\+SA@{C\+A\+SA}!dados.\+h@{dados.\+h}}
+\subsubsection{\texorpdfstring{C\+A\+SA}{CASA}}
+{\footnotesize\ttfamily enum \hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA}}
+
+
+
+Tipo de dados para as casa do tabuleiro. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V\+A\+Z\+IO@{V\+A\+Z\+IO}!dados.\+h@{dados.\+h}}\index{dados.\+h@{dados.\+h}!V\+A\+Z\+IO@{V\+A\+Z\+IO}}}\mbox{\Hypertarget{dados_8h_aba91601f16d4c485b2d9b8c429f27039abc711f491a56ec7af7a688be508c5113}\label{dados_8h_aba91601f16d4c485b2d9b8c429f27039abc711f491a56ec7af7a688be508c5113}} 
+V\+A\+Z\+IO&Casa vazia \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B\+R\+A\+N\+CA@{B\+R\+A\+N\+CA}!dados.\+h@{dados.\+h}}\index{dados.\+h@{dados.\+h}!B\+R\+A\+N\+CA@{B\+R\+A\+N\+CA}}}\mbox{\Hypertarget{dados_8h_aba91601f16d4c485b2d9b8c429f27039ad24485fddec75419fd4a0cc9edda0ca5}\label{dados_8h_aba91601f16d4c485b2d9b8c429f27039ad24485fddec75419fd4a0cc9edda0ca5}} 
+B\+R\+A\+N\+CA&Casa branca \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+R\+E\+TA@{P\+R\+E\+TA}!dados.\+h@{dados.\+h}}\index{dados.\+h@{dados.\+h}!P\+R\+E\+TA@{P\+R\+E\+TA}}}\mbox{\Hypertarget{dados_8h_aba91601f16d4c485b2d9b8c429f27039a007278eb3827d19891b47cdd3ac8846d}\label{dados_8h_aba91601f16d4c485b2d9b8c429f27039a007278eb3827d19891b47cdd3ac8846d}} 
+P\+R\+E\+TA&Casa preta \\
+\hline
+
+\end{DoxyEnumFields}
+
 
 \subsection{Function Documentation}
 \mbox{\Hypertarget{dados_8h_a4fd93bb7585d9f9b9207a7df170a8059}\label{dados_8h_a4fd93bb7585d9f9b9207a7df170a8059}} 
@@ -286,7 +312,7 @@ Muda o valor de uma casa.
 \index{dados.\+h@{dados.\+h}!obter\+\_\+casa@{obter\+\_\+casa}}
 \index{obter\+\_\+casa@{obter\+\_\+casa}!dados.\+h@{dados.\+h}}
 \subsubsection{\texorpdfstring{obter\+\_\+casa()}{obter\_casa()}}
-{\footnotesize\ttfamily C\+A\+SA obter\+\_\+casa (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{linha,  }\item[{int}]{coluna }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \hyperlink{dados_8h_aba91601f16d4c485b2d9b8c429f27039}{C\+A\+SA} obter\+\_\+casa (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{int}]{linha,  }\item[{int}]{coluna }\end{DoxyParamCaption})}
 
 
 
@@ -437,7 +463,7 @@ Função que altera número da jogada atual.
 \index{dados.\+h@{dados.\+h}!potenciais\+\_\+jogadas@{potenciais\+\_\+jogadas}}
 \index{potenciais\+\_\+jogadas@{potenciais\+\_\+jogadas}!dados.\+h@{dados.\+h}}
 \subsubsection{\texorpdfstring{potenciais\+\_\+jogadas()}{potenciais\_jogadas()}}
-{\footnotesize\ttfamily \hyperlink{structnodo}{L\+I\+S\+TA} potenciais\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structnodo}{L\+I\+S\+TA}}]{l }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \hyperlink{listas_8h_a2ed03b19209dd10718380b31b09a69f5}{L\+I\+S\+TA} potenciais\+\_\+jogadas (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{listas_8h_a2ed03b19209dd10718380b31b09a69f5}{L\+I\+S\+TA}}]{l }\end{DoxyParamCaption})}
 
 
 

@@ -6,51 +6,51 @@
     <includes refid="dados_8h" local="yes">dados.h</includes>
     <includes local="no">stdio.h</includes>
     <incdepgraph>
-      <node id="58">
+      <node id="87">
         <label>bits/types/FILE.h</label>
       </node>
-      <node id="57">
+      <node id="86">
         <label>stdlib.h</label>
       </node>
-      <node id="53">
+      <node id="82">
         <label>interface.h</label>
         <link refid="interface_8h"/>
-        <childnode refid="54" relation="include">
+        <childnode refid="83" relation="include">
         </childnode>
-        <childnode refid="56" relation="include">
+        <childnode refid="85" relation="include">
         </childnode>
-        <childnode refid="57" relation="include">
+        <childnode refid="86" relation="include">
         </childnode>
-        <childnode refid="58" relation="include">
+        <childnode refid="87" relation="include">
         </childnode>
       </node>
-      <node id="56">
+      <node id="85">
         <label>logica.h</label>
         <link refid="logica_8h"/>
-        <childnode refid="54" relation="include">
+        <childnode refid="83" relation="include">
         </childnode>
       </node>
-      <node id="52">
+      <node id="81">
         <label>main.c</label>
         <link refid="main_8c"/>
-        <childnode refid="53" relation="include">
+        <childnode refid="82" relation="include">
         </childnode>
-        <childnode refid="54" relation="include">
+        <childnode refid="83" relation="include">
         </childnode>
-        <childnode refid="59" relation="include">
+        <childnode refid="88" relation="include">
         </childnode>
       </node>
-      <node id="55">
+      <node id="84">
         <label>listas.h</label>
         <link refid="listas_8h"/>
       </node>
-      <node id="54">
+      <node id="83">
         <label>dados.h</label>
         <link refid="dados_8h"/>
-        <childnode refid="55" relation="include">
+        <childnode refid="84" relation="include">
         </childnode>
       </node>
-      <node id="59">
+      <node id="88">
         <label>stdio.h</label>
       </node>
     </incdepgraph>
@@ -61,34 +61,36 @@
         <argsstring>()</argsstring>
         <name>main</name>
         <briefdescription>
-        </briefdescription>
+<para>Função que inicia o jogo. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>Dependências <simplesect kind="return"><para>0 se não houver erros </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="main.c" line="5" column="1" bodyfile="main.c" bodystart="5" bodyend="15"/>
+        <location file="main.c" line="15" column="1" bodyfile="main.c" bodystart="15" bodyend="25"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
+<para>Definição do estado e das funções que o manipulam </para>    </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="interface_8h" kindref="compound">interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="dados_8h" kindref="compound">dados.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="4"><highlight class="normal"></highlight></codeline>
-<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>main()<sp/>{</highlight></codeline>
-<codeline lineno="6"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e<sp/>=<sp/><ref refid="dados_8h_1a7e0c7e26fb685d9ab501e19b05e6954f" kindref="member">inicializar_estado</ref>();</highlight></codeline>
-<codeline lineno="7"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r;</highlight></codeline>
-<codeline lineno="8"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(<ref refid="interface_8h_1a24da95ebeede4a540e37790ce8be359b" kindref="member">interpretador</ref>(e))<sp/>{</highlight></codeline>
-<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((r<sp/>=<sp/><ref refid="logica_8h_1a0ac0a14f4a34c1290f81a4a17e041df6" kindref="member">gameOver</ref>(e,<sp/><ref refid="dados_8h_1a40555aff97afc67bd1866f2785111310" kindref="member">obter_ultima_jogada</ref>(e))))<sp/>{</highlight></codeline>
-<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;O<sp/>vencedor<sp/>é<sp/>o<sp/>jogador<sp/>%d.&quot;</highlight><highlight class="normal">,<sp/>r);</highlight></codeline>
-<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
-<codeline lineno="15"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="1"></codeline>
+<codeline lineno="7"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="interface_8h" kindref="compound">interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="dados_8h" kindref="compound">dados.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="main_8c_1ae66f6b31b5ad750f1fe042a706a4e3d4" kindref="member">main</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e<sp/>=<sp/><ref refid="bot_8c_1a7e0c7e26fb685d9ab501e19b05e6954f" kindref="member">inicializar_estado</ref>();</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(<ref refid="interface_8c_1a24da95ebeede4a540e37790ce8be359b" kindref="member">interpretador</ref>(e))<sp/>{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((r<sp/>=<sp/><ref refid="bot_8c_1a0ac0a14f4a34c1290f81a4a17e041df6" kindref="member">gameOver</ref>(e,<sp/><ref refid="bot_8c_1a40555aff97afc67bd1866f2785111310" kindref="member">obter_ultima_jogada</ref>(e))))<sp/>{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;O<sp/>vencedor<sp/>é<sp/>o<sp/>jogador<sp/>%d.&quot;</highlight><highlight class="normal">,<sp/>r);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">}</highlight></codeline>
     </programlisting>
     <location file="main.c"/>
   </compounddef>

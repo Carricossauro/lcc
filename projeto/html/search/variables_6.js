@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['valor',['valor',['../structnodo.html#ab63adcdb83ea1fdcf4fa10f3cafc4a6a',1,'nodo']]]
+  ['tab',['tab',['../structESTADO.html#ae03c399b73d7a92d7f7ced83e91e5b6f',1,'ESTADO']]]
 ];
