@@ -21,12 +21,10 @@ A função deve retornar a lista de todas os rectangulos (tuplos com 4 inteiros)
 
 '''
 
-
-
 def robot(comandos):
     result = []
     comandosCorrigidos = comandos.split('H')
-    if comandosCorrigidos[-1] == "":
+    if comandos[-1] == 'H':
         comandosCorrigidos.pop()
     for lista in comandosCorrigidos:
         retangulo = [0,0,0,0] # (Min x, Min y, Max x, Max y)
@@ -47,5 +45,4 @@ def robot(comandos):
                 posicao[0] -= 1
             retangulo = [min(retangulo[0],posicao[0]),min(retangulo[1],posicao[1]),max(retangulo[2],posicao[0]),max(retangulo[3],posicao[1])]
         result.append((retangulo[0], retangulo[1], retangulo[2], retangulo[3]))
-        
     return result
