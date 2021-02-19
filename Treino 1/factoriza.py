@@ -12,7 +12,7 @@ def isPrime(x):
     return r
     
 def factoriza(n):
-    primos = [x for x in range(2,100) if isPrime(x)]
+    primos = [x for x in range(2,n) if isPrime(x)]
     result = 0
     for k in primos:
         if (n % k == 0):
