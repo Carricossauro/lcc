@@ -41,3 +41,24 @@ def hacker(log):
         
     result.sort(key=lambda x: (-len(list(filter(lambda k: k != '*', x[0]))),x[1]))
     return result
+
+# Solução não cancerosa
+
+def hacker(log):
+    mails = {}
+    for cartao,email in log:
+        if email not in mails:
+            mails[email] = cartao
+        else:
+            cartaoAntigo = mails[email]
+            cartaoNovo = ""
+            for i in range(len(cartaoAntigo)):
+                if cartao[i] != '*':
+                    cartaoNovo += cartao[i]
+                else:
+                    cartaoNovo += cartaoAntigo[i]
+            mails[email] = cartaoNovo
+        
+    result = [(mails[x],x) for x in mails]
+    result.sort(key=lambda x: (-len(list(filter(lambda k: k != '*', x[0]))),x[1]))
+    return result
