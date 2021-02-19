@@ -16,5 +16,7 @@ def repete(palavra,n):
             palavra = palavra[:-len(el)]
             break
     
-    palavra = palavra*n + repeated
+    palavra = palavra*n
+    if n > 0:
+        palavra += repeated
     return palavra
