@@ -12,7 +12,7 @@ def isPrime(x):
     return r
     
 def factoriza(n):
-    primos = [x for x in range(2,n) if isPrime(x)]
+    primos = [x for x in range(2,n+1) if isPrime(x)]
     result = 0
     for k in primos:
         if (n % k == 0):
@@ -25,7 +25,7 @@ def factoriza(n):
 # It's Big Brain Time
 
 def factoriza(n):
-    primos = [x for x in range(2,n) if all([x % k != 0 for k in range(2,x//2)])]
+    primos = [x for x in range(2,n+1) if all([x % k != 0 for k in range(2,x//2)])]
     result = 0
     for k in primos:
         if (n % k == 0):
