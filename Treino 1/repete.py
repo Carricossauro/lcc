@@ -4,7 +4,6 @@ contém n repetições de uma determinada palavra
 '''
 
 def repete(palavra,n):
-    condicao = True
     subStrings = []
     for i in range(1,len(palavra)):
         subStrings.append(palavra[i:])
