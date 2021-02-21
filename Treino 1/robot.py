@@ -48,3 +48,27 @@ def robot(comandos):
             retangulo = [min(retangulo[0],posicao[0]),min(retangulo[1],posicao[1]),max(retangulo[2],posicao[0]),max(retangulo[3],posicao[1])]
         result.append(tuple(retangulo))
     return result
+
+  # Sem usar split (fica menos confuso ya)
+  
+  def robot(comandos):
+    andar = {0:(1,1), 1:(0,1), 2:(1,-1), 3:(0,-1)}
+    result = []
+    retangulo = [0,0,0,0] # min x, min y, max x, max y
+    posicao = [0,0] # x,y
+    direcao = 0
+    for character in comandos:
+        if character == 'E':
+            direcao = (direcao - 1) % 4
+        elif character == 'D':
+            direcao = (direcao + 1) % 4
+        elif character == 'A':
+            mov = andar[direcao]
+            posicao[mov[0]] += mov[1]
+            retangulo = [min(retangulo[0],posicao[0]),min(retangulo[1],posicao[1]),max(retangulo[2],posicao[0]),max(retangulo[3],posicao[1])]
+        else:
+            result.append(tuple(retangulo))
+            retangulo = [0,0,0,0]
+            posicao = [0,0]
+            direcao = 0
+    return result
