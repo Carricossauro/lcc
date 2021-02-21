@@ -17,8 +17,6 @@ def factoriza(n):
     for k in primos:
         if (n % k == 0):
             result += k
-        while (n % k == 0):
-            n//=k
 
     return result
 
@@ -30,8 +28,6 @@ def factoriza(n):
     for k in primos:
         if (n % k == 0):
             result += k
-        while (n % k == 0):
-            n//=k
 
     return result
 
