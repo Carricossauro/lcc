@@ -26,7 +26,7 @@ def robot(comandos):
     comandosCorrigidos = comandos.split('H')
     if comandos == "":
         comandosCorrigidos = [""]
-    if comandos[-1] == 'H':
+    elif comandos[-1] == 'H':
         comandosCorrigidos.pop()
     for lista in comandosCorrigidos:
         retangulo = [0,0,0,0] # (Min x, Min y, Max x, Max y)
