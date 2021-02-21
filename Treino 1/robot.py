@@ -46,5 +46,5 @@ def robot(comandos):
             elif direcao == 3:
                 posicao[0] -= 1
             retangulo = [min(retangulo[0],posicao[0]),min(retangulo[1],posicao[1]),max(retangulo[2],posicao[0]),max(retangulo[3],posicao[1])]
-        result.append((retangulo[0], retangulo[1], retangulo[2], retangulo[3]))
+        result.append(tuple(retangulo))
     return result
