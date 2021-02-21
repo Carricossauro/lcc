@@ -34,6 +34,5 @@ def factoriza(n):
 # Even Bigger Brain Time
 
 def factoriza(n):
-    primos = [x for x in range(2,n+1) if all([x % k != 0 for k in range(2,x//2+1)])]
-    result = sum(filter(lambda x: n % x == 0, primos))
+    result = sum(filter(lambda i: n % i == 0, [x for x in range(2,n+1) if all([x % k != 0 for k in range(2,x//2+1)])]))
     return result
