@@ -36,3 +36,10 @@ def isbn(livros):
         
     result.sort()
     return result
+
+# PAHAHAHAHAHHAHAHA
+
+def isbn(livros):
+    result = list(filter(lambda nome: (sum(map(int,livros[nome][::2])) + sum(map(lambda x: int(x)*3,livros[nome][1::2]))) % 10 != 0, livros))
+    result.sort()
+    return result
