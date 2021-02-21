@@ -21,3 +21,18 @@ def isbn(livros):
         
     result.sort()
     return result
+
+# Versão mais bonita
+
+def isbn(livros):
+    result = []
+    for nome in livros:
+        isbn = livros[nome]
+        pesoUm = sum(map(int,isbn[::2]))
+        pesoTres = sum(map(lambda x: int(x)*3,isbn[1::2]))
+        soma = pesoUm + pesoTres
+        if soma % 10 != 0:
+            result.append(nome)
+        
+    result.sort()
+    return result
