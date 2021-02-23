@@ -16,11 +16,9 @@ def tabela(jogos):
     for e1,g1,e2,g2 in jogos:
         if e1 not in golos:
             golos[e1] = 0
+            pontos[e1] = 0
         if e2 not in golos:
             golos[e2] = 0
-        if e1 not in pontos:
-            pontos[e1] = 0
-        if e2 not in pontos:
             pontos[e2] = 0
         golos[e1] += (g1-g2)
         golos[e2] += (g2-g1)
