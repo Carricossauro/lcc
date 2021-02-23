@@ -33,3 +33,24 @@ def tabela(jogos):
     jogos = list(pontos.keys())
     jogos.sort(key=lambda x: (-pontos[x],-golos[x],x))
     return [(x,pontos[x]) for x in jogos]
+
+# Same shit, less code
+
+def tabela(jogos):
+    golos = {} #  {Nome da Equipa: Diferença de Golos}
+    pontos = {} # {Nome da Equipa: Ponto}
+    for e1,g1,e2,g2 in jogos:
+        if e1 not in golos:
+            golos[e1] = 0
+            pontos[e1] = 0
+        if e2 not in golos:
+            golos[e2] = 0
+            pontos[e2] = 0
+        golos[e1] += (g1-g2)
+        golos[e2] += (g2-g1)
+        pontos[e1] += (g1 > g2)*3 + (g1 == g2)
+        pontos[e2] += (g2 > g1)*3 + (g1 == g2)
+            
+    jogos = list(pontos.keys())
+    jogos.sort(key=lambda x: (-pontos[x],-golos[x],x))
+    return [(x,pontos[x]) for x in jogos]
