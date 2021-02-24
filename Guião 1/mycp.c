@@ -4,6 +4,7 @@
 
 #define MAXBUFFER 1
 
+// Ex 1 -> mycp
 int main(int argc, char *argv[]) {
 	if (argc >= 3) {
 		int fileToRead = open(argv[1], O_RDONLY);
