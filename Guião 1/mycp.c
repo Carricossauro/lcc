@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 		while(res != 0) {
 			res = read(fileToRead, &buffer, MAXBUFFER);
 			if (res == 0) break;
-			res = write(fileToWrite, &buffer, MAXBUFFER);
+			res = write(fileToWrite, &buffer, res);
 		}
 		close(fileToWrite);
 		close(fileToRead);
