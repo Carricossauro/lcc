@@ -107,7 +107,7 @@ public class exI {
     }
 
     // Ex 7
-    private static void idade() {
+    private static void idade() { // Tenho a certeza absoluta que ha uma maneira melhor de fazer isto
         Scanner input = new Scanner(System.in);
         System.out.print("Dia: ");
         int dia = input.nextInt();
