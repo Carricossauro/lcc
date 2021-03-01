@@ -15,6 +15,7 @@ ssize_t readln(int fd, char *line, size_t size) {
 	return size;
 }
 
+// This is incomplete btw
 int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 		int numero = 1;
