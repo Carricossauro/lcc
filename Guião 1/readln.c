@@ -24,7 +24,7 @@ ssize_t readln(int fd, char *line, size_t size) {
 	size = 0;
 	int i = 0;
 	ssize_t res = 1;
-	while (1 && res) {
+	while (res) {
 		res = read(fd, &c, 50);
 		for (i=0; i < res; i++,size++) {
 			if (c[i] == '\n') {
