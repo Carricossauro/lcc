@@ -1,3 +1,6 @@
+#include<stdio.h>
+#include<stdlib.h>
+
 int ex1() {
 	int p;
 	scanf("%d", &p);
@@ -117,3 +120,124 @@ char *mystrstr(char s1[], char s2[]) {
     }
     return res;
 }
+
+//Ex 11
+void strrev(char s[]) {
+	int size;
+	char temp;
+	for (size = 0; s[size] != '\0'; size++);
+	for (int i = 0; i < size/2; i++) {
+		temp = s[i];
+		s[i] = s[size-i-1];
+		s[size-i-1] = temp;
+	}
+}
+
+//Ex 12
+void strnoV (char t[]){
+    int i, pos;
+    for (i = 0, pos = 0; t[i] != '\0';i++) {
+        if (t[i] != 'a' &&
+			t[i] != 'e' &&
+			t[i] != 'i' &&
+			t[i] != 'o' &&
+			t[i] != 'u' &&
+			t[i] != 'A' &&
+			t[i] != 'E' &&
+			t[i] != 'I' &&
+			t[i] != 'O' &&
+			t[i] != 'U') {
+			t[pos++] = t[i];
+		}
+    }
+    t[pos] = '\0';
+}
+
+//Ex 13
+void truncW(char t[], int n) {
+    int i, adi, pos;
+    for (i = 0, pos = 0, adi = 0; t[i] != '\0'; i++) {
+        if (t[i] == ' ') {
+            adi = 0;
+            t[pos++] = ' ';
+        } else if (adi < n) {
+            t[pos++] = t[i];
+            adi++;
+        }
+    }
+    t[pos] = '\0';
+}
+
+//Ex 14
+char charMaisfreq (char s[]) {
+	char maisFreq = '0';
+	int i, j, freq = 0, f;
+	for(i = 0; s[i] != '\0'; i++) {
+		f = 0;
+		for (j = 0; s[j] != '\0'; j++) {
+			if (s[j] == s[i]) f++;
+		}
+		if (f > freq) {
+			freq = f;
+			maisFreq = s[i];
+		}
+	}
+	return maisFreq;
+}
+
+//Ex 15
+int iguaisConsecutivos (char s[]) {
+    int i, k;
+    int seq = 0, n;
+    for (i = 0, n = 0; s[i] != '\0'; i++, n = 0) {
+        for (k = i; s[k] == s[i] && s[k] != '\0'; k++) n++;
+        if (n > seq) seq = n;
+    }
+    return seq;
+}
+
+//Ex 16
+int ex16(char s[]) {
+    int n = strlen(s), vs = 0, r = 0, i, o;
+    for (i = 0; i < n; i++) {
+        vs = 0;
+        for (o = i; o < n; o++) {
+            if (o == 0) vs++;
+            else if (s[o] == ' ') continue;
+            else if (s[o - 1] == s[o]) break;
+            else vs++;
+        }
+        if (vs > r) r = vs;
+    }
+    return r;
+}
+
+//Ex 17
+int maiorPrefixo (char s1 [], char s2 []) {
+	int prefixo = 0;
+	int i, k, pre;
+	for (i = 0, pre = 0; s1[i] != '\0' && s2[i] != '\0'; i++, pre = 0) {
+		for (k = 0; s1[k] != '\0' && s2[k] != '\0' && s1[k] == s2[k]; k++) pre++;
+		if (pre > prefixo) prefixo = pre;
+	}
+	return prefixo;
+}
+
+//Ex 18
+int maiorSufixo (char s1 [], char s2 []) {
+    int n1 = strlen(s1), n2 = strlen(s2), i;
+    int n = (n1 < n2 ? n1 : n2), r = 0, pos = 0;
+    char s1i[n1], s2i[n2];
+
+    for (i = n1 - 1; i >= 0; i--) s1i[pos++] = s1[i];
+    pos = 0;
+    for (i = n2 - 1; i >= 0; i--) s2i[pos++] = s2[i];
+
+    for (i = 0; i < n; i++) {
+        if (s1i[i] == s2i[i]) r++;
+        else break;
+    }
+    return r;
+}
+
+//Ex 19
