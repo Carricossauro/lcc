@@ -22,15 +22,16 @@ ssize_t readln(int fd, char *line, ssize_t size) {
 
 // This is incomplete btw
 // Não sei como imprimir o número da linha
-// Also, quando encontra uma linha vazia para de ler (mas que o texto continue para baixo dessa linha)
 int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 		int linha = 1;
 		int fd = open(argv[1], O_RDONLY);
+		int endFile = lseek(fd,0,SEEK_END);
+		lseek(fd, 0, SEEK_SET);
 		char buffer[MAXBUFFER];
 		ssize_t size, total = 0;
 
-		while ((size = readln(fd, buffer, 100)) > 0) {
+		while ((size = readln(fd, buffer, 100)) > 0 || (total + linha) < endFile) {
 			total += size;
 			write(1, "\t",1);
 			write(1, buffer,size);
