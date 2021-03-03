@@ -2,51 +2,50 @@
 #include<unistd.h>
 #include<fcntl.h>
 
+#define MAXBUFFER 1000
+
+// Resoluçao do professor
 // Ex 3
-ssize_t readln(int fd, char *line, size_t size) {
-	char c;
-	size = 0;
-	ssize_t res;
-	do {
-		res = read(fd, &c, 1);
-		if (res == 0) break;
-		line[size++] = c;
-	} while (c != '\n');
-	line[--size] = '\0';
-	return size;
-}
-
 /*
+ssize_t readln(int fd, char *line, ssize_t size) {
+	ssize_t res = 0;
+	ssize_t i = 0;
 
-#define MAXBUFFER 50
-
-// Ex 4
-ssize_t readln(int fd, char *line, size_t size) {
-	char c[MAXBUFFER];
-	size = 0;
-	int i = 0;
-	ssize_t res = 1;
-	while (res) {
-		res = read(fd, &c, MAXBUFFER);
-		for (i=0; i < res; i++,size++) {
-			if (c[i] == '\n') {
-				line[size++] = '\0';
-				res = 0;
-				break;
-			}
-			line[size] = c[i];
-		}
+	while ((res = read(fd, &line[i], size)) > 0 && ((char) line[i] != '\n')) {
+		i+=res;
 	}
-	return size;
+
+	return i;
 }
 */
 
+// Ex 4
+ssize_t readln(int fd, char *line, ssize_t size) {
+	ssize_t res = 0;
+	int j = 0;
+	char local[MAXBUFFER];
+
+	while ((res = read(fd, local, size)) > 0) {
+		for(int i = 0; i < res; i++) {
+			if ((char) local[i] != '\n') {
+				line[j++] = local[i];
+			} else return j;
+		}
+	}
+
+	return j;
+}
+
 int main(int argc, char *argv[]) {
-	char line[1000];
+	char line[100];
 	ssize_t size;
-	if (argc < 1) return -1;
+	if (argc < 2) return -1;
+
 	int fd = open(argv[1], O_RDONLY);
-	size = readln(fd, line, size);
+	ssize_t tam = (ssize_t) atoi(argv[2]);
+
+	size = readln(fd, line, tam);
+
 	write(1, &line, size);
 	line[0] = '\n';
 	write(1, line, 1);
