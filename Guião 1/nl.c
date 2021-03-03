@@ -21,6 +21,8 @@ ssize_t readln(int fd, char *line, ssize_t size) {
 }
 
 // This is incomplete btw
+// Não sei como imprimir o número da linha
+// Also, quando encontra uma linha vazia para de ler (mas que o texto continue para baixo dessa linha)
 int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 		int linha = 1;
