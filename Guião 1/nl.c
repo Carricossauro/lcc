@@ -23,7 +23,7 @@ ssize_t readln(int fd, char *line, ssize_t size) {
 // Isto é um bocado estúpido mas funciona
 int numbers(char *buffer, int num) {
     char local[MAXBUFFER];
-    int i=0, j=0, resto;
+    int i=0, j=0;
     do {
         local[i++] = (num % 10) + 48;
         num/=10;
