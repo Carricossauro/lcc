@@ -20,6 +20,7 @@ ssize_t readln(int fd, char *line, ssize_t size) {
 	return j;
 }
 
+// Isto é um bocado estúpido mas funciona
 int numbers(char *buffer, int num) {
     char local[100];
     int i=0, j=0, resto;
@@ -35,8 +36,6 @@ int numbers(char *buffer, int num) {
     return j;
 }
 
-// This is incomplete btw
-// Não sei como imprimir o número da linha
 int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 		int linha = 1;
