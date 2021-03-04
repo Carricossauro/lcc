@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
 			lseek(fd, total+linha, SEEK_SET);
 			linha++;
 		}
+		close(fd);
 	}
 	return 0;
 }
