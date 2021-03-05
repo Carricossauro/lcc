@@ -31,7 +31,6 @@ int numbers(char *buffer, int num) {
     while (i >= 0) {
         buffer[j++] = local[--i];
     }
-    buffer[j++] = '.';
     buffer[j++] = ' ';
     return j;
 }
@@ -46,15 +45,17 @@ int main(int argc, char *argv[]) {
 		char num[MAXBUFFER];
 		ssize_t size, total = 0;
 
-		while ((size = readln(fd, buffer, 100)) > 0 || (total + linha) < endFile) {
+		while ((size = readln(fd, buffer, 100)) > 0 || total < endFile) {
 			total += size;
-			numSize = numbers(num, linha);
-			write(1, "\t",1);
-			write(1, num, numSize);
-			write(1, buffer,size);
+			total++;
+			if (size > 0) {
+				numSize = numbers(num, linha++);
+				write(1, "\t",1);
+				write(1, num, numSize);
+				write(1, buffer,size);
+			}
 			write(1, "\n",1);
-			lseek(fd, total+linha, SEEK_SET);
-			linha++;
+			lseek(fd, total, SEEK_SET);
 		}
 		close(fd);
 	}
