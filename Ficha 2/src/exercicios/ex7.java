@@ -74,7 +74,7 @@ public class ex7 {
 
         return rep;
     }
-    /*
+    
     private static int[][] gerador() {
         int[][] chaves = new int[2][];
         chaves[0] = new int[5]; // Numeros
@@ -96,14 +96,16 @@ public class ex7 {
             swap(estrelasPossiveis, k, 9-i-1);
         }
         return chaves;
-    }*/
+    }
 
+    /* Testes
     private static int[][] gerador() {
         int [][] chaves = new int[2][];
         chaves[0] = new int[]{1, 2, 3, 4, 5};
         chaves[1] = new int[]{1, 2};
         return chaves;
     }
+    */
 
     private static void swap(int[] array, int x, int y) {
         int temp = array[x];
