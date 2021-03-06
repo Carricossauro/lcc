@@ -37,10 +37,20 @@ public class ex7 {
 
         for (int i = 0; i < 5 && correto; i++) {
             if (i < 2) {
-                correto = respostas[1][i] == chaves[1][i];
+                correto = false;
+                for (int k = 0; k < 2 && !correto; k++) {
+                    if (respostas[1][i] == chaves[1][k]) {
+                        correto = true;
+                    }
+                }
             }
             if (correto) {
-                correto = respostas[0][i] == chaves[0][i];
+                correto = false;
+                for (int k = 0; k < 5 && !correto; k++) {
+                    if (respostas[0][i] == chaves[0][k]) {
+                        correto = true;
+                    }
+                }
             }
         }
 
