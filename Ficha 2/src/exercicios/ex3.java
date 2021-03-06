@@ -5,9 +5,9 @@ import java.time.temporal.ChronoUnit;
 
 
 public class ex3 {
-    LocalDate[] datas;
-    int tamanho;
-    int ocupacao = 0;
+    private LocalDate[] datas;
+    private int tamanho;
+    private int ocupacao = 0;
 
     public ex3(int tamanho) {
         this.datas = new LocalDate[tamanho];
