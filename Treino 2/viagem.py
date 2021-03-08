@@ -28,6 +28,7 @@ def viagem(rotas,o,d):
     cidades = set([j for i in rotas for j in i if not isinstance(j, int)])
 
     caminhos = {o:([o], 0)} # { destino: ([paragens], preco) }
+    # Guardar as paragens no dicionario não altera nada, é inútil
     orla = [(o,0)] # [ (destino, preco) ]
     x = 0
     
