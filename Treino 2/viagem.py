@@ -25,10 +25,8 @@ def fixRotas(rotas):
 
 def viagem(rotas,o,d):
     rotas = fixRotas(rotas)
-    cidades = set([j for i in rotas for j in i if not isinstance(j, int)])
 
-    caminhos = {o:([o], 0)} # { destino: ([paragens], preco) }
-    # Guardar as paragens no dicionario não altera nada, é inútil
+    caminhos = {o:0} # { destino:preco }
     orla = [(o,0)] # [ (destino, preco) ]
     x = 0
     
@@ -46,12 +44,12 @@ def viagem(rotas,o,d):
             novoPreco = preco + prox[1]
                 
             if proximoDestino not in caminhos:
-                caminhos[proximoDestino] = ([o,proximoDestino], novoPreco)
+                caminhos[proximoDestino] = novoPreco
                 orla.append((proximoDestino,novoPreco))
-            elif novoPreco < caminhos[proximoDestino][1]:
-                caminhos[proximoDestino] = (caminhos[cid][0] + [proximoDestino], novoPreco)
+            elif novoPreco < caminhos[proximoDestino]:
+                caminhos[proximoDestino] = novoPreco
                 orla.append((proximoDestino,novoPreco))
 
-    return caminhos[d][1]
+    return caminhos[d]
 
 # Fuck grafos, all my homies hate grafos
