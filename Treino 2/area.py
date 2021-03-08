@@ -45,17 +45,15 @@ def area(p,mapa):
     n = len(mapa)
     visitado = [[False]*n for _ in range(n)]
     acessivel = 0
-    x = 0
     orla = [p]
     
-    while len(orla) != x:
-        pos = orla[x]
+    for pos in orla:
         if not visitado[pos[1]][pos[0]]:
             acessivel += 1
         
-        x += 1
         visitado[pos[1]][pos[0]] = True
         
         orla += visitaveis(pos, visitado, mapa,n)
+    
     
     return acessivel
