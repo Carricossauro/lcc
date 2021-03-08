@@ -9,11 +9,7 @@ A função deverá devolver o tamanho do maior continente.
 '''
 
 def maior(vizinhos):
-    paises = [] # Lista de paises sem repetiçoes
-    for f in vizinhos:
-        for p in f:
-            if p not in paises:
-                paises.append(p)
+    paises = list(set([p for f in vizinhos for p in f])) # Lista de paises sem repetiçoes
             
     continentes = []
     
