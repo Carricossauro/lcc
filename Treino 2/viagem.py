@@ -6,6 +6,7 @@ lista de rotas de autocarro, onde cada rota é uma sequência de cidades por ond
 passa o autocarro, intercalada com o custo para viajar entre cada par de cidades.
 Assuma que cada rota funciona nos dois sentidos.
 
+"Fuck grafos, all my homies hate grafos"
 '''
 
 def fixRotas(rotas):
@@ -21,20 +22,15 @@ def fixRotas(rotas):
             posDestino += 2
             posPreco += 2
     
-    return lista    
+    return lista
 
 def viagem(rotas,o,d):
     rotas = fixRotas(rotas)
 
     caminhos = {o:0} # { destino:preco }
     orla = [(o,0)] # [ (destino, preco) ]
-    x = 0
     
-    while x != len(orla):
-        cid = orla[x][0]
-        preco = orla[x][1]
-        x += 1
-        
+    for cid, preco in orla:
         proximos = filter(lambda x: cid in x, rotas)
         for prox in proximos:
             if prox[0] == cid:
@@ -51,5 +47,3 @@ def viagem(rotas,o,d):
                 orla.append((proximoDestino,novoPreco))
 
     return caminhos[d]
-
-# Fuck grafos, all my homies hate grafos
