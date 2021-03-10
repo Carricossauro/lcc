@@ -1,3 +1,3 @@
 # POO-FM
 
-Este projeto foi proposto pela cadeira de Programção Orientada a Objetos onde o objetivo principal fazer o football manager
+Trabalho prático realizado no âmbito da cadeira de Programação Orientada aos Objetos, do curso de LCC da Universidade do Minho.
