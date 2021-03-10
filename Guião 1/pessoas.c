@@ -10,6 +10,14 @@ struct pessoa {
     int idade;
 };
 
+int isNumber(char *string) {
+
+    for(int i = 0; string[i] != '\0'; i++)
+        if (string[i] < 48 || string[i] > 57) return 0;
+
+    return 1;
+}
+
 int numbers(char *buffer, int num) {
     char local[20];
     int i=0, j=0;
@@ -24,80 +32,85 @@ int numbers(char *buffer, int num) {
     return j;
 }
 
+void inserir(char *argv[]) {
+    int file = open("pessoas.txt", O_RDWR);
+    int enc = 0;
+    int reg = 1;
+    char registo[20];
+    ssize_t res;
+    struct pessoa humano;
+            
+    // Guarda o nome e a idade no ficheiro
+    // Imprime no stdout o número do registo
+    strcpy(humano.nome, argv[2]);
+    humano.idade = atoi(argv[3]);
+    reg = lseek(file, 0, SEEK_END);
+    reg = numbers(registo, reg/sizeof(struct pessoa));
+    write(file, &humano, sizeof(struct pessoa));
+    write(1,"Registo ", 8);
+    write(1, registo, reg);
+    write(1,"\n",1);
+
+    close(file);
+}
+
+void alteraRegisto(char *argv[]) {
+    int file = open("pessoas.txt", O_RDWR);
+    ssize_t res;
+    int reg = 1;
+    int enc = 0;
+    char registo[20];
+    struct pessoa humano;
+
+    lseek(file, sizeof(struct pessoa) * (atoi(argv[2]) - 1), SEEK_SET);
+    read(file, &humano, sizeof(struct pessoa));
+    lseek(file, sizeof(struct pessoa) * (atoi(argv[2]) - 1), SEEK_SET);
+    humano.idade = atoi(argv[3]);
+    write(file, &humano, sizeof(struct pessoa));
+
+    close(file);
+}
+
+void altera(char *argv[]) {
+    int file = open("pessoas.txt", O_RDWR);
+    ssize_t res;
+    int reg = 1;
+    int enc = 0;
+    struct pessoa humano;
+
+    while (!enc && (res = read(file, &humano, sizeof(struct pessoa))) > 0) {
+
+        if (!strcmp(humano.nome, argv[2])) {
+            enc = 1;
+        } reg++;
+    }
+
+    if (enc) {
+        // Voltar para trás no ficheiro para reescrever
+        lseek(file, -sizeof(struct pessoa), SEEK_CUR);
+                
+        humano.idade = atoi(argv[3]);
+
+        write(file, &humano, sizeof(struct pessoa));
+    }
+
+    close(file);
+}
+
 // Exercícios 6 e 7 feitos em conjunto
 int main(int argc, char *argv[]) {
     if (argc >= 4) {
         if (!strcmp(argv[1], "-i")) {
-            
-            int file = open("pessoas.txt", O_RDWR);
-            int enc = 0;
-            int reg = 1;
-            char registo[20];
-            ssize_t res;
-            char garbage;
-            struct pessoa humano;
-
-            // Procura o nome e conta o número de registos
-            while (!enc && (res = read(file, &humano, sizeof(struct pessoa))) > 0) {
-                read(file, &garbage, 1);
-                if (!strcmp(humano.nome, argv[2])) {
-                    enc = 1;
-                } else reg++;
-            }
-            
-            // Guarda o nome e a idade no ficheiro se ainda não existir.
-            // Imprime no stdout o número do registo
-            if (!enc) {
-                strcpy(humano.nome, argv[2]);
-                humano.idade = atoi(argv[3]);
-                reg = numbers(registo, reg);
-
-                write(file, &humano, sizeof(struct pessoa));
-                write(file, "\n", 1);
-                write(1,"Registo ", 8);
-                write(1, registo, reg);
-                write(1,"\n",1);
-
-            } else write(1, "Já existe alguém com esse nome\n", 33);
-
-            close(file);
+            inserir(argv);
         }
 
         // Esta merda funcionou à primeira, poggers
         else if (!strcmp(argv[1], "-u")) {
+            if (isNumber(argv[2])) {
+                alteraRegisto(argv);
 
-            int file = open("pessoas.txt", O_RDWR);
-            ssize_t res;
-            int reg = 1;
-            int enc = 0;
-            char garbage, registo[20];
-            struct pessoa humano;
-            int totalLido;
+            } else altera(argv);
 
-            numbers(registo, reg);
-
-            while (!enc && (res = read(file, &humano, sizeof(struct pessoa))) > 0) {
-                read(file, &garbage, 1);
-                totalLido += sizeof(struct pessoa) + 1;
-
-                if (!strcmp(humano.nome, argv[2]) || !strcmp(argv[2], registo)) {
-                    enc = 1;
-                } else numbers(registo, ++reg);
-            }
-
-            if (enc) {
-                // Voltar para o início do ficheiro para reescrever
-                lseek(file, totalLido-sizeof(struct pessoa)-1, SEEK_SET);
-                
-                humano.idade = atoi(argv[3]);
-
-                write(file, &humano, sizeof(struct pessoa));
-                write(file, "\n",1);
-            }
-
-
-
-            close(file);
         } else write(1, "Invalid inputs\n", 15);
 
     } else if (argc >= 2 && strcmp(argv[1], "-a") == 0) {
@@ -105,7 +118,6 @@ int main(int argc, char *argv[]) {
 
         int file = open("pessoas.txt", O_RDONLY);
         struct pessoa humano;
-        char garbage;
         char idString[20];
         ssize_t res;
 
@@ -114,7 +126,6 @@ int main(int argc, char *argv[]) {
             write(1, " ", 1);
             res = numbers(idString, humano.idade);
             write(1, idString, res);
-            read(file, &garbage, 1);
             write(1, "\n", 1);
         }
 
