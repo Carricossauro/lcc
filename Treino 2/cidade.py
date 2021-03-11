@@ -63,3 +63,61 @@ def tamanho(ruas):
             m = max(y,m)
     
     return m
+
+####################################################################################
+#         Solução alternativa usando o algoritmo Floyd-Wharshall fornecido         #
+#                  Ainda não funciona continua a falhar num teste                  #
+####################################################################################
+
+def fw(adj):
+    dist = {}
+    
+    for o in adj:
+        dist[o] = {}
+        for d in adj:
+            if o == d:
+                dist[o][d] = 0
+            elif d in adj[o]:
+                dist[o][d] = adj[d][o]
+            else:
+                dist[o][d] = float("inf")
+    for k in adj:
+        for o in adj:
+            for d in adj:
+                if dist[o][k] + dist[k][d] < dist[o][d]:
+                    dist[o][d] = dist[o][k] + dist[k][d] 
+
+    return dist
+
+def fixRuas(ruas):
+    adj = {}
+    
+    for rua in ruas:
+        a = rua[0]
+        b = rua[-1]
+        n = len(rua)
+        if a != b:
+            if a not in adj:
+                adj[a] = {}
+            if b not in adj:
+                adj[b] = {}
+            if b not in adj[a]:
+                adj[a][b] = float("inf")
+            if a not in adj[b]:
+                adj[b][a] = float("inf")
+            adj[a][b] = min(n, adj[a][b])
+            adj[b][a] = min(n, adj[b][a])
+    return adj
+
+def tamanho(ruas):
+    ruas = fixRuas(ruas)
+    dists = fw(ruas)
+    m = -1
+    
+    for k in dists:
+        for j in dists[k]:
+            x = dists[k][j]
+            if x > m:
+                m = x
+    
+    return m
