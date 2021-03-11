@@ -23,26 +23,24 @@ identificado pelo primeiro (e último) caracter do respectivo nome.
 ###################################################################################
 def caminhos(ruas, origem):
     res = {origem:0}
-    orla = [(origem,0, [])]
+    orla = [(origem,0)]
     
     while orla:
-        dest, tam, hist = orla.pop(0)
+        dest, tam = orla.pop(0)
         for rua in ruas:
             if dest in rua:
                 if dest == rua[0]:
                     prox = rua[1]
                 else:
                     prox = rua[0]
-                if prox in hist:
-                    continue
                 novaDist = rua[2] + tam
                 
                 if prox not in res:
                     res[prox] = novaDist
-                    orla.append( (prox, novaDist, hist + [dest]) )
+                    orla.append( (prox, novaDist) )
                 elif res[prox] > novaDist:
                     res[prox] = novaDist
-                    orla.append( (prox, novaDist, hist + [dest]) )
+                    orla.append( (prox, novaDist) )
     
     return res
 
