@@ -18,9 +18,6 @@ identificado pelo primeiro (e último) caracter do respectivo nome.
 > 4
 
 '''
-###################################################################################
-# Isto falha num teste dos 5, vou tentar usar alguma coisa mais eificiente depois #
-###################################################################################
 def caminhos(ruas, origem):
     res = {origem:0}
     orla = [(origem,0)]
@@ -47,8 +44,7 @@ def caminhos(ruas, origem):
 def fixRuas(ruas):
     final = []
     for rua in ruas:
-        if rua[0] != rua[-1]:
-            final.append( (rua[0], rua[-1], len(rua)) )
+        final.append( (rua[0], rua[-1], len(rua)) )
     return final
 
 def tamanho(ruas):
@@ -66,7 +62,6 @@ def tamanho(ruas):
 
 ####################################################################################
 #         Solução alternativa usando o algoritmo Floyd-Wharshall fornecido         #
-#                  Ainda não funciona continua a falhar num teste                  #
 ####################################################################################
 
 def fw(adj):
@@ -96,17 +91,16 @@ def fixRuas(ruas):
         a = rua[0]
         b = rua[-1]
         n = len(rua)
-        if a != b:
-            if a not in adj:
-                adj[a] = {}
-            if b not in adj:
-                adj[b] = {}
-            if b not in adj[a]:
-                adj[a][b] = float("inf")
-            if a not in adj[b]:
-                adj[b][a] = float("inf")
-            adj[a][b] = min(n, adj[a][b])
-            adj[b][a] = min(n, adj[b][a])
+        if a not in adj:
+            adj[a] = {}
+        if b not in adj:
+            adj[b] = {}
+        if b not in adj[a]:
+            adj[a][b] = float("inf")
+        if a not in adj[b]:
+            adj[b][a] = float("inf")
+        adj[a][b] = min(n, adj[a][b])
+        adj[b][a] = min(n, adj[b][a])
     return adj
 
 def tamanho(ruas):
