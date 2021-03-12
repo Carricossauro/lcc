@@ -1,6 +1,6 @@
 # https://codeboard.io/projects/153023
 
-## Percentagens:
+### Percentagens:
 - Área - 13%
 - Cavalo - 10%
 - Cidade - 13%
