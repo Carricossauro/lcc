@@ -56,3 +56,22 @@ void horizontal(int size) {
 	}
 }
 
+// Ex 4
+int circulo(int raio) {
+    int num = 0;
+    for (int i =  0; i < raio*2+1; i++) {
+        for (int j = 0; j < raio*2+1; j++) {
+            float x = raio - i;
+            float y = raio - j;
+            float dist = sqrt(x*x + y*y);
+            if (dist <= raio) {
+                putchar('#');
+                num++;
+            }
+            else putchar(' ');
+        }
+        putchar('\n');
+    }
+
+    return num;
+}
