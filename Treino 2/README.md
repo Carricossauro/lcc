@@ -2,7 +2,7 @@
 
 ### Percentagens:
 - Área - 13%
-- Cavalo - 10%
+- Cavalo - 13% com a solução do [@quantik-git](https://github.com/quantik-git)
 - Cidade - 13%
 - Continente - 13%
 - Erdos - 13%
