@@ -8,31 +8,26 @@ Assuma que o tabuleiro tem tamanho ilimitado.
 
 '''
 
-def movimentos(x, y, m):
-    movs = []
+def movimentos(x, y, m, movs):
+    dx = [1,-1,1,-1,2,2,-2,-2]
+    dy = [2,2,-2,-2,-1,1,-1,1]
     
-    # Cima
-    movs.append(((x+1,y+2), m+1))
-    movs.append(((x-1,y+2), m+1))
-    # Baixo
-    movs.append(((x+1,y-2), m+1))
-    movs.append(((x-1,y-2), m+1))
-    # Direita
-    movs.append(((x+2,y-1), m+1))
-    movs.append(((x+2,y+1), m+1))
-    # Esquerda
-    movs.append(((x-2,y-1), m+1))
-    movs.append(((x-2,y+1), m+1))
+    for i in range(8):
+        newX = x + dx[i]
+        newY = y + dy[i]
+        
+        movs.append( ((newX,newY), m+1) )
     
     return movs
 
 def saltos(o,d):
     orla = [(o,0)]
     
-    for pos, mov in orla:
+    while orla:
+        pos,mov = orla.pop(0)
         if pos == d:
             return mov
             
-        orla += movimentos(pos[0], pos[1], mov)
+        movimentos(pos[0], pos[1], mov, orla)
     
-    return (o,0)
+    return 0
