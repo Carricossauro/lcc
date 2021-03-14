@@ -8,4 +8,4 @@
 - Erdos - 13%
 - Labirinto - 13%
 - Viagem - 13%
-- Travessia - Não resolvido
+- Travessia - 13%
