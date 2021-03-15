@@ -37,3 +37,25 @@ def caminho(mapa):
         orla += lados(pos, n, mapa)
     
     return orla
+
+# Função lados alternativa
+def lados(pos, n, mapa):
+    lista = []
+    dx = [-1 , 1 , 0 , 0 ]
+    dy = [ 0 , 0 ,-1 , 1 ]
+    lt = ["O","E","N","S"]
+    bl = ['E','O','S','N']
+    
+    for k in range(4):
+        newX = pos[0] + dx[k]
+        newY = pos[1] + dy[k]
+        l = lt[k]
+        blacklisted = bl[k]
+        
+        if n > newX >= 0 and n > newY >= 0 and mapa[newY][newX] == ' ':
+            if pos[2] == "":
+                lista.append( (newX, newY, pos[2] + l) )
+            elif pos[2][-1] != blacklisted:
+                lista.append( (newX, newY, pos[2] + l) )
+    
+    return lista
