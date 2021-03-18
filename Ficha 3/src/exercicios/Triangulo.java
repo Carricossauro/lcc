@@ -27,7 +27,7 @@ public class Triangulo {
         double[] a = this.getX();
         double[] b = this.getY();
         double[] c = this.getZ();
-        return 0.5 * ((a[0] * (b[1] - c[1])) + b[0] * (c[1] - a[1]) + c[0] * (a[1] - b[1]));
+        return 0.5 * ((a[0] * (b[1] - c[1])) + b[0] * (c[1] - a[1]) + c[0] * (a[1] - b[1])); //Nao sei se esta certa, encontrei a formula
     }
 
     public double calculaPerimetroTriangulo() {
