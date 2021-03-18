@@ -68,3 +68,52 @@ def travessia(mapa):
         orla += movimentos(mapa, y, x, N, M, m, inicio)
         
     return short
+
+##########################################################################################
+# Exemplo alternativo usando o algoritmo de dijkstra (em teoria deve ser mais eficiente) #
+#                         Função movimentos mantém-se igual                              #
+##########################################################################################
+    
+def insert(orla, p): # insert ordenado -> Mete elemento com menor peso (e mais a esquerda) no fim
+    y,x,m,inicio = p
+    i = 0
+    added = False
+    
+    while i < len(orla) and not added:
+        if m > orla[i][2]:
+            added = True
+            orla.insert(i,p)
+        elif m == orla[i][2] and inicio > orla[i][3]:
+            added = True
+            orla.insert(i,p)
+        i+=1
+    if not added:
+        orla.append(p)
+    
+
+def travessia(mapa):
+    N = len(mapa)
+    M = len(mapa[0])
+    vis = {}
+    orla = []
+    for k in range(M):
+        orla.append( (0,k,0,k) )
+        vis[k] = set()
+    result = []
+    short = (0, N*M)
+    
+    while orla:
+        y,x,m,inicio = orla.pop()
+        if (x,y) in vis[inicio]:
+            continue
+        
+        vis[inicio].add( (x,y) )
+        if y == N-1 and m < short[1]:
+            return (inicio, m)
+            
+        lista = movimentos(mapa, y, x, N, M, m, inicio)
+        
+        for x in lista:
+            insert(orla, x)
+        
+    return short
