@@ -58,6 +58,7 @@ int duplicaVogais(char *s) {
             adicionados++;
             s++;
         }
+        len--;
     }
     
     return adicionados;
