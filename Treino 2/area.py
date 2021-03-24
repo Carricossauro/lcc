@@ -57,3 +57,23 @@ def area(p,mapa):
     
     
     return acessivel
+
+# Alternativa
+def area(p,mapa):
+    queue = [p]
+    N = len(mapa)
+    area = 0
+
+    for posicao in queue:
+        area += 1
+        dx = [1,-1,0,0]
+        dy = [0,0,1,-1]
+
+        for i in range(4):
+            x = posicao[0] + dx[i]
+            y = posicao[1] + dy[i]
+        
+            if 0 <= x < N and 0 <= y < N and mapa[y][x] == '.' and (x,y) not in queue:
+                queue.append((x,y))
+
+    return area
