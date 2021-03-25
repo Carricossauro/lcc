@@ -34,3 +34,16 @@ def maior(vizinhos):
                     lista.append(p)
     
     return max(map(len, continentes)) if continentes != [] else 0
+
+# Alternativa
+def maior(vizinhos):
+    continentes = []
+    for k in vizinhos:
+        continentes.append(set(k))
+    for c1 in continentes:
+        for c2 in continentes:
+            if any(i in c1 for i in c2):
+                c1.update(c2)
+                
+    lista = [list(k) for k in continentes]
+    return max(map(len, lista)) if lista != [] else 0
