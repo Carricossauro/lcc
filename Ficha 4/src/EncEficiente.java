@@ -94,7 +94,9 @@ public class EncEficiente {
         this.data = date;
     }
     public void setEncomendas(ArrayList<LinhaEncomenda> lista) {
-        this.encomendas = new ArrayList<LinhaEncomenda>(lista);
+        this.encomendas = new ArrayList<LinhaEncomenda>();
+        for (LinhaEncomenda linha : lista)
+            this.encomendas.add(linha.clone());
     }
     public void setMorada(String morada) {
         this.morada = new String(morada);
@@ -115,6 +117,9 @@ public class EncEficiente {
         return this.data;
     }
     public ArrayList<LinhaEncomenda> getEncomendas() {
-        return new ArrayList<LinhaEncomenda>(this.encomendas);
+        ArrayList<LinhaEncomenda> ret = new ArrayList<LinhaEncomenda>();
+        for (LinhaEncomenda linha : this.encomendas)
+            ret.add(linha.clone());
+        return ret;
     }
 }
