@@ -22,8 +22,6 @@ def dist(pac, N, M, mapa):
 
 def pacman(mapa):
     pacX, pacY = findPacMan(mapa)
-    if gs == []:
-        return pacX,pacY
     N = len(mapa)
     M = len(mapa[0])
     result = (0,0,float("-inf")) # x,y,dist
