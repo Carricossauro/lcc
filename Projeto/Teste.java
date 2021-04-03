@@ -8,10 +8,10 @@ public class Teste {
 
         Jogador jog = new Jogador();
 
-        System.out.print("Introduza o metodo para testar: ");
-        int x = ler.nextInt();
+        System.out.print("Introduza o método que quer testar: ");
+        int caso = ler.nextInt();
 
-        switch(x) {
+        switch(caso) {
             case 0: {
                 break;
             }
@@ -25,11 +25,10 @@ public class Teste {
                 break;
             }
             default: {
-                System.out.println("Metodo nao existe.");
+                System.out.println("Método não existe.");
                 break;
             }
         }
         ler.close();
-
     }
 }
