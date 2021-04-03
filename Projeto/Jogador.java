@@ -63,9 +63,9 @@ public class Jogador {
 
         sb.append("Jogador: "); sb.append(this.nome);
         sb.append("\nEquipa: "); sb.append(this.equipa);
-        sb.append("\nPosicao "); sb.append(this.posicao);
+        sb.append("\nPosição "); sb.append(this.posicao);
         sb.append("\nId: "); sb.append(this.id);
-        sb.append("\nHistorico de equipas: "); sb.append(this.historico.toString());
+        sb.append("\nHistórico de equipas: "); sb.append(this.historico.toString());
         sb.append("\nAtributos: "); sb.append(this.atributos.toString());
 
         return sb.toString();
