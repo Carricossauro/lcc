@@ -11,12 +11,17 @@ int system(char *command) {
     char *args[MAXBUFFER];
     char *token;
     int c = 0;
+    int background = 0;
     
     token = strtok(command, " ");
 
     while (token != NULL) {
         args[c++] = token;
         token = strtok(NULL, " ");
+    }
+    if (!strcmp(args[c-1], "&")) {
+        background = 1;
+        c--;
     }
     args[c] = NULL;
 
@@ -26,8 +31,9 @@ int system(char *command) {
         _exit(ret);
     }
 
-    int status;
-    pid_t pid = wait(&status);
+    int status = 0;
+    pid_t pid;
+    if (!background) pid = wait(&status);
     return status;
 }
 
