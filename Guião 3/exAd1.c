@@ -1,50 +1,34 @@
 #include<unistd.h>
 #include<sys/wait.h>
 #include<stdio.h>
-#include<stdlib.h>
-#include<fcntl.h>
 #include<string.h>
+#include<fcntl.h>
 
-#define MAXBUFFER 1000
+#define MAXBUFFER 100
 
-int mySystem(char **argv) {
-    if (argv[0] == NULL) return 1;
+int system(char *command) {
+    if (command == NULL) return 1;
+    char *args[MAXBUFFER];
+    char *token;
+    int c = 0;
     
+    token = strtok(command, " ");
+
+    while (token != NULL) {
+        args[c++] = token;
+        token = strtok(NULL, " ");
+    }
+    args[c] = NULL;
+
     if (fork() == 0) {
-        execvp(argv[0], argv);
+        int ret = execvp(args[0], args);
         
-        _exit(127);
+        _exit(ret);
     }
 
     int status;
     pid_t pid = wait(&status);
     return status;
-}
-
-int split(char *buffer, char **args) { 
-    // Guarda os comandos de um buffer para um array de strings
-    char command[MAXBUFFER];
-    int k,i = 0; // Posição a ler no buffer
-    int c = 0; // Número de comandos guardados
-    while (buffer[i] != '\0') {
-        if (buffer[i] == ' ') {
-            i++;
-            continue;
-        }
-        k = i;
-        for (; i < MAXBUFFER && buffer[i] != '\0' && buffer[i] != ' ' & buffer[i] != '\n';i++)
-        // i == MAXBUFFER ou
-        // buffer[i] == '\0' ou
-        // buffer[i] == ' '
-        if (i == MAXBUFFER) return 1;
-
-        args[c++] = buffer+k;
-        if (buffer[i] != '\0')
-            buffer[i++] = '\0';
-    }
-    args[c] = NULL;
-
-    return 0;
 }
 
 ssize_t readln(char *line) {
@@ -58,51 +42,16 @@ ssize_t readln(char *line) {
 	return i;
 }
 
-int main() {
-    int exit = 0;
+int main(int argc, char **argv) {
     char buffer[MAXBUFFER];
-    char *args[MAXBUFFER];
-    char ch;
-    int r;
 
-    while (!exit) {
-        r = readln(buffer);
+    while (1) {
+        readln(buffer);
 
-        if (split(buffer, args)) continue;
+        if (!strcmp(buffer, "exit")) break;
 
-        if (!strcmp(args[0], "exit")) return 0;
-        
-        mySystem(args);
+        system(buffer);
     }
-
-    return 1;
-}
-
-/* split que usei incialmente (menos eficiente em memória)
-
-int split(char *buffer, char **args) { 
-    // Guarda os comandos de um buffer para um array de strings
-    char command[MAXBUFFER];
-    int k,i = 0; // Posição a ler no buffer
-    int c = 0; // Número de comandos guardados
-    while (buffer[i] != '\0') {
-        if (buffer[i] == ' ') i++;
-
-        for (k = 0; i < MAXBUFFER && buffer[i] != '\0' && buffer[i] != ' '; k++, i++) {
-            command[k] = buffer[i];
-        }
-        // i == MAXBUFFER ou
-        // buffer[i] == '\0' ou
-        // buffer[i] == ' '
-        if (i == MAXBUFFER) return 1;
-
-        command[k] = '\0';
-
-        args[c] = malloc(sizeof(char) * k);
-        strcpy(args[c++], command);
-    }
-    args[c] = NULL;
 
     return 0;
 }
-*/

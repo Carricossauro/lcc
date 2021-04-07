@@ -1,15 +1,29 @@
 #include<unistd.h>
 #include<sys/wait.h>
 #include<stdio.h>
+#include<string.h>
 #include<fcntl.h>
 
-int system(char **argv) {
-    if (argv[1] == NULL) return 1;
+#define MAXBUFFER 100
+
+int system(char *command) {
+    if (command == NULL) return 1;
+    char *args[MAXBUFFER];
+    char *token;
+    int c = 0;
     
+    token = strtok(command, " ");
+
+    while (token != NULL) {
+        args[c++] = token;
+        token = strtok(NULL, " ");
+    }
+    args[c] = NULL;
+
     if (fork() == 0) {
-        execvp(argv[1], argv+1);
+        int ret = execvp(args[0], args);
         
-        _exit(127);
+        _exit(ret);
     }
 
     int status;
@@ -18,8 +32,5 @@ int system(char **argv) {
 }
 
 int main(int argc, char **argv) {
-
-    system(argv);
-
-    return 0;
+    return system("ls");
 }

@@ -1,0 +1,1 @@
+Fiz estes exercícios a assumir que o system recebia um **char, mas devia ser *char
