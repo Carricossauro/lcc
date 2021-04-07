@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
             printf("[Processo %d] ", getpid());
 
             execvp(argv[i], args);
+            // execv(argv[i], args); -> Para correr ficheiros que não estão em $PATH
 
             _exit(0);
         }
