@@ -32,5 +32,6 @@ int system(char *command) {
 }
 
 int main(int argc, char **argv) {
-    return system("ls");
+    char command[] = "ls -la";
+    return system(command);
 }
