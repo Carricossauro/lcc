@@ -54,7 +54,7 @@ ssize_t readln(char *line) {
 	while ((res = read(0, &line[i], 1)) > 0 && ((char) line[i] != '\n')) {
 		i+=res;
 	}
-    line[i] = '\0';
+    	line[i] = '\0';
 	return i;
 }
 
