@@ -27,6 +27,65 @@ int split(char *buffer, char **args) {
     int k,i = 0; // Posição a ler no buffer
     int c = 0; // Número de comandos guardados
     while (buffer[i] != '\0') {
+        if (buffer[i] == ' ') {
+            i++;
+            continue;
+        }
+        k = i;
+        for (; i < MAXBUFFER && buffer[i] != '\0' && buffer[i] != ' ' & buffer[i] != '\n';i++)
+        // i == MAXBUFFER ou
+        // buffer[i] == '\0' ou
+        // buffer[i] == ' '
+        if (i == MAXBUFFER) return 1;
+
+        args[c++] = buffer+k;
+        if (buffer[i] != '\0')
+            buffer[i++] = '\0';
+    }
+    args[c] = NULL;
+
+    return 0;
+}
+
+ssize_t readln(char *line) {
+	ssize_t res = 0;
+	ssize_t i = 0;
+    
+	while ((res = read(0, &line[i], 1)) > 0 && ((char) line[i] != '\n')) {
+		i+=res;
+	}
+    line[i] = '\0';
+	return i;
+}
+
+int main() {
+    int exit = 0;
+    char buffer[MAXBUFFER];
+    char *args[MAXBUFFER];
+    char ch;
+    int r;
+
+    while (!exit) {
+        r = readln(buffer);
+
+        if (split(buffer, args)) continue;
+
+        if (!strcmp(args[0], "exit")) return 0;
+        
+        mySystem(args);
+    }
+
+    return 1;
+}
+
+/* split que usei incialmente (menos eficiente em memória)
+
+int split(char *buffer, char **args) { 
+    // Guarda os comandos de um buffer para um array de strings
+    char command[MAXBUFFER];
+    int k,i = 0; // Posição a ler no buffer
+    int c = 0; // Número de comandos guardados
+    while (buffer[i] != '\0') {
         if (buffer[i] == ' ') i++;
 
         for (k = 0; i < MAXBUFFER && buffer[i] != '\0' && buffer[i] != ' '; k++, i++) {
@@ -46,35 +105,4 @@ int split(char *buffer, char **args) {
 
     return 0;
 }
-
-ssize_t readln(char *line) {
-	ssize_t res = 0;
-	ssize_t i = 0;
-    
-	while ((res = read(0, &line[i], 1)) > 0 && ((char) line[i] != '\n')) {
-		i+=res;
-	}
-
-	return i;
-}
-
-int main() {
-    int exit = 0;
-    char buffer[MAXBUFFER];
-    char *args[MAXBUFFER];
-    char ch;
-    int r;
-
-    while (!exit) {
-        r = readln(buffer);
-        buffer[r] = '\0';
-
-        if (split(buffer, args)) continue;
-
-        if (!strcmp(args[0], "exit")) return 0;
-        
-        mySystem(args);
-    }
-
-    return 1;
-}
+*/
