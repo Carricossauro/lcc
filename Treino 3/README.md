@@ -8,4 +8,4 @@
 - Saque - TBD
 - Soma - TBD
 - Validas - TBD
-- Vendedor - TBD
+- Vendedor - 13%
