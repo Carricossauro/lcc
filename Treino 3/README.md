@@ -2,7 +2,7 @@
 
 ### Percentagens:
 - Crescente - TBD
-- Espaca - TBD
+- Espaca - 10%
 - Ladrão - 13%
 - Robot - TBD
 - Saque - 13%
