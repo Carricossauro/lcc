@@ -97,7 +97,7 @@ public class Parque {
         List<String> lista = new ArrayList<String>();
 
         for (Lugar lu: this.lugares.values()) {
-            if (lu.isPermanente() && lu.getMinutos() < x)
+            if (lu.isPermanente() && lu.getMinutos() > x)
                 lista.add(lu.getMatricula());
         }
 
