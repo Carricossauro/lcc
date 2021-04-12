@@ -16,8 +16,8 @@ def espaca(frase,palavras):
     n = len(frase)
     cache = ["" for x in range(n+1)]
     
-    for x in range(n+1):
-        for y in range(n+1):
+    for x in range(n):
+        for y in range(x+1, n+1):
             pal = frase[x:y]
             if pal in palavras:
                 ant = cache[x]
