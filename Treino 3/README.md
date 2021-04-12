@@ -7,5 +7,5 @@
 - Robot - TBD
 - Saque - 13%
 - Soma - 13%
-- Validas - TBD
+- Validas - 13%
 - Vendedor - 13%
