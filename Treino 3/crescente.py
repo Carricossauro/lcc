@@ -14,6 +14,8 @@ função a todos os sufixos da sequência de entrada.´
 # Programação Dinâmica - 11%
 def crescente(lista):
     n = len(lista)
+    if n == 0:
+        return 0
     cache = [1 for x in range(n+1)]
     cache[0] = 0
     maxSub = 1
