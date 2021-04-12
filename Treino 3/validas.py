@@ -9,7 +9,6 @@ sub-sequência cuja soma é o valor dado.
 
 """
 
-# Programação Dinâmica
 def temSoma(soma, lista):
     print(lista)
     n = len(lista)
@@ -25,8 +24,7 @@ def temSoma(soma, lista):
             else:
                 cache[i][s] = cache[i-1][s] 
                 if not cache[i][s]:
-                    p = s-lista[i-1]
-                    if not cache[i-1][p]:
+                    if not cache[i-1][s-lista[i-1]]:
                         cache[i][s] = False
                     else:
                         cache[i][s] = cache[i][s-lista[i-1]]
