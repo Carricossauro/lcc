@@ -1,7 +1,7 @@
 # https://codeboard.io/projects/155406
 
 ### Percentagens:
-- Crescente - 11%
+- Crescente - 13%
 - Espaca - 10%
 - Ladrão - 13%
 - Robot - TBD
