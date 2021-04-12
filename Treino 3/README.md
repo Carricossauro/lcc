@@ -6,6 +6,6 @@
 - Ladrão - 13%
 - Robot - TBD
 - Saque - 13%
-- Soma - TBD
+- Soma - 13%
 - Validas - TBD
 - Vendedor - 13%
