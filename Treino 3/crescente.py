@@ -11,7 +11,7 @@ função a todos os sufixos da sequência de entrada.´
 
 """
 
-# Programação Dinâmica - 11%
+# Programação Dinâmica - 13%
 def crescente(lista):
     n = len(lista)
     if n == 0:
