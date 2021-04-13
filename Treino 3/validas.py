@@ -24,9 +24,8 @@ def temSoma(soma, lista):
             else:
                 cache[i][s] = cache[i-1][s] 
                 if not cache[i][s]:
-                    if not cache[i-1][s-lista[i-1]]:
-                        cache[i][s] = False
-                    else:
+                    cache[i][s] = cache[i-1][s-lista[i-1]]
+                    if cache[i][s]:
                         cache[i][s] = cache[i][s-lista[i-1]]
 
     return cache[n][soma]
