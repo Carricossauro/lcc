@@ -32,12 +32,12 @@ int main(int argc, char *argv[]) {
     // O nome do ficheiro tem de vir colado ao sinal de redirecionamento
     for (int i = argc-2; i > 0; i--) {
         if (argv[i][0] == '>') {
-            if (out != -1) close(in);
+            if (out != -1) close(out);
 
             int r = 1;
             if (argv[i][1] == '>') r++;
 
-            out = open(argv[i]+r, O_RDONLY);
+            out = open(argv[i]+r, O_CREAT | O_WRONLY, 0666);
 
             if (r == 2) lseek(in, SEEK_END, 0);
 
