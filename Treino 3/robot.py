@@ -26,15 +26,12 @@ def probabilidade(passos,probabilidade):
     for p in range(1, passos+1):
         for x in range(-passos//2-1, passos//2+1):
             for y in range(-passos//2-1, passos//2+1):
-                if (x,y,p) == (0,0,0):
-                    probs[p][(x,y)] = 1.0
-                else:
-                    probs[p][(x,y)] = 0.0
-                    for k2 in range(4):
-                        X = x + dx[k2]
-                        Y = y + dy[k2]
-                        if -passos//2-1 < X < passos//2+1 and -passos//2-1 < Y < passos//2+1:
-                            antiga = probabilidade[lado[k2]]*probs[p-1][(X,Y)]
-                            probs[p][(x,y)] += antiga
+                probs[p][(x,y)] = 0.0
+                for k2 in range(4):
+                    X = x + dx[k2]
+                    Y = y + dy[k2]
+                    if -passos//2-1 < X < passos//2+1 and -passos//2-1 < Y < passos//2+1:
+                        antiga = probabilidade[lado[k2]]*probs[p-1][(X,Y)]
+                        probs[p][(x,y)] += antiga
     
     return round(probs[passos][(0,0)],2)
