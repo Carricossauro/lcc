@@ -13,13 +13,10 @@ O resultado deve ser devolvido com a precisao de 2 casas decimais.
 # Programação Dinâmica - 11%
 def probabilidade(passos,probabilidade):
     probs = [{} for x in range(passos+1)]
-    
-    for k in range(2):
-        for x in range(-passos//2-1, passos//2+1):
-            for y in range(passos+1):
-                probs[0][(x,y)] = 0.0
-            for y in range(-passos,0):
-                probs[0][(x,y)] = 0.0
+
+    for x in range(-passos//2-1, passos//2+1):
+        for y in range(-passos//2-1, passos//2+1):
+            probs[0][(x,y)] = 0.0
     
     probs[0][(0,0)] = 1.0
     lado = ['L', 'R', 'U', 'D']
