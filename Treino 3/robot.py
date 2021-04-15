@@ -13,7 +13,6 @@ O resultado deve ser devolvido com a precisao de 2 casas decimais.
 # Programação Dinâmica - 10%
 def probabilidade(passos,probabilidade):
     probs = [{} for x in range(passos+1)]
-    total = 0
     
     for k in range(2):
         for x in range(-passos, passos+1):
