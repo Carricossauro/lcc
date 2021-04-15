@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     int reds = 0;
     // Lê os redirecionamentos (começa no fim e para quando não encontra nada)
     // O nome do ficheiro tem de vir colado ao sinal de redirecionamento
-    for (int i = argc-2; i > 0; i--) {
+    for (int i = argc-1; i > 0; i--) {
         if (argv[i][0] == '>') {
             if (out != -1) close(out);
 
