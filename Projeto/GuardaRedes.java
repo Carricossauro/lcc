@@ -1,6 +1,7 @@
 package projeto;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GuardaRedes extends Jogador {
     private int elasticidade;
@@ -10,8 +11,8 @@ public class GuardaRedes extends Jogador {
         this.elasticidade = 0;
     }
 
-    public GuardaRedes(String nom, String eq, int pos, int ide, ArrayList<String> hist, ArrayList<Integer> ats, int elas) {
-        super(nom, eq, pos, ide, hist, ats);
+    public GuardaRedes(String nom, String eq, int ide, ArrayList<String> hist, Map<String,Integer> ats, int elas) {
+        super(nom, eq,ide, hist, ats);
         this.elasticidade = elas;
     }
 
@@ -25,16 +26,20 @@ public class GuardaRedes extends Jogador {
     }
 
     public boolean equals(Object o) {
-        if (!super.equals(o)) return false;
+        if (this == o) return true;
 
-        if (o.getClass() != this.getClass()) return false;
+        if (o == null || o.getClass() != this.getClass()) return false;
 
         GuardaRedes gr = (GuardaRedes) o;
-        return this.elasticidade == gr.elasticidade;
+        return super.equals(o) && this.elasticidade == gr.elasticidade;
     }
 
     public String toString() {
         return super.toString() + "\nElasticidade: " + elasticidade + "\n";
+    }
+
+    public int calculaOverall() {
+        return 0;
     }
 
     // setters e getters
@@ -44,5 +49,4 @@ public class GuardaRedes extends Jogador {
     public int getElasticidade() {
         return this.elasticidade;
     }
-
 }

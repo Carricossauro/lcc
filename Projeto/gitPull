@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd POO-FM
+git pull
+
+cp Projeto/* ../

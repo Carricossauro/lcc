@@ -1,48 +1,42 @@
 package projeto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-public class Jogador {
-    private final int VELOCIDADE = 0;
-    private final int RESISTENCIA = 1;
-    private final int DESTREZA = 2;
-    private final int IMPULSAO = 3;
-    private final int JOGOCABECA = 4;
-    private final int REMATE = 5;
-    private final int PASSE = 6;
-
+public abstract class Jogador {
     private String nome; // Nome do jogador
     private String equipa; // Nome da equipa
-    private int posicao; // 1-gr;2-def/3-med/4-av/5-lat
     private int id; // Identificador do jogador (valor unico)
     private ArrayList<String> historico; // Historico de equipas
-    private ArrayList<Integer> atributos; // Atributos do jogador
+    private Map<String,Integer> atributos; // Atributos do jogador
 
     public Jogador() {
         this.nome = "n/a";
         this.equipa = "n/a";
-        this.posicao = 0;
         this.id = 0;
         this.historico = new ArrayList<>();
-        this.atributos = new ArrayList<>();
-        for (int i = 0; i < 7; i++) this.atributos.add(0);
+        this.atributos = new HashMap<>();
+        this.atributos.put("velocidade", 0);
+        this.atributos.put("resistencia", 0);
+        this.atributos.put("destreza", 0);
+        this.atributos.put("impulsao", 0);
+        this.atributos.put("jogocabeca", 0);
+        this.atributos.put("remate", 0);
+        this.atributos.put("passe", 0);
     }
 
-    public Jogador(String nom, String eq, int pos, int ide, ArrayList<String> hist, ArrayList<Integer> ats) {
+    public Jogador(String nom, String eq, int ide, ArrayList<String> hist, Map<String,Integer> ats) {
         this.nome = nom;
         this.equipa = eq;
-        this.posicao = pos;
         this.id = ide;
         this.historico = new ArrayList<String>(hist);
-        this.atributos = new ArrayList<Integer>(ats);
+        this.atributos = ats.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Jogador(Jogador j) {
-        this(j.nome, j.equipa, j.posicao, j.id, j.historico, j.atributos);
-    }
-
-    public Jogador clone() {
-        return new Jogador(this);
+        this(j.nome, j.equipa, j.id, j.historico, j.atributos);
     }
 
     public boolean equals(Object o) {
@@ -51,8 +45,7 @@ public class Jogador {
         if (o == null || o.getClass() != this.getClass()) return false;
 
         Jogador that = (Jogador) o;
-        return this.posicao == that.posicao &&
-                this.id == that.id && this.nome.equals(that.nome) &&
+        return this.id == that.id && this.nome.equals(that.nome) &&
                 this.equipa.equals(that.equipa) &&
                 this.historico.equals(that.historico) &&
                 this.atributos.equals(that.atributos);
@@ -63,13 +56,14 @@ public class Jogador {
 
         sb.append("Jogador: "); sb.append(this.nome);
         sb.append("\nEquipa: "); sb.append(this.equipa);
-        sb.append("\nPosição "); sb.append(this.posicao);
         sb.append("\nId: "); sb.append(this.id);
         sb.append("\nHistórico de equipas: "); sb.append(this.historico.toString());
         sb.append("\nAtributos: "); sb.append(this.atributos.toString());
 
         return sb.toString();
     }
+
+    public abstract int calculaOverall();
 
     // setters e getters
     public String getNome() {
@@ -84,12 +78,6 @@ public class Jogador {
     public void setEquipa(String eq) {
         this.equipa = eq;
     }
-    public int getPosicao() {
-        return this.posicao;
-    }
-    public void setPosicao(int pos) {
-        this.posicao = pos;
-    }
     public int getId() {
         return this.id;
     }
@@ -102,52 +90,52 @@ public class Jogador {
     public void setHistorico(ArrayList<String> hist) {
         this.historico = new ArrayList<String>(hist);
     }
-    public void setAtributo(int indice, int at) {
-        this.atributos.set(indice, at);
+    public void setAtributo(String atr, int at) {
+        this.atributos.put(atr, at);
     }
-    public int getAtributo(int indice) {
-        return this.atributos.get(indice);
+    public int getAtributo(String atr) {
+        return this.atributos.get(atr);
     }
     public void setVelocidade(int at) {
-        setAtributo(VELOCIDADE, at);
+        setAtributo("velocidade", at);
     }
     public int getVelocidade() {
-        return getAtributo(VELOCIDADE);
+        return getAtributo("velocidade");
     }
     public void setResistencia(int at) {
-        setAtributo(RESISTENCIA, at);
+        setAtributo("resistencia", at);
     }
     public int getResistencia() {
-        return getAtributo(RESISTENCIA);
+        return getAtributo("resistencia");
     }
     public void setDestreza(int at) {
-        setAtributo(DESTREZA, at);
+        setAtributo("destreza", at);
     }
     public int getDestreza() {
-        return getAtributo(DESTREZA);
+        return getAtributo("destreza");
     }
     public void setImpulsao(int at) {
-        setAtributo(IMPULSAO, at);
+        setAtributo("impulsao", at);
     }
     public int getImpulsao() {
-        return getAtributo(IMPULSAO);
+        return getAtributo("impulsao");
     }
     public void setJogoCabeca(int at) {
-        setAtributo(JOGOCABECA, at);
+        setAtributo("jogocabeca", at);
     }
     public int getJogoCabeca() {
-        return getAtributo(JOGOCABECA);
+        return getAtributo("jogocabeca");
     }
     public void setRemate(int at) {
-        setAtributo(REMATE, at);
+        setAtributo("remate", at);
     }
     public int getRemate() {
-        return getAtributo(REMATE);
+        return getAtributo("remate");
     }
     public void setPasse(int at) {
-        setAtributo(PASSE, at);
+        setAtributo("passe", at);
     }
     public int getPasse() {
-        return getAtributo(PASSE);
+        return getAtributo("passe");
     }
 }
