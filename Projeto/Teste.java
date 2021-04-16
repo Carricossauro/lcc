@@ -15,6 +15,7 @@ public class Teste {
         System.out.print("Introduza o método que quer testar: ");
         int caso = ler.nextInt();
         System.out.print("\n");
+        // teste
 
         switch(caso) {
             case 0: {
