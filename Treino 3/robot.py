@@ -9,8 +9,9 @@ das direcções (as chaves são os caracteres indicados entre parêntesis).
 O resultado deve ser devolvido com a precisao de 2 casas decimais.
 
 """
-
-# Programação Dinâmica - 11%
+########################################
+#      Programação Dinâmica - 11%      #
+########################################
 def probabilidade(passos,probabilidade):
     probs = {}
     
@@ -38,3 +39,24 @@ def probabilidade(passos,probabilidade):
                         probs[p,x,y] += antiga
     
     return round(probs[passos,0,0],2)
+
+########################################
+#          Memoization - 11%           #
+########################################
+def aux(p, x, y, probs, cache):
+    if p == 0:
+        if (x,y) == (0,0):
+            return 1
+        else:
+            return 0
+    if (p,x,y) in cache:
+        return cache[(p,x,y)]
+    a = probs['U'] * aux(p-1, x+1, y, probs, cache)
+    b = probs['D'] * aux(p-1, x-1, y, probs, cache)
+    c = probs['L'] * aux(p-1, x, y-1, probs, cache)
+    d = probs['R'] * aux(p-1, x, y+1, probs, cache)
+    cache[(p,x,y)] = a+b+c+d
+    return cache[(p,x,y)]
+
+def probabilidade(passos,probs):
+    return round(aux(passos, 0, 0, probs, {}),2)
