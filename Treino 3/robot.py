@@ -30,11 +30,11 @@ def probabilidade(passos,probabilidade):
         for x in range(limInf, limSup):
             for y in range(limInf, limSup):
                 probs[p,x,y] = 0.0
-                for k2 in range(4):
-                    X = x + dx[k2]
-                    Y = y + dy[k2]
+                for k in range(4):
+                    X = x + dx[k]
+                    Y = y + dy[k]
                     if limInf <= X < limSup and limInf <= Y < limSup:
-                        antiga = probabilidade[lado[k2]]*probs[p-1,X,Y]
+                        antiga = probabilidade[lado[k]]*probs[p-1,X,Y]
                         probs[p,x,y] += antiga
     
     return round(probs[passos,0,0],2)
