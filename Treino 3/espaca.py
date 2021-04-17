@@ -21,8 +21,9 @@ def espaca(frase,palavras):
             pal = frase[x:y]
             if pal in palavras:
                 ant = cache[x]
-                if x != 0 and ant == "":
+                if x != 0 and not ant:
                     continue
-                cache[y] = ant + " "*(ant != "") + pal
+                if not cache[y]:
+                    cache[y] = ant + " "*(ant != "") + pal
 
     return cache[n]
