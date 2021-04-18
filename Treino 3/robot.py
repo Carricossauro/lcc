@@ -15,6 +15,8 @@ O resultado deve ser devolvido com a precisao de 2 casas decimais.
 def probabilidade(passos,probabilidade):
     probs = {}
     
+    # Movimentos possíveis vêm em pares (cima/baixo e esquerda/direita) 
+    # porque tem de voltar sempre ao início
     if passos % 2 != 0:
         return 0.0
     
@@ -62,4 +64,4 @@ def aux(p, x, y, probs, cache):
     return cache[(p,x,y)]
 
 def probabilidade(passos,probs):
-    return round(aux(passos, 0, 0, probs, {}),2)
+    return round(aux(passos, 0, 0, probs, {}),2) if passos % 2 == 0 else 0.0
