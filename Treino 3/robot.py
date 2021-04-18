@@ -15,6 +15,9 @@ O resultado deve ser devolvido com a precisao de 2 casas decimais.
 def probabilidade(passos,probabilidade):
     probs = {}
     
+    if passos % 2 != 0:
+        return 0.0
+    
     limInf = -passos//3-2
     limSup = passos//3+2
 
