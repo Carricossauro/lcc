@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
             if (r == 2) lseek(in, SEEK_END, 0);
 
-            dup2(out, 0);
+            dup2(out, 1);
             reds++;
         } else if (argv[i][0] == '<') {
             if (in != -1) close(in);
