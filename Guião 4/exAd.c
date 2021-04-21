@@ -30,18 +30,18 @@ int main(int argc, char *argv[]) {
     int reds = 0;
     // Lê os redirecionamentos (começa no fim e para quando não encontra nada)
     // O nome do ficheiro tem de vir colado ao sinal de redirecionamento
-    for (int i = argc-2; i > 0; i--) {
+    for (int i = argc-1; i > 0; i--) {
         if (argv[i][0] == '>') {
-            if (out != -1) close(in);
+            if (out != -1) close(out);
 
             int r = 1;
             if (argv[i][1] == '>') r++;
 
-            out = open(argv[i]+r, O_RDONLY);
+            out = open(argv[i]+r, O_CREAT | O_WRONLY, 0666);
 
             if (r == 2) lseek(in, SEEK_END, 0);
 
-            dup2(out, 0);
+            dup2(out, 1);
             reds++;
         } else if (argv[i][0] == '<') {
             if (in != -1) close(in);
