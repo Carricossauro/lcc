@@ -36,6 +36,24 @@ public class SmartSpeaker extends SmartDevice {
         if (this.volume > 0) this.volume-=1;
     }
 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || o.getClass() != this.getClass()) return false;
+
+        SmartSpeaker ss = (SmartSpeaker) o;
+        return super.equals(o) && this.volume == ss.volume && this.channel.equals(ss.channel);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nVolume: "); sb.append(this.volume);
+        sb.append("\nCanal: "); sb.append(this.channel);
+
+        return super.toString() + sb.toString();
+    }
+
     // setters e getters
     public void setVolume(int vol) {
         this.volume = vol;

@@ -18,6 +18,24 @@ public class SmartDevice {
         this.on = ON;
     }
 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        SmartDevice sd = (SmartDevice) o;
+        return sd.on == this.on && this.id.equals(sd.id);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("ID: "); sb.append(this.id);
+        sb.append("\nON: "); sb.append(this.on);
+
+        return sb.toString();
+    }
+
     // setters e getters
     public void setID(String ID) {
         this.id = ID;

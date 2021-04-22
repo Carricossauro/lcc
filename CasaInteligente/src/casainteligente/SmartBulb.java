@@ -27,7 +27,15 @@ public class SmartBulb extends SmartDevice {
         if (o == null || this.getClass() != o.getClass()) return false;
 
         SmartBulb sb = (SmartBulb) o;
-        return this.getID().equals(sb.getID()) && this.getOn() == sb.getOn() && this.tone == sb.tone;
+        return super.equals(o) && this.tone == sb.tone;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nTone: "); sb.append(this.tone);
+
+        return super.toString() + sb.toString();
     }
 
     public SmartBulb clone() {
