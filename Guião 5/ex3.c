@@ -20,18 +20,12 @@ int main() {
         close(fd[1]);
 
         dup2(fd[0], 0);
-
-        if (fork() == 0) {
-            execlp("wc", "wc", "-l", NULL);
-
-            return -1;
-        } else {
-            wait(&i);
-        }
-
-        printf("[Filho] Lido\n");
         close(fd[0]);
+
+        execlp("wc", "wc", NULL);
         
+        perror("Fork");
+        return -1;        
     } else {
         close(fd[0]);
         
