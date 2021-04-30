@@ -13,30 +13,43 @@ amigos(conhecidos) -> 2
 
 '''
 
-# 9%
+# 10%
 def complete(n, ls):
     return n == len(ls)
 
-def existeAresta(conhecidos, a, b):
-    return any(map(lambda tup: a in tup and b in tup, conhecidos))
+def existeAresta(adj, a, b):
+    return a in adj[b]
 
-def extensions(n, ls, amigos, conhecidos):
-    return [x for x in amigos if all(map(lambda y: y != x and existeAresta(conhecidos, x, y), ls))]
+def extensions(n, ls, amigos, adj):
+    return [x for x in amigos if all(map(lambda y: y != x and existeAresta(adj, x, y), ls))]
 
-def search(n, ls, conhecidos, amigos):
+def search(n, ls, adj, amigos):
     if complete(n, ls):
         return True
-    for x in extensions(n, ls, amigos, conhecidos):
+    for x in extensions(n, ls, amigos, adj):
         ls.append(x)
-        if search(n, ls, conhecidos, amigos):
+        if search(n, ls, adj, amigos):
             return True
         ls.pop()
     return False
 
 def amigos(conhecidos):
     amigos = set([a for tup in conhecidos for a in tup])
+    adj = {}
+    
+    if len(conhecidos) == 0:
+        return 0
+    if len(amigos) == 1:
+        return 1
+    
+    for x in amigos:
+        adj[x] = set()
+    for tup in conhecidos:
+        adj[tup[0]].add(tup[1])
+        adj[tup[1]].add(tup[0])
+    
     for n in range(len(amigos)-1,2, -1):
         ls = []
-        if search(n, ls, conhecidos, amigos):
+        if search(n, ls, adj, amigos):
             return n
     return 2
