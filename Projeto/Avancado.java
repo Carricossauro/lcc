@@ -42,10 +42,6 @@ public class Avancado extends Jogador {
         return super.toString() + "\nFinalizacao: " + this.finalizacao + "\nCompostura: " + this.compostura + "\n";
     }
 
-    public int calculaOverall() {
-        return 0;
-    }
-
     public void setFinalizacao(int fn) {
         this.finalizacao = fn;
     }
@@ -57,5 +53,17 @@ public class Avancado extends Jogador {
     }
     public int getCompostura() {
         return this.compostura;
+    }
+
+    public int calculaOverall() {
+        return (int) (this.getVelocidade() * 0.15
+                 + this.getResistencia() * 0.05
+                 + this.getDestreza() * 0.10
+                 + this.getImpulsao() * 0.05
+                 + this.getJogoCabeca() * 0.10
+                 + this.getRemate() * 0.20
+                 + this.getPasse()  * 0.05
+                 + this.finalizacao * 0.20
+                 + this.compostura * 0.10);
     }
 }

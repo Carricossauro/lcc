@@ -42,10 +42,6 @@ public class Lateral extends Jogador {
         return super.toString() + "\nCorte: " + this.cruzamento + "\nIntersecçao: " + this.drible + "\n";
     }
 
-    public int calculaOverall() {
-        return 0;
-    }
-
     public void setCruzamento(int cr) {
         this.cruzamento = cr;
     }
@@ -57,5 +53,17 @@ public class Lateral extends Jogador {
     }
     public int getDrible() {
         return this.drible;
+    }
+
+    public int calculaOverall() {
+      return (int) (this.getVelocidade() * 0.15
+                 + this.getResistencia() * 0.15
+                 + this.getDestreza() * 0.10
+                 + this.getImpulsao() * 0.05
+                 + this.getJogoCabeca() * 0.05
+                 + this.getRemate() * 0.10
+                 + this.getPasse()  * 0.10
+                 + this.drible * 0.15
+                 + this.cruzamento * 0.15);
     }
 }

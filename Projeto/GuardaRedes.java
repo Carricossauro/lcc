@@ -38,15 +38,22 @@ public class GuardaRedes extends Jogador {
         return super.toString() + "\nElasticidade: " + elasticidade + "\n";
     }
 
-    public int calculaOverall() {
-        return 0;
-    }
-
     // setters e getters
     public void setElasticidade(int elas) {
         this.elasticidade = elas;
     }
     public int getElasticidade() {
         return this.elasticidade;
+    }
+
+    public int calculaOverall() {
+        return (int) (this.getVelocidade() * 0.01
+                 + this.getResistencia() * 0.05
+                 + this.getDestreza() * 0.05
+                 + this.getImpulsao() * 0.15
+                 + this.getJogoCabeca() * 0.01
+                 + this.getRemate() * 0.10
+                 + this.getPasse()  * 0.10
+                 + this.elasticidade * 0.53);
     }
 }

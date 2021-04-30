@@ -42,10 +42,6 @@ public class Medio extends Jogador {
         return super.toString() + "\nInterseçao: " + this.intersecao + "\nVisao: " + this.visao + "\n";
     }
 
-    public int calculaOverall() {
-        return 0;
-    }
-
     public void setIntersecao(int it) {
         this.intersecao = it;
     }
@@ -57,5 +53,17 @@ public class Medio extends Jogador {
     }
     public int getVisao() {
         return this.visao;
+    }
+
+    public int calculaOverall() {
+      return (int) (this.getVelocidade() * 0.10
+                 + this.getResistencia() * 0.10
+                 + this.getDestreza() * 0.10
+                 + this.getImpulsao() * 0.10
+                 + this.getJogoCabeca() * 0.05
+                 + this.getRemate() * 0.10
+                 + this.getPasse()  * 0.15
+                 + this.intersecao * 0.10
+                 + this.visao * 0.20);
     }
 }

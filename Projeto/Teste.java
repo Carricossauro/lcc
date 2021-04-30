@@ -27,6 +27,11 @@ public class Teste {
                 break;
             }
             case 1: {
+                System.out.println(gr.calculaOverall());
+                System.out.println(def.calculaOverall());
+                System.out.println(la.calculaOverall());
+                System.out.println(med.calculaOverall());
+                System.out.println(av.calculaOverall());
                 break;
             }
             case 2: {

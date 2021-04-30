@@ -42,10 +42,6 @@ public class Defesa extends Jogador {
         return super.toString() + "\nCorte: " + this.corte + "\nIntersecçao: " + this.intersecao + "\n";
     }
 
-    public int calculaOverall() {
-        return 0;
-    }
-
     public void setIntersecao(int it) {
         this.intersecao = it;
     }
@@ -58,4 +54,17 @@ public class Defesa extends Jogador {
     public int getCorte() {
         return this.corte;
     }
+
+    public int calculaOverall() {
+        return (int) (this.getVelocidade() * 0.05
+                 + this.getResistencia() * 0.10
+                 + this.getDestreza() * 0.05
+                 + this.getImpulsao() * 0.15
+                 + this.getJogoCabeca() * 0.15
+                 + this.getRemate() * 0.05
+                 + this.getPasse()  * 0.15
+                 + this.corte * 0.10
+                 + this.intersecao * 0.20);
+    }
+
 }
