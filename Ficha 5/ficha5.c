@@ -29,7 +29,7 @@ int procuraNum(int numeroAluno, Aluno t[], int N) {
 }
 
 //Ex 3
-void swap(Aluno *x, Aluno*y) {
+void swap(Aluno *x, Aluno *y) {
     Aluno t = *x;
     *x = *y;
     *y = t;
