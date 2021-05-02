@@ -85,4 +85,6 @@ int main(int argc, char **argv) {
 
 /*
 ngl este foi fodido
+Este é o exercício adicional 1 na verdade mas da para o 5 se se fizer:
+./a.out "grep -v ˆ# /etc/passwd | cut -f7 -d: | uniq | wc -l"
 */
