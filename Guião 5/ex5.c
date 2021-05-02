@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
     // Executar os vários comandos
     if (f == 0) { // Cada processo filho tem um k único (posiçao no array de argumentos)
         system(args[k]);
-        _exit(0);
+        _exit(1);
     } else {
         for (int p = 0; p < commands; p++) {
             int pid = wait(&k);
