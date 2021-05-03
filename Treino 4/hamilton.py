@@ -36,11 +36,13 @@ def valid(arestas, ls):
 def search(N, verts, arestas, ls):
     if complete(N, verts, arestas, ls):
         return valid(arestas, ls)
+    
     for x in extensions(N, verts, arestas, ls):
         ls.append(x)
         if search(N, verts, arestas, ls):
             return True
         ls.pop()
+        
     return False
 
 def hamilton(arestas):
