@@ -5,7 +5,7 @@
 - Anel - 13%
 - Cobertura - 9%
 - Hamilton - 11%
-- Multiplos - 13% (mas não conta)
+- Multiplos - 13%
 - Sacos - TBD
 - Superstring - TBD
 - Uniao -TBD
