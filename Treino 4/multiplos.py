@@ -13,7 +13,35 @@ multiplos(5,12)
 
 '''
 
-# Não é que é suposto fazer assim mas deu 13% lol
+# 13%
+def extensions(n, numeros):
+    return [x for x in range(1,n+1) if x not in numeros]
+    
+def complete(n, numeros):
+    return len(numeros) == n
+    
+def valid(n, numeros, d):
+    return int("".join(map(str, numeros))) % d == 0
+    
+def search(n, numeros, d):
+    if complete(n, numeros):
+        return valid(n, numeros, d)
+    
+    p = 0
+    for x in extensions(n, numeros):
+        numeros.append(x)
+        p += search(n, numeros, d)
+        numeros.pop()
+        
+    return p
+
+def multiplos(n,d):
+    return search(n, [], d)
+
+#########################################
+#      Solução estúpida (funciona)      #
+#########################################
+
 import itertools
 
 def multiplos(n,d):
