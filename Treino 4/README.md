@@ -8,4 +8,4 @@
 - Multiplos - 13%
 - Sacos - TBD
 - Superstring - TBD
-- Uniao -TBD
+- Uniao - 10%
