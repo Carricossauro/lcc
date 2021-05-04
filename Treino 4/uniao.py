@@ -12,7 +12,50 @@ self.assertEqual(uniao(sets),3)
 
 '''
 
-# 10%
+# 11%
+def complete(sets, ls, un, x):
+    return x == len(ls)
+
+def valid(sets, ls, un, x):
+    return ls == un
+
+def extensions(sets, ls, un, x, usados):
+    lista = []
+    for s in sets:
+        if s not in usados and any(map(lambda y: y not in ls, s)):
+            lista.append(s)
+            usados.append(s)
+    return lista
+
+def search(sets, ls, un, x, usados):
+    if x == 0:
+        return valid(sets, ls, un, x)
+
+    for k in extensions(sets, ls, un, x, usados):
+        resp = ls.union(k)
+        if search(sets, resp, un, x-1, usados):
+            return True
+        usados.remove(k)
+
+    return False
+
+def uniao(sets):
+    N = len(sets)
+    un = set()
+    for x in sets:
+        un = un.union(x)
+
+    for x in range(N):
+        ls = set()
+        if search(sets, ls, un, x, []):
+            return x
+
+    return N
+
+###################################
+#    Soluçao alternativa - 10%    #
+###################################
+
 def complete(sets, ls, un, x):
     return x == len(ls)
 
