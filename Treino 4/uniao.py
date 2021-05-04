@@ -12,10 +12,7 @@ self.assertEqual(uniao(sets),3)
 
 '''
 
-# 11%
-def complete(sets, ls, un, x):
-    return x == len(ls)
-
+# 13%
 def valid(sets, ls, un, x):
     return ls == un
 
