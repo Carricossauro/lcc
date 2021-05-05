@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
     // Executar os vários comandos
     if (f == 0) { // Cada processo filho tem um k único (posiçao no array de argumentos)
         system(args[k]);
-        _exit(0);
+        _exit(1);
     } else {
         for (int p = 0; p < commands; p++) {
             int pid = wait(&k);
@@ -95,4 +95,6 @@ int main(int argc, char **argv) {
 
 /*
 ngl este foi fodido
+Este é o exercício adicional 1 na verdade mas da para o 5 se se fizer:
+./a.out "grep -v ˆ# /etc/passwd | cut -f7 -d: | uniq | wc -l"
 */
