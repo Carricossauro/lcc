@@ -34,7 +34,6 @@ int main(int argc, char **argv) {
     if (argc < 2) return -1;
 
     char *args[MAXBUFFER];
-    int pipes[2][MAXBUFFER];
     int k, f;
 
     setbuf(stdout, NULL);
@@ -45,18 +44,29 @@ int main(int argc, char **argv) {
     while( token != NULL ) {
         args[commands] = token;
         token = strtok(NULL, "|");
-        if (token != NULL && pipe(pipes[commands]) == -1) return -1; // erro se não conseguir criar um pipe
         commands++;
     }
     while (!strcmp(args[commands-1]," ")) commands--;
     args[commands] = NULL;
     printf("Reconhecidos %d comandos\n", commands);
 
-    if (commands == 1) system(argv[0]);
+    int pipes[commands - 1][2];
+
+    for (int p = 0; args[p+1] != NULL; p++) {
+        if (pipe(pipes[p]) == -1) return -1;
+    }
+
+    if (commands == 1) {
+        if (fork() == 0) system(args[0]);
+        else {
+            wait(&k);
+            return WEXITSTATUS(k);
+        }
+    }
 
     // Tratar dos redirecionamentos dos pipes
     for (k = 0; k < commands; k++) {
-        // printf("\'%s\'\n", args[k]);
+        printf("\'%s\'\n", args[k]);
         if ((f = fork())== 0) {
             if (k > 0) dup2(pipes[k-1][0],0);
             if (k != commands-1) {
