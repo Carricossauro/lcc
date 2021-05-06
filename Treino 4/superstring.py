@@ -17,16 +17,17 @@ def extensions(strings, N, k, ls):
 def search(strings, N, k, ls, resList):
     string = reduce(lambda a,b: concat(a,b), ls)
     if len(string) == k:
-        return valid(strings, N, k, ls)
+        if valid(strings, N, k, ls):
+            resList.append(string)
+            return True
+        else:
+            return False
     elif len(string) > k:
         return False
-        
+
     for x in extensions(strings, N, k, ls):
         ls.append(x)
         if search(strings, N, k, ls, resList):
-            string = reduce(lambda a,b: concat(a,b), ls)
-            print(ls, k, string)
-            resList.append(string)
             return True
         ls.pop()
 
@@ -36,11 +37,11 @@ def superstring(strings):
     res = "".join(strings)
     resList = [res]
     N = len(res)
-    
+
     for k in range(1,N):
         if search(strings, N, k, [""], resList):
             return resList[-1]
-    
+
     return resList[-1]
 
 def concat(a, b):
@@ -48,7 +49,7 @@ def concat(a, b):
     Nb = len(b)
     k = 0
     x = Na
-    
+
     for i in range(Na):
         k = i
         for j in range(Nb):
@@ -61,5 +62,5 @@ def concat(a, b):
         if k == Na:
             x = i
             break
-    
+
     return a[:x] + b
