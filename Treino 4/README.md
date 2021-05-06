@@ -7,5 +7,5 @@
 - Hamilton - 11%
 - Multiplos - 13%
 - Sacos - TBD
-- Superstring - TBD
+- Superstring - 11%
 - Uniao - 13%
