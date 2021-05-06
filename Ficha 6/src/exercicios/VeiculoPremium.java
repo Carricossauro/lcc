@@ -25,6 +25,10 @@ public class VeiculoPremium extends Veiculo {
         this.taxaLuxo = luxo;
     }
 
+    public String toString() {
+        return super.toString() + "\nTaxa de luxo: " + this.taxaLuxo;
+    }
+
     public void setTaxaLuxo(double tax) {
         this.taxaLuxo = tax;
     }

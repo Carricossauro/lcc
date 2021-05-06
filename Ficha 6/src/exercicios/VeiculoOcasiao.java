@@ -24,6 +24,10 @@ public class VeiculoOcasiao extends Veiculo {
         super.setKmsUltimo(kmsUltimo);
     }
 
+    public String toString() {
+        return super.toString();
+    }
+
     public VeiculoOcasiao clone() {
         return new VeiculoOcasiao(this.getMarca(), this.getModelo(), this.getMatricula(), this.getAno(), this.getVelociademedia(), this.getPrecokm(),
                 this.getClassificacao(), this.getKms(), this.getKmsUltimo());

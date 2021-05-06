@@ -19,6 +19,21 @@ public abstract class Veiculo implements Comparable<Veiculo> {
     private int kms;
     private int kmsUltimo; // kms da ultima viagem
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Marca: "); sb.append(this.marca);
+        sb.append("\nModelo: "); sb.append(this.modelo);
+        sb.append("\nMatricula: "); sb.append(this.matricula);
+        sb.append("\nAno: "); sb.append(this.ano);
+        sb.append("\nVelocidade Media: "); sb.append(this.velociademedia);
+        sb.append("\nPreço p/ km: "); sb.append(this.precokm);
+        sb.append("\nClassificaçoes: "); sb.append(this.classificacao);
+        sb.append("\nKms: "); sb.append(this.kms);
+        sb.append("\nKms da ultima viagem: "); sb.append(this.kmsUltimo);
+
+        return sb.toString();
+    }
     public abstract Veiculo clone();
     public void setMarca(String marc) {
         this.marca = marc;

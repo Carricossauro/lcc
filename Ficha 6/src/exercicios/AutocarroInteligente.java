@@ -25,11 +25,14 @@ public class AutocarroInteligente extends Veiculo{
         this.ocupacao = ocup;
     }
 
+    public String toString() {
+        return super.toString() + "\nOcupaçao: " + (int) this.ocupacao*10 + "%";
+    }
+
     public AutocarroInteligente(AutocarroInteligente a) {
         this(a.getMarca(), a.getModelo(), a.getMatricula(), a.getAno(),
              a.getVelociademedia(), a.getPrecokm(), a.getClassificacao(), a.getKms(), a.getKmsUltimo(), a.getOcupacao());
     }
-
 
     public AutocarroInteligente clone() {
         return new AutocarroInteligente(this.getMarca(), this.getModelo(), this.getMatricula(), this.getAno(), this.getVelociademedia(), this.getPrecokm(),

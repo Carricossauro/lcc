@@ -1,10 +1,13 @@
 package exercicios;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DriveIt {
     private Map<String, Veiculo> veiculos;
+    private Map<String, Comparator<Veiculo>> comparadores;
     private boolean promocao;
 
     public DriveIt() {
@@ -101,5 +104,31 @@ public class DriveIt {
 
     public void alteraPromocao(boolean estado) {
         this.promocao = estado;
+    }
+    /*
+    public Set<Veiculo> ordenarVeiculos() {
+        return this.veiculos.values().stream().sorted().collect(Collectors.toCollection(TreeSet::new));
+    }
+    */
+    public List<Veiculo> ordenarVeiculos() {
+        return this.veiculos.values().stream().sorted().collect(Collectors.toList());
+    }
+
+    public Set<Veiculo> ordenarVeiculos(Comparator<Veiculo> comp) {
+        return this.veiculos.values().stream().sorted(comp).collect(Collectors.toCollection(TreeSet::new));
+
+    }
+
+    public void adicionarComparador(String crit, Comparator<Veiculo> comp) {
+        if (!this.comparadores.containsKey(crit)) this.comparadores.put(crit, comp);
+    }
+
+    public void removerComparador(String criterio) {
+        this.comparadores.remove(criterio);
+    }
+
+    public Iterator<Veiculo> ordenarVeiculo(String criterio) {
+        if (!this.comparadores.containsKey(criterio)) return null;
+        return this.veiculos.values().stream().sorted(this.comparadores.get(criterio)).iterator();
     }
 }
