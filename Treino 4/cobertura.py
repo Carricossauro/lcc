@@ -6,40 +6,38 @@ conjunto de nós que contém pelo menos um extremo de cada aresta.
 A função recebe a lista de todas as arestas do grafo, sendo cada aresta um 
 par de nós.
 
-arestas = [('portugal','espanha'),('espanha','franca'),('franca','alemanha'),('alemanha','belgica'),('belgica','franca'),('usa','canada'),('usa','mexico'),('marrocos','argelia'),('argelia','libia'),('argelia','mali')]
-5
-
-arestas = [('a','b'),('b','c'),('c','d'),('d','e'),('e','f'),('f','g'),('g','h')]
-4
-            
 '''
 
-# 9%
-def extensions(nos, ls):
-    return [x for x in nos if x not in ls]
-
-def complete(ls, n):
-    return len(ls) == n
+def extensions(vertices, ls, k):
+    return [x for x in range(k, len(vertices)) if  x not in ls]
     
 def valid(ls, n, arestas):
     return all(map(lambda tup: tup[0] in ls or tup[1] in ls, arestas))
 
-def search(nos, ls, n, arestas):
-    if complete(ls, n):
+def search(vertices, ls, n, arestas, tam):
+    if n == tam:
         return valid(ls, n, arestas)
-    for x in extensions(nos, ls):
+    for x in extensions(vertices, ls, tam):
         ls.append(x)
-        if search(nos, ls, n, arestas):
+        if search(vertices, ls, n, arestas, tam+1):
             return True
         ls.pop()
     return False
 
 def cobertura(arestas):
-    nos = set([i for tup in arestas for i in tup])
+    vertices = list(set([i for tup in arestas for i in tup]))
+
     if len(arestas) == 0:
         return 0
-    for i in range(1,len(nos)):
-        c = []
-        if search(nos, c, i, arestas):
+
+    N = len(vertices)
+    novasArestas = []
+    for a,b in arestas:
+        novasArestas.append( (vertices.index(a), vertices.index(b)) )
+
+    for i in range(1,N):
+        c = [""]
+        if search(vertices, c, i, novasArestas, 0):
             return i
-    return len(nos)
+
+    return N
