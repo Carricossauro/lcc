@@ -3,7 +3,7 @@
 ### Percentagens:
 - Amigos - 11%
 - Anel - 13%
-- Cobertura - 9%
+- Cobertura - 10%
 - Hamilton - 11%
 - Multiplos - 13%
 - Sacos - 13%
