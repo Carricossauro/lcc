@@ -8,20 +8,17 @@ ou seja, nunca haverá inputs onde uma das palavras está contida noutra.
 
 from functools import reduce
 
-def valid(strings, N, k, ls):
-    return all(map(lambda x: x in ls, strings))
-
 def extensions(strings, N, k, ls):
     return [x for x in strings if x not in ls]
 
 def search(strings, N, k, ls, resList):
     string = reduce(lambda a,b: concat(a,b), ls)
     if len(string) == k:
-        if valid(strings, N, k, ls):
+        if any(map(lambda x: x not in ls, strings)):
+            return False
+        else:
             resList.append(string)
             return True
-        else:
-            return False
     elif len(string) > k:
         return False
 
