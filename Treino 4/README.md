@@ -6,6 +6,6 @@
 - Cobertura - 9%
 - Hamilton - 11%
 - Multiplos - 13%
-- Sacos - 10%
+- Sacos - 13%
 - Superstring - 13%
 - Uniao - 13%
