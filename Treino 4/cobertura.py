@@ -8,20 +8,25 @@ par de nós.
 
 '''
 
+# 10%
 def extensions(vertices, ls, k):
     return [x for x in range(k, len(vertices)) if  x not in ls]
-    
+
 def valid(ls, n, arestas):
     return all(map(lambda tup: tup[0] in ls or tup[1] in ls, arestas))
 
-def search(vertices, ls, n, arestas, tam):
+def search(vertices, ls, n, arestas, tam, total):
     if n == tam:
         return valid(ls, n, arestas)
+    elif total + len(ls) - tam < n:
+        return False
+
     for x in extensions(vertices, ls, tam):
         ls.append(x)
-        if search(vertices, ls, n, arestas, tam+1):
+        if search(vertices, ls, n, arestas, tam+1, total):
             return True
         ls.pop()
+
     return False
 
 def cobertura(arestas):
@@ -37,7 +42,7 @@ def cobertura(arestas):
 
     for i in range(1,N):
         c = [""]
-        if search(vertices, c, i, novasArestas, 0):
+        if search(vertices, c, i, novasArestas, 0, N):
             return i
 
     return N
