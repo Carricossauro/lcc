@@ -11,8 +11,8 @@ from functools import reduce
 def extensions(strings, N, k, ls):
     return [x for x in strings if x not in ls]
 
-def search(strings, N, k, ls, resList):
-    string = reduce(lambda a,b: concat(a,b), ls)
+def search(strings, N, k, ls, resList, concatList):
+    string = makeWord(ls, concatList)
     if len(string) == k:
         if any(map(lambda x: x not in ls, strings)):
             return False
@@ -24,7 +24,7 @@ def search(strings, N, k, ls, resList):
 
     for x in extensions(strings, N, k, ls):
         ls.append(x)
-        if search(strings, N, k, ls, resList):
+        if search(strings, N, k, ls, resList, concatList):
             return True
         ls.pop()
 
@@ -32,14 +32,40 @@ def search(strings, N, k, ls, resList):
 
 def superstring(strings):
     res = "".join(strings)
+    concatList = {}
+    contidas = False
+    for p in strings:
+        for b in strings:
+            if p != b:
+                if p not in concatList:
+                    concatList[p] = {}
+                concatList[p][b] = concat(p,b)
+                if concatList[p][b] != len(p):
+                    contidas = True
+    if not contidas:
+        return res
     resList = [res]
     N = len(res)
 
     for k in range(1,N):
-        if search(strings, N, k, [""], resList):
+        if search(strings, N, k, [""], resList, concatList):
             return resList[-1]
 
     return resList[-1]
+
+def makeWord(ls, concatList):
+    i = 0
+    N = len(ls)
+    if N == 0:
+        return ""
+    final = ""
+    while i < N-1:
+        pal = ls[i]
+        nextPal = ls[i+1]
+        if pal != "":
+            final += pal[:concatList[pal][nextPal]]
+        i+=1
+    return final + ls[i]
 
 def concat(a, b):
     Na = len(a)
@@ -59,5 +85,4 @@ def concat(a, b):
         if k == Na:
             x = i
             break
-
-    return a[:x] + b
+    return x
