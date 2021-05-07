@@ -14,32 +14,23 @@ None
 
 '''
 
-# 11%
-def extensions(N, verts, arestas, ls):
-    lista = set()
-    x = ls[-1]
-    
-    for a,b in arestas:
-        if x == a and b not in ls:
-            lista.add(b)
-        if x == b and a not in ls:
-            lista.add(a)
+# 13%
+def existeAresta(arestas, a, b):
+    return any(map(lambda tup: a in tup and b in tup, arestas))
 
-    return lista
+def extensions(N, vertices, arestas, ls):
+    return [x for x in vertices if x not in ls and existeAresta(arestas, ls[-1], x)]
 
-def complete(N, verts, arestas, ls):
-    return len(ls) == N
+def valid(N, vertices, arestas, ls):
+    return existeAresta(arestas, ls[0], ls[-1])
 
-def valid(arestas, ls):
-    return any(map(lambda tup: ls[0] in tup and ls[-1] in tup,arestas))
-
-def search(N, verts, arestas, ls):
-    if complete(N, verts, arestas, ls):
-        return valid(arestas, ls)
+def search(N, verts, arestas, ls, num):
+    if num == N:
+        return valid(N, verts, arestas, ls)
     
     for x in extensions(N, verts, arestas, ls):
         ls.append(x)
-        if search(N, verts, arestas, ls):
+        if search(N, verts, arestas, ls, num+1):
             return True
         ls.pop()
         
@@ -51,7 +42,7 @@ def hamilton(arestas):
     
     for x in verts:
         ls = [x]
-        if search(n, verts, arestas, ls):
+        if search(n, verts, arestas, ls, 1):
             return ls
 
     return None
