@@ -1,7 +1,7 @@
 # https://codeboard.io/projects/155407
 
 ### Percentagens:
-- Amigos - 10%
+- Amigos - 11%
 - Anel - 13%
 - Cobertura - 9%
 - Hamilton - 11%
