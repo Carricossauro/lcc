@@ -48,7 +48,7 @@ def superstring(strings):
     N = len(res)
 
     for k in range(1,N):
-        if search(strings, N, k, [""], resList, concatList):
+        if search(strings, N, k, [], resList, concatList):
             return resList[-1]
 
     return resList[-1]
@@ -62,8 +62,7 @@ def makeWord(ls, concatList):
     while i < N-1:
         pal = ls[i]
         nextPal = ls[i+1]
-        if pal != "":
-            final += pal[:concatList[pal][nextPal]]
+        final += pal[:concatList[pal][nextPal]]
         i+=1
     return final + ls[i]
 
