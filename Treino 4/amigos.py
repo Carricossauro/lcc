@@ -1,14 +1,5 @@
 '''
 
-Implemente uma função que descubra o maior conjunto de pessoas que se conhece 
-mutuamente. A função recebe receber uma sequências de pares de pessoas que se 
-conhecem e deverá devolver o tamanho do maior conjunto de pessoas em que todos 
-conhecem todos os outros.
-
-'''
-
-'''
-
 Implemente uma função que descubra o maior conjunto de pessoas que se conhece
 mutuamente. A função recebe receber uma sequências de pares de pessoas que se
 conhecem e deverá devolver o tamanho do maior conjunto de pessoas em que todos
