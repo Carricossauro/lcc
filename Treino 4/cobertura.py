@@ -9,8 +9,8 @@ par de nós.
 '''
 
 # 10%
-def extensions(vertices, ls, k):
-    return [x for x in range(k, len(vertices)) if  x not in ls]
+def extensions(vertices, ls, k, total, n):
+    return [x for x in range(k, len(vertices)) if x not in ls and total - x + k >= n]
 
 def valid(ls, n, arestas):
     return all(map(lambda tup: tup[0] in ls or tup[1] in ls, arestas))
@@ -18,10 +18,10 @@ def valid(ls, n, arestas):
 def search(vertices, ls, n, arestas, tam, total):
     if n == tam:
         return valid(ls, n, arestas)
-    elif total + len(ls) - tam < n:
+    elif total - ls[-1] - 1 + tam < n: # Esta condição não executa se as extensões estiverem bem feitas
         return False
 
-    for x in extensions(vertices, ls, tam):
+    for x in extensions(vertices, ls, tam, total, n):
         ls.append(x)
         if search(vertices, ls, n, arestas, tam+1, total):
             return True
@@ -41,7 +41,7 @@ def cobertura(arestas):
         novasArestas.append( (vertices.index(a), vertices.index(b)) )
 
     for i in range(1,N):
-        c = [""]
+        c = [-1]
         if search(vertices, c, i, novasArestas, 0, N):
             return i
 
