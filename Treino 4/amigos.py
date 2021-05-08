@@ -7,19 +7,26 @@ conhecem todos os outros.
 
 '''
 
+'''
+
+Implemente uma função que descubra o maior conjunto de pessoas que se conhece
+mutuamente. A função recebe receber uma sequências de pares de pessoas que se
+conhecem e deverá devolver o tamanho do maior conjunto de pessoas em que todos
+conhecem todos os outros.
+
+'''
+
 def existeAresta(adj, a, b, amigos):
     return amigos[a] in adj[amigos[b]]
 
-def extensions(n, ls, amigos, adj, k):
-    return [x for x in range(k, len(amigos)) if all(map(lambda y: y != x and existeAresta(adj, x, y, amigos), ls[1:]))]
+def extensions(n, ls, amigos, adj, k, total):
+    return [x for x in range(k, total) if total - x + k >= n and all(map(lambda y: y != x and existeAresta(adj, x, y, amigos), ls[1:]))]
 
 def search(n, ls, adj, amigos, k, total):
     if n == k:
         return True
-    elif len(ls) + total - k < n:
-        return False
 
-    for x in extensions(n, ls, amigos, adj, k):
+    for x in extensions(n, ls, amigos, adj, k, total):
         ls.append(x)
         if search(n, ls, adj, amigos, k+1, total):
             return True
