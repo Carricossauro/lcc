@@ -74,15 +74,7 @@ int dequeueC (QueueC *q, int *x){
 }
 
 int frontC (QueueC q, int *x){
-    if (*q == NULL) return -1;
-    LInt temp = NULL;
-    if (*q == (*q)->prox) {
-        temp = *q;
-        *q = NULL;
-    } else {
-        temp = (*q)->prox;
-        (*q)->prox = temp->prox;
-    }
-    *x = temp->valor;
+    if (q == NULL) return -1;
+    *x = q->valor;
     return 0;
 }
