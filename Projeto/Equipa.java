@@ -1,5 +1,3 @@
-package projeto;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,23 +36,18 @@ public class Equipa {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-
         sb.append("Equipa: "); sb.append(this.nome);
         sb.append("\nJogadores: ");this.jogadores.forEach((y,x) -> {
-            sb.append("Camisola: "); sb.append(y.toString());
-            sb.append("\n");sb.append(x.toString());
-
+        sb.append("Camisola: "); sb.append(y.toString());
+        sb.append("\n");sb.append(x.toString()); 
         });
         sb.append("\nTitulares: "); sb.append(this.titulares.toString());
-
         return sb.toString();
     }
 
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o==null || o.getClass() != this.getClass() ) return false;
-
         Equipa a = (Equipa) o;
         return this.nome.equals(a.nome) && this.jogadores.equals(a.jogadores) && Arrays.equals(this.titulares, a.titulares);
     }
