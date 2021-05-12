@@ -1,9 +1,10 @@
 '''
 
-Implemente uma função que descubra o maior conjunto de pessoas que se conhece
-mutuamente. A função recebe receber uma sequências de pares de pessoas que se
-conhecem e deverá devolver o tamanho do maior conjunto de pessoas em que todos
-conhecem todos os outros.
+Implemente uma função que calcula o número mínimo de nós de um grafo 
+não orientado que cobrem todas as arestas, ou seja, o tamanho do menor 
+conjunto de nós que contém pelo menos um extremo de cada aresta. 
+A função recebe a lista de todas as arestas do grafo, sendo cada aresta um 
+par de nós.
 
 '''
 
@@ -40,7 +41,7 @@ def cobertura(arestas):
     novasArestas = []
     for a,b in arestas:
         novasArestas.append( (vertices.index(a), vertices.index(b)) )
-        
+
     incluido = [False for x in range(N)]
 
     for i in range(1,N):
