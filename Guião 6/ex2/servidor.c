@@ -10,6 +10,8 @@ int main() {
     
     int file = open("log", O_CREAT | O_WRONLY, 0666);
     int re = open("ex2", O_RDONLY);
+    int garantia = open("ex2", O_WRONLY);
+
     char buffer;
 
     if (file != -1) {
