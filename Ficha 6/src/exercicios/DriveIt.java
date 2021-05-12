@@ -1,13 +1,13 @@
 package exercicios;
 
-import com.sun.source.tree.Tree;
-
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DriveIt {
+    private static final Map<String, Comparator<Veiculo>> comparadores = new HashMap<>();
+
     private Map<String, Veiculo> veiculos;
-    private Map<String, Comparator<Veiculo>> comparadores;
     private boolean promocao;
 
     public DriveIt() {
@@ -31,47 +31,44 @@ public class DriveIt {
         return (int) this.veiculos.values().stream().filter(a->a.getMarca().equals(marca)).count();
     }
 
-    public Veiculo getVeiculo(String mat) {
+    public Veiculo getVeiculo(String mat) throws VeiculoNaoExisteException {
         Veiculo v = this.veiculos.get(mat);
-        if (v != null) v = v.clone();
-        return v;
+        if (v == null) throw new VeiculoNaoExisteException(mat);
+        return v.clone();
     }
 
-    public void adiciona(Veiculo v) {
-        if (!this.veiculos.containsKey(v.getMarca())) {
-            this.veiculos.put(v.getMarca(), v.clone());
-        }
+    public void adiciona(Veiculo v) throws VeiculoJaExisteException {
+        if (this.veiculos.containsKey(v.getMatricula())) {
+            throw new VeiculoJaExisteException(v.getMatricula());
+        } else this.veiculos.put(v.getMarca(), v.clone());
     }
 
     public List<Veiculo> getVeiculos() {
         return this.veiculos.values().stream().map(Veiculo::clone).collect(Collectors.toList());
     }
 
-    public void adiciona(Set<Veiculo> vs) {
-        vs.forEach(this::adiciona);
-    }
-
-    public void registarAluguer(String mat, int numKms) {
-        Veiculo v = this.veiculos.get(mat);
-        if (v != null) {
-            v.addViagem(numKms);
+    public void adiciona(Set<Veiculo> vs) throws VeiculoJaExisteException {
+        for (Veiculo v : vs) {
+            adiciona(v);
         }
     }
 
-    public void ClassificarVeiculo(String mat, int clas) {
+    public void registarAluguer(String mat, int numKms) throws VeiculoNaoExisteException {
         Veiculo v = this.veiculos.get(mat);
-        if (v != null) {
-            v.addClassificacao(clas);
-        }
+        if (v == null) throw new VeiculoNaoExisteException(mat);
+        else  v.addViagem(numKms);
     }
 
-    public double custoRealKm(String mat) {
+    public void ClassificarVeiculo(String mat, int clas) throws VeiculoNaoExisteException {
         Veiculo v = this.veiculos.get(mat);
-        if (v != null) {
-            if (v instanceof VeiculoOcasiao && this.promocao) return ((VeiculoOcasiao) v).custorealDesconto();
-            else return v.custoRealKM();
-        }
-        return 0;
+        if (v == null) throw new VeiculoNaoExisteException(mat);
+        else v.addClassificacao(clas);
+    }
+
+    public double custoRealKm(String mat)  throws VeiculoNaoExisteException {
+        Veiculo v = this.veiculos.get(mat);
+        if (v == null) throw new VeiculoNaoExisteException(mat);
+        else return v.custoRealKM();
     }
 
     public int quantosT(String tipo) {
@@ -81,12 +78,8 @@ public class DriveIt {
     public List<Veiculo> veiculosOrdenadosCusto() {
         return this.veiculos.values().stream().sorted((a,b)->{
             double pA, pB;
-
-            if (a instanceof VeiculoOcasiao) pA = ((VeiculoOcasiao) a).custorealDesconto();
-            else pA = a.custoRealKM();
-
-            if (b instanceof VeiculoOcasiao) pB = ((VeiculoOcasiao) b).custorealDesconto();
-            else pB = b.custoRealKM();
+            pA = a.custoRealKM();
+            pB = b.custoRealKM();
 
             return (int) (pB-pA);
         }).map(Veiculo::clone).collect(Collectors.toList());
@@ -120,15 +113,39 @@ public class DriveIt {
     }
 
     public void adicionarComparador(String crit, Comparator<Veiculo> comp) {
-        if (!this.comparadores.containsKey(crit)) this.comparadores.put(crit, comp);
+        if (!comparadores.containsKey(crit)) comparadores.put(crit, comp);
     }
 
     public void removerComparador(String criterio) {
-        this.comparadores.remove(criterio);
+        comparadores.remove(criterio);
     }
 
     public Iterator<Veiculo> ordenarVeiculo(String criterio) {
-        if (!this.comparadores.containsKey(criterio)) return null;
-        return this.veiculos.values().stream().sorted(this.comparadores.get(criterio)).iterator();
+        if (!comparadores.containsKey(criterio)) return null;
+        return this.veiculos.values().stream().sorted(comparadores.get(criterio)).iterator();
+    }
+
+    public List<BonificaKms> daoPontos() {
+        return this.veiculos.values().stream().filter(a->a instanceof BonificaKms)
+                .map(a->(BonificaKms) a.clone()).collect(Collectors.toList());
+    }
+
+    // Ficheiros
+    public void gravar(String file) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this);
+        oos.close();
+        fos.close();
+    }
+
+    public void ler(String file) throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(file);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        DriveIt lido = (DriveIt) ois.readObject();
+        this.veiculos = lido.veiculos.values().stream().collect(Collectors.toMap(Veiculo::getMatricula, a->a));
+        this.promocao = lido.promocao;
+        ois.close();
+        fis.close();
     }
 }

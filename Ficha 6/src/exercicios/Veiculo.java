@@ -92,17 +92,15 @@ public abstract class Veiculo implements Comparable<Veiculo> {
 
     // Fim dos setters e getters
 
-    public void addViagem(int nkms){
+    public void addViagem(int nkms) {
         this.kms += nkms;
         this.kmsUltimo = nkms;
     }
 
-    public double custoRealKM(){
-        return this.precokm*1.1;
-    }
+    public abstract double custoRealKM();
 
     public int classificacao(){
-        return (int) this.classificacao.stream().mapToInt(k->k.intValue()).average().getAsDouble();
+        return (int) this.classificacao.stream().mapToInt(k-> k).average().getAsDouble();
     }
 
     public void addClassificacao(int v){

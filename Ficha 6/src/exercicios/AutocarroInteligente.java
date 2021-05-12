@@ -2,17 +2,18 @@ package exercicios;
 
 import java.util.ArrayList;
 
-public class AutocarroInteligente extends Veiculo{
+public class AutocarroInteligente extends Veiculo implements BonificaKms{
     private double ocupacao;
+    private int pontosKM;
 
     public AutocarroInteligente() {
-        this("n/a","n/a","n/a", 0, 0, 0, new ArrayList<Integer>(), 0, 0, 0);
+        this("n/a","n/a","n/a", 0, 0, 0, new ArrayList<Integer>(), 0, 0, 0,1);
     }
 
     public AutocarroInteligente(String marca, String modelo, String matricula,
                                 int ano, double velociademedia, double precokm,
                                 ArrayList<Integer> classificacao,
-                                int kms, int kmsUltimo, double ocup) {
+                                int kms, int kmsUltimo, double ocup, int pontos) {
         super.setMarca(marca);
         super.setModelo(modelo);
         super.setMatricula(matricula);
@@ -23,6 +24,7 @@ public class AutocarroInteligente extends Veiculo{
         super.setKms(kms);
         super.setKmsUltimo(kmsUltimo);
         this.ocupacao = ocup;
+        this.pontosKM = pontos;
     }
 
     public String toString() {
@@ -31,12 +33,12 @@ public class AutocarroInteligente extends Veiculo{
 
     public AutocarroInteligente(AutocarroInteligente a) {
         this(a.getMarca(), a.getModelo(), a.getMatricula(), a.getAno(),
-             a.getVelociademedia(), a.getPrecokm(), a.getClassificacao(), a.getKms(), a.getKmsUltimo(), a.getOcupacao());
+             a.getVelociademedia(), a.getPrecokm(), a.getClassificacao(), a.getKms(), a.getKmsUltimo(), a.getOcupacao(), a.pontosKM);
     }
 
     public AutocarroInteligente clone() {
         return new AutocarroInteligente(this.getMarca(), this.getModelo(), this.getMatricula(), this.getAno(), this.getVelociademedia(), this.getPrecokm(),
-                this.getClassificacao(), this.getKms(), this.getKmsUltimo(), this.ocupacao);
+                this.getClassificacao(), this.getKms(), this.getKmsUltimo(), this.ocupacao, this.pontosKM);
     }
 
     public void setOcupacao(double oc) {
@@ -48,7 +50,18 @@ public class AutocarroInteligente extends Veiculo{
     }
 
     public double custoRealKM() {
-        if (this.ocupacao< 0.6) return super.custoRealKM() * 0.5;
-        return super.custoRealKM() * 0.25;
+        if (this.ocupacao< 0.6) return this.getPrecokm() * 1.1 * 0.5;
+        return this.getPrecokm() * 1.1 * 0.25;
+    }
+
+    // BonificaKMs
+    public void setPontosKM(int pontos) {
+        this.pontosKM = pontos;
+    }
+    public int getPontosKM() {
+        return this.pontosKM;
+    }
+    public int pontosAcumulados() {
+        return this.pontosKM * getKms();
     }
 }
