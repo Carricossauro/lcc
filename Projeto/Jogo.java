@@ -92,19 +92,15 @@ public class Jogo {
     }
 
     public void adicionaSubstituicaoCasa(int entra, int sai) throws SubstituicaoErradaException {
-        if (entra == sai || !this.jogadoresCasa.contains(sai) || this.substituicoesCasa.containsKey(entra)) throw new SubstituicaoErradaException();
+        if (entra == sai || this.substituicoesCasa.size() >= 3 || this.substituicoesCasa.containsKey(entra)) throw new SubstituicaoErradaException();
 
         this.substituicoesCasa.put(sai, entra);
-        jogadoresCasa.removeIf(a->a==sai);
-        jogadoresCasa.add(entra);
     }
 
     public void adicionaSubstituicaoFora(int entra, int sai) throws SubstituicaoErradaException {
-        if (entra == sai || !this.jogadoresFora.contains(sai) || this.substituicoesFora.containsKey(entra)) throw new SubstituicaoErradaException();
+        if (entra == sai || this.substituicoesFora.size() >= 3 || this.substituicoesFora.containsKey(entra)) throw new SubstituicaoErradaException();
 
         this.substituicoesFora.put(sai, entra);
-        jogadoresFora.removeIf(a->a==sai);
-        jogadoresFora.add(entra);
     }
 
     public void goloCasa() {

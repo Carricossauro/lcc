@@ -1,8 +1,6 @@
 package projeto;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -117,9 +115,31 @@ public class Equipa {
         return titulares;
     }
 
+    public List<Integer> getListTitulares() {
+        List<Integer> lista = new ArrayList<>();
+        for (int i = 0; i < 11; i++) lista.add(this.titulares[i]);
+        return lista;
+    }
+
     public void setTitulares(int[] titulares) {
         this.titulares = new int[11];
         System.arraycopy(titulares,0,this.titulares,0,11);
+    }
+
+    public void substituicao(int entra, int sai) throws SubstituicaoErradaException, JogadorNaoExisteException {
+        if (!this.jogadores.containsKey(entra)) throw new JogadorNaoExisteException("Nao existe jogador com numero " + entra);
+        if (!this.jogadores.containsKey(sai)) throw new JogadorNaoExisteException("Nao existe jogador com numero " + sai);
+
+        boolean subs = false;
+        for (int i = 0; i < 11; i++) {
+            int num = this.titulares[i];
+            if (num == entra) throw new SubstituicaoErradaException("O jogador com numero " + entra + " ja esta em campo");
+            if (num == sai) {
+                this.titulares[i] = entra;
+                subs = true;
+            }
+        }
+        if (!subs) throw new SubstituicaoErradaException("Nao existe jogador em campo com numero " + sai);
     }
 
     public String getNome(){
