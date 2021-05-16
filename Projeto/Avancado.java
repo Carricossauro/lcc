@@ -1,3 +1,5 @@
+package projeto;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -64,4 +66,8 @@ public class Avancado extends Jogador {
                  + this.finalizacao * 0.20
                  + this.compostura * 0.10);
     }
+
+    /*public static Avancado parse(String input, String equipa) {
+
+    }*/
 }
