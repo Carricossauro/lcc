@@ -1,6 +1,7 @@
 package projeto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Defesa extends Jogador {
@@ -13,8 +14,8 @@ public class Defesa extends Jogador {
         this.intersecao = 0;
     }
 
-    public Defesa(String nom, String eq, int ide, ArrayList<String> hist, Map<String,Integer> ats, int co, int it) {
-        super(nom, eq,ide, hist, ats);
+    public Defesa(String nom, int ide, ArrayList<String> hist, Map<String,Integer> ats, int co, int it) {
+        super(nom,ide, hist, ats);
         this.corte = co;
         this.intersecao = it;
     }
@@ -67,4 +68,25 @@ public class Defesa extends Jogador {
                  + this.intersecao * 0.20);
     }
 
+    public static Defesa parse(String input) {
+        String[] campos = input.split(",");
+        // Nome - campos[0]
+        // Numero da camisola - campos[1]
+        Map<String, Integer> atributos = new HashMap<>();
+        // Velocidade
+        atributos.put("velocidade", Integer.parseInt(campos[2]));
+        // Resistencia
+        atributos.put("resistencia", Integer.parseInt(campos[3]));
+        // Destreza
+        atributos.put("destreza", Integer.parseInt(campos[4]));
+        // Impulsao
+        atributos.put("impulsao", Integer.parseInt(campos[5]));
+        // Jogocabeça
+        atributos.put("jogocabeca", Integer.parseInt(campos[6]));
+        // Remate
+        atributos.put("remate", Integer.parseInt(campos[7]));
+        // Passe
+        atributos.put("passe", Integer.parseInt(campos[8]));
+        return new Defesa(campos[0], Integer.parseInt(campos[1]), new ArrayList<>(), atributos, 70, 70);
+    }
 }

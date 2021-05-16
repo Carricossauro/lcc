@@ -7,14 +7,12 @@ import java.util.stream.Collectors;
 
 public abstract class Jogador {
     private String nome; // Nome do jogador
-    private String equipa; // Nome da equipa
     private int numeroCamisola; // Numero de camisola do jogador
     private ArrayList<String> historico; // Historico de equipas
     private Map<String,Integer> atributos; // Atributos do jogador
 
     public Jogador() {
         this.nome = "n/a";
-        this.equipa = "n/a";
         this.numeroCamisola = 0;
         this.historico = new ArrayList<>();
         this.atributos = new HashMap<>();
@@ -27,16 +25,15 @@ public abstract class Jogador {
         this.atributos.put("passe", 0);
     }
 
-    public Jogador(String nom, String eq, int nC, ArrayList<String> hist, Map<String,Integer> ats) {
+    public Jogador(String nom, int nC, ArrayList<String> hist, Map<String,Integer> ats) {
         this.nome = nom;
-        this.equipa = eq;
         this.numeroCamisola = nC;
         this.historico = new ArrayList<String>(hist);
         this.atributos = ats.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Jogador(Jogador j) {
-        this(j.nome, j.equipa, j.numeroCamisola, j.historico, j.atributos);
+        this(j.nome, j.numeroCamisola, j.historico, j.atributos);
     }
 
     public boolean equals(Object o) {
@@ -46,7 +43,6 @@ public abstract class Jogador {
 
         Jogador that = (Jogador) o;
         return this.numeroCamisola == that.numeroCamisola && this.nome.equals(that.nome) &&
-                this.equipa.equals(that.equipa) &&
                 this.historico.equals(that.historico) &&
                 this.atributos.equals(that.atributos);
     }
@@ -55,7 +51,6 @@ public abstract class Jogador {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Jogador: "); sb.append(this.nome);
-        sb.append("\nEquipa: "); sb.append(this.equipa);
         sb.append("\nNumero de Camisola: "); sb.append(this.numeroCamisola);
         sb.append("\nHistórico de equipas: "); sb.append(this.historico.toString());
         sb.append("\nAtributos: "); sb.append(this.atributos.toString());
@@ -76,12 +71,6 @@ public abstract class Jogador {
     }
     public void setNome(String nom) {
         this.nome = nom;
-    }
-    public String getEquipa() {
-        return this.equipa;
-    }
-    public void setEquipa(String eq) {
-        this.equipa = eq;
     }
     public int getNumeroCamisola() {
         return this.numeroCamisola;

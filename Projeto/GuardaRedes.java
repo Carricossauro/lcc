@@ -1,6 +1,7 @@
 package projeto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GuardaRedes extends Jogador {
@@ -11,8 +12,8 @@ public class GuardaRedes extends Jogador {
         this.elasticidade = 0;
     }
 
-    public GuardaRedes(String nom, String eq, int ide, ArrayList<String> hist, Map<String,Integer> ats, int elas) {
-        super(nom, eq,ide, hist, ats);
+    public GuardaRedes(String nom, int ide, ArrayList<String> hist, Map<String,Integer> ats, int elas) {
+        super(nom, ide, hist, ats);
         this.elasticidade = elas;
     }
 
@@ -55,5 +56,27 @@ public class GuardaRedes extends Jogador {
                  + this.getRemate() * 0.10
                  + this.getPasse()  * 0.10
                  + this.elasticidade * 0.53);
+    }
+
+    public static GuardaRedes parse(String input) {
+        String[] campos = input.split(",");
+        // Nome - campos[0]
+        // Numero da camisola - campos[1]
+        Map<String, Integer> atributos = new HashMap<>();
+        // Velocidade
+        atributos.put("velocidade", Integer.parseInt(campos[2]));
+        // Resistencia
+        atributos.put("resistencia", Integer.parseInt(campos[3]));
+        // Destreza
+        atributos.put("destreza", Integer.parseInt(campos[4]));
+        // Impulsao
+        atributos.put("impulsao", Integer.parseInt(campos[5]));
+        // Jogocabeça
+        atributos.put("jogocabeca", Integer.parseInt(campos[6]));
+        // Remate
+        atributos.put("remate", Integer.parseInt(campos[7]));
+        // Passe
+        atributos.put("passe", Integer.parseInt(campos[8]));
+        return new GuardaRedes(campos[0], Integer.parseInt(campos[1]), new ArrayList<>(), atributos, 70);
     }
 }

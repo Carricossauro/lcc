@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Equipa {
     private String nome;
@@ -12,6 +13,15 @@ public class Equipa {
 
     public Equipa (){
         this.nome = "n/a";
+        this.jogadores = new HashMap<>();
+        this.titulares = new int[11];
+        for(int i = 0; i<11; i++){
+            this.titulares [i] = -1;
+        }
+    }
+
+    public Equipa(String nome) {
+        this.nome = nome;
         this.jogadores = new HashMap<>();
         this.titulares = new int[11];
         for(int i = 0; i<11; i++){
@@ -40,8 +50,7 @@ public class Equipa {
         StringBuilder sb = new StringBuilder();
         sb.append("Equipa: "); sb.append(this.nome);
         sb.append("\nJogadores: ");this.jogadores.forEach((y,x) -> {
-        sb.append("Camisola: "); sb.append(y.toString());
-        sb.append("\n");sb.append(x.toString()); 
+        sb.append(x.toString());
         });
         sb.append("\nTitulares: "); sb.append(Arrays.toString(this.titulares));
         return sb.toString();
@@ -54,7 +63,7 @@ public class Equipa {
         return this.nome.equals(a.nome) && this.jogadores.equals(a.jogadores) && Arrays.equals(this.titulares, a.titulares);
     }
 
-    public int calculaOverall() throws TitularesNaoDefinidosException, JogadorNaoExisteException {
+    public int calculaOverallTitulares() throws TitularesNaoDefinidosException, JogadorNaoExisteException {
         int soma = 0;
         for (int i = 0; i < 11; i++) {
             int jogador = this.titulares[i];
@@ -63,6 +72,11 @@ public class Equipa {
             soma += this.jogadores.get(jogador).calculaOverall();
         }
         return soma/11;
+    }
+
+    public int calculaOverall() throws EquipaNaoDefinidaException {
+        if (this.jogadores.isEmpty()) throw new EquipaNaoDefinidaException("Equipa nao tem jogadores");
+        return (int) this.jogadores.values().stream().mapToInt(Jogador::calculaOverall).average().getAsDouble();
     }
 
     public void adicionaJogador(Jogador j, int numCamisola) throws JogadorJaExisteException {
@@ -94,7 +108,6 @@ public class Equipa {
         Jogador j = getJogador(numCamisola);
         this.removeJogador(numCamisola);
         j.adicionarAoHistorico(this.nome);
-        j.setEquipa(eq.nome);
         eq.adicionaJogador(j, numCamisolaNovo);
     }
 
@@ -115,6 +128,11 @@ public class Equipa {
 
     public void setNome(String n){
         this.nome = n;
+    }
+
+    public static Equipa parse(String input){
+        String[] campos = input.split(",");
+        return new Equipa(campos[0]);
     }
 
     // Falta metodo para determinar jogadores titulares

@@ -1,6 +1,6 @@
 package projeto;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Teste {
     public static void main(String[] args) {
@@ -35,6 +35,16 @@ public class Teste {
                 break;
             }
             case 2: {
+                try {
+                    Map<String, Equipa> equipas = new HashMap<>();
+                    List<Jogo> jogos = new ArrayList<>();
+                    Parser.parse(equipas, jogos);
+                    for (String e: equipas.keySet()){
+                        System.out.println(e);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             }
             case 3: {

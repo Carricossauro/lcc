@@ -1,6 +1,7 @@
 package projeto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Lateral extends Jogador {
@@ -13,8 +14,8 @@ public class Lateral extends Jogador {
         this.drible = 0;
     }
 
-    public Lateral(String nom, String eq, int ide, ArrayList<String> hist, Map<String,Integer> ats, int cr, int dr) {
-        super(nom, eq,ide, hist, ats);
+    public Lateral(String nom, int ide, ArrayList<String> hist, Map<String,Integer> ats, int cr, int dr) {
+        super(nom,ide, hist, ats);
         this.cruzamento = cr;
         this.drible = dr;
     }
@@ -65,5 +66,27 @@ public class Lateral extends Jogador {
                  + this.getPasse()  * 0.10
                  + this.drible * 0.15
                  + this.cruzamento * 0.15);
+    }
+
+    public static Lateral parse(String input) {
+        String[] campos = input.split(",");
+        // Nome - campos[0]
+        // Numero da camisola - campos[1]
+        Map<String, Integer> atributos = new HashMap<>();
+        // Velocidade
+        atributos.put("velocidade", Integer.parseInt(campos[2]));
+        // Resistencia
+        atributos.put("resistencia", Integer.parseInt(campos[3]));
+        // Destreza
+        atributos.put("destreza", Integer.parseInt(campos[4]));
+        // Impulsao
+        atributos.put("impulsao", Integer.parseInt(campos[5]));
+        // Jogocabeça
+        atributos.put("jogocabeca", Integer.parseInt(campos[6]));
+        // Remate
+        atributos.put("remate", Integer.parseInt(campos[7]));
+        // Passe
+        atributos.put("passe", Integer.parseInt(campos[8]));
+        return new Lateral(campos[0], Integer.parseInt(campos[1]), new ArrayList<>(), atributos, 70, 70);
     }
 }
