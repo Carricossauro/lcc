@@ -27,10 +27,9 @@ int altura (ABin a){
 }
 
 int nFolhas (ABin a){
+    if (a == NULL) return 0;
     if (a->esq == NULL && a->dir == NULL) return 1;
-    int e = altura(a->esq);
-    int d = altura(a->dir);
-    return ((e > d) ? e : d);
+    return nFolhas(a->esq) + nFolhas(a->dir);
 }
 
 ABin maisEsquerda (ABin a){
