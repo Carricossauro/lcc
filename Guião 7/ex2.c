@@ -6,6 +6,8 @@
 #include <signal.h>
 #include <stdlib.h>
 
+// abcdef ex2
+
 int numeroFilhos = 0;
 int *pids = NULL;
 

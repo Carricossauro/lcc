@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <signal.h>
 
+// abcdef ex1
+
 int crtl_c = 0;
 int segundos = 0;
 
