@@ -140,10 +140,11 @@ int main() {
 		char *palavra = remMaisFreq(&grama, &freq);
 		if (strlen(palavra) > 3) {
 			printf("Palavra: %s", palavra);
-			free(palavra);
 			printf("Contagem: %d", freq);
 			i++;
 		}
+		free(palavra);
 	}
+	libertaHist(&grama);
 	return 0;
 }
