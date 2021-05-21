@@ -15,6 +15,7 @@ na calculadora (por exemplo, se o número actual é 3 ficará com o número 34).
 
 """
 
+# 90%
 def calculadora(ops,res):
     queue = [(0,0)] #res, operaçoes
     vis = [0]
