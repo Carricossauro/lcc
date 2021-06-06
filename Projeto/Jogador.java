@@ -1,5 +1,7 @@
 package projeto;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +65,32 @@ public abstract class Jogador {
 
     public void adicionarAoHistorico(String nomeEquipa) {
         this.historico.add(nomeEquipa);
+    }
+
+    public void escrever(FileWriter writer) throws IOException {
+        String subClasse = this.getClass().getSimpleName();
+        if (this instanceof GuardaRedes) {
+            writer.write("Guarda-Redes:");
+        } else {
+            writer.write(this.getClass().getSimpleName() + ":");
+        }
+
+        writer.write(this.nome + ",");
+        writer.write(this.numeroCamisola + ",");
+        writer.write(this.getVelocidade() + ",");
+        writer.write(this.getResistencia() + ",");
+        writer.write(this.getDestreza() + ",");
+        writer.write(this.getImpulsao() + ",");
+        writer.write(this.getJogoCabeca() + ",");
+        writer.write(this.getRemate() + ",");
+        writer.write(this.getPasse() + "");
+
+        if (this instanceof GuardaRedes) writer.write("," + ((GuardaRedes) this).getElasticidade());
+        if (this instanceof Lateral) writer.write("," + ((Lateral) this).getCruzamento());
+        if (this instanceof Medio) writer.write("," + ((Medio) this).getIntersecao());
+
+        writer.write("\n");
+        writer.flush();
     }
 
     // setters e getters

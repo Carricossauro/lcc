@@ -38,16 +38,43 @@ public class Teste {
                 try {
                     Map<String, Equipa> equipas = new HashMap<>();
                     List<Jogo> jogos = new ArrayList<>();
-                    Parser.parse(equipas, jogos);
-                    for (String e: equipas.keySet()){
+                    Parser.parse(equipas, jogos, "output.txt");
+                    /*for (String e: equipas.keySet()){
                         System.out.println(e);
-                    }
+                    }*/
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             }
             case 3: {
+                try {
+                    Map<String, Equipa> equipas = new HashMap<>();
+                    List<Jogo> jogos = new ArrayList<>();
+                    Parser.parse(equipas, jogos, "output.txt");
+                    for (String e: equipas.keySet()){
+                        System.out.println(e);
+                    }
+                    SaveGame.gravar(equipas,jogos, "teste.txt");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            }
+            case 4: {
+                try {
+                    Map<String, Equipa> equipas = new HashMap<>();
+                    List<Jogo> jogos = new ArrayList<>();
+                    Parser.parse(equipas, jogos, "output.txt");
+                    int array[] = {21,32,5,6,41,45,12,22,48,28,3};
+                    equipas.get("Debussy Athletic").setTitulares(array);
+                    int array2[] = {18,3,31,39,42,8,26,43,50,33,28,7};
+                    equipas.get("Vivaldi F. C.").setTitulares(array2);
+                    SimulacaoJogo sj = new SimulacaoJogo(equipas.get("Debussy Athletic"), equipas.get("Vivaldi F. C."));
+                    sj.simulaJogo();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             }
             default: {

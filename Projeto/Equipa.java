@@ -1,5 +1,7 @@
 package projeto;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -153,6 +155,19 @@ public class Equipa {
     public static Equipa parse(String input){
         String[] campos = input.split(",");
         return new Equipa(campos[0]);
+    }
+
+    public void escrever(FileWriter writer) throws IOException {
+        String eq = "Equipa:" + this.nome + "\n";
+        writer.write(eq);
+        writer.flush();
+        for (Jogador jogador: this.jogadores.values()) {
+            jogador.escrever(writer);
+        }
+    }
+
+    public List<Integer> getJogadoresNaoTitulares() {
+        return this.jogadores.keySet().stream().filter(a->Arrays.stream(titulares).noneMatch(b->b==a)).collect(Collectors.toList());
     }
 
     // Falta metodo para determinar jogadores titulares

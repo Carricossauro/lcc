@@ -87,6 +87,6 @@ public class Medio extends Jogador {
         atributos.put("remate", Integer.parseInt(campos[7]));
         // Passe
         atributos.put("passe", Integer.parseInt(campos[8]));
-        return new Medio(campos[0], Integer.parseInt(campos[1]), new ArrayList<>(), atributos, 70, 70);
+        return new Medio(campos[0], Integer.parseInt(campos[1]), new ArrayList<>(), atributos, Integer.parseInt(campos[9]), 70);
     }
 }

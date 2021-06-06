@@ -1,10 +1,10 @@
 package projeto;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Jogo {
     private String equipaCasa;
@@ -48,18 +48,21 @@ public class Jogo {
         List<Integer> jf = new ArrayList<>();
         Map<Integer, Integer> subsC = new HashMap<>();
         Map<Integer, Integer> subsF = new HashMap<>();
-        for (int i = 5; i < 16; i++){
+        int i = 5;
+        for (; i < 16; i++){
             jc.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 16; i < 19; i++){
+        for (; i < 19; i++){
             String[] sub = campos[i].split("->");
+            if (sub.length <= 1) break;
             subsC.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
-        for (int i = 19; i < 30; i++){
+        for (int j = 0; j < 11; j++, i++){
             jf.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 30; i < 33; i++){
+        for (int subs = 0; subs < 3 && i < campos.length; subs++, i++){
             String[] sub = campos[i].split("->");
+            if (sub.length <= 1) break;
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
         return new Jogo(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
@@ -75,7 +78,7 @@ public class Jogo {
         // Jogo: Benfica 4 - 3 Sporting
         sb.append("\nData: ").append(this.date);
         sb.append("\nEquipa casa: ");
-        this.jogadoresCasa.forEach(j->sb.append(j).append(", "));
+        this.jogadoresCasa.forEach(j->sb.append(j).append(" "));
         // Equipa casa: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
         sb.append("Substituiçoes casa: ");
         this.substituicoesCasa.forEach((key, value) -> sb.append(key).append(" -> ").append(value).append(" "));
@@ -109,6 +112,39 @@ public class Jogo {
 
     public void goloFora() {
         this.golosFora++;
+    }
+
+    public void escrever(FileWriter writer) throws IOException {
+        writer.write("Jogo:");
+
+        writer.write(this.equipaCasa + ",");
+        writer.write(this.equipaFora + ",");
+        writer.write(this.golosCasa + ",");
+        writer.write(this.golosFora + ",");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        writer.write(formatter.format(this.date));
+
+        for (int numero: this.jogadoresCasa) {
+            writer.write("," + numero);
+        }
+
+        if (this.substituicoesCasa.isEmpty()) writer.write(",");
+        for (int sai: this.substituicoesCasa.keySet()) {
+            writer.write("," + sai + "->" + this.substituicoesCasa.get(sai));
+        }
+
+        for (int numero: this.jogadoresFora) {
+            writer.write("," + numero);
+        }
+
+        if (this.substituicoesFora.isEmpty()) writer.write(",");
+        for (int sai: this.substituicoesFora.keySet()) {
+            writer.write("," + sai + "->" + this.substituicoesFora.get(sai));
+        }
+
+        writer.write("\n");
+        writer.flush();
     }
 
     // setters e getters

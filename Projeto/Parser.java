@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Parser {
-    public static void parse(Map<String, Equipa> equipas, List<Jogo> jogos) throws LinhaIncorretaException, JogadorJaExisteException {
-        List<String> linhas = lerFicheiro("output.txt");
-        System.out.println(linhas);
+    public static void parse(Map<String, Equipa> equipas, List<Jogo> jogos, String ficheiro) throws LinhaIncorretaException, JogadorJaExisteException {
+        List<String> linhas = lerFicheiro(ficheiro);
+        //System.out.println(linhas);
         //Map<String, Equipa> equipas = new HashMap<>(); //nome, equipa
         //Map<Integer, Jogador> jogadores = new HashMap<>(); //numero, jogador
         //List<Jogo> jogos = new ArrayList<>();
@@ -64,10 +64,13 @@ public class Parser {
 
             }
         }
-
-        /* debug
+        /*
+        System.out.println(equipas.size());
+        System.out.println(jogos.size());
+         debug
         for (Equipa e: equipas.values()){
             System.out.println(e.toString());
+            System.out.print("\n");
         }
         for (Jogo jog: jogos){
             System.out.println(jog.toString());
