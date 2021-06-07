@@ -3,7 +3,7 @@ package projeto;
 import java.util.*;
 
 public class Teste {
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
         Scanner ler = new Scanner(System.in);
 
         Jogador gr = new GuardaRedes();
@@ -66,9 +66,9 @@ public class Teste {
                     Map<String, Equipa> equipas = new HashMap<>();
                     List<Jogo> jogos = new ArrayList<>();
                     Parser.parse(equipas, jogos, "output.txt");
-                    int array[] = {21,32,5,6,41,45,12,22,48,28,3};
+                    int[] array = {21,32,5,6,41,45,12,22,48,28,3};
                     equipas.get("Debussy Athletic").setTitulares(array);
-                    int array2[] = {18,3,31,39,42,8,26,43,50,33,28,7};
+                    int[] array2 = {18,3,31,39,42,8,26,43,50,33,28,7};
                     equipas.get("Vivaldi F. C.").setTitulares(array2);
                     SimulacaoJogo sj = new SimulacaoJogo(equipas.get("Debussy Athletic"), equipas.get("Vivaldi F. C."));
                     sj.simulaJogo();

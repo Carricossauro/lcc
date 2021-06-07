@@ -14,8 +14,8 @@ public class Jogo {
     private LocalDate date;
     private List<Integer> jogadoresCasa;
     private List<Integer> jogadoresFora;
-    Map<Integer, Integer> substituicoesCasa = new HashMap<>(); // sai -> entra
-    Map<Integer, Integer> substituicoesFora = new HashMap<>(); // sai -> entra
+    Map<Integer, Integer> substituicoesCasa; // sai -> entra
+    Map<Integer, Integer> substituicoesFora; // sai -> entra
 
     public Jogo() {
         equipaCasa = "n/a";
@@ -25,8 +25,8 @@ public class Jogo {
         date = LocalDate.now();
         jogadoresCasa = new ArrayList<>();
         jogadoresFora = new ArrayList<>();
-        substituicoesCasa = new HashMap<>();
-        substituicoesFora = new HashMap<>();
+        substituicoesCasa = new LinkedHashMap<>();
+        substituicoesFora = new LinkedHashMap<>();
     }
 
     public Jogo (String ec, String ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -37,8 +37,8 @@ public class Jogo {
         date = d;
         jogadoresCasa = new ArrayList<>(jc);
         jogadoresFora = new ArrayList<>(jf);
-        substituicoesCasa = new HashMap<>(sc);
-        substituicoesFora = new HashMap<>(sf);
+        substituicoesCasa = new LinkedHashMap<>(sc);
+        substituicoesFora = new LinkedHashMap<>(sf);
     }
 
     public static Jogo parse(String input){
@@ -46,8 +46,8 @@ public class Jogo {
         String[] data = campos[4].split("-");
         List<Integer> jc = new ArrayList<>();
         List<Integer> jf = new ArrayList<>();
-        Map<Integer, Integer> subsC = new HashMap<>();
-        Map<Integer, Integer> subsF = new HashMap<>();
+        Map<Integer, Integer> subsC = new LinkedHashMap<>();
+        Map<Integer, Integer> subsF = new LinkedHashMap<>();
         int i = 5;
         for (; i < 16; i++){
             jc.add(Integer.parseInt(campos[i]));

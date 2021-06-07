@@ -119,13 +119,13 @@ public class SimulacaoJogo {
 
         for (; jogadas < numeroJogadas; jogadas++) {
             if (this.substituicoesCasa > 0) {
-                if (rand.nextInt(numeroJogadas*2) < numeroJogadas) {
+                if (rand.nextInt(numeroJogadas*3) < numeroJogadas) {
                     substituicaoCasa();
                     substituicoesCasa--;
                 }
             }
             if (this.substituicoesFora > 0) {
-                if (rand.nextInt(numeroJogadas*2) < numeroJogadas) {
+                if (rand.nextInt(numeroJogadas*3) < numeroJogadas) {
                     substituicaoFora();
                     substituicoesFora--;
                 }

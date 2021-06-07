@@ -81,7 +81,7 @@ public class Parser {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
         catch(IOException exc) {
-            System.out.println(exc);
+            System.out.println("Erro ao ler o ficheiro: " + exc);
             lines = new ArrayList<>();
         }
         return lines;
