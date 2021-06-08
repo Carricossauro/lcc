@@ -105,6 +105,8 @@ public class Equipa {
     }
 
     public void transfere(Equipa eq, int numCamisola, int numCamisolaNovo) throws JogadorJaExisteException, JogadorNaoExisteException, NullPointerException {
+        if (eq.jogadores.containsKey(numCamisolaNovo)) throw new JogadorJaExisteException();
+        if (!this.jogadores.containsKey(numCamisola)) throw new JogadorNaoExisteException();
         Jogador j = getJogador(numCamisola);
         this.removeJogador(numCamisola);
         j.adicionarAoHistorico(this.nome);
@@ -170,5 +172,9 @@ public class Equipa {
         return this.jogadores.keySet().stream().filter(a->Arrays.stream(titulares).noneMatch(b->b==a)).collect(Collectors.toList());
     }
 
-    // Falta metodo para determinar jogadores titulares
+    public Map<Integer, String> getJogadores() {
+        Map<Integer, String> mapa = new HashMap<>();
+        this.jogadores.forEach((key, value) -> mapa.put(key, value.getNome()));
+        return mapa;
+    }
 }
