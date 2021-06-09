@@ -1,15 +1,17 @@
 package projeto;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
-public class Controller {
+public class Controller implements Serializable {
     private Map<String,Equipa> equipas;
     private List<Jogo> jogos;
+    private SimulacaoJogo simulacao;
 
     public Controller(Map<String,Equipa> equipas, List<Jogo> jogos) {
         this.equipas = equipas;
         this.jogos = jogos;
+        this.simulacao = null;
     }
 
     public void lerEquipas(String ficheiro) throws JogadorJaExisteException, LinhaIncorretaException {
@@ -25,6 +27,29 @@ public class Controller {
 
     public void gravarEstado(String ficheiro) throws IOException {
         SaveGame.gravar(equipas, jogos, ficheiro);
+    }
+
+    public void lerEquipasObjetos(String ficheiro) throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(ficheiro);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        Controller controladorLido = (Controller) ois.readObject();
+
+        controladorLido.equipas.forEach((k,v)->this.equipas.put(k,v));
+        this.jogos.addAll(controladorLido.jogos);
+
+        ois.close();
+        fis.close();
+    }
+
+    public void gravarEstadoObjetos(String ficheiro) throws IOException {
+        FileOutputStream fos = new FileOutputStream(ficheiro);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(this);
+
+        oos.close();
+        fos.close();
     }
 
     public void criarEquipa(String equipa) throws EquipaJaExisteException {
@@ -68,7 +93,7 @@ public class Controller {
     }
 
     public void transferenciaJogador(String equipaSai, String equipaEntra, int camisola, int novaCamisola) throws JogadorNaoExisteException, JogadorJaExisteException, EquipaNaoDefinidaException {
-        if (!this.equipas.containsKey(equipaSai) && !this.equipas.containsKey(equipaEntra)) throw new EquipaNaoDefinidaException();
+        if (!this.equipas.containsKey(equipaSai) || !this.equipas.containsKey(equipaEntra)) throw new EquipaNaoDefinidaException();
 
         this.equipas.get(equipaSai).transfere(this.equipas.get(equipaEntra), camisola, novaCamisola);
     }
@@ -93,5 +118,45 @@ public class Controller {
         }
 
         this.equipas.remove(equipa);
+    }
+
+    public void removerJogador(String equipa, int numero) throws EquipaNaoDefinidaException, JogadorNaoExisteException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        this.equipas.get(equipa).removeJogador(numero);
+    }
+
+    public double overallEquipa(String equipa) throws EquipaNaoDefinidaException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        return this.equipas.get(equipa).calculaOverall();
+    }
+
+    public String informacaojogador(String equipa, int numero) throws EquipaNaoDefinidaException, JogadorNaoExisteException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        return this.equipas.get(equipa).getJogador(numero).toString();
+    }
+
+    public Map<Integer, String> jogadoresPosicao(String equipa, String pos) throws EquipaNaoDefinidaException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        return this.equipas.get(equipa).getJogadoresPorPosicao(pos);
+    }
+
+    public void setTitulares(String equipa, int[] array) throws EquipaNaoDefinidaException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        this.equipas.get(equipa).setTitulares(array);
+    }
+
+    public void simularJogo(String casa, String fora) throws EquipaNaoDefinidaException, JogadorNaoExisteException, TitularesNaoDefinidosException {
+        if (!this.equipas.containsKey(casa) || !this.equipas.containsKey(fora)) throw new EquipaNaoDefinidaException();
+
+        this.simulacao = new SimulacaoJogo(this.equipas.get(casa), this.equipas.get(fora));
+
+        this.jogos.add(this.simulacao.simulaJogo());
+
+        this.simulacao = null;
     }
 }

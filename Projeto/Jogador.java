@@ -2,12 +2,13 @@ package projeto;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class Jogador {
+public abstract class Jogador implements Serializable {
     private String nome; // Nome do jogador
     private int numeroCamisola; // Numero de camisola do jogador
     private ArrayList<String> historico; // Historico de equipas

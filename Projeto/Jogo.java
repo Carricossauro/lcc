@@ -2,11 +2,12 @@ package projeto;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Jogo {
+public class Jogo implements Serializable {
     private String equipaCasa;
     private String equipaFora;
     private int golosCasa;

@@ -159,11 +159,11 @@ public class SimulacaoJogo {
                 Scanner in = new Scanner(System.in);
 
                 int sai = -1;
-                System.out.println("Jogador que sai: ");
+                System.out.print("Jogador que sai: ");
                 sai = in.nextInt();
 
                 int entra = -1;
-                System.out.println("Jogador que entra: ");
+                System.out.print("\nJogador que entra: ");
                 entra = in.nextInt();
 
                 processaSubstituicao(entra, sai, CASA);

@@ -2,11 +2,12 @@ package projeto;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Equipa {
+public class Equipa implements Serializable {
     private String nome;
     private Map<Integer,Jogador> jogadores;
     private int[] titulares;
@@ -175,6 +176,14 @@ public class Equipa {
     public Map<Integer, String> getJogadores() {
         Map<Integer, String> mapa = new HashMap<>();
         this.jogadores.forEach((key, value) -> mapa.put(key, value.getNome()));
+        return mapa;
+    }
+
+    public Map<Integer,String> getJogadoresPorPosicao(String pos) {
+        Map<Integer, String> mapa = new HashMap<>();
+        this.jogadores.forEach((key, value) -> {
+            if (value.getClass().getSimpleName().equals(pos)) mapa.put(key, value.getNome());
+        });
         return mapa;
     }
 }
