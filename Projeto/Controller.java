@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class Controller implements Serializable {
+    private static final int CASA = -1;
+    private static final int FORA = 1;
+
     private Map<String,Equipa> equipas;
     private List<Jogo> jogos;
     private SimulacaoJogo simulacao;
@@ -126,7 +129,7 @@ public class Controller implements Serializable {
         this.equipas.get(equipa).removeJogador(numero);
     }
 
-    public double overallEquipa(String equipa) throws EquipaNaoDefinidaException {
+    public int overallEquipa(String equipa) throws EquipaNaoDefinidaException {
         if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
 
         return this.equipas.get(equipa).calculaOverall();
@@ -150,13 +153,29 @@ public class Controller implements Serializable {
         this.equipas.get(equipa).setTitulares(array);
     }
 
-    public void simularJogo(String casa, String fora) throws EquipaNaoDefinidaException, JogadorNaoExisteException, TitularesNaoDefinidosException {
+    public void simularJogo(String casa, String fora, View view) throws EquipaNaoDefinidaException, JogadorNaoExisteException, TitularesNaoDefinidosException {
         if (!this.equipas.containsKey(casa) || !this.equipas.containsKey(fora)) throw new EquipaNaoDefinidaException();
 
         this.simulacao = new SimulacaoJogo(this.equipas.get(casa), this.equipas.get(fora));
 
-        this.jogos.add(this.simulacao.simulaJogo());
+        this.jogos.add(this.simulacao.simulaJogo(view));
 
         this.simulacao = null;
+    }
+
+    public int overallJogador(String equipa, int numero) throws JogadorNaoExisteException, EquipaNaoDefinidaException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        return this.equipas.get(equipa).getJogador(numero).calculaOverall();
+    }
+
+    public String posicaoJogador(String equipa, int numero) throws EquipaNaoDefinidaException, JogadorNaoExisteException {
+        if (!this.equipas.containsKey(equipa)) throw new EquipaNaoDefinidaException();
+
+        return this.equipas.get(equipa).getJogador(numero).getClass().getSimpleName();
+    }
+
+    public void processaSubstituicao(int entra, int sai, int equipa) throws JogadorNaoExisteException, SubstituicaoErradaException {
+        this.simulacao.processaSubstituicao(entra, sai, equipa);
     }
 }

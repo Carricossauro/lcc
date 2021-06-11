@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>projeto</OriginalElement>
+  <nodes>
+    <node x="596.3886020015468" y="3221.0">projeto.Teste</node>
+    <node x="2432.0052124505937" y="1355.0">projeto.Jogo</node>
+    <node x="3271.5052124505937" y="822.5">projeto.TitularesNaoDefinidosException</node>
+    <node x="822.2398221343876" y="1619.5">projeto.Defesa</node>
+    <node x="3111.3023221343874" y="2364.0">projeto.SimulacaoJogo</node>
+    <node x="1591.4812994071149" y="442.0">projeto.Jogador</node>
+    <node x="2848.731299407115" y="822.5">projeto.SubstituicaoErradaException</node>
+    <node x="1055.0825195399557" y="2537.0">projeto.Parser</node>
+    <node x="2018.0052124505935" y="2548.5">projeto.SaveGame</node>
+    <node x="367.23982213438785" y="1619.5">projeto.Avancado</node>
+    <node x="1826.8648221343876" y="0.0">projeto.Medio</node>
+    <node x="1660.3886020015468" y="3221.5">projeto.SimulacaoImpossivelException</node>
+    <node x="3829.5052124505937" y="822.5">projeto.EquipaNaoDefinidaException</node>
+    <node x="1370.8648221343876" y="34.5">projeto.GuardaRedes</node>
+    <node x="77.09090909090901" y="1758.5">projeto.LinhaIncorretaException</node>
+    <node x="4104.505212450594" y="822.5">projeto.JogadorJaExisteException</node>
+    <node x="4155.263602001547" y="3671.0">projeto.View</node>
+    <node x="4358.505212450593" y="2549.0">projeto.EquipaJaExisteException</node>
+    <node x="2380.263602001547" y="2956.0">projeto.Controller</node>
+    <node x="3142.0052124505937" y="1458.5">projeto.Equipa</node>
+    <node x="881.5825195399557" y="0.0">projeto.Lateral</node>
+    <node x="2113.75" y="4311.0">projeto.Interface</node>
+    <node x="3563.5052124505937" y="822.5">projeto.JogadorNaoExisteException</node>
+    <node x="4607.505212450593" y="2549.0">projeto.NumeroInvalidoException</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="projeto.Controller" target="projeto.JogadorNaoExisteException" relationship="DEPENDENCY">
+      <point x="95.57894736842127" y="-305.5" />
+      <point x="2702.842549369968" y="2885.0" />
+      <point x="3697.2552124505937" y="2885.0" />
+      <point x="3697.2552124505937" y="1324.0" />
+      <point x="3686.5052124505937" y="1324.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="-71.68421052631584" y="-305.5" />
+      <point x="2535.579391475231" y="2875.0" />
+      <point x="2399.5052124505937" y="2875.0" />
+      <point x="2399.5052124505937" y="1324.0" />
+      <point x="1782.9812994071149" y="1324.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.SaveGame" relationship="DEPENDENCY">
+      <point x="-191.15789473684208" y="-305.5" />
+      <point x="2416.1057072647045" y="2925.0" />
+      <point x="2187.0052124505937" y="2925.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Avancado" relationship="CREATE">
+      <point x="-14.454545454545496" y="-40.5" />
+      <point x="661.4340565470013" y="2835.0" />
+      <point x="476.2398221343876" y="2835.0" />
+      <point x="476.2398221343876" y="2333.0" />
+      <point x="584.7398221343876" y="2333.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.SubstituicaoErradaException" relationship="CREATE">
+      <point x="16.0" y="-225.0" />
+      <point x="3255.3023221343874" y="2273.0" />
+      <point x="3131.5052124505937" y="2273.0" />
+      <point x="3131.5052124505937" y="1314.0" />
+      <point x="2975.231299407115" y="1314.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Medio" relationship="CREATE">
+      <point x="167.26315789473665" y="-305.5" />
+      <point x="2774.5267598962837" y="2915.0" />
+      <point x="4348.005212450594" y="2915.0" />
+      <point x="4348.005212450594" y="390.0" />
+      <point x="1989.3325195399555" y="390.0" />
+      <point x="1989.3325195399557" y="380.0" />
+      <point x="2138.1148221343874" y="380.0" />
+      <point x="103.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.SimulacaoJogo" relationship="CREATE">
+      <point x="72.27272727272748" y="-40.5" />
+      <point x="748.1613292742743" y="2915.0" />
+      <point x="2276.5052124505937" y="2915.0" />
+      <point x="2276.5052124505937" y="2835.0" />
+      <point x="3153.9689888010544" y="2835.0" />
+      <point x="-85.33333333333348" y="225.0" />
+    </edge>
+    <edge source="projeto.Avancado" target="projeto.Jogador" relationship="GENERALIZATION">
+      <point x="0.0" y="-179.0" />
+      <point x="584.7398221343879" y="1334.0" />
+      <point x="625.6302124505933" y="1334.0" />
+      <point x="625.6302124505933" y="1314.0" />
+      <point x="1655.3146327404481" y="1314.0" />
+      <point x="-127.66666666666674" y="420.5" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Defesa" relationship="DEPENDENCY">
+      <point x="-74.0" y="-52.0" />
+      <point x="1147.5825195399557" y="2323.0" />
+      <point x="1032.2398221343876" y="2323.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Avancado" relationship="DEPENDENCY">
+      <point x="-111.0" y="-52.0" />
+      <point x="1110.5825195399557" y="2333.0" />
+      <point x="584.7398221343876" y="2333.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.NumeroInvalidoException" relationship="CREATE">
+      <point x="101.72727272727275" y="-294.0" />
+      <point x="4443.490874728819" y="3629.0" />
+      <point x="4725.505212450593" y="3629.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.Equipa" relationship="TO_ONE">
+      <point x="112.0" y="-225.0" />
+      <point x="3351.3023221343874" y="2293.0" />
+      <point x="3686.2552124505937" y="2293.0" />
+      <point x="3686.2552124505937" y="2263.0" />
+      <point x="3402.2552124505937" y="2263.0" />
+      <point x="86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Jogador" target="projeto.Lateral" relationship="DEPENDENCY">
+      <point x="-143.62499999999977" y="-420.5" />
+      <point x="1639.356299407115" y="410.0" />
+      <point x="1080.3325195399557" y="410.0" />
+      <point x="1080.3325195399557" y="380.0" />
+      <point x="986.3325195399557" y="380.0" />
+      <point x="-104.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Interface" target="projeto.View" relationship="CREATE">
+      <point x="19.0" y="-40.5" />
+      <point x="2208.75" y="4280.0" />
+      <point x="4341.763602001547" y="4280.0" />
+      <point x="0.0" y="294.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Jogo" relationship="TO_MANY">
+      <point x="23.89473684210543" y="-305.5" />
+      <point x="2631.158338843652" y="2855.0" />
+      <point x="2940.5052124505937" y="2855.0" />
+      <point x="169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.Jogador" target="projeto.Medio" relationship="DEPENDENCY">
+      <point x="143.62500000000023" y="-420.5" />
+      <point x="1926.606299407115" y="390.0" />
+      <point x="1989.3325195399557" y="390.0" />
+      <point x="1989.3325195399557" y="380.0" />
+      <point x="2138.1148221343874" y="380.0" />
+      <point x="103.75" y="179.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.EquipaJaExisteException" relationship="DEPENDENCY">
+      <point x="33.90909090909099" y="-294.0" />
+      <point x="4375.672692910638" y="3609.0" />
+      <point x="4472.505212450593" y="3609.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Jogo" relationship="DEPENDENCY">
+      <point x="-95.57894736842127" y="-305.5" />
+      <point x="2511.6846546331253" y="2885.0" />
+      <point x="2388.5052124505937" y="2885.0" />
+      <point x="2388.5052124505937" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.SubstituicaoErradaException" relationship="CREATE">
+      <point x="-99.14285714285734" y="-340.0" />
+      <point x="3216.362355307736" y="1314.0" />
+      <point x="2975.231299407115" y="1314.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.JogadorJaExisteException" relationship="DEPENDENCY">
+      <point x="169.54545454545473" y="-294.0" />
+      <point x="4511.309056547001" y="3649.0" />
+      <point x="4865.005212450593" y="3649.0" />
+      <point x="4865.005212450593" y="1304.0" />
+      <point x="4221.005212450594" y="1304.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Lateral" relationship="CREATE">
+      <point x="-47.78947368421041" y="-305.5" />
+      <point x="2559.474128317336" y="2865.0" />
+      <point x="2410.5052124505937" y="2865.0" />
+      <point x="2410.5052124505937" y="410.0" />
+      <point x="1080.3325195399557" y="410.0" />
+      <point x="1080.3325195399557" y="380.0" />
+      <point x="986.3325195399557" y="380.0" />
+      <point x="-104.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Jogador" target="projeto.GuardaRedes" relationship="DEPENDENCY">
+      <point x="-47.87499999999977" y="-420.5" />
+      <point x="1735.106299407115" y="400.0" />
+      <point x="1479.8648221343876" y="400.0" />
+      <point x="-109.0" y="144.5" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.GuardaRedes" relationship="CREATE">
+      <point x="-57.81818181818198" y="-40.5" />
+      <point x="618.0704201833648" y="2865.0" />
+      <point x="66.59090909090901" y="2865.0" />
+      <point x="66.59090909090901" y="400.0" />
+      <point x="1479.8648221343876" y="400.0" />
+      <point x="-109.0" y="144.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.EquipaNaoDefinidaException" relationship="CREATE">
+      <point x="119.47368421052624" y="-305.5" />
+      <point x="2726.737286212073" y="2895.0" />
+      <point x="3957.0052124505937" y="2895.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.GuardaRedes" target="projeto.Jogador" relationship="GENERALIZATION">
+      <point x="109.0" y="144.5" />
+      <point x="1697.8648221343876" y="380.0" />
+      <point x="1729.520019539956" y="380.0" />
+      <point x="1729.520019539956" y="420.0" />
+      <point x="1830.856299407115" y="420.0" />
+      <point x="47.87500000000023" y="-420.5" />
+    </edge>
+    <edge source="projeto.View" target="projeto.Controller" relationship="TO_ONE">
+      <point x="0.0" y="-294.0" />
+      <point x="4341.763602001547" y="3599.0" />
+      <point x="2758.59693533488" y="3599.0" />
+      <point x="151.33333333333348" y="305.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.SimulacaoJogo" relationship="TO_ONE">
+      <point x="47.78947368421041" y="-305.5" />
+      <point x="2655.053075685757" y="2865.0" />
+      <point x="3239.3023221343874" y="2865.0" />
+      <point x="0.0" y="225.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Jogo" relationship="DEPENDENCY">
+      <point x="14.454545454545496" y="-40.5" />
+      <point x="690.3431474560923" y="2895.0" />
+      <point x="980.0825195399557" y="2895.0" />
+      <point x="980.0825195399557" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.Jogador" relationship="TO_MANY">
+      <point x="-49.57142857142844" y="-340.0" />
+      <point x="3265.9337838791653" y="1304.0" />
+      <point x="1910.6479660737816" y="1304.0" />
+      <point x="127.66666666666674" y="420.5" />
+    </edge>
+    <edge source="projeto.SaveGame" target="projeto.Jogo" relationship="DEPENDENCY">
+      <point x="-84.5" y="-40.5" />
+      <point x="2102.5052124505937" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.NumeroInvalidoException" relationship="CREATE">
+      <point x="215.0526315789475" y="-305.5" />
+      <point x="2822.3162335804946" y="2935.0" />
+      <point x="4725.505212450593" y="2935.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.LinhaIncorretaException" relationship="DEPENDENCY">
+      <point x="-135.6363636363635" y="-294.0" />
+      <point x="4206.127238365183" y="3619.0" />
+      <point x="41.22727272727252" y="3619.0" />
+      <point x="41.22727272727252" y="2343.0" />
+      <point x="191.090909090909" y="2343.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Lateral" relationship="DEPENDENCY">
+      <point x="-37.0" y="-52.0" />
+      <point x="1184.5825195399557" y="2263.0" />
+      <point x="1252.7398221343876" y="2263.0" />
+      <point x="1252.7398221343876" y="410.0" />
+      <point x="1080.3325195399557" y="410.0" />
+      <point x="1080.3325195399557" y="380.0" />
+      <point x="986.3325195399557" y="380.0" />
+      <point x="-104.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Parser" relationship="DEPENDENCY">
+      <point x="43.36363636363649" y="-40.5" />
+      <point x="719.2522383651833" y="2935.0" />
+      <point x="1488.5825195399557" y="2935.0" />
+      <point x="1488.5825195399557" y="2895.0" />
+      <point x="1221.5825195399557" y="2895.0" />
+      <point x="0.0" y="52.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Medio" relationship="DEPENDENCY">
+      <point x="74.0" y="-52.0" />
+      <point x="1295.5825195399557" y="2293.0" />
+      <point x="1984.9812994071149" y="2293.0" />
+      <point x="1984.9812994071149" y="390.0" />
+      <point x="1989.3325195399557" y="390.0" />
+      <point x="1989.3325195399557" y="380.0" />
+      <point x="2138.1148221343874" y="380.0" />
+      <point x="103.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.SimulacaoJogo" relationship="CREATE">
+      <point x="-167.26315789473665" y="-305.5" />
+      <point x="2440.0004441068104" y="2915.0" />
+      <point x="2276.5052124505937" y="2915.0" />
+      <point x="2276.5052124505937" y="2835.0" />
+      <point x="3153.9689888010544" y="2835.0" />
+      <point x="-85.33333333333348" y="225.0" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.EquipaNaoDefinidaException" relationship="CREATE">
+      <point x="99.14285714285734" y="-340.0" />
+      <point x="3414.6480695934506" y="1314.0" />
+      <point x="3957.0052124505937" y="1314.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Medio" relationship="CREATE">
+      <point x="-43.36363636363649" y="-40.5" />
+      <point x="632.5249656379103" y="2855.0" />
+      <point x="315.590909090909" y="2855.0" />
+      <point x="315.590909090909" y="390.0" />
+      <point x="1989.3325195399557" y="390.0" />
+      <point x="1989.3325195399557" y="380.0" />
+      <point x="2138.1148221343874" y="380.0" />
+      <point x="103.75" y="179.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Equipa" relationship="CREATE">
+      <point x="0.0" y="-305.5" />
+      <point x="2607.263602001547" y="2845.0" />
+      <point x="2627.528409090909" y="2845.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Parser" relationship="DEPENDENCY">
+      <point x="-215.05263157894728" y="-305.5" />
+      <point x="2392.2109704225995" y="2935.0" />
+      <point x="1488.5825195399557" y="2935.0" />
+      <point x="1488.5825195399557" y="2895.0" />
+      <point x="1221.5825195399557" y="2895.0" />
+      <point x="0.0" y="52.0" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.JogadorNaoExisteException" relationship="CREATE">
+      <point x="49.57142857142844" y="-340.0" />
+      <point x="3365.076641022022" y="1324.0" />
+      <point x="3686.5052124505937" y="1324.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="37.0" y="-52.0" />
+      <point x="1258.5825195399557" y="2283.0" />
+      <point x="1782.9812994071149" y="2283.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="-28.90909090909099" y="-40.5" />
+      <point x="646.9795110924558" y="2845.0" />
+      <point x="326.590909090909" y="2845.0" />
+      <point x="326.590909090909" y="1324.0" />
+      <point x="1782.9812994071149" y="1324.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.Jogo" relationship="CREATE">
+      <point x="-112.0" y="-225.0" />
+      <point x="3127.3023221343874" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Avancado" relationship="CREATE">
+      <point x="-143.36842105263167" y="-305.5" />
+      <point x="2463.8951809489154" y="2905.0" />
+      <point x="2366.5052124505937" y="2905.0" />
+      <point x="2366.5052124505937" y="2333.0" />
+      <point x="584.7398221343876" y="2333.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.TitularesNaoDefinidosException" relationship="CREATE">
+      <point x="0.0" y="-340.0" />
+      <point x="3315.5052124505937" y="1334.0" />
+      <point x="3407.5052124505937" y="1334.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Medio" target="projeto.Jogador" relationship="GENERALIZATION">
+      <point x="-103.75" y="179.0" />
+      <point x="1930.6148221343876" y="380.0" />
+      <point x="1729.520019539956" y="380.0" />
+      <point x="1729.520019539956" y="420.0" />
+      <point x="1830.856299407115" y="420.0" />
+      <point x="47.87500000000023" y="-420.5" />
+    </edge>
+    <edge source="projeto.Jogo" target="projeto.SubstituicaoErradaException" relationship="CREATE">
+      <point x="0.0" y="-443.5" />
+      <point x="2771.0052124505937" y="1314.0" />
+      <point x="2975.231299407115" y="1314.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Defesa" relationship="CREATE">
+      <point x="-119.47368421052624" y="-305.5" />
+      <point x="2487.7899177910203" y="2895.0" />
+      <point x="2377.5052124505937" y="2895.0" />
+      <point x="2377.5052124505937" y="2323.0" />
+      <point x="1032.2398221343876" y="2323.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.JogadorJaExisteException" relationship="DEPENDENCY">
+      <point x="143.36842105263167" y="-305.5" />
+      <point x="2750.6320230541787" y="2905.0" />
+      <point x="4221.005212450594" y="2905.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Jogo" relationship="DEPENDENCY">
+      <point x="111.0" y="-52.0" />
+      <point x="1332.5825195399557" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.JogadorNaoExisteException" relationship="DEPENDENCY">
+      <point x="80.0" y="-225.0" />
+      <point x="3319.3023221343874" y="2283.0" />
+      <point x="3651.7552124505937" y="2283.0" />
+      <point x="3651.7552124505937" y="1324.0" />
+      <point x="3686.5052124505937" y="1324.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.SaveGame" target="projeto.Equipa" relationship="DEPENDENCY">
+      <point x="84.5" y="-40.5" />
+      <point x="2271.5052124505937" y="2303.0" />
+      <point x="2627.528409090909" y="2303.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="-148.71428571428578" y="-340.0" />
+      <point x="3166.7909267363075" y="1324.0" />
+      <point x="1782.9812994071149" y="1324.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.SaveGame" relationship="DEPENDENCY">
+      <point x="57.81818181818198" y="-40.5" />
+      <point x="733.7067838197288" y="2925.0" />
+      <point x="2187.0052124505937" y="2925.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.View" relationship="DEPENDENCY">
+      <point x="0.0" y="305.5" />
+      <point x="2607.263602001547" y="3589.0" />
+      <point x="3349.09693533488" y="3589.0" />
+      <point x="3349.09693533488" y="3639.0" />
+      <point x="4307.854511092456" y="3639.0" />
+      <point x="-33.90909090909099" y="-294.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.EquipaNaoDefinidaException" relationship="DEPENDENCY">
+      <point x="135.63636363636374" y="-294.0" />
+      <point x="4477.399965637911" y="3639.0" />
+      <point x="4854.005212450593" y="3639.0" />
+      <point x="4854.005212450593" y="1314.0" />
+      <point x="3957.0052124505937" y="1314.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.Controller" relationship="DEPENDENCY">
+      <point x="-101.72727272727275" y="-294.0" />
+      <point x="4240.036329274274" y="3649.0" />
+      <point x="2336.59693533488" y="3649.0" />
+      <point x="2336.59693533488" y="3599.0" />
+      <point x="2455.930268668213" y="3599.0" />
+      <point x="-151.33333333333348" y="305.5" />
+    </edge>
+    <edge source="projeto.View" target="projeto.JogadorNaoExisteException" relationship="CREATE">
+      <point x="67.81818181818176" y="-294.0" />
+      <point x="4409.581783819729" y="3619.0" />
+      <point x="4597.005212450593" y="3619.0" />
+      <point x="4597.005212450593" y="1324.0" />
+      <point x="3686.5052124505937" y="1324.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Interface" target="projeto.Jogo" relationship="DEPENDENCY">
+      <point x="-57.0" y="-40.5" />
+      <point x="2132.75" y="4290.0" />
+      <point x="0.0" y="4290.0" />
+      <point x="0.0" y="2885.0" />
+      <point x="980.0825195399557" y="2885.0" />
+      <point x="980.0825195399557" y="2313.0" />
+      <point x="2089.231299407115" y="2313.0" />
+      <point x="2089.231299407115" y="2293.0" />
+      <point x="2601.5052124505937" y="2293.0" />
+      <point x="-169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.View" relationship="DEPENDENCY">
+      <point x="85.33333333333348" y="225.0" />
+      <point x="3324.6356554677213" y="2865.0" />
+      <point x="4405.005212450594" y="2865.0" />
+      <point x="4405.005212450594" y="3589.0" />
+      <point x="3349.09693533488" y="3589.0" />
+      <point x="3349.09693533488" y="3639.0" />
+      <point x="4307.854511092456" y="3639.0" />
+      <point x="-33.90909090909099" y="-294.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.Equipa" relationship="TO_MANY">
+      <point x="71.68421052631584" y="-305.5" />
+      <point x="2678.947812527863" y="2875.0" />
+      <point x="3686.2552124505937" y="2875.0" />
+      <point x="3686.2552124505937" y="2263.0" />
+      <point x="3402.2552124505937" y="2263.0" />
+      <point x="86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.Jogo" relationship="TO_ONE">
+      <point x="-48.0" y="-225.0" />
+      <point x="3191.3023221343874" y="2293.0" />
+      <point x="2940.5052124505937" y="2293.0" />
+      <point x="169.5" y="443.5" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="-16.0" y="-225.0" />
+      <point x="3223.3023221343874" y="2283.0" />
+      <point x="3120.5052124505937" y="2283.0" />
+      <point x="3120.5052124505937" y="1324.0" />
+      <point x="1782.9812994071149" y="1324.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.TitularesNaoDefinidosException" relationship="DEPENDENCY">
+      <point x="48.0" y="-225.0" />
+      <point x="3287.3023221343874" y="2273.0" />
+      <point x="3499.5052124505937" y="2273.0" />
+      <point x="3499.5052124505937" y="1334.0" />
+      <point x="3407.5052124505937" y="1334.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.SimulacaoJogo" target="projeto.Equipa" relationship="DEPENDENCY">
+      <point x="-80.0" y="-225.0" />
+      <point x="3159.3023221343874" y="2303.0" />
+      <point x="2627.528409090909" y="2303.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.EquipaJaExisteException" relationship="CREATE">
+      <point x="191.15789473684208" y="-305.5" />
+      <point x="2798.4214967383887" y="2925.0" />
+      <point x="4472.505212450593" y="2925.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Equipa" relationship="DEPENDENCY">
+      <point x="28.90909090909099" y="-40.5" />
+      <point x="704.7976929106378" y="2905.0" />
+      <point x="1398.5825195399557" y="2905.0" />
+      <point x="1398.5825195399557" y="2303.0" />
+      <point x="2627.528409090909" y="2303.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Interface" target="projeto.Equipa" relationship="CREATE">
+      <point x="57.0" y="-40.5" />
+      <point x="2246.75" y="4290.0" />
+      <point x="4884.232485177867" y="4290.0" />
+      <point x="4884.232485177867" y="2303.0" />
+      <point x="2627.528409090909" y="2303.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Lateral" relationship="CREATE">
+      <point x="-72.27272727272748" y="-40.5" />
+      <point x="603.6158747288193" y="2875.0" />
+      <point x="55.59090909090901" y="2875.0" />
+      <point x="55.59090909090901" y="410.0" />
+      <point x="1080.3325195399557" y="410.0" />
+      <point x="1080.3325195399557" y="380.0" />
+      <point x="986.3325195399557" y="380.0" />
+      <point x="-104.75" y="179.0" />
+    </edge>
+    <edge source="projeto.View" target="projeto.SimulacaoImpossivelException" relationship="CREATE">
+      <point x="-67.81818181818176" y="-294.0" />
+      <point x="4273.945420183365" y="3609.0" />
+      <point x="1792.3886020015468" y="3609.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Defesa" target="projeto.Jogador" relationship="GENERALIZATION">
+      <point x="0.0" y="-179.0" />
+      <point x="1032.2398221343876" y="1334.0" />
+      <point x="625.6302124505933" y="1334.0" />
+      <point x="625.6302124505933" y="1314.0" />
+      <point x="1655.3146327404481" y="1314.0" />
+      <point x="-127.66666666666674" y="420.5" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.LinhaIncorretaException" relationship="CREATE">
+      <point x="-148.0" y="-52.0" />
+      <point x="1073.5825195399557" y="2343.0" />
+      <point x="191.090909090909" y="2343.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.Equipa" relationship="DEPENDENCY">
+      <point x="148.0" y="-52.0" />
+      <point x="1369.5825195399557" y="2303.0" />
+      <point x="2627.528409090909" y="2303.0" />
+      <point x="2627.528409090909" y="2263.0" />
+      <point x="3228.7552124505937" y="2263.0" />
+      <point x="-86.75" y="340.0" />
+    </edge>
+    <edge source="projeto.Controller" target="projeto.GuardaRedes" relationship="CREATE">
+      <point x="-23.89473684210543" y="-305.5" />
+      <point x="2583.368865159441" y="2855.0" />
+      <point x="2421.5052124505937" y="2855.0" />
+      <point x="2421.5052124505937" y="400.0" />
+      <point x="1479.8648221343876" y="400.0" />
+      <point x="-109.0" y="144.5" />
+    </edge>
+    <edge source="projeto.View" target="projeto.Jogador" relationship="DEPENDENCY">
+      <point x="-169.5454545454545" y="-294.0" />
+      <point x="4172.218147456092" y="3629.0" />
+      <point x="30.22727272727252" y="3629.0" />
+      <point x="30.22727272727252" y="1324.0" />
+      <point x="1782.9812994071149" y="1324.0" />
+      <point x="0.0" y="420.5" />
+    </edge>
+    <edge source="projeto.Parser" target="projeto.GuardaRedes" relationship="DEPENDENCY">
+      <point x="0.0" y="-52.0" />
+      <point x="1221.5825195399557" y="2273.0" />
+      <point x="1490.8648221343876" y="2273.0" />
+      <point x="1490.8648221343876" y="400.0" />
+      <point x="1479.8648221343876" y="400.0" />
+      <point x="-109.0" y="144.5" />
+    </edge>
+    <edge source="projeto.Interface" target="projeto.Controller" relationship="CREATE">
+      <point x="-19.0" y="-40.5" />
+      <point x="2170.75" y="4280.0" />
+      <point x="11.0" y="4280.0" />
+      <point x="11.0" y="3649.0" />
+      <point x="2336.59693533488" y="3649.0" />
+      <point x="2336.59693533488" y="3599.0" />
+      <point x="2455.930268668213" y="3599.0" />
+      <point x="-151.33333333333348" y="305.5" />
+    </edge>
+    <edge source="projeto.Lateral" target="projeto.Jogador" relationship="GENERALIZATION">
+      <point x="104.75" y="179.0" />
+      <point x="1195.8325195399557" y="380.0" />
+      <point x="1729.520019539956" y="380.0" />
+      <point x="1729.520019539956" y="420.0" />
+      <point x="1830.856299407115" y="420.0" />
+      <point x="47.87500000000023" y="-420.5" />
+    </edge>
+    <edge source="projeto.Equipa" target="projeto.JogadorJaExisteException" relationship="CREATE">
+      <point x="148.71428571428578" y="-340.0" />
+      <point x="3464.219498164879" y="1304.0" />
+      <point x="4221.005212450594" y="1304.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="projeto.Teste" target="projeto.Defesa" relationship="CREATE">
+      <point x="0.0" y="-40.5" />
+      <point x="675.8886020015468" y="2875.0" />
+      <point x="705.4898221343876" y="2875.0" />
+      <point x="705.4898221343876" y="2323.0" />
+      <point x="1032.2398221343876" y="2323.0" />
+      <point x="0.0" y="179.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.19673617407071622" showDependencies="true" x="2442.5" y="2196.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

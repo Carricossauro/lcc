@@ -71,7 +71,7 @@ public class Teste {
                     int[] array2 = {18,3,31,39,42,8,26,43,50,33,28,7};
                     equipas.get("Vivaldi F. C.").setTitulares(array2);
                     SimulacaoJogo sj = new SimulacaoJogo(equipas.get("Debussy Athletic"), equipas.get("Vivaldi F. C."));
-                    sj.simulaJogo();
+                    //sj.simulaJogo();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

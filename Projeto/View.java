@@ -127,7 +127,7 @@ public class View {
 
             System.out.println("\nInformação do ficheiro carregada.\n");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("\nImpossivel ler ficheiro.\n");
+            System.out.println("\nImpossivel ler ficheiro.\n" + e.toString());
         } catch (Exception e) {
             System.out.println("\nOcorreu um erro. Tente outra vez.\n");
         }
@@ -254,7 +254,7 @@ public class View {
                     break;
             }
 
-            System.out.println("Jogador adicionado com sucesso.");
+            System.out.println("\nJogador adicionado com sucesso.\n");
         } catch (JogadorJaExisteException e) {
             System.out.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
@@ -418,6 +418,7 @@ public class View {
         System.out.print("\nNumero de camisola: ");
         int camisola = Integer.parseInt(this.input.next());
 
+        System.out.println("Posiçao: " + this.controller.posicaoJogador(equipa, camisola));
         System.out.println(this.controller.informacaojogador(equipa, camisola));
     }
 
@@ -439,7 +440,7 @@ public class View {
 
             System.out.println("\nEscolha o esquema tatico da equipa de casa: \n" +
                     "1. 1-4-3-3\n" +
-                    "2. 1-4-2-2\n");
+                    "2. 1-4-4-2\n");
 
             System.out.print("Esquema tatico: ");
             int taticaCasa = Integer.parseInt(this.input.next());
@@ -472,7 +473,7 @@ public class View {
                     break;
             }
 
-            this.controller.simularJogo(casa, fora);
+            this.controller.simularJogo(casa, fora, this);
         } catch (SimulacaoImpossivelException e) {
             System.out.println("\nNao foi possivel fazer a simulacao do jogo.\n");
         } catch (Exception e) {
@@ -546,6 +547,7 @@ public class View {
                         jogadoresPosExtra = this.controller.jogadoresPosicao(equipa, "Medio");
                         break;
                     case "Medio":
+                    case "Defesa":
                         posExtra = "Lateral";
                         jogadoresPosExtra = this.controller.jogadoresPosicao(equipa, "Lateral");
                         break;
@@ -553,13 +555,9 @@ public class View {
                         posExtra = "Defesa";
                         jogadoresPosExtra = this.controller.jogadoresPosicao(equipa, "Defesa");
                         break;
-                    case "Defesa":
-                        posExtra = "Lateral";
-                        jogadoresPosExtra = this.controller.jogadoresPosicao(equipa, "Lateral");
-                        break;
                 }
 
-                if (jogadoresPosExtra.isEmpty() && jogadoresPos.isEmpty()) throw new EquipaNaoDefinidaException();
+                if (jogadoresPosExtra.isEmpty() && jogadoresPos.isEmpty()) throw new SimulacaoImpossivelException();
 
                 for (int numero: jogadoresPos.keySet()) {
                     if (!titulares.contains(numero)) System.out.println(numero + ". " + jogadoresPos.get(numero) + " - " + pos);
@@ -576,6 +574,55 @@ public class View {
                 return numero;
             } catch (JogadorNaoExisteException e) {
                 System.out.println("\nJogador escolhido nao existe.\n");
+            }
+        }
+    }
+
+    public void printOveralls(int casa, int fora) {
+        System.out.println("Overall Casa: " + casa);
+        System.out.println("Overall Fora: " + fora);
+    }
+
+    public void printJogada(int jogada, int posseBola, String jogo) {
+        System.out.println("Jogada " + jogada);
+        System.out.println("Posse de bola: " + ((posseBola == -1) ? "Casa" : "Fora"));
+        System.out.println(jogo + "\n-------------");
+    }
+
+    public void printIntervalo() {
+        System.out.println("Intervalo\n-------------");
+    }
+
+    public void substituicao(String equipa, List<Integer> listaTitulares, List<Integer> listaNaoTitulares, int casaOUfora) throws EquipaNaoDefinidaException, JogadorNaoExisteException {
+        System.out.println("Fase de substituiçao (" + ((casaOUfora == -1) ? "Casa" : "Fora") + ")");
+        boolean cond = true;
+
+        Map<Integer, String> nomesJogadores = this.controller.jogadoresEquipa(equipa);
+
+        System.out.println("Jogadores em campo:");
+        for (int numero: listaTitulares) {
+            System.out.println(numero + " " + nomesJogadores.get(numero) + " - " + this.controller.posicaoJogador(equipa, numero)
+                    + " - " + this.controller.overallJogador(equipa, numero));
+        }
+        System.out.println("\nJogadores no banco:");
+        for (int numero: listaNaoTitulares) {
+            System.out.println(numero + " " + nomesJogadores.get(numero) + " - " + this.controller.posicaoJogador(equipa, numero)
+                    + " - " + this.controller.overallJogador(equipa, numero));
+        }
+        while (cond) {
+            try {
+                int sai = -1;
+                System.out.print("Jogador que sai: ");
+                sai = Integer.parseInt(this.input.next());
+
+                int entra = -1;
+                System.out.print("\nJogador que entra: ");
+                entra = Integer.parseInt(this.input.next());
+
+                this.controller.processaSubstituicao(entra, sai, casaOUfora);
+                cond = false;
+            } catch (Exception e) {
+                System.out.println("Substituiçao Falhada. Tente outra vez.");
             }
         }
     }

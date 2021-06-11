@@ -17,7 +17,7 @@ public class SimulacaoJogo {
     private int overallCasa;
     private int overallFora;
     private int posseBola;
-    private int posseIntervalo;
+    private final int posseIntervalo;
     private int posicaoBola;
     private int substituicoesCasa;
     private int substituicoesFora;
@@ -67,6 +67,30 @@ public class SimulacaoJogo {
 
     public void processaSubstituicao(int entra, int sai, int equipa) throws JogadorNaoExisteException, SubstituicaoErradaException {
         boolean cond = false;
+
+        Jogador jogadorSai = (equipa == CASA) ? this.equipaCasa.getJogador(sai) : this.equipaFora.getJogador(sai);
+        Jogador jogadorEntra = (equipa == CASA) ? this.equipaCasa.getJogador(entra) : this.equipaFora.getJogador(entra);
+
+        switch (jogadorSai.getClass().getSimpleName()) {
+            case "Defesa":
+            case "Lateral":
+                if (!jogadorEntra.getClass().getSimpleName().equals("Lateral") && !jogadorEntra.getClass().getSimpleName().equals("Defesa"))
+                    throw new SubstituicaoErradaException("Posiçoes incompativeis.");
+                break;
+            case "Medio":
+                if (!jogadorEntra.getClass().getSimpleName().equals("Lateral") && !jogadorEntra.getClass().getSimpleName().equals("Medio"))
+                    throw new SubstituicaoErradaException("Posiçoes incompativeis.");
+                break;
+            case "Avancado":
+                if (!jogadorEntra.getClass().getSimpleName().equals("Avancado") && !jogadorEntra.getClass().getSimpleName().equals("Medio"))
+                    throw new SubstituicaoErradaException("Posiçoes incompativeis.");
+                break;
+            default:
+                if (!jogadorEntra.getClass().getSimpleName().equals(jogadorSai.getClass().getSimpleName()))
+                    throw new SubstituicaoErradaException("Posiçoes incompativeis.");
+                break;
+        }
+
         try {
             if (equipa == CASA) {
                 this.equipaCasa.substituicao(entra, sai);
@@ -85,128 +109,51 @@ public class SimulacaoJogo {
                     this.equipaCasa.substituicao(sai, entra);
                 } else this.equipaFora.substituicao(sai, entra);
             }
-            throw new SubstituicaoErradaException();
+            throw new SubstituicaoErradaException("Substituiçao Falhada. Tente outra vez.");
         }
     }
 
-    public Jogo simulaJogo() throws JogadorNaoExisteException {
+    public Jogo simulaJogo(View view) throws JogadorNaoExisteException, EquipaNaoDefinidaException {
         int numeroJogadas = (this.overallCasa + this.overallFora) / 6;
         int jogadas = 0;
-        System.out.println("Overall Casa: " + this.overallCasa);
-        System.out.println("Overall Fora: " + this.overallFora);
+        view.printOveralls(this.overallCasa, this.overallFora);
 
         Random rand = new Random();
         for (jogadas = 0; jogadas < numeroJogadas / 2; jogadas++) {
             if (this.substituicoesCasa > 0) {
-                if (rand.nextInt(numeroJogadas*10) < jogadas) {
-                    substituicaoCasa();
+                if (rand.nextInt(numeroJogadas*10) < jogadas && !this.equipaCasa.getJogadoresNaoTitulares().isEmpty()) {
+                    view.substituicao(this.equipaCasa.getNome(), this.equipaCasa.getListTitulares(), this.equipaCasa.getJogadoresNaoTitulares(), CASA);
                     substituicoesCasa--;
                 }
             }
             if (this.substituicoesFora > 0) {
-                if (rand.nextInt(numeroJogadas*10) < jogadas) {
-                    substituicaoFora();
+                if (rand.nextInt(numeroJogadas*10) < jogadas && !this.equipaFora.getJogadoresNaoTitulares().isEmpty()) {
+                    view.substituicao(this.equipaFora.getNome(), this.equipaFora.getListTitulares(), this.equipaFora.getJogadoresNaoTitulares(), FORA);
                     substituicoesFora--;
                 }
             }
             jogada(this.posseBola);
-            System.out.println("Jogada " + jogadas);
-            System.out.println("Posse de bola: " + ((this.posseBola == CASA) ? "Casa" : "Fora"));
-            System.out.println(jogo.toString() + "\n-------------");
+            view.printJogada(jogadas, this.posseBola, this.jogo.toString());
         }
-        System.out.println("Intervalo\n-------------");
+        view.printIntervalo();
         this.posseBola = this.posseIntervalo;
 
         for (; jogadas < numeroJogadas; jogadas++) {
             if (this.substituicoesCasa > 0) {
-                if (rand.nextInt(numeroJogadas*3) < numeroJogadas) {
-                    substituicaoCasa();
+                if (rand.nextInt(numeroJogadas*3) < numeroJogadas && !this.equipaCasa.getJogadoresNaoTitulares().isEmpty()) {
+                    view.substituicao(this.equipaCasa.getNome(), this.equipaCasa.getListTitulares(), this.equipaCasa.getJogadoresNaoTitulares(), CASA);
                     substituicoesCasa--;
                 }
             }
             if (this.substituicoesFora > 0) {
-                if (rand.nextInt(numeroJogadas*3) < numeroJogadas) {
-                    substituicaoFora();
+                if (rand.nextInt(numeroJogadas*3) < numeroJogadas && !this.equipaFora.getJogadoresNaoTitulares().isEmpty()) {
+                    view.substituicao(this.equipaFora.getNome(), this.equipaFora.getListTitulares(), this.equipaFora.getJogadoresNaoTitulares(), FORA);
                     substituicoesFora--;
                 }
             }
             jogada(this.posseBola);
-            System.out.println("Jogada " + jogadas);
-            System.out.println("Posse de bola: " + ((this.posseBola == CASA) ? "Casa" : "Fora"));
-            System.out.println(jogo.toString() + "\n-------------");
+            view.printJogada(jogadas, this.posseBola, this.jogo.toString());
         }
         return this.jogo.clone();
-    }
-
-    public void substituicaoCasa() throws JogadorNaoExisteException {
-        System.out.println("Fase de substituiçao (Casa)");
-        boolean cond = true;
-
-        System.out.println("Jogadores em campo:");
-        List<Integer> listaTitulares = this.equipaCasa.getListTitulares();
-        for (int numero: listaTitulares) {
-            System.out.println(numero + " " + this.equipaCasa.getJogador(numero).getNome() + " - " + this.equipaCasa.getJogador(numero).getClass().getSimpleName()
-                    + " - " +this.equipaCasa.getJogador(numero).calculaOverall());
-        }
-        System.out.println("\nJogadores no banco:");
-        List<Integer> jogadoresNaoTitulares = this.equipaCasa.getJogadoresNaoTitulares();
-        for (int numero: jogadoresNaoTitulares) {
-            System.out.println(numero + " " + this.equipaCasa.getJogador(numero).getNome() + " - " + this.equipaCasa.getJogador(numero).getClass().getSimpleName()
-                    + " - " + this.equipaCasa.getJogador(numero).calculaOverall());
-        }
-        while (cond) {
-            try {
-                Scanner in = new Scanner(System.in);
-
-                int sai = -1;
-                System.out.print("Jogador que sai: ");
-                sai = in.nextInt();
-
-                int entra = -1;
-                System.out.print("\nJogador que entra: ");
-                entra = in.nextInt();
-
-                processaSubstituicao(entra, sai, CASA);
-                cond = false;
-            } catch (Exception e) {
-                System.out.println("Substituiçao Falhada. Tente outra vez.");
-            }
-        }
-    }
-
-    public void substituicaoFora() throws JogadorNaoExisteException {
-        System.out.println("Fase de substituiçao (Fora)");
-        boolean cond = true;
-
-        System.out.println("Jogadores em campo:");
-        List<Integer> listaTitulares = this.equipaFora.getListTitulares();
-        for (int numero: listaTitulares) {
-            System.out.println(numero + " " + this.equipaFora.getJogador(numero).getNome() + " - " + this.equipaFora.getJogador(numero).getClass().getSimpleName()
-                    + " - " + this.equipaFora.getJogador(numero).calculaOverall());
-        }
-        System.out.println("\nJogadores no banco:");
-        List<Integer> jogadoresNaoTitulares = this.equipaFora.getJogadoresNaoTitulares();
-        for (int numero: jogadoresNaoTitulares) {
-            System.out.println(numero + " " + this.equipaFora.getJogador(numero).getNome() + " - " + this.equipaFora.getJogador(numero).getClass().getSimpleName()
-                    + " - " + this.equipaFora.getJogador(numero).calculaOverall());
-        }
-        while (cond) {
-            try {
-                Scanner in = new Scanner(System.in);
-
-                int sai = -1;
-                System.out.println("Jogador que sai: ");
-                sai = in.nextInt();
-
-                int entra = -1;
-                System.out.println("Jogador que entra: ");
-                entra = in.nextInt();
-
-                processaSubstituicao(entra, sai, FORA);
-                cond = false;
-            } catch (Exception e) {
-                System.out.println("Substituiçao Falhada. Tente outra vez.");
-            }
-        }
     }
 }
