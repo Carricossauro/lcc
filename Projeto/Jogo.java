@@ -15,8 +15,8 @@ public class Jogo implements Serializable {
     private LocalDate date;
     private List<Integer> jogadoresCasa;
     private List<Integer> jogadoresFora;
-    Map<Integer, Integer> substituicoesCasa; // sai -> entra
-    Map<Integer, Integer> substituicoesFora; // sai -> entra
+    private Map<Integer, Integer> substituicoesCasa; // sai -> entra
+    private Map<Integer, Integer> substituicoesFora; // sai -> entra
 
     public Jogo() {
         equipaCasa = "n/a";
