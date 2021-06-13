@@ -25,7 +25,7 @@ void status() {
         close(pid_escrever);
 
         char buffer;
-        while (read(pid_ler, buffer, 1) > 0) write(1, buffer, 1);
+        while (read(pid_ler, &buffer, 1) > 0) write(1, &buffer, 1);
 
         close(pid_ler);
         unlink(pid_ler);
