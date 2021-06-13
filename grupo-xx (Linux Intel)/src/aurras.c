@@ -55,7 +55,10 @@ void transform(int argc, char **argv) {
         write(pipePrincipal, pid, strlen(pid));
         close(pipePrincipal);
 
-        for (int i = 1; i < argc; i++) write(pid_escrever, argv[i], strlen(argv[i]));
+        for (int i = 1; i < argc; i++) {
+            write(pid_escrever, argv[i], strlen(argv[i]));
+            write(pid_escrever, " ", 1);
+        }
         close(pid_escrever);
         unlink(pid_escrever);
 
@@ -73,5 +76,9 @@ int main(int argc, char **argv) {
         status();
     } else if (argc >= 5 && !strcmp(argv[1], "transform")) {
         transform(argc, argv);
+    } else {
+        write(1,"./aurras status\n", 16);
+        write(1,"./aurras transform input-filename output-filename filter-id-1 filter-id-2 ...\n",78);
     }
+    return 0;
 }
