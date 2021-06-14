@@ -52,19 +52,11 @@ void status() {
                 perror("Signal2");
                 _exit(-1);
         }
-        /*if (signal(SIGKILL, term_handler) == SIG_ERR) {
-                unlink(pid_ler);
-                unlink(pid_escrever);
-                perror("Signal3");
-                _exit(-1);
-        }*/
-
-        //int pipe_ler = open(pid_ler, O_RDONLY);
 
         int pipePrincipal = open("main", O_WRONLY);
 
-        if (pipePrincipal == -1 /*|| pipe_ler == -1*/) {
-            perror("Erro ao abrir ficheiro");
+        if (pipePrincipal == -1) {
+            perror("Erro ao abrir pipe");
             unlink(pid_ler);
             unlink(pid_escrever);
             _exit(-1);
@@ -76,13 +68,29 @@ void status() {
 
         int pipe_escrever = open(pid_escrever, O_WRONLY);
 
+        if (pipe_escrever == -1) {
+            perror("Erro ao abrir pipe");
+            unlink(pid_ler);
+            unlink(pid_escrever);
+            _exit(-1);
+        }
+
         write(pipe_escrever, "status", 6);
         close(pipe_escrever);
 
         char buffer;
-        /*while (read(pipe_ler, &buffer, 1) > 0) write(1, &buffer, 1);
+        int pipe_ler = open(pid_ler, O_RDONLY);
 
-        close(pipe_ler);*/
+        if (pipe_ler == -1) {
+            perror("Erro ao abrir pipe");
+            unlink(pid_ler);
+            unlink(pid_escrever);
+            _exit(-1);
+        }
+
+        while (read(pipe_ler, &buffer, 1) > 0) write(1, &buffer, 1);
+
+        close(pipe_ler);
         unlink(pid_ler);
         unlink(pid_escrever);
     } else {
@@ -115,24 +123,30 @@ void transform(int argc, char **argv) {
     strcpy(pid_escrever+1,pid);
 
     if (mkfifo(pid_escrever, 0666) == 0) {
-        if (signal(SIGINT, usr2_handler) == SIG_ERR || signal(SIGTERM, usr2_handler) == SIG_ERR
-            || signal(SIGKILL, usr2_handler) == SIG_ERR) {
+        if (signal(SIGINT, usr2_handler) == SIG_ERR || signal(SIGTERM, usr2_handler) == SIG_ERR) {
                 unlink(pid_escrever);
                 perror("Signal");
                 _exit(-1);
         }
-        int pipe_escrever = open(pid_escrever, O_WRONLY);
 
         int pipePrincipal = open("main", O_WRONLY);
 
-        if (pipePrincipal == -1 || pipe_escrever == -1) {
-            perror("Erro ao abrir ficheiro");
+        if (pipePrincipal == -1) {
+            perror("Erro ao abrir pipe");
             unlink(pid_escrever);
             _exit(-1);
         }
 
         write(pipePrincipal, pid, strlen(pid));
         close(pipePrincipal);
+
+        int pipe_escrever = open(pid_escrever, O_WRONLY);
+
+        if (pipe_escrever == -1) {
+            perror("Erro ao abrir pipe");
+            unlink(pid_escrever);
+            _exit(-1);
+        }
 
         for (int i = 1; i < argc; i++) {
             write(pipe_escrever, argv[i], strlen(argv[i]));
