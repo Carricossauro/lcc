@@ -370,7 +370,7 @@ void monitor(Task task) {
         kill(task->pid,SIGUSR2);
     } else if (f == 0) {
         int input = open(task->input_file, O_RDONLY);
-        int output = open(task->output_file, O_CREAT | O_WRONLY, 0666);
+        int output = open(task->output_file, O_CREAT | O_WRONLY, 0777);
 
         if (input == -1) {
             perror("Open input");
