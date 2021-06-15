@@ -4,6 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <signal.h>
+#include <wait.h>
 
 #define MAXBUFFER 50
 
@@ -16,16 +18,33 @@ typedef struct lligada {
     struct lligada *prox;
 } *Filtro;
 
+struct quantidade_filtro {
+    char *nome_filtro;
+    int utilizacoes;
+};
+
 typedef struct tasks {
     char *comando;
-    char **nomes_filtros;
+    char **ordem_filtros;
+    struct quantidade_filtro *nomes_filtros;
     int numero;
+    int processamento; // 0 - a espera; 1 - a processar
+    int pid;
+    char *input_file;
+    char *output_file;
     struct tasks *prox;
 } *Task;
+
+void monitor(Task task);
+int numeroFiltros();
+void status();
+void execs(int input, int output, Task task);
+int disponivel(struct quantidade_filtro *nomes_filtros, int num_filtros);
 
 Filtro filtros;
 Task tasks;
 char *pasta_filtros;
+int numero_tasks = 0;
 
 ssize_t readln(int fd, char *line, ssize_t size) {
 	ssize_t res = 0;
@@ -72,8 +91,8 @@ Filtro lerConfig(char *config) {
     return filtros;
 }
 
-char** removeTask(int num) {
-    char **nomes_filtros = NULL;
+struct quantidade_filtro *removeTask(int num) {
+    struct quantidade_filtro *nomes_filtros = NULL;
     Task iterador = tasks;
     Task ant = NULL;
 
@@ -94,13 +113,23 @@ char** removeTask(int num) {
     return nomes_filtros;
 }
 
-void removeFiltro(char nome_filtro) {
+void removeFiltro(char *nome_filtro, int quantidade) {
     Filtro iterador = filtros;
 
     while (iterador != NULL && !strcmp(iterador->nome_filtro, nome_filtro)) iterador = iterador->prox;
 
     if (iterador != NULL) {
-        if (iterador->atual > 0) (iterador->atual)--;
+        if (iterador->atual >= quantidade) (iterador->atual)-= quantidade;
+    }
+}
+
+void adicionaFiltros(struct quantidade_filtro *nomes_filtros) {
+    int i = 0;
+    Filtro iterador = filtros;
+    while (iterador != NULL) {
+        iterador->atual += nomes_filtros[i++].utilizacoes;
+
+        iterador = iterador->prox;
     }
 }
 
@@ -112,16 +141,50 @@ void usr1_handler(int signum) {
         while (read(pipe,num_string,1) > 0);
 
         int num = atoi(num_string);
-        char **nomes_filtros = removeTask(num);
+        struct quantidade_filtro *nomes_filtros = removeTask(num);
 
         int i = 0;
-        while (nomes_filtros[i] != NULL) removeFiltro(nomes_filtros[i]);
+        int num_filtros = numeroFiltros();
+        for (int i = 0; i < num_filtros; i++)
+            removeFiltro(nomes_filtros[i].nome_filtro, nomes_filtros[i].utilizacoes);
 
         unlink("close");
+
+        Task iterador = tasks;
+        while (iterador != NULL && iterador->processamento == 1) iterador=iterador->prox;
+        if (iterador != NULL) {
+            int disponibilidade = disponivel(nomes_filtros, num_filtros);
+            if (disponibilidade == 1) {
+                iterador->processamento = 1;
+                int f = fork();
+                if (f != -1) {
+                    if (f == 0) {
+                        monitor(iterador);
+                        _exit(0);
+                    } else {
+                        adicionaFiltros(iterador->nomes_filtros);
+                    }
+                } else {
+                    perror("Fork");
+                }
+            }
+        }
     } else {
         perror("Erro ao abrir pipe");
     }
     
+}
+
+int numeroFiltros() {
+    Filtro iterador = filtros;
+    int res = 0;
+
+    while (iterador != NULL) {
+        res++;
+        iterador = iterador->prox;
+    }
+
+    return res;
 }
 
 int totalFiltros() {
@@ -136,28 +199,99 @@ int totalFiltros() {
     return res;
 }
 
+int disponivel(struct quantidade_filtro *nomes_filtros, int num_filtros) {
+    Filtro iterador = filtros;
+    for (int i = 0; i < num_filtros; i++, iterador = iterador->prox) {
+        if (nomes_filtros[i].utilizacoes > iterador->maximo) return -1;
+        if (nomes_filtros[i].utilizacoes + iterador->atual > iterador->maximo) return 0;
+    }
+    return 1;
+}
+
+void inicializarArray(struct quantidade_filtro *nomes_filtros, int num_filtros) {
+    Filtro iterador = filtros;
+    for (int i = 0; i < num_filtros; i++, iterador = iterador->prox) {
+        nomes_filtros[i].nome_filtro = iterador->nome_filtro;
+        nomes_filtros[i].utilizacoes = 0;
+    }
+}
+
 void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a output.m4a alto eco rapido
     char *token = strtok(info_cliente, " "); // transform
 
     token = strtok(NULL, " "); // samples/sample-1.m4a
-    char input_file[strlen(token)];
+    char *input_file = malloc(sizeof(char) * strlen(token));
     strcpy(input_file, token);
 
     token = strtok(NULL, " "); // output.m4a
-    char output_file[strlen(token)];
+    char *output_file = malloc(sizeof(char) * strlen(token));
     strcpy(output_file, token);
 
-    char *nomes_filtros[totalFiltros()]; // alto eco rapido
-    int numFiltros = 0;
+    int numFiltros = numeroFiltros();
+    struct quantidade_filtro *nomes_filtros = malloc(sizeof(struct quantidade_filtro) * numFiltros); // alto eco rapido
+    inicializarArray(nomes_filtros, numFiltros);
+
+    char **ordem_filtros = malloc(sizeof(char*) * (totalFiltros()+1));
+
     token = strtok(NULL, " ");
+    int k = 0;
     while (token != NULL) {
-        strcpy(nomes_filtros[numFiltros++], token);
+        ordem_filtros[k] = malloc(sizeof(char) * strlen(token));
+        strcpy(ordem_filtros[k++], token);
+        for (int i = 0; i < numFiltros; i++) {
+            if (!strcmp(nomes_filtros[i].nome_filtro, token)) {
+                nomes_filtros[i].utilizacoes++;
+                break;
+            }
+        }
         token = strtok(NULL, " ");
     }
-    nomes_filtros[numFiltros++] = NULL;
+    ordem_filtros[k++] = NULL;
 
-    // Falta verificar se nao ultrapassa limites de filtros
-    // e ver como fazer para deixar em standby
+    int disponibilidade = disponivel(nomes_filtros, numFiltros);
+
+    if (disponibilidade == -1) {
+        write(1,"Limite de filtros excedido\n",27);
+        kill(atoi(pid), SIGUSR2);
+    } else {
+        Task temp = malloc(sizeof(struct tasks));
+        temp->comando = malloc(sizeof(char) * strlen(info_cliente));
+        strcpy(temp->comando, info_cliente);
+        temp->nomes_filtros = nomes_filtros;
+        temp->numero = ++numero_tasks;
+        temp->prox = NULL;
+        temp->pid = atoi(pid);
+        temp->input_file = malloc(sizeof(char) * strlen(input_file));
+        strcpy(temp->input_file, input_file);
+        temp->output_file = malloc(sizeof(char) * strlen(output_file));
+        strcpy(temp->output_file, output_file);
+        temp->ordem_filtros = ordem_filtros;
+
+        Task iterador = tasks;
+        if (iterador == NULL) {
+            tasks = temp;
+        } else {
+            while (iterador->prox != NULL) iterador = iterador->prox;
+            iterador->prox = temp;
+        }
+
+        if (disponibilidade == 1) {
+            temp->processamento = 1;
+            int f = fork();
+            if (f != -1) {
+                if (f == 0) {
+                    monitor(temp);
+                    _exit(0);
+                } else {
+                    adicionaFiltros(temp->nomes_filtros);
+                }
+            } else {
+                perror("Fork");
+            }
+        } else {
+            temp->processamento = 0;
+        }
+    }
 }
 
 int main(int argc, char **argv) {
@@ -165,6 +299,8 @@ int main(int argc, char **argv) {
         write(1,"./aurrasd etc/aurrasd.conf bin/aurras-filters\n", 46);
         return -1;
     }
+
+    signal(SIGUSR1, usr1_handler);
 
     filtros = lerConfig(argv[1]);
     pasta_filtros = argv[2];
@@ -203,4 +339,121 @@ int main(int argc, char **argv) {
     }
 
     return 0;
+}
+
+char *concatenarFiltro(char *executavel, char *filtro) {
+    int len = strlen(pasta_filtros);
+    
+    executavel = malloc(sizeof(char) * (strlen(filtro) + len+2));
+
+    strcpy(executavel, pasta_filtros); //     /bin/filtro
+    executavel[len] = '/';
+    
+
+    Filtro iterador = filtros;
+    while (iterador != NULL && strcmp(iterador->nome_filtro, filtro)) iterador = iterador->prox;
+
+    printf("%s\n", iterador->nome_executavel);
+    strcpy(executavel+len+1, iterador->nome_executavel);
+    return executavel;
+}
+
+void itoa(int value, char*buffer, int base) {
+	sprintf(buffer, "%d", value);
+}
+
+void monitor(Task task) {
+    int f = fork();
+    
+    if (f == -1) {
+        perror("Fork");
+        kill(task->pid,SIGUSR2);
+    } else if (f == 0) {
+        int input = open(task->input_file, O_RDONLY);
+        int output = open(task->output_file, O_CREAT | O_WRONLY, 0666);
+
+        if (input == -1) {
+            perror("Open input");
+            _exit(-1);
+        }
+
+        if (output == -1) {
+            perror("Open output");
+            _exit(-1);
+        }
+
+        dup2(0,input);
+        dup2(1,output);
+
+        execs(input, output, task);
+        _exit(-1);
+    } else {
+        int status;
+        wait(&status);
+        if (mkfifo("close", 0666) == 0) {
+            kill(getppid(), SIGUSR1);
+            
+            char num[MAXBUFFER];
+            itoa(task->numero, num, 10);
+
+            int pipe = open("close", O_WRONLY);
+
+            int i = 0;
+            while (num[i] != '\0') write(pipe, num+(i++), 1);
+
+            close(pipe);
+            _exit(0);
+        } else {
+            perror("Mkfifo");
+            _exit(-1);
+        }
+    }
+}
+
+void execs(int input, int output, Task task) {
+    dup2(0, input);
+    int i = 0;
+    int pip[2];
+
+    for (int k = 0; task->ordem_filtros[k]; k++) {
+        char *executavel;
+        executavel = concatenarFiltro(executavel, task->ordem_filtros[k]);
+        printf("%s--\n", executavel);
+    }
+
+    while (task->ordem_filtros[i] != NULL) {
+        if (task->ordem_filtros[i+1] == NULL) dup2(1, output);
+        else {
+            if (pipe(pip) == 0) {
+                dup2(1,pip[1]);
+                close(pip[1]);
+            } else {
+                perror("Pipe");
+                _exit(-1);
+            }
+        }
+        if (i != 0) {
+            dup2(0,pip[0]);
+            close(pip[0]);
+        }
+
+        int f;
+        if ((f = fork()) == -1) {
+                perror("Fork");
+                _exit(-1);
+        } else if (f == 0) {
+            char *executavel;
+            executavel = concatenarFiltro(executavel, task->ordem_filtros[i]);
+            printf("%s\n", executavel);
+            execlp(executavel, executavel, NULL);
+            perror("Exec");
+            _exit(-1);
+        }
+
+        i++;
+    }
+}
+
+void status() {
+    // .
 }
