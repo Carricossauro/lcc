@@ -45,7 +45,7 @@
 }
 
 \title{Sistemas Operativos - Trabalho Prático\\
-       \textbf{Grupo 17}\\ Resolução
+       \textbf{Grupo 17}\\ Relatório
        } %Titulo do documento
 %\title{Um Exemplo de Artigo em \LaTeX}
 \author{Inês Pires Presa\\ (A90355)\and Ivo Miguel Gomes Lima\\ (A90214)\and Tiago dos Santos Silva Peixoto Carriço \\ (A91695)
@@ -73,41 +73,93 @@
 
 \chapter{Introdução}
 
-Foi-nos proposto, no âmbito da unidade curricular de Sistemas Operativos, o desenvolvimento de um sistema capaz de transformar vários ficheiros de áudio concurrentemente, consultar as tarefas em execução, mostrando ainda o número de filtros disponiveis e em uso nessas transformações. Este tipo de
-sistema utiliza um conjunto de executáveis utilizados para filtrar e modificar um fluxo de áudios, permitindo tratar grandes quantidades de dados explorando a
-concorrência entre os diferentes processos.
+Foi-nos proposto, no âmbito da unidade curricular de Sistemas Operativos, o desenvolvimento de um sistema capaz de transformar vários ficheiros de áudio concurrentemente, consultar as tarefas em execução, mostrando ainda o número de filtros disponiveis e em uso nessas transformações. Este tipo de sistema utiliza um conjunto de executáveis utilizados para filtrar e modificar um fluxo de áudios, permitindo tratar grandes quantidades de dados explorando a concorrência entre os diferentes processos.
 
-Neste relatório,vamos explicitar a nossa abordagem ao problema, justificando a estrutura do nosso sistema, demonstrando os
-conhecimentos adquiridos durante as aulas, tais como a utilização/criação de processos, duplicação de descritores, criação de \emph{pipes} sem nome, execução de processos, aplicação de sinais e  \emph{system calls}.
+Neste relatório,vamos explicitar a nossa abordagem ao problema, justificando a estrutura do nosso sistema, demonstrando os conhecimentos adquiridos durante as aulas, tais como a utilização/criação de processos, duplicação de descritores, criação de \emph{pipes} sem/com nome, execução de processos, aplicação de sinais e \emph{system calls}.
+
+\chapter{Funcionalidades}
+
+\section{Aplicação de Filtros}
+
+Submetendo um comando do tipo \emph{./aurras transform}, seguido dos nomes do ficheiro original assim como do ficheiro processado e de uma sequência de identificadores de filtros, o programa aplica-os ao primeiro ficheiro, guardando o resultado final no segundo. Esta ação só não será efetuada caso seja pedido que algum dos filtros seja aplicado um número de vezes superior ao máximo definido no ficheiro de configuração. Quando esse valor é alcançado devido à pré-existência de pedidos, este fica em lista de espera para que possa ser posteriormente processado.
+
+\section{Verifição do Estado}
+
+Caso o comando seja do tipo \emph{./aurras status}, o cliente recebe do servidor uma descrição dos pedidos que estão a ser processados, assim como uma lista dos filtros em utilização e a identificação do \emph{pid} do servidor.
+
+\section{Informação de Utilização}
+
+Na eventualidade de o utilizador pretender obter informação relativa às funcionalidades suportadas pelo cliente (servidor), este terá de digitar \emph{./aurras} (\emph{./aurrasd}). 
 
 \chapter{Estrutura de implementação}
 
 \section{Cliente (\emph{aurras.c})}
 
-\section{Servidor (\emph{aurrasd.c})}
+Para a implementação das funcionalidades referidas anteriormente, foi necessário a criação de duas funções \emph{status} e \emph{transform} que serão brevemente descritas de seguida.
 
-\chapter{Funcionalidades}
-
-
-
-\section{Filtros}
-
-No nosso projeto quando é feita a submissão de um pedido do tipo \emph{\$ ./aurras transform samples/sample-1.m4a output.m4a ...} foi nos apresentados cinco filtros básicos que recebem o \emph{input} pelo \emph{standard input} e produzem \emph{output} para o \emph{standard output}.
-
-\begin{itemize}
-\item \emph{\textbf{aurrasd-echo}} (eco) - Este filtro
-\item \emph{\textbf{aurrasd-gain-double}} (alto) - Este filtro
-\item \emph{\textbf{aurrasd-gain-half}} (baixo) - Este filtro
-\item \emph{\textbf{aurrasd-tempo-double}} (rapido) - Este filtro
-\item \emph{\textbf{aurrasd-tempo-half}} (lento) - Este filtro
+ \begin{itemize}
+\item \textbf{Status: } São criados dois \emph{pipes} com nome que fazem a ligação com o servidor. O \emph{pipe\_escrever} é empregue para o envio do pedido de verificação do estado conduzido pelo cliente, em contrapartida o \emph{pipe\_ler} recebe a informação solicitada que será imprimida no \emph{standard output}. O \emph{pid} do cliente é enviado através do \emph{pipePrincipal} para o servidor.
+\item \textbf{Transform: } Nesta função só é criado um \emph{pipe\_escrever}, uma vez que o método de comunicação que definimos no sentido servidor -\textgreater cliente é a utilização de sinais. Desta forma, o \emph{pipe} é utilizado para enviar a informação referente ao pedido de transformação do ficheiro, quando o processo é iniciado o cliente recebe um sinal (\emph{SIGUSR1}).
 \end{itemize}
 
-Todos estes filtros podem mudar a sua constituição (efeito e máximo de aplicações) conforme são mudados/acrescentados ficheiros presente nas pastas \emph{/bin/aurrasd-filters/} e \emph{/etc/aurrasd.conf}.
+\section{Servidor (\emph{aurrasd.c})}
+
+\subsection{Variáveis Globais}
+
+\begin{itemize}
+\item \textbf{struct lligada: } Esta \emph{struct} serve para armazenar as informações presentes no ficheiro de configuração, nomeadamente  o nome do filtro, o nome do executável e o número máximo de uso simultâneo desse filtro, para além disso guarda também o número de utilizações no momento do mesmo.
+\item \textbf{struct quantidade\_filtro: } Esta estrutura de dados tem a funcionalidade de manter o nome de um filtro assim como a quantidade de utilizações presentes num certo comando.
+\item \textbf{struct tasks: } Neste caso a \emph{struct} desempenha o papel de guardar os dados mais relevantes de um pedido, acrescentando ainda 
+\end{itemize}
+
+\begin{lstlisting}[style = code]
+typedef struct lligada {
+    char *nome_filtro;
+    char *nome_executavel;
+    int maximo;
+    int atual;
+    struct lligada *prox;
+} *Filtro;
+\end{lstlisting}
+
+Na \emph{struct lligada}
+
+\begin{lstlisting}[style = code]
+struct quantidade_filtro {
+    char *nome_filtro;
+    int utilizacoes;
+};
+\end{lstlisting}
+
+Na \emph{struct quantidade\_filtro}
+
+\begin{lstlisting}[style = code]
+typedef struct tasks {
+    char *comando;
+    char **ordem_filtros;
+    struct quantidade_filtro *nomes_filtros;
+    int numero;
+    int processamento; // 0 - a espera; 1 - a processar
+    int pid;
+    char *input_file;
+    char *output_file;
+    struct tasks *prox;
+} *Task;
+\end{lstlisting}
+
+Na \emph{struct tasks}
+
+\begin{itemize}
+\item \textbf{Filtro filtros :}
+\item \textbf{Task tasks = NULL :}
+\item \textbf{char *pasta\_filtros :}
+\item \textbf{int numero\_tasks = 0 :}
+\end{itemize}
 
 \chapter{Conclusão}
 
 Durante a realização deste trabalho prático embora o mesmo tenha sido apelidado de simples e até mesmo básico por parte da equipa docente, sentimos que exigiu uma grande organização da nossa parte para que não fosse perdido o foco do problema que estavamos a enfrentar. Tendo a aplicação dos conceitos teóricos revelado-se, de uma maneira geral, bastante interessante e desafiante pois tal como \emph{\textbf{Ward Cunningham}} disse \emph{\textbf{It's all talk until the code runs}}. 
 
-Uma das peças fundamentais para a concretização do projeto foram as resoluções dos guiões práticos apresentadas pela equipa de docentes e até mesmo as nossas, pois serviram de apoio para o esclarecimento de dúvidas que surgiram, o que nos permitiu finalizar o mesmo com todas as funcionalidades solicitadas. Consideramos que a maior dificuldade foi sentida no momento inicial do mesmo pois ...
+Uma das peças fundamentais para a concretização do projeto foram as resoluções dos guiões práticos apresentadas pela equipa de docentes e até mesmo as nossas, pois serviram de apoio para o esclarecimento de dúvidas que surgiram, o que nos permitiu finalizar o mesmo com todas as funcionalidades solicitadas. Consideramos que a maior dificuldade foi sentida no momento inicial pois não conseguimos visualizar o produto final da nossa abordagem ao problema, mas conforme o estabelecimento de \emph{mini checkpoints} conseguimos ultrapassar este impasse.
 
 \end{document}
