@@ -7,7 +7,7 @@
 #include <signal.h>
 #include <wait.h>
 
-#define MAXBUFFER 50
+#define MAXBUFFER 150
 
 typedef struct lligada {
     // alto aurrasd-gain-double 2
@@ -37,12 +37,12 @@ typedef struct tasks {
 
 void monitor(Task task);
 int numeroFiltros();
-void status();
+void status(char *pid);
 void execs(int input, int output, Task task);
 int disponivel(struct quantidade_filtro *nomes_filtros, int num_filtros);
 
 Filtro filtros;
-Task tasks;
+Task tasks = NULL;
 char *pasta_filtros;
 int numero_tasks = 0;
 
@@ -116,7 +116,7 @@ struct quantidade_filtro *removeTask(int num) {
 void removeFiltro(char *nome_filtro, int quantidade) {
     Filtro iterador = filtros;
 
-    while (iterador != NULL && !strcmp(iterador->nome_filtro, nome_filtro)) iterador = iterador->prox;
+    while (iterador != NULL && strcmp(iterador->nome_filtro, nome_filtro)) iterador = iterador->prox;
 
     if (iterador != NULL) {
         if (iterador->atual >= quantidade) (iterador->atual)-= quantidade;
@@ -145,8 +145,9 @@ void usr1_handler(int signum) {
 
         int i = 0;
         int num_filtros = numeroFiltros();
-        for (int i = 0; i < num_filtros; i++)
+        for (int i = 0; i < num_filtros; i++) {
             removeFiltro(nomes_filtros[i].nome_filtro, nomes_filtros[i].utilizacoes);
+        }
 
         unlink("close");
 
@@ -159,6 +160,8 @@ void usr1_handler(int signum) {
                 int f = fork();
                 if (f != -1) {
                     if (f == 0) {
+                        signal(SIGINT, SIG_IGN);
+                        signal(SIGTERM, SIG_IGN);
                         monitor(iterador);
                         _exit(0);
                     } else {
@@ -217,13 +220,16 @@ void inicializarArray(struct quantidade_filtro *nomes_filtros, int num_filtros) 
 }
 
 void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a output.m4a alto eco rapido
-    char *token = strtok(info_cliente, " "); // transform
+    char *info_cliente_backup = malloc(sizeof(char) * strlen(info_cliente));
+    strcpy(info_cliente_backup, info_cliente);
 
-    token = strtok(NULL, " "); // samples/sample-1.m4a
+    char *token = strtok(info_cliente, "«"); // transform
+
+    token = strtok(NULL, "«"); // samples/sample-1.m4a
     char *input_file = malloc(sizeof(char) * strlen(token));
     strcpy(input_file, token);
 
-    token = strtok(NULL, " "); // output.m4a
+    token = strtok(NULL, "«"); // output.m4a
     char *output_file = malloc(sizeof(char) * strlen(token));
     strcpy(output_file, token);
 
@@ -233,7 +239,7 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
 
     char **ordem_filtros = malloc(sizeof(char*) * (totalFiltros()+1));
 
-    token = strtok(NULL, " ");
+    token = strtok(NULL, "«");
     int k = 0;
     while (token != NULL) {
         ordem_filtros[k] = malloc(sizeof(char) * strlen(token));
@@ -244,7 +250,7 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
                 break;
             }
         }
-        token = strtok(NULL, " ");
+        token = strtok(NULL, "«");
     }
     ordem_filtros[k++] = NULL;
 
@@ -255,8 +261,8 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
         kill(atoi(pid), SIGUSR2);
     } else {
         Task temp = malloc(sizeof(struct tasks));
-        temp->comando = malloc(sizeof(char) * strlen(info_cliente));
-        strcpy(temp->comando, info_cliente);
+        temp->comando = malloc(sizeof(char) * strlen(info_cliente_backup));
+        strcpy(temp->comando, info_cliente_backup);
         temp->nomes_filtros = nomes_filtros;
         temp->numero = ++numero_tasks;
         temp->prox = NULL;
@@ -280,6 +286,8 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
             int f = fork();
             if (f != -1) {
                 if (f == 0) {
+                    signal(SIGINT, SIG_IGN);
+                    signal(SIGTERM, SIG_IGN);
                     monitor(temp);
                     _exit(0);
                 } else {
@@ -294,6 +302,18 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
     }
 }
 
+void term_handler(int signum) {
+    unlink("main");
+
+    printf("A espera para fechar\n");
+    while (tasks != NULL) {
+        pause();
+        printf("Fechou\n");
+    }
+
+    _exit(0);
+}
+
 int main(int argc, char **argv) {
     if (argc != 3) {
         write(1,"./aurrasd etc/aurrasd.conf bin/aurras-filters\n", 46);
@@ -301,6 +321,8 @@ int main(int argc, char **argv) {
     }
 
     signal(SIGUSR1, usr1_handler);
+    signal(SIGTERM, term_handler);
+    signal(SIGINT, term_handler);
 
     filtros = lerConfig(argv[1]);
     pasta_filtros = argv[2];
@@ -311,7 +333,6 @@ int main(int argc, char **argv) {
     }
 
     while (1) {
-        fflush(stdout);
         int pipe = open("main", O_RDONLY);
         char pid[MAXBUFFER];
         int res = 0;
@@ -353,7 +374,6 @@ char *concatenarFiltro(char *executavel, char *filtro) {
     Filtro iterador = filtros;
     while (iterador != NULL && strcmp(iterador->nome_filtro, filtro)) iterador = iterador->prox;
 
-    printf("%s\n", iterador->nome_executavel);
     strcpy(executavel+len+1, iterador->nome_executavel);
     return executavel;
 }
@@ -362,15 +382,37 @@ void itoa(int value, char*buffer, int base) {
 	sprintf(buffer, "%d", value);
 }
 
+void fecharFilho(Task task) {
+    if (mkfifo("close", 0666) == 0) {
+        kill(getppid(), SIGUSR1);
+        kill(task->pid, SIGUSR2);
+            
+        char num[MAXBUFFER];
+        itoa(task->numero, num, 10);
+
+        int pipe = open("close", O_WRONLY);
+
+        int i = 0;
+        while (num[i] != '\0') write(pipe, num+(i++), 1);
+
+        close(pipe);
+        _exit(0);
+    } else {
+        perror("Mkfifo");
+        _exit(-1);
+    }
+}
+
 void monitor(Task task) {
     int f = fork();
     
     if (f == -1) {
         perror("Fork");
         kill(task->pid,SIGUSR2);
+        fecharFilho(task);
     } else if (f == 0) {
         int input = open(task->input_file, O_RDONLY);
-        int output = open(task->output_file, O_CREAT | O_WRONLY, 0777);
+        int output = open(task->output_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 
         if (input == -1) {
             perror("Open input");
@@ -382,59 +424,38 @@ void monitor(Task task) {
             _exit(-1);
         }
 
-        dup2(0,input);
-        dup2(1,output);
-
+        sleep(5);
         execs(input, output, task);
         _exit(-1);
     } else {
         int status;
+        kill(task->pid, SIGUSR1);
+
         wait(&status);
-        if (mkfifo("close", 0666) == 0) {
-            kill(getppid(), SIGUSR1);
-            
-            char num[MAXBUFFER];
-            itoa(task->numero, num, 10);
-
-            int pipe = open("close", O_WRONLY);
-
-            int i = 0;
-            while (num[i] != '\0') write(pipe, num+(i++), 1);
-
-            close(pipe);
-            _exit(0);
-        } else {
-            perror("Mkfifo");
-            _exit(-1);
-        }
+        
+        fecharFilho(task);
     }
 }
 
 void execs(int input, int output, Task task) {
-    dup2(0, input);
     int i = 0;
     int pip[2];
 
-    for (int k = 0; task->ordem_filtros[k]; k++) {
-        char *executavel;
-        executavel = concatenarFiltro(executavel, task->ordem_filtros[k]);
-        printf("%s--\n", executavel);
-    }
-
     while (task->ordem_filtros[i] != NULL) {
-        if (task->ordem_filtros[i+1] == NULL) dup2(1, output);
+        if (i != 0) {
+            dup2(pip[0],0);
+            close(pip[0]);
+        } else dup2(input,0);
+
+        if (task->ordem_filtros[i+1] == NULL) dup2(output,1);
         else {
             if (pipe(pip) == 0) {
-                dup2(1,pip[1]);
+                dup2(pip[1],1);
                 close(pip[1]);
             } else {
                 perror("Pipe");
                 _exit(-1);
             }
-        }
-        if (i != 0) {
-            dup2(0,pip[0]);
-            close(pip[0]);
         }
 
         int f;
@@ -444,7 +465,6 @@ void execs(int input, int output, Task task) {
         } else if (f == 0) {
             char *executavel;
             executavel = concatenarFiltro(executavel, task->ordem_filtros[i]);
-            printf("%s\n", executavel);
             execlp(executavel, executavel, NULL);
             perror("Exec");
             _exit(-1);
@@ -454,6 +474,29 @@ void execs(int input, int output, Task task) {
     }
 }
 
-void status() {
-    // .
+void status(char *pid) {
+    int f = fork();
+
+    if (f == 0) {
+        signal(SIGINT, SIG_IGN);
+        signal(SIGTERM, SIG_IGN);
+
+        char pid_escrever[strlen(pid)+2];
+        pid_escrever[0] = 'r';
+        strcpy(pid_escrever+1,pid);
+
+        int pipe_escrever = open(pid_escrever, O_WRONLY);
+
+        Task iterador = tasks;
+
+        while (iterador != NULL && iterador->processamento == 1) {
+            printf("%s\n", iterador->comando);
+            write(pipe_escrever,iterador->comando, strlen(iterador->comando));
+            write(pipe_escrever, "\n", 1);
+            iterador = iterador->prox;
+        }
+
+        close(pipe_escrever);
+        _exit(0);
+    }
 }
