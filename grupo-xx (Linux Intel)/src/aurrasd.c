@@ -35,11 +35,25 @@ typedef struct tasks {
     struct tasks *prox;
 } *Task;
 
-void monitor(Task task);
+ssize_t readln(int fd, char *line, ssize_t size);
+Filtro lerConfig(char *config);
+struct quantidade_filtro *removeTask(int num);
+void removeFiltro(char *nome_filtro, int quantidade);
+void adicionaFiltros(struct quantidade_filtro *nomes_filtros);
+void usr1_handler(int signum);
 int numeroFiltros();
-void status(char *pid);
-void execs(int input, int output, Task task);
+int totalFiltros();
 int disponivel(struct quantidade_filtro *nomes_filtros, int num_filtros);
+void inicializarArray(struct quantidade_filtro *nomes_filtros, int num_filtros);
+int transform(char *pid, char *info_cliente);
+void term_handler(int signum);
+char *concatenarFiltro(char *executavel, char *filtro);
+void reverse(char s[]);
+void itoa(int n, char s[]);
+void fecharFilho(Task task);
+void monitor(Task task);
+void execs(int input, int output, Task task);
+void status(char *pid);
 
 Filtro filtros;
 Task tasks = NULL;
@@ -134,7 +148,7 @@ void adicionaFiltros(struct quantidade_filtro *nomes_filtros) {
 }
 
 void usr1_handler(int signum) {
-    int pipe = open("close", O_RDONLY);
+    int pipe = open("tmp/close", O_RDONLY);
 
     if (pipe > 0) {
         char num_string[MAXBUFFER];
@@ -148,7 +162,7 @@ void usr1_handler(int signum) {
             removeFiltro(nomes_filtros[i].nome_filtro, nomes_filtros[i].utilizacoes);
         }
 
-        unlink("close");
+        unlink("tmp/close");
 
         Task iterador = tasks;
         while (iterador != NULL && iterador->processamento == 1) iterador=iterador->prox;
@@ -308,12 +322,13 @@ int transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a 
 }
 
 void term_handler(int signum) {
-    unlink("main");
+    unlink("tmp/main");
 
     while (tasks != NULL) {
         pause();
     }
 
+    write(1,"\n",1);
     _exit(0);
 }
 
@@ -331,13 +346,13 @@ int main(int argc, char **argv) {
     filtros = lerConfig(argv[1]);
     pasta_filtros = argv[2];
 
-    if (mkfifo("main", 0666) != 0) {
+    if (mkfifo("tmp/main", 0666) != 0) {
         perror("Mkfifo");
         return -1;
     }
 
     while (1) {
-        int pipe = open("main", O_RDONLY);
+        int pipe = open("tmp/main", O_RDONLY);
         char pid[MAXBUFFER];
         int res = 0;
 
@@ -408,14 +423,14 @@ void itoa(int n, char s[]){
 }
 
 void fecharFilho(Task task) {
-    if (mkfifo("close", 0666) == 0) {
+    if (mkfifo("tmp/close", 0666) == 0) {
         kill(getppid(), SIGUSR1);
         kill(task->pid, SIGUSR2);
             
         char num[MAXBUFFER];
         itoa(task->numero, num);
 
-        int pipe = open("close", O_WRONLY);
+        int pipe = open("tmp/close", O_WRONLY);
 
         int i = 0;
         while (num[i] != '\0') write(pipe, num+(i++), 1);
@@ -449,7 +464,7 @@ void monitor(Task task) {
             _exit(-1);
         }
 
-        sleep(5);
+        // sleep(5); // Usado para testar concorrencia de clientes
         execs(input, output, task);
         _exit(0);
     } else {

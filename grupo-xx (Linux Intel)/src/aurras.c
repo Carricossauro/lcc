@@ -75,7 +75,7 @@ void status() {
                 _exit(-1);
         }
 
-        int pipePrincipal = open("main", O_WRONLY);
+        int pipePrincipal = open("tmp/main", O_WRONLY);
 
         if (pipePrincipal == -1) {
             perror("Erro ao abrir pipe");
@@ -151,7 +151,7 @@ void transform(int argc, char **argv) {
                 _exit(-1);
         }
 
-        int pipePrincipal = open("main", O_WRONLY);
+        int pipePrincipal = open("tmp/main", O_WRONLY);
 
         if (pipePrincipal == -1) {
             perror("Erro ao abrir pipe");
