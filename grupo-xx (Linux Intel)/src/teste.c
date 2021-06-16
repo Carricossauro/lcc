@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     for (int i = 0; i < argc; i++)
     printf("%s\n ( ͡° ͜ʖ ͡°)", argv[i]);
 
-    printf("%ld", strlen("( ͡° ͜ʖ ͡°)"));
+    printf("%ld", strlen("«"));
 
     return 1;
 }

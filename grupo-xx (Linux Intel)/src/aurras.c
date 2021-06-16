@@ -150,7 +150,7 @@ void transform(int argc, char **argv) {
 
         for (int i = 1; i < argc; i++) {
             write(pipe_escrever, argv[i], strlen(argv[i]));
-            write(pipe_escrever, "«", 1); // transform( ͡° ͜ʖ ͡°)samples sample-1.m4a( ͡° ͜ʖ ͡°)output.m4a alto eco rapido
+            write(pipe_escrever, ";", 1); // transform( ͡° ͜ʖ ͡°)samples sample-1.m4a( ͡° ͜ʖ ͡°)output.m4a alto eco rapido
         }
         close(pipe_escrever);
         unlink(pid_escrever);
