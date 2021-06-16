@@ -361,9 +361,10 @@ int main(int argc, char **argv) {
         }
         pid[res++] = '\0';
 
-        char pid_ler_cliente[MAXBUFFER];
-        pid_ler_cliente[0] = 'w';
-        strcpy(pid_ler_cliente+1, pid);
+
+        char pid_ler_cliente[strlen(pid)+5];
+        strcpy(pid_ler_cliente, "tmp/w");
+        strcpy(pid_ler_cliente+5,pid);
         res = 0;
         
         char info_cliente[MAXBUFFER];
@@ -523,9 +524,9 @@ void status(char *pid) {
         signal(SIGINT, SIG_IGN);
         signal(SIGTERM, SIG_IGN);
 
-        char pid_escrever[strlen(pid)+2];
-        pid_escrever[0] = 'r';
-        strcpy(pid_escrever+1,pid);
+        char pid_escrever[strlen(pid)+5];
+        strcpy(pid_escrever, "tmp/r");
+        strcpy(pid_escrever+5,pid);
 
         int pipe_escrever = open(pid_escrever, O_WRONLY);
 

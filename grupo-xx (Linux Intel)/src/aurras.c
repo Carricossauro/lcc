@@ -38,12 +38,13 @@ void term_handler() {
     char pid[MAXBUFFER];
     itoa(getpid(), pid);
 
-    char pid_ler[strlen(pid)+2];
-    char pid_escrever[strlen(pid)+2];
-    pid_ler[0] = 'r';
-    pid_escrever[0] = 'w';
-    strcpy(pid_ler+1,pid);
-    strcpy(pid_escrever+1,pid);
+    char pid_escrever[strlen(pid)+5];
+    strcpy(pid_escrever, "tmp/w");
+    strcpy(pid_escrever+5,pid);
+
+    char pid_ler[strlen(pid)+5];
+    strcpy(pid_escrever, "tmp/r");
+    strcpy(pid_escrever+5,pid);
 
     unlink(pid_ler);
     unlink(pid_escrever);
@@ -54,12 +55,13 @@ void status() {
     char pid[MAXBUFFER];
     itoa(getpid(), pid);
 
-    char pid_ler[strlen(pid)+2];
-    char pid_escrever[strlen(pid)+2];
-    pid_ler[0] = 'r';
-    pid_escrever[0] = 'w';
-    strcpy(pid_ler+1,pid);
-    strcpy(pid_escrever+1,pid);
+    char pid_escrever[strlen(pid)+5];
+    strcpy(pid_escrever, "tmp/w");
+    strcpy(pid_escrever+5,pid);
+
+    char pid_ler[strlen(pid)+5];
+    strcpy(pid_ler, "tmp/r");
+    strcpy(pid_ler+5,pid);
 
     if (mkfifo(pid_ler, 0666) == 0 && mkfifo(pid_escrever, 0666) == 0) {
         if (signal(SIGINT, term_handler) == SIG_ERR) {
@@ -128,9 +130,9 @@ void usr1_handler(int signum) {
 void usr2_handler(int signum) {
     char pid[MAXBUFFER];
     itoa(getpid(), pid);
-    char pid_escrever[strlen(pid)+2];
-    pid_escrever[0] = 'w';
-    strcpy(pid_escrever+1,pid);
+    char pid_escrever[strlen(pid)+5];
+    strcpy(pid_escrever, "tmp/w");
+    strcpy(pid_escrever+5,pid);
 
     unlink(pid_escrever);
     _exit(0);
@@ -139,10 +141,9 @@ void usr2_handler(int signum) {
 void transform(int argc, char **argv) {
     char pid[MAXBUFFER];
     itoa(getpid(), pid);
-    char pid_escrever[strlen(pid)+2];
-
-    pid_escrever[0] = 'w';
-    strcpy(pid_escrever+1,pid);
+    char pid_escrever[strlen(pid)+5];
+    strcpy(pid_escrever, "tmp/w");
+    strcpy(pid_escrever+5,pid);
 
     if (mkfifo(pid_escrever, 0666) == 0) {
         if (signal(SIGINT, usr2_handler) == SIG_ERR || signal(SIGTERM, usr2_handler) == SIG_ERR) {
