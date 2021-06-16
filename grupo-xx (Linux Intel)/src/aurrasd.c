@@ -218,7 +218,7 @@ void inicializarArray(struct quantidade_filtro *nomes_filtros, int num_filtros) 
     }
 }
 
-void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a output.m4a alto eco rapido
+int transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a output.m4a alto eco rapido
     char *info_cliente_backup = malloc(sizeof(char) * strlen(info_cliente));
     strcpy(info_cliente_backup, info_cliente);
 
@@ -243,11 +243,16 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
     while (token != NULL) {
         ordem_filtros[k] = malloc(sizeof(char) * strlen(token));
         strcpy(ordem_filtros[k++], token);
-        for (int i = 0; i < numFiltros; i++) {
+        int i;
+        for (i = 0; i < numFiltros; i++) {
             if (!strcmp(nomes_filtros[i].nome_filtro, token)) {
                 nomes_filtros[i].utilizacoes++;
                 break;
             }
+        }
+        if (i == numFiltros) {
+            kill(atoi(pid), SIGUSR2);
+            return -1;
         }
         token = strtok(NULL, ";");
     }
@@ -299,6 +304,7 @@ void transform(char *pid, char *info_cliente) { //transform samples/sample-1.m4a
             temp->processamento = 0;
         }
     }
+    return 0;
 }
 
 void term_handler(int signum) {
@@ -375,8 +381,30 @@ char *concatenarFiltro(char *executavel, char *filtro) {
     return executavel;
 }
 
-void itoa(int value, char*buffer, int base) {
-	sprintf(buffer, "%d", value);
+void reverse(char s[]) {
+    int i, j;
+    char c;
+
+    for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+
+void itoa(int n, char s[]){
+    int i, sign;
+
+    if ((sign = n) < 0)  /* record sign */
+        n = -n;          /* make n positive */
+    i = 0;
+    do {       /* generate digits in reverse order */
+        s[i++] = n % 10 + '0';   /* get next digit */
+    } while ((n /= 10) > 0);     /* delete it */
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s);
 }
 
 void fecharFilho(Task task) {
@@ -385,7 +413,7 @@ void fecharFilho(Task task) {
         kill(task->pid, SIGUSR2);
             
         char num[MAXBUFFER];
-        itoa(task->numero, num, 10);
+        itoa(task->numero, num);
 
         int pipe = open("close", O_WRONLY);
 
@@ -491,7 +519,7 @@ void status(char *pid) {
         while (iterador != NULL && iterador->processamento == 1) {
             write(pipe_escrever, "task #", 6);
             char num[MAXBUFFER];
-            itoa(iterador->numero, num, 10);
+            itoa(iterador->numero, num);
             write(pipe_escrever, num, strlen(num));
             write(pipe_escrever, ": ", 2);
             for (int i = 0; i < strlen(iterador->comando); i++) {
@@ -511,12 +539,12 @@ void status(char *pid) {
             write(pipe_escrever, ": ", 2);
 
             char num[MAXBUFFER];
-            itoa(it->atual,num,10);
+            itoa(it->atual,num);
             write(pipe_escrever, num, strlen(num));
 
             write(pipe_escrever, "/", 1);
 
-            itoa(it->maximo, num, 10);
+            itoa(it->maximo, num);
             write(pipe_escrever, num, strlen(num));
 
             write(pipe_escrever, " (running/max)\n", 15);
@@ -526,7 +554,7 @@ void status(char *pid) {
 
         char num[MAXBUFFER];
 
-        itoa(getppid(),num,10);
+        itoa(getppid(),num);
         write(pipe_escrever, "pid: ", 5);
         write(pipe_escrever, num, strlen(num));
         write(pipe_escrever, "\n", 1);

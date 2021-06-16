@@ -8,13 +8,35 @@
 
 #define MAXBUFFER 50
 
-void itoa(int value, char*buffer, int base) {
-	sprintf(buffer, "%d", value);
+void reverse(char s[]) {
+    int i, j;
+    char c;
+
+    for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+
+void itoa(int n, char s[]){
+    int i, sign;
+
+    if ((sign = n) < 0)  /* record sign */
+        n = -n;          /* make n positive */
+    i = 0;
+    do {       /* generate digits in reverse order */
+        s[i++] = n % 10 + '0';   /* get next digit */
+    } while ((n /= 10) > 0);     /* delete it */
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s);
 }
 
 void term_handler() {
     char pid[MAXBUFFER];
-    itoa(getpid(), pid, 10);
+    itoa(getpid(), pid);
 
     char pid_ler[strlen(pid)+2];
     char pid_escrever[strlen(pid)+2];
@@ -30,7 +52,7 @@ void term_handler() {
 
 void status() {
     char pid[MAXBUFFER];
-    itoa(getpid(), pid, 10);
+    itoa(getpid(), pid);
 
     char pid_ler[strlen(pid)+2];
     char pid_escrever[strlen(pid)+2];
@@ -105,7 +127,7 @@ void usr1_handler(int signum) {
 
 void usr2_handler(int signum) {
     char pid[MAXBUFFER];
-    itoa(getpid(), pid, 10);
+    itoa(getpid(), pid);
     char pid_escrever[strlen(pid)+2];
     pid_escrever[0] = 'w';
     strcpy(pid_escrever+1,pid);
@@ -116,7 +138,7 @@ void usr2_handler(int signum) {
 
 void transform(int argc, char **argv) {
     char pid[MAXBUFFER];
-    itoa(getpid(), pid, 10);
+    itoa(getpid(), pid);
     char pid_escrever[strlen(pid)+2];
 
     pid_escrever[0] = 'w';
