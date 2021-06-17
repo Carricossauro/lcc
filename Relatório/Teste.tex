@@ -12,7 +12,8 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{float} 
+\usepackage{float}
+\usepackage[rightcaption]{sidecap}
 
 \definecolor{myblue}{rgb}{0.2,0.2,0.8}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -73,9 +74,9 @@
 
 \chapter{Introdução}
 
-Foi-nos proposto, no âmbito da unidade curricular de Sistemas Operativos, o desenvolvimento de um sistema capaz de transformar vários ficheiros de áudio concurrentemente, consultar as tarefas em execução, mostrando ainda o número de filtros disponiveis e em uso nessas transformações. Este tipo de sistema utiliza um conjunto de executáveis utilizados para filtrar e modificar um fluxo de áudios, permitindo tratar grandes quantidades de dados explorando a concorrência entre os diferentes processos.
+Foi-nos proposto, no âmbito da unidade curricular de Sistemas Operativos, o desenvolvimento de um sistema capaz de transformar vários ficheiros de áudio concorrentemente, consultar as tarefas em execução, mostrando ainda o número de filtros disponiveis e em uso nessas transformações. Este tipo de sistema utiliza um conjunto de executáveis para filtrar e modificar um fluxo de áudios, permitindo tratar grandes quantidades de dados explorando a concorrência entre os diferentes processos.
 
-Neste relatório,vamos explicitar a nossa abordagem ao problema, justificando a estrutura do nosso sistema, demonstrando os conhecimentos adquiridos durante as aulas, tais como a utilização/criação de processos, duplicação de descritores, criação de \emph{pipes} sem/com nome, execução de processos, aplicação de sinais e \emph{system calls}.
+Neste relatório, vamos explicitar a nossa abordagem ao problema, justificando a estrutura do nosso sistema e demonstrar os conhecimentos adquiridos durante as aulas, tais como a utilização/criação de processos, duplicação de descritores, criação de \emph{pipes} sem/com nome, execução de processos, aplicação de sinais e \emph{system calls}.
 
 \chapter{Funcionalidades}
 
@@ -97,7 +98,7 @@ Na eventualidade de o utilizador pretender obter informação relativa às funci
 
 Para a implementação das funcionalidades referidas anteriormente, foi necessário a criação de duas funções \emph{status} e \emph{transform} que serão brevemente descritas de seguida.
 
- \begin{itemize}
+\begin{itemize}
 \item \textbf{Status: } São criados dois \emph{pipes} com nome que fazem a ligação com o servidor. O \emph{pipe\_escrever} é empregue para o envio do pedido de verificação do estado conduzido pelo cliente, em contrapartida o \emph{pipe\_ler} recebe a informação solicitada que será imprimida no \emph{standard output}. O \emph{pid} do cliente é enviado através do \emph{pipePrincipal} para o servidor.
 \item \textbf{Transform: } Nesta função só é criado um \emph{pipe\_escrever}, uma vez que o método de comunicação que definimos no sentido servidor -\textgreater cliente é a utilização de sinais. Desta forma, o \emph{pipe} é utilizado para enviar a informação referente ao pedido de transformação do ficheiro, quando o processo é iniciado o cliente recebe um sinal (\emph{SIGUSR1}).
 \end{itemize}
@@ -107,54 +108,26 @@ Para a implementação das funcionalidades referidas anteriormente, foi necessá
 \subsection{Variáveis Globais}
 
 \begin{itemize}
-\item \textbf{struct lligada: } Esta \emph{struct} serve para armazenar as informações presentes no ficheiro de configuração, nomeadamente  o nome do filtro, o nome do executável e o número máximo de uso simultâneo desse filtro, para além disso guarda também o número de utilizações no momento do mesmo.
-\item \textbf{struct quantidade\_filtro: } Esta estrutura de dados tem a funcionalidade de manter o nome de um filtro assim como a quantidade de utilizações presentes num certo comando.
-\item \textbf{struct tasks: } Neste caso a \emph{struct} desempenha o papel de guardar os dados mais relevantes de um pedido, acrescentando ainda 
+\item \textbf{Filtro filtros: } Esta variável dá acesso à \emph{struct lligada} que serve para armazenar as informações presentes no ficheiro de configuração, nomeadamente  o nome do filtro, o nome do executável e o número máximo de uso simultâneo desse filtro, para além disso guarda também o número de utilizações, no momento, do mesmo.
+\item \textbf{Task tasks: } Por sua vez esta variável tem uma estrutura de dados que lhe é associada, sendo responsável por guardar uma lista de \emph{tasks}, armazenando em cada \emph{nodo} o conjunto de dados necessários para processar uma determinada \emph{task} (comando usado para a invocar, nome dos filtros pela ordem que devem ser aplicados, nome de cada filtro e respetiva quantidade de vezes que deve ser executado, número da task, estado do processameno, \emph{pid} do processo filho responsável pelo processamento do pedido, nome do ficheiro original e nome do ficheiro processado).
+\item \textbf{char* pasta\_filtros: } Nome da diretória onde se encontram os ficheiros de filtros. 
+\item \textbf{int numero\_tasks:} Número de tasks recebidas até ao momento.
 \end{itemize}
 
-\begin{lstlisting}[style = code]
-typedef struct lligada {
-    char *nome_filtro;
-    char *nome_executavel;
-    int maximo;
-    int atual;
-    struct lligada *prox;
-} *Filtro;
-\end{lstlisting}
+\subsection{Descrição do Funcionamento}
 
-Na \emph{struct lligada}
+O servidor começa por testar se na sua inicialização recebeu os três argumetos necessários para o seu funcionamento. Caso isso se verifique passa então à criação de um pipe que estabelecerá a comunicação entre o servidor e os clientes.
 
-\begin{lstlisting}[style = code]
-struct quantidade_filtro {
-    char *nome_filtro;
-    int utilizacoes;
-};
-\end{lstlisting}
+De seguida, é informado, através desse \emph{pipe} do \emph{pid} do cliente, para que possa tomar conhecimento do \emph{pipe\_lercliente} que traz a indicação da tarefa que deve ser efetuada. Caso esta tarefa seja um pedido de verificação do estado, será chamada a função \emph{status}, caso seja uma requisição de transformação de ficheiro de áudio, será invocada a função \emph{transform}. Este processo será repetido até que seja recebido um sinal de \emph{SIGINT} ou \emph{SIGTERM}, fechando de forma elegante o servidor. A seguir serão descritas as funções referidas.
 
-Na \emph{struct quantidade\_filtro}
+\textbf{Status: } Começa por criar um processo filho, que enviará através do \emph{pipe\_escrever} a informação o cliente do estado atual programa.
+ 
+\textbf{Transform: } No momento inicial armazena a informação referente ao pedido na estrutura de dados criada para o efeito (\emph{tasks}), de seguida verifica se o pedido pode ser executado utilizando a função \emph{disponibilidade}, tendo três opções ser descartado (-1), colocado em espera (0) ou ser executado (1). Passamos agora a explicar a arquitetura de processos adotada para a execução da transformação de um ficheiro: cria um processo filho para monitorizar as operações, sendo que de seguida é criado um outro processo filho dentro do \emph{monitor} que será responsável pela criação dos processos que executarão a aplicação dos filtros.
 
-\begin{lstlisting}[style = code]
-typedef struct tasks {
-    char *comando;
-    char **ordem_filtros;
-    struct quantidade_filtro *nomes_filtros;
-    int numero;
-    int processamento; // 0 - a espera; 1 - a processar
-    int pid;
-    char *input_file;
-    char *output_file;
-    struct tasks *prox;
-} *Task;
-\end{lstlisting}
-
-Na \emph{struct tasks}
-
-\begin{itemize}
-\item \textbf{Filtro filtros :}
-\item \textbf{Task tasks = NULL :}
-\item \textbf{char *pasta\_filtros :}
-\item \textbf{int numero\_tasks = 0 :}
-\end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.54\textwidth]{diagrama}
+\end{figure}
 
 \chapter{Conclusão}
 
