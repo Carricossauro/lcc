@@ -334,7 +334,7 @@ void term_handler(int signum) {
 
 int main(int argc, char **argv) {
     if (argc != 3) {
-        write(1,"./aurrasd etc/aurrasd.conf bin/aurras-filters\n", 46);
+        write(1,"./aurrasd config-filename filters-folder\n", 41);
         return -1;
     }
 
