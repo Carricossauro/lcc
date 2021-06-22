@@ -1,0 +1,89 @@
+\begin{eqnarray*}
+\start
+  |out . in = id|
+%
+\just\equiv{ Definição de in }
+%
+  |out . [const X, num_ops] = id|
+%
+\just\equiv{ Universal-+ e Definição de num\_ops}
+%
+\begin{lcbr}
+  out . const X = i1
+\\
+  out . [N, ops] = i2
+\end{lcbr}
+%
+\just\equiv{ Universal-+ e Definição de ops }
+%
+\begin{lcbr}
+    out . const X = i1
+\\
+    out . N = i2 . i1
+\\
+    out . [bin, uncurry Un] = i2 . i2
+\end{lcbr}
+%
+\just\equiv{ Universal-+ }
+%
+\begin{lcbr}
+    out . const X = i1
+\\
+    out . N = i2 . i1
+\\
+    out . bin = i2 . i2 . i1
+\\
+    out . uncurry Un = i2 . i2 . i2
+\end{lcbr}
+%
+\just\equiv{ Universal-+ }
+%
+\begin{lcbr}
+    out X = i1 ()
+\\
+    out (N x) = i2 (i1 x)
+\\
+    out (bin (op,(a,b))) = i2 (i2 (i1 (op,(a,b))))
+\\
+    out (uncurry Un (x,y)) = i2 (i2 (i2 (x,y)))
+\end{lcbr}
+%
+\just\equiv{ Definição de bin e Definição de uncurry }
+%
+\begin{lcbr}
+    out X = i1 ()
+\\
+    out (N x) = i2 (i1 x)
+\\
+    out (Bin op a b) = i2 (i2 (i1 (op,(a,b))))
+\\
+    out (Un x y) = i2 (i2 (i2 (x,y)))
+\end{lcbr}
+\qed
+\end{eqnarray*}
+
+calcLine = undefined--cataList cl where
+
+--teste = cataList cl
+cl = either h g
+teste (x,l) = split (const x) l
+h () = const (0,[])
+g (x,(t,l)) = split (const (t+1)) (auxCalc (x,(t,l)))
+auxCalc (x,(t,l)) = cons . split (linear1d x . (head . drop t . reverse)) (const l)
+
+
+
+p2d :: [Rational]
+p2d = [1.2, 3.4]
+p3d :: [Rational]
+p3d = [0.2, 10.3, 2.4]
+
+g [x] = i2 ((x,x),[])
+g [] = i1 ()
+g (x:y:[]) = i2 ((x,y), [])
+g (x:y:t) = i2 ((x,y),y:t)
+
+p t = either nil (pp2 t)
+pp2 t ((x,y), r) = calcLine x y t:r
+
+teste t = cataList (p t) . anaList g
