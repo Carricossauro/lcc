@@ -1,3 +1,5 @@
+-- drop schema AlojamentoLocal;
+
 -- -----------------------------------------------------
 -- Schema AlojamentoLocal
 -- -----------------------------------------------------
@@ -8,7 +10,7 @@ USE AlojamentoLocal ;
 -- Table AlojamentoLocal.Edificio
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AlojamentoLocal.Edificio (
-  Id_Edificio INT NOT NULL,
+  Id_Edificio INT NOT NULL AUTO_INCREMENT,
   `Rua/Morada` VARCHAR(200) NOT NULL,
   `Localidade/Morada` VARCHAR(100) NOT NULL,
   `Codigo_Postal/Morada` VARCHAR(10) NOT NULL,
@@ -19,7 +21,7 @@ ENGINE = InnoDB;
 -- Table AlojamentoLocal.Alojamento
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AlojamentoLocal.Alojamento (
-  Id_Alojamento INT NOT NULL,
+  Id_Alojamento INT NOT NULL AUTO_INCREMENT,
   Numero INT NOT NULL,
   Edificio INT NOT NULL,
   Preco_Base DECIMAL(6,2) NOT NULL,
@@ -37,7 +39,7 @@ ENGINE = InnoDB;
 -- Table AlojamentoLocal.Funcionario
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AlojamentoLocal.Funcionario (
-  Id_Funcionario INT NOT NULL,
+  Id_Funcionario INT NOT NULL AUTO_INCREMENT,
   Nome VARCHAR(200) NOT NULL,
   Telemovel INT NOT NULL,
   `E-mail` VARCHAR(200) NOT NULL,
@@ -56,7 +58,7 @@ ENGINE = InnoDB;
 -- Table AlojamentoLocal.Cliente
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AlojamentoLocal.Cliente (
-  Id_Cliente INT NOT NULL,
+  Id_Cliente INT NOT NULL AUTO_INCREMENT,
   Nome VARCHAR(200) NOT NULL,
   Data_Nascimento DATE NOT NULL,
   `E-mail` VARCHAR(200) NOT NULL,
@@ -69,11 +71,11 @@ ENGINE = InnoDB;
 -- Table AlojamentoLocal.Reserva
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AlojamentoLocal.Reserva (
-  Id_Reserva INT NOT NULL,
+  Id_Reserva INT NOT NULL AUTO_INCREMENT,
   Funcionario INT NOT NULL,
   Cliente INT NOT NULL,
-  DataInicio DATETIME NOT NULL,
-  DataFim DATETIME NOT NULL,
+  Data_Inicio DATETIME NOT NULL,
+  Data_Fim DATETIME NOT NULL,
   Preco DECIMAL(6,2) NOT NULL,
   Adultos INT NOT NULL,
   Criancas INT NOT NULL,
