@@ -19,14 +19,12 @@ CREATE VIEW RE04 (Id_Funcionario, Nome, Responsavel) AS
 
 -- RE05 – Calcular o número de vezes que cada quarto foi reservado
 CREATE VIEW RE05 (Id_Alojamento, Numero_Alojamento, Edificio, Reservas) AS
-	SELECT P.Id_Alojamento, P.Numero, P.Edificio, COUNT(P.Preco) FROM
-		(SELECT A.Id_Alojamento, A.Numero, A.Edificio, R.Preco FROM Reserva_Alojamento AS RA
-			INNER JOIN Reserva AS R
-				ON RA.Reserva = R.Id_Reserva
+	SELECT P.Id_Alojamento, P.Numero, P.Edificio, COUNT(P.Reserva) FROM
+		(SELECT A.Id_Alojamento, A.Numero, A.Edificio, RA.Reserva FROM Reserva_Alojamento AS RA
 			INNER JOIN Alojamento AS A
 				ON A.Id_Alojamento = RA.Alojamento) AS P
 		GROUP BY Id_Alojamento; 
-    
+
 -- RE06 – Calcular o número de pedidos que um funcionário processou
 CREATE VIEW RE06 (Funcionario, Nome, Pedidos) AS
 	SELECT R.Funcionario, F.Nome, COUNT(R.Id_Reserva) FROM Reserva AS R
