@@ -1,0 +1,75 @@
+Declarar varaiveis:
+
+- int x -> cria inteiro "x"
+
+- array a t -> cria array de inteiros "a" de tamanho t
+
+- matriz m t1 t2 -> cria matriz de inteiros "m" de tamanho t1 X t2
+
+Operações aritméticas:
+
+- soma (x, y) -> somar "x" e "y"
+
+- sub (x, y) -> subtrair "y" a "x"
+
+- mult (x, y) -> multiplicar "x" por "y"
+
+- div (x, y) -> dividir "x" por "y"
+
+- mod (x, y) -> calcular resto da divisao inteira de "x" por "y"
+
+Operações Relacionais:
+
+- maior (x, y)
+
+- menor (x, y)
+
+- igual (x, y)
+
+- maiori (x, y)
+
+- menori (x, y)
+
+- nigual (x, y)
+
+Operações Lógicas:
+
+- neg (x)
+
+- e (x, y)
+
+- ou (x, y)
+
+Atribuição:
+
+- (x <- y) -> atribuir a "x" o valor de "y"
+
+IO:
+
+- ler -> ler do standard input
+
+- escrever x -> escrever o valor de "x" no standard output
+
+Controlo de fluxo:
+
+- se (x) entao
+  ...
+  y
+  ...
+  fim
+  senao
+  z
+  fim -> executa "y" se "x" for verdadeiro, e "z" se "x" for falso
+
+Ciclos:
+
+- enquanto (x) faz
+  y
+  fim
+
+Indexação: (i, j inteiros)
+
+- array[i]
+
+- matrix[i,j]
+
