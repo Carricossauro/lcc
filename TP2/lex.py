@@ -160,13 +160,14 @@ t_ignore = ' \r\t\n'
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
- 
-lexer = lex.lex() # cria um AnaLex especifico a partir da especificação acima usando o gerador 'lex' do objeto 'lex'
 
+
+lexer = lex.lex() # cria um AnaLex especifico a partir da especificação acima usando o gerador 'lex' do objeto 'lex'
+'''
 # Reading input
 for linha in sys.stdin:
     lexer.input(linha) 
     tok = lexer.token()
     while tok:
         print(tok)
-        tok = lexer.token()
+        tok = lexer.token()'''

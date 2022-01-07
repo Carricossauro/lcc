@@ -1,0 +1,8 @@
+INT x
+INT cond
+INT y
+x <- 5
+cond <- IGUAL (x,0)
+y <- 9
+cond <- NEG (IGUAL (cond, y))
+ESCREVER cond
