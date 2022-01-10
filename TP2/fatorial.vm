@@ -1,0 +1,27 @@
+	pushi 0 // n
+	pushi 1 // i
+	pushi 1 // i!
+	start
+	read
+	atoi
+	storeg 0
+loopS:  nop
+	pushg 1
+	pushg 0
+	inf
+	jz loopE
+loopB:  pushg 2
+	pushg 1
+	pushi 1
+	add
+	storeg 1
+	pushg 1
+	mul
+	storeg 2
+	jump loopS
+loopE:  nop
+	pushg 2
+	writei
+	pushs "\n"
+	writes
+	stop
