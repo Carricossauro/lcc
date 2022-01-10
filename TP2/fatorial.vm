@@ -10,7 +10,8 @@ loopS:  nop
 	pushg 0
 	inf
 	jz loopE
-loopB:  pushg 2
+loopB:  nop
+	pushg 2
 	pushg 1
 	pushi 1
 	add
