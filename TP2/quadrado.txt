@@ -1,0 +1,18 @@
+INT a
+INT b
+INT c
+INT d
+
+a <- LER
+b <- LER
+c <- LER
+d <- LER
+SE MAIOR (a, 0) ENTAO
+SE E (IGUAL (a,b), E (IGUAL (b,c), IGUAL (c,d))) ENTAO
+ESCREVER 1
+SENAO
+ESCREVER 0
+FIM
+SENAO
+ESCREVER 2
+FIM

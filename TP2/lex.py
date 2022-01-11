@@ -61,7 +61,7 @@ def t_ARRAY(t):
 
 def t_MATRIZ(t):
     r'MATRIZ'
-    return r
+    return t
 
 def t_SOMA(t):
     r'SOMA'
@@ -127,10 +127,6 @@ def t_ESCREVER (t):
     r'ESCREVER'
     return t
 
-def t_SE (t):
-    r'SE'
-    return t
-
 def t_ENTAO(t):
     r'ENTAO'
     return t
@@ -138,6 +134,10 @@ def t_ENTAO(t):
 def t_SENAO(t):
     r'SENAO'
     return t 
+
+def t_SE (t):
+    r'SE'
+    return t
 
 def t_ENQUANTO(t):
     r'ENQUANTO'

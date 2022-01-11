@@ -1,8 +1,5 @@
 INT x
-INT cond
-INT y
-x <- 5
-cond <- IGUAL (x,0)
-y <- 9
-cond <- NEG (IGUAL (cond, y))
-ESCREVER cond
+MATRIZ m 2 2
+
+m[1,0] <- 5
+x <- m[1,0]
