@@ -1,0 +1,10 @@
+INT n <- 5
+INT res <- 1
+INT x
+
+ENQUANTO NIGUAL (n, 0) FAZ
+    x <- LER
+    res <- MULT (res, x)
+    n <- SUB (n, 1)
+FIM
+ESCREVER res

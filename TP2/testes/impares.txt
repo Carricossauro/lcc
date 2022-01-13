@@ -1,0 +1,13 @@
+INT inf
+INT sup
+INT i
+
+inf <- LER
+sup <- LER
+i <- inf
+ENQUANTO NIGUAL (i, sup) FAZ
+    SE IGUAL (MOD (i, 2), 1) ENTAO
+        ESCREVER i
+    FIM
+    i <- SOMA (i, 1)
+FIM

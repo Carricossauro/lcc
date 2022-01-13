@@ -1,0 +1,14 @@
+INT n
+INT i
+INT x
+INT y
+
+n <- LER
+ENQUANTO NIGUAL (n, i) FAZ
+    y <- LER
+    SE OU (MENOR (y, x), IGUAL (i,0)) ENTAO
+        x <- y
+    FIM
+    i <- SOMA (i, 1)
+FIM
+ESCREVER x

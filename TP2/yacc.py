@@ -145,7 +145,7 @@ def p_Atrib_Ler(p):
 
 def p_Escrever(p):
     "Escrever : ESCREVER Expr"
-    p[0] = f'{p[2]}WRITEI\n'
+    p[0] = f'{p[2]}WRITEI\nWRITES \'\\n\'\n'
 
 def p_Expr_Var(p):
     "Expr     : Var"
