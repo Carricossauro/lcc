@@ -271,7 +271,7 @@ def p_error(p):
     parser.success = False
 
 #----------------------------------------
-#inicio do Parser e Calculadora
+#inicio do Parser
 parser = yacc.yacc()
 
 parser.success = True
@@ -287,4 +287,3 @@ for line in sys.stdin:
 with open(sys.argv[1],'r') as file:
     inp = file.read()
     parser.parse(inp)
-
