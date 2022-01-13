@@ -2,39 +2,39 @@
 
 | Declaração                                      | Comando        |
 | ----------------------------------------------- | -------------- |
-| Criar inteiro "x"                               | INT x          |
-| Criar inteiro "x" com valor v                   | INT x <- v     |
-| Criar array de inteiros "a" de tamanho t        | ARRAY a t      |
-| Criar matriz de inteiros "m" de tamanho t1 X t2 | MATRIZ m t1 t2 |
+| Criar inteiro "x"                               | int x          |
+| Criar inteiro "x" com valor v                   | int x <- v     |
+| Criar array de inteiros "a" de tamanho t        | array a t      |
+| Criar matriz de inteiros "m" de tamanho t1 X t2 | matriz m t1 t2 |
 
 # Operações aritméticas:
 
 | Operação                                         | Comando     |
 | ------------------------------------------------ | ----------- |
-| Somar "x" e "y"                                  | SOMA (x, y) |
-| Subtrair "y" a "x"                               | SUB (x, y)  |
-| Multiplicar "x" por "y"                          | MULT (x, y) |
-| Dividir "x" por "y"                              | DIV (x, y)  |
-| Calcular resto da divisao inteira de "x" por "y" | MOD (x, y)  |
+| Somar "x" e "y"                                  | soma (x, y) |
+| Subtrair "y" a "x"                               | sub (x, y)  |
+| Multiplicar "x" por "y"                          | mult (x, y) |
+| Dividir "x" por "y"                              | div (x, y)  |
+| Calcular resto da divisao inteira de "x" por "y" | mod (x, y)  |
 
 # Operações Relacionais:
 
 | Operação | Comando       |
 | -------- | ------------- |
-| x > y    | MAIOR (x, y)  |
-| x < y    | MENOR (x, y)  |
-| x == y   | IGUAL (x, y)  |
-| x >= y   | MAIORI (x, y) |
-| x <= y   | MENORI (x, y) |
-| x != y   | NIGUAL (x, y) |
+| x > y    | maior (x, y)  |
+| x < y    | menor (x, y)  |
+| x == y   | igual (x, y)  |
+| x >= y   | maiori (x, y) |
+| x <= y   | menori (x, y) |
+| x != y   | nigual (x, y) |
 
 # Operações Lógicas:
 
 | Operação                 | Comando   |
 | ------------------------ | --------- |
-| Negar "x"                | NEG (x)   |
-| Conjunção de "x" com "y" | E (x, y)  |
-| Disjunção de "x" e "y"   | OU (x, y) |
+| Negar "x"                | neg (x)   |
+| Conjunção de "x" com "y" | e (x, y)  |
+| Disjunção de "x" e "y"   | ou (x, y) |
 
 # Atribuição:
 
@@ -47,32 +47,32 @@
 
 | IO                                | Comando    |
 | --------------------------------- | ---------- |
-| Ler do stdin                      | LER        |
-| Escrever o valor de "x" no stdout | ESCREVER x |
+| Ler do stdin                      | ler        |
+| Escrever o valor de "x" no stdout | escrever x |
 
 # Controlo de fluxo:
 
 Executar algo se "x" for verdadeiro
 
-    SE (x) ENTAO
+    se (x) entao
     ...
-    FIM
+    fim
 
 Executar algo se "x" for verdadeiro, e outra coisa se "x" for falso
 
-    SE (x) ENTAO
+    se (x) entao
     ...
-    SENAO
+    senao
     ...
-    FIM
+    fim
 
 # Ciclos:
 
 Ciclo while-do
 
-    ENQUANTO (x) FAZ
+    enquanto (x) faz
     ...
-    FIM
+    fim
 
 # Indexação: (i, j inteiros)
 
