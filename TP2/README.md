@@ -126,3 +126,14 @@ Aceder indice "i","j" de uma matriz (matrix[ i ][ j ] em C)
         Cond     : NEG PCABRIR Cond PCFECHAR
         Var      : NOME
         Var      : NUM
+
+# Testes
+
+| Ficheiro       | Exemplo                                                                      |
+| -------------- | ---------------------------------------------------------------------------- |
+| quadrado.txt   | ler 4 números e dizer se podem ser os lados de um quadrado                   |
+| menor.txt      | ler um inteiro N, depois ler N números e escrever o menor deles              |
+| produtorio.txt | ler N (constante do programa) números e calcular e imprimir o seu produtório |
+| impares.txt    | contar e imprimir os números impares de uma sequência de números naturais    |
+| array.txt      | ler e armazenar N números num array; imprimir os valores por ordem inversa   |
+| matriz.txt     | ler e armazenar N números numa matriz; imprimir a soma de cada linha         |

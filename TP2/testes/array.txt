@@ -1,0 +1,16 @@
+int n
+array a 10
+int i <- 0
+
+n <- ler
+enquanto nigual (i, n) faz
+    a[i] <- ler
+    i <- soma (i, 1)
+fim
+
+i <- sub (i, 1)
+
+enquanto maiori (i, 0) faz
+    escrever a[i]
+    i <- sub (i, 1)
+fim

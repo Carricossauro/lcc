@@ -1,14 +1,14 @@
-INT n
-INT i
-INT x
-INT y
+int n
+int i
+int x
+int y
 
-n <- LER
-ENQUANTO NIGUAL (n, i) FAZ
-    y <- LER
-    SE OU (MENOR (y, x), IGUAL (i,0)) ENTAO
+n <- ler
+enquanto nigual (n, i) faz
+    y <- ler
+    se ou (menor (y, x), igual (i,0)) entao
         x <- y
-    FIM
-    i <- SOMA (i, 1)
-FIM
-ESCREVER x
+    fim
+    i <- soma (i, 1)
+fim
+escrever x

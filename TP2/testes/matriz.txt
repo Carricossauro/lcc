@@ -1,0 +1,25 @@
+matriz M 5 3
+int i
+int j
+int som
+
+enquanto menor (i, 5) faz
+    j <- 0
+    enquanto menor (j, 3) faz
+        M[i,j] <- ler
+        j <- soma (j, 1)
+    fim
+    i <- soma (i, 1)
+fim
+
+i <- 0
+enquanto menor (i, 5) faz
+    j <- 0
+    som <- 0
+    enquanto menor (j, 3) faz
+        som <- soma (som, M[i,j])
+        j <- soma (j, 1)
+    fim
+    escrever som
+    i <- soma (i, 1)
+fim

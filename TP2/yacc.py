@@ -135,6 +135,23 @@ def p_Atrib_expr_Matriz(p):
         print("Erro: Variável não definida.")
         parser.success = False
 
+def p_Atrib_Ler_Array(p):
+    "Atrib    : NOME PRABRIR Expr PRFECHAR ATR LER"
+    if p[1] in p.parser.registers:
+        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])}\nPADD\n{p[3]}READ\nATOI\nSTOREN\n'
+    else:
+        print("Erro: Variável não definida.")
+        parser.success = False
+
+def p_Atrib_Ler_Matriz(p):
+    "Atrib    : NOME PRABRIR Expr VIRG Expr PRFECHAR ATR LER"
+    if p[1] in p.parser.registers:
+        c = p.parser.registers.get(p[1])[2]
+        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\nREAD\nATOI\nSTOREN\n'
+    else:
+        print("Erro: Variável não definida.")
+        parser.success = False
+
 def p_Atrib_Ler(p):
     "Atrib    : NOME ATR LER"
     if p[1] in p.parser.registers:
@@ -145,7 +162,7 @@ def p_Atrib_Ler(p):
 
 def p_Escrever(p):
     "Escrever : ESCREVER Expr"
-    p[0] = f'{p[2]}WRITEI\nWRITES \'\\n\'\n'
+    p[0] = f'{p[2]}WRITEI\nPUSHS "\\n"\nWRITES\n'
 
 def p_Expr_Var(p):
     "Expr     : Var"

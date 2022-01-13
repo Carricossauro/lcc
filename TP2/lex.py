@@ -47,72 +47,68 @@ def t_NUM(t):
     r'\d+'
     return t
 
-def t_NOME(t):
-    r'[a-z]+'
-    return t
-
 def t_INT(t):
-    r'INT'
+    r'int'
     return t
 
 def t_ARRAY(t):
-    r'ARRAY'
+    r'array'
     return t
 
 def t_MATRIZ(t):
-    r'MATRIZ'
+    r'matriz'
     return t
 
 def t_SOMA(t):
-    r'SOMA'
+    r'soma'
     return t
 
 def t_SUB(t):
-    r'SUB'
+    r'sub'
     return t
 
 def t_MULT(t):
-    r'MULT'
+    r'mult'
     return t
 
 def t_DIV(t):
-    r'DIV'
+    r'div'
     return t
 
 def t_MOD(t):
-    r'MOD'
-    return t
-
-def t_MAIOR(t):
-    r'MAIOR'
-    return t
-
-def t_MENOR(t):
-    r'MENOR'
-    return t
-
-def t_IGUAL(t):
-    r'IGUAL'
+    r'mod'
     return t
 
 def t_MAIORI(t):
-    r'MAIORI'
+    r'maiori'
+    return t
+
+def t_MAIOR(t):
+    r'maior'
     return t
 
 def t_MENORI(t):
-    r'MENORI'
+    r'menori'
     return t 
 
+def t_MENOR(t):
+    r'menor'
+    return t
+
+def t_IGUAL(t):
+    r'igual'
+    return t
+
 def t_NIGUAL(t):
-    r'NIGUAL'
+    r'nigual'
     return t
 
 def t_NEG (t):
-    r'NEG'
+    r'neg'
     return t
 
 def t_OU (t):
-    r'OU'
+    r'ou'
     return t
 
 def t_ATR (t):
@@ -120,39 +116,43 @@ def t_ATR (t):
     return t
 
 def t_LER (t):
-    r'LER'
+    r'ler'
     return t
 
 def t_ESCREVER (t):
-    r'ESCREVER'
+    r'escrever'
     return t
 
 def t_ENTAO(t):
-    r'ENTAO'
+    r'entao'
     return t
 
 def t_SENAO(t):
-    r'SENAO'
+    r'senao'
     return t 
 
 def t_SE (t):
-    r'SE'
+    r'se'
     return t
 
 def t_ENQUANTO(t):
-    r'ENQUANTO'
+    r'enquanto'
     return t 
 
 def t_FAZ(t):
-    r'FAZ'
+    r'faz'
     return t 
 
 def t_FIM(t):
-    r'FIM'
+    r'fim'
     return t
 
 def t_E (t):
-    r'E'
+    r'e'
+    return t
+
+def t_NOME(t):
+    r'\w+'
     return t
 
 t_ignore = ' \r\t\n'

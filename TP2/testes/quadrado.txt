@@ -1,18 +1,18 @@
-INT a
-INT b
-INT c
-INT d
+int a
+int b
+int c
+int d
 
-a <- LER
-b <- LER
-c <- LER
-d <- LER
-SE MAIOR (a, 0) ENTAO
-SE E (IGUAL (a,b), E (IGUAL (b,c), IGUAL (c,d))) ENTAO
-ESCREVER 1
-SENAO
-ESCREVER 0
-FIM
-SENAO
-ESCREVER 2
-FIM
+a <- ler
+b <- ler
+c <- ler
+d <- ler
+se maior (a, 0) entao
+    se e (igual (a,b), e (igual (b,c), igual (c,d))) entao
+        escrever 1
+    senao
+        escrever 0
+    fim
+senao
+    escrever 2
+fim
