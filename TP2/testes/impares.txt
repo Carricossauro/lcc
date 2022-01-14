@@ -1,11 +1,11 @@
-int inf
+int inf1
 int sup
 int i
 int som
 
-inf <- ler
+inf1 <- ler
 sup <- ler
-i <- inf
+i <- inf1
 enquanto nigual (i, sup) faz
     se igual (mod (i, 2), 1) entao
         escrever i

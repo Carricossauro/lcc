@@ -5,16 +5,11 @@ from lex import tokens
 
 def p_Programa(p):
     "Programa : Corpo"
-    print("START")
-    print(p[1], end="")
-    print("STOP")
+    parser.assembly = f'START\n{p[1]}STOP'
 
-def p_Programa(p):
+def p_Programa_Decls(p):
     "Programa : Decls Corpo"
-    print(p[1], end="")
-    print("START")
-    print(p[2], end="")
-    print("STOP")
+    parser.assembly = f'{p[1]}START\n{p[2]}STOP'
 
 def p_Decls(p):
     "Decls    : Decl"
@@ -49,7 +44,7 @@ def p_Decl_Int_Atr(p):
 def p_Decl_Array(p):
     "Decl     : ARRAY NOME NUM"
     if p[2] not in p.parser.registers:
-        p.parser.registers.update({p[2] : p.parser.gp})
+        p.parser.registers.update({p[2] : (p.parser.gp, int(p[3]))})
         p[0] = f'PUSHN {p[3]}\n'
         p.parser.gp += int(p[3])
     else:
@@ -122,9 +117,10 @@ def p_Atrib_expr_Int(p):
 def p_Atrib_expr_Array(p):
     "Atrib    : NOME PRABRIR Expr PRFECHAR ATR Expr"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])}\nPADD\n{p[3]}{p[6]}STOREN\n'
+        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}{p[6]}STOREN\n'
     else:
         print("Erro: Variável não definida.")
+        parser.success = False
 
 def p_Atrib_expr_Matriz(p):
     "Atrib    : NOME PRABRIR Expr VIRG Expr PRFECHAR ATR Expr"
@@ -138,7 +134,7 @@ def p_Atrib_expr_Matriz(p):
 def p_Atrib_Ler_Array(p):
     "Atrib    : NOME PRABRIR Expr PRFECHAR ATR LER"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])}\nPADD\n{p[3]}READ\nATOI\nSTOREN\n'
+        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}READ\nATOI\nSTOREN\n'
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -160,9 +156,37 @@ def p_Atrib_Ler(p):
         print("Erro: Variável não definida.")
         parser.success = False
 
+def p_Escrever_a(p):
+    "Escrever : ESCREVERA NOME"
+    if p[2] in p.parser.registers:
+        if p[2] not in p.parser.ints:
+            if len(p.parser.registers.get(p[2])) == 2:
+                array = ""
+                for i in range(p.parser.registers.get(p[2])[1]):
+                    array += f'PUSHGP\nPUSHI {p.parser.registers.get(p[2])[0]}\nPADD\nPUSHI {i}\nLOADN\nWRITEI\nPUSHS " "\nWRITES\n'
+                p[0] = array + 'PUSHS "\\n"\nWRITES\n'
+            else:
+                matriz = ""
+                for l in range(p.parser.registers.get(p[2])[1]):
+                    for c in range(p.parser.registers.get(p[2])[2]):
+                        matriz += f'PUSHGP\nPUSHI {p.parser.registers.get(p[2])[0]}\nPADD\nPUSHI {p.parser.registers.get(p[2])[2] * l + c}\nLOADN\nWRITEI\nPUSHS " "\nWRITES\n'
+                    matriz += 'PUSHS "\\n"\nWRITES\n'
+                p[0] = matriz
+
+        else:
+            print("Erro: Variável não é um array.")
+            parser.success = False
+    else:
+        print("Erro: Variável não definida.")
+        parser.success = False
+
 def p_Escrever(p):
     "Escrever : ESCREVER Expr"
     p[0] = f'{p[2]}WRITEI\nPUSHS "\\n"\nWRITES\n'
+
+def p_Expr_P(p):
+    "Expr     : PCABRIR Expr PCFECHAR"
+    p[0] = p[2]
 
 def p_Expr_Var(p):
     "Expr     : Var"
@@ -195,6 +219,10 @@ def p_Expr_Mod(p):
 def p_Expr_Cond(p):
     "Expr     : Cond"
     p[0] = p[1]
+
+def p_Cond_P(p):
+    "Cond     : PCABRIR Cond PCFECHAR"
+    p[0] = p[2]
 
 def p_Cond_Maior(p):
     "Cond     : MAIOR PCABRIR Expr VIRG Expr PCFECHAR"
@@ -244,7 +272,7 @@ def p_Var_Matriz(p):
 def p_Var_Array(p):
     "Var      : NOME PRABRIR Expr PRFECHAR"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])}\nPADD\n{p[3]}LOADN\n'
+        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}LOADN\n'
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -279,6 +307,7 @@ parser.registers = {}
 parser.labels = 0
 parser.gp = 0
 parser.ints = []
+parser.assembly = ""
 
 '''
 for line in sys.stdin:
@@ -287,3 +316,5 @@ for line in sys.stdin:
 with open(sys.argv[1],'r') as file:
     inp = file.read()
     parser.parse(inp)
+    if parser.success:
+        print(parser.assembly)

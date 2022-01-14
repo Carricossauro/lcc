@@ -10,7 +10,4 @@ fim
 
 i <- sub (i, 1)
 
-enquanto maiori (i, 0) faz
-    escrever a[i]
-    i <- sub (i, 1)
-fim
+escrevera a

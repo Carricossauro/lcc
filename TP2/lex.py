@@ -34,7 +34,8 @@ tokens = (
     'PCFECHAR',
     'PRABRIR',
     'PRFECHAR',
-    'VIRG'
+    'VIRG',
+    'ESCREVERA'
 )
 
 t_PCABRIR = r'\('
@@ -48,67 +49,67 @@ def t_NUM(t):
     return t
 
 def t_INT(t):
-    r'int'
+    r'(?i:int)'
     return t
 
 def t_ARRAY(t):
-    r'array'
+    r'(?i:array)'
     return t
 
 def t_MATRIZ(t):
-    r'matriz'
+    r'(?i:matriz)'
     return t
 
 def t_SOMA(t):
-    r'soma'
+    r'(?i:soma)'
     return t
 
 def t_SUB(t):
-    r'sub'
+    r'(?i:sub)'
     return t
 
 def t_MULT(t):
-    r'mult'
+    r'(?i:mul)t'
     return t
 
 def t_DIV(t):
-    r'div'
+    r'(?i:div)'
     return t
 
 def t_MOD(t):
-    r'mod'
+    r'(?i:mod)'
     return t
 
 def t_MAIORI(t):
-    r'maiori'
+    r'(?i:maiori)'
     return t
 
 def t_MAIOR(t):
-    r'maior'
+    r'(?i:maior)'
     return t
 
 def t_MENORI(t):
-    r'menori'
+    r'(?i:menori)'
     return t 
 
 def t_MENOR(t):
-    r'menor'
+    r'(?i:menor)'
     return t
 
 def t_IGUAL(t):
-    r'igual'
+    r'(?i:igual)'
     return t
 
 def t_NIGUAL(t):
-    r'nigual'
+    r'(?i:nigual)'
     return t
 
 def t_NEG (t):
-    r'neg'
+    r'(?i:neg)'
     return t
 
 def t_OU (t):
-    r'ou'
+    r'(?i:ou)'
     return t
 
 def t_ATR (t):
@@ -116,39 +117,43 @@ def t_ATR (t):
     return t
 
 def t_LER (t):
-    r'ler'
+    r'(?i:ler)'
+    return t
+
+def t_ESCREVERA(t):
+    r'(?i:escrevera)'
     return t
 
 def t_ESCREVER (t):
-    r'escrever'
+    r'(?i:escrever)'
     return t
 
 def t_ENTAO(t):
-    r'entao'
+    r'(?i:entao)'
     return t
 
 def t_SENAO(t):
-    r'senao'
+    r'(?i:senao)'
     return t 
 
 def t_SE (t):
-    r'se'
+    r'(?i:se)'
     return t
 
 def t_ENQUANTO(t):
-    r'enquanto'
+    r'(?i:enquanto)'
     return t 
 
 def t_FAZ(t):
-    r'faz'
+    r'(?i:faz)'
     return t 
 
 def t_FIM(t):
-    r'fim'
+    r'(?i:fim)'
     return t
 
 def t_E (t):
-    r'e'
+    r'(?i:e)'
     return t
 
 def t_NOME(t):
