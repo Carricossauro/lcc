@@ -309,12 +309,36 @@ parser.gp = 0
 parser.ints = []
 parser.assembly = ""
 
-'''
-for line in sys.stdin:
-    parser.parse(line)
-'''
-with open(sys.argv[1],'r') as file:
-    inp = file.read()
-    parser.parse(inp)
-    if parser.success:
-        print(parser.assembly)
+try:
+    if len(sys.argv) > 1:
+        with open(sys.argv[1],'r') as file:
+            inp = file.read()
+            parser.parse(inp)
+            if parser.success:
+                if len(sys.argv) > 2:
+                    with open(sys.argv[2], 'w') as output:
+                        output.write(parser.assembly)
+                        print("--------------------------------------")
+                        print(f"Ficheiro {sys.argv[1]} compilado com sucesso.\nOutput guardado em {sys.argv[2]}.")
+                        print("--------------------------------------")
+                else:
+                    print(parser.assembly)
+    else:
+        for line in sys.stdin:
+            parser.success = True
+            parser.registers = {}
+            parser.labels = 0
+            parser.gp = 0
+            parser.ints = []
+            parser.assembly = ""
+            parser.parse(line)
+            if parser.success:
+                print("--------------------------------------")
+                print(parser.assembly)
+                print("--------------------------------------")
+            else:
+                print("--------------------------------------")
+                print("Erro ao compilar.")
+                print("--------------------------------------")
+except KeyboardInterrupt:
+    print()
