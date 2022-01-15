@@ -157,7 +157,7 @@ def t_E (t):
     return t
 
 def t_NOME(t):
-    r'\w+'
+    r'[a-z]\w*'
     return t
 
 t_ignore = ' \r\t\n'
