@@ -16,7 +16,7 @@ def p_Decls(p):
     p[0] = f'{p[1]}'
 
 def p_Decls_Recursiva(p):
-    "Decls    : Decl Decls"
+    "Decls    : Decls Decl"
     p[0] = f'{p[1]}{p[2]}'
 
 def p_Decl_Int(p):
@@ -67,7 +67,7 @@ def p_Corpo(p):
     p[0] = p[1]
 
 def p_Corpo_Recursiva(p):
-    "Corpo    : Proc Corpo"
+    "Corpo    : Corpo Proc"
     p[0] = f'{p[1]}{p[2]}'
 
 def p_Proc_Atrib(p):
@@ -193,8 +193,8 @@ def p_Expr_Var(p):
     p[0] = p[1]
 
 def p_Expr_Num(p):
-    "Expr     : Num"
-    p[0] = p[1]
+    "Expr     : NUM"
+    p[0] = f'PUSHI {p[1]}\n'
 
 def p_Expr_Soma(p):
     "Expr     : SOMA PCABRIR Expr VIRG Expr PCFECHAR"
@@ -288,10 +288,6 @@ def p_Var_Int(p):
     else:
         print("Erro: Variável não definida.")
         parser.success = False
-
-def p_Num(p):
-    "Num      : NUM"
-    p[0] = f'PUSHI {p[1]}\n'
 
 #----------------------------------------
 def p_error(p):
