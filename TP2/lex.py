@@ -69,7 +69,7 @@ def t_SUB(t):
     return t
 
 def t_MULT(t):
-    r'(?i:mul)t'
+    r'(?i:mult)'
     return t
 
 def t_DIV(t):
