@@ -27,7 +27,7 @@ def p_Decl_Int(p):
         p.parser.ints.append(p[2])
         p.parser.gp += 1
     else:
-        print("Erro: Variável já existe")
+        print("Erro: Variável já existe.")
         parser.success = False
 
 def p_Decl_Int_Atr(p):
@@ -38,7 +38,7 @@ def p_Decl_Int_Atr(p):
         p.parser.ints.append(p[2])
         p.parser.gp += 1
     else:
-        print("Erro: Variável já existe")
+        print("Erro: Variável já existe.")
         parser.success = False
 
 def p_Decl_Array(p):
@@ -48,7 +48,7 @@ def p_Decl_Array(p):
         p[0] = f'PUSHN {p[3]}\n'
         p.parser.gp += int(p[3])
     else:
-        print("Erro: Variável já existe")
+        print("Erro: Variável já existe.")
         parser.success = False
 
 def p_Decl_Matriz(p):
@@ -59,7 +59,7 @@ def p_Decl_Matriz(p):
         p[0] = f'PUSHN {str(size)}\n'
         p.parser.gp += size
     else:
-        print("Erro: Variável já existe")
+        print("Erro: Variável já existe.")
         parser.success = False
 
 def p_Corpo(p):
@@ -88,12 +88,12 @@ def p_Proc_Enquanto(p):
 
 def p_Se(p):
     "Se       : SE Cond ENTAO Corpo FIM"
-    p[0] = f'{p[2]}JZ l{p.parser.labels}\n{p[4]}l{p.parser.labels}: nop\n'
+    p[0] = f'{p[2]}JZ l{p.parser.labels}\n{p[4]}l{p.parser.labels}: NOP\n'
     p.parser.labels += 1
 
 def p_Se_Senao(p):
     "Se       : SE Cond ENTAO Corpo SENAO Corpo FIM"
-    p[0] = f'{p[2]}JZ l{p.parser.labels}\n{p[4]}JUMP l{p.parser.labels}f\nl{p.parser.labels}: nop\n{p[6]}l{p.parser.labels}f: nop\n'
+    p[0] = f'{p[2]}JZ l{p.parser.labels}\n{p[4]}JUMP l{p.parser.labels}f\nl{p.parser.labels}: NOP\n{p[6]}l{p.parser.labels}f: NOP\n'
     p.parser.labels += 1
 
 def p_Enquanto(p):
@@ -117,7 +117,11 @@ def p_Atrib_expr_Int(p):
 def p_Atrib_expr_Array(p):
     "Atrib    : NOME PRABRIR Expr PRFECHAR ATR Expr"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}{p[6]}STOREN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 2:
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}{p[6]}STOREN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é um array.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -125,8 +129,12 @@ def p_Atrib_expr_Array(p):
 def p_Atrib_expr_Matriz(p):
     "Atrib    : NOME PRABRIR Expr VIRG Expr PRFECHAR ATR Expr"
     if p[1] in p.parser.registers:
-        c = p.parser.registers.get(p[1])[2]
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\n{p[8]}STOREN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 3:
+            c = p.parser.registers.get(p[1])[2]
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\n{p[8]}STOREN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é uma matriz.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -134,7 +142,11 @@ def p_Atrib_expr_Matriz(p):
 def p_Atrib_Ler_Array(p):
     "Atrib    : NOME PRABRIR Expr PRFECHAR ATR LER"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}READ\nATOI\nSTOREN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 2:
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}READ\nATOI\nSTOREN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é um array.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -142,8 +154,12 @@ def p_Atrib_Ler_Array(p):
 def p_Atrib_Ler_Matriz(p):
     "Atrib    : NOME PRABRIR Expr VIRG Expr PRFECHAR ATR LER"
     if p[1] in p.parser.registers:
-        c = p.parser.registers.get(p[1])[2]
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\nREAD\nATOI\nSTOREN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 3:
+            c = p.parser.registers.get(p[1])[2]
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\nREAD\nATOI\nSTOREN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é uma matriz.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -250,7 +266,7 @@ def p_Cond_Nigual(p):
 
 def p_Cond_E(p):
     "Cond     : E PCABRIR Cond VIRG Cond PCFECHAR"
-    p[0] = f'{p[3]}{p[5]}EQUAL\n'
+    p[0] = f'{p[3]}{p[5]}ADD\nPUSHI 2\nEQUAL\n'
 
 def p_Cond_Ou(p):
     "Cond     : OU PCABRIR Cond VIRG Cond PCFECHAR"
@@ -263,8 +279,12 @@ def p_Cond_Neg(p):
 def p_Var_Matriz(p):
     "Var      : NOME PRABRIR Expr VIRG Expr PRFECHAR"
     if p[1] in p.parser.registers:
-        c = p.parser.registers.get(p[1])[2]
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\nLOADN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 3:
+            c = p.parser.registers.get(p[1])[2]
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}PUSHI {c}\nMUL\n{p[5]}ADD\nLOADN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é uma matriz.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -272,7 +292,11 @@ def p_Var_Matriz(p):
 def p_Var_Array(p):
     "Var      : NOME PRABRIR Expr PRFECHAR"
     if p[1] in p.parser.registers:
-        p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}LOADN\n'
+        if p[1] not in p.parser.ints and len(p.parser.registers.get(p[1])) == 2:
+            p[0] = f'PUSHGP\nPUSHI {p.parser.registers.get(p[1])[0]}\nPADD\n{p[3]}LOADN\n'
+        else:
+            print(f"Erro: Variável {p[1]} não é um array.")
+            parser.success = False
     else:
         print("Erro: Variável não definida.")
         parser.success = False
@@ -319,6 +343,10 @@ try:
                         print("--------------------------------------")
                 else:
                     print(parser.assembly)
+            else:
+                print("--------------------------------------")
+                print("Erro ao compilar.")
+                print("--------------------------------------")
     else:
         for line in sys.stdin:
             parser.success = True
