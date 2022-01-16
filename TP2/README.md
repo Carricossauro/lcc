@@ -86,46 +86,53 @@ Aceder indice "i","j" de uma matriz (matrix[ i ][ j ] em C)
 
 # GIC
 
-        Programa : Corpo
-        Programa : Decls Corpo
-        Decls    : Decl
-        Decls    : Decl Decls
-        Decl     : INT NOME
-        Decl     : INT NOME ATR NUM
-        Decl     : ARRAY NOME NUM
-        Decl     : MATRIZ NOME NUM NUM
-        Corpo    : Proc
-        Corpo    : Proc Corpo
-        Proc     : Atrib
-        Proc     : Se
-        Proc     : Escrever
-        Proc     : Enquanto
-        Atrib    : NOME ATR Expr
-        Atrib    : NOME ATR LER
-        Se       : SE Cond ENTAO Corpo FIM
-        Se       : SE Cond ENTAO Corpo SENAO Corpo FIM
-        Enquanto : ENQUANTO Cond FAZ Corpo FIM
-        Escrever : ESCREVER Expr
-        Expr     : NOME PRABRIR Var PRFECHAR
-        Expr     : NOME PRABRIR Var VIRG Var PRFECHAR
-        Expr     : Var
-        Expr     : Cond
-        Expr     : SOMA PCABRIR Expr VIRG Expr PCFECHAR
-        Expr     : SUB PCABRIR Expr VIRG Expr PCFECHAR
-        Expr     : MULT PCABRIR Expr VIRG Expr PCFECHAR
-        Expr     : DIV PCABRIR Expr VIRG Expr PCFECHAR
-        Expr     : MOD PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : MAIOR PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : MENOR PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : MAIORI PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : MENORI PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : IGUAL PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : NIGUAL PCABRIR Expr VIRG Expr PCFECHAR
-        Cond     : E PCABRIR Cond VIRG Cond PCFECHAR
-        Cond     : OU PCABRIR Cond VIRG Cond PCFECHAR
-        Cond     : NEG PCABRIR Cond PCFECHAR
-        Var      : NOME
-        Var      : NUM
+    Programa : Corpo
+             | Decls Corpo
+    Decls    : Decl
+             | Decls Decl
+    Decl     : INT NOME
+             | INT NOME ATR NUM
+             | ARRAY NOME NUM
+             | MATRIZ NOME NUM NUM
+    Corpo    : Proc
+             | Corpo Proc
+    Proc     : Atrib
+             | Se
+             | Escrever
+             | Enquanto
+    Se       : SE Cond ENTAO Corpo FIM
+             | SE Cond ENTAO Corpo SENAO Corpo FIM
+    Enquanto : ENQUANTO Cond FAZ Corpo FIM
+    Atrib    : NOME ATR Expr
+             | NOME PRABRIR Expr PRFECHAR ATR Expr
+             | NOME PRABRIR Expr VIRG Expr PRFECHAR ATR Expr
+             | NOME PRABRIR Expr PRFECHAR ATR LER
+             | NOME PRABRIR Expr VIRG Expr PRFECHAR ATR LER
+             | NOME ATR LER
+    Escrever : ESCREVERA NOME
+             | ESCREVER Expr
+    Expr     : PCABRIR Expr PCFECHAR
+             | Var
+             | Num
+             | SOMA PCABRIR Expr VIRG Expr PCFECHAR
+             | SUB PCABRIR Expr VIRG Expr PCFECHAR
+             | MULT PCABRIR Expr VIRG Expr PCFECHAR
+             | DIV PCABRIR Expr VIRG Expr PCFECHAR
+             | MOD PCABRIR Expr VIRG Expr PCFECHAR
+             | Cond
+    Cond     : PCABRIR Cond PCFECHAR
+             | MAIOR PCABRIR Expr VIRG Expr PCFECHAR
+             | MENOR PCABRIR Expr VIRG Expr PCFECHAR
+             | MAIORI PCABRIR Expr VIRG Expr PCFECHAR
+             | MENORI PCABRIR Expr VIRG Expr PCFECHAR
+             | IGUAL PCABRIR Expr VIRG Expr PCFECHAR
+             | NIGUAL PCABRIR Expr VIRG Expr PCFECHAR
+             | E PCABRIR Cond VIRG Cond PCFECHAR
+             | OU PCABRIR Cond VIRG Cond PCFECHAR
+             | NEG PCABRIR Cond PCFECHAR
+    Var      : NOME PRABRIR Expr VIRG Expr PRFECHAR
+             | NOME PRABRIR Expr PRFECHAR
+             | NOME
 
 # Testes
 
