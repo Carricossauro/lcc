@@ -35,12 +35,7 @@ def migracao(tabela, atributos):
         lista.append({})
         for i in range(len(el)):
             lista[-1][atributos[i]] = el[i]
-
-    mongoColection = mongoDb[tabela]
-    mongoColection.drop()
-    x = mongoColection.insert_many(lista)
-
-    return x.inserted_ids
+    return lista
 
 ##################################
 # Edificio
@@ -48,7 +43,11 @@ def migracao(tabela, atributos):
 
 atributos = ["_id", "Rua/Morada", "Localidade/Morada", "Codigo_Postal/Localidade"]
 
-print(migracao("Edificio", atributos))
+edificio = migracao("Edificio", atributos)
+mongoColection = mongoDb["Edificio"]
+mongoColection.drop()
+x = mongoColection.insert_many(edificio)
+print("Coleção Edificio criada.")
 
 ##################################
 # Alojamento
@@ -56,7 +55,11 @@ print(migracao("Edificio", atributos))
 
 atributos = ["_id", "Numero", "Edificio", "Preco_Base", "Lotacao", "Numero_Quartos"]
 
-print(migracao("Alojamento", atributos))
+alojamento = migracao("Alojamento", atributos)
+mongoColection = mongoDb["Alojamento"]
+mongoColection.drop()
+x = mongoColection.insert_many(alojamento)
+print("Coleção Alojamento criada.")
 
 ##################################
 # Funcionario
@@ -64,7 +67,11 @@ print(migracao("Alojamento", atributos))
 
 atributos = ["_id", "Nome", "Telemovel", "E-mail", "Salario", "Gerente"]
 
-print(migracao("Funcionario", atributos))
+funcionario = migracao("Funcionario", atributos)
+mongoColection = mongoDb["Funcionario"]
+mongoColection.drop()
+x = mongoColection.insert_many(funcionario)
+print("Coleção Funcionario criada.")
 
 ##################################
 # Cliente
@@ -72,7 +79,11 @@ print(migracao("Funcionario", atributos))
 
 atributos = ["_id", "Nome", "Data_Nascimento", "E-mail", "Telemovel"]
 
-print(migracao("Cliente", atributos))
+cliente = migracao("Cliente", atributos)
+mongoColection = mongoDb["Cliente"]
+mongoColection.drop()
+x = mongoColection.insert_many(cliente)
+print("Coleção Cliente criada.")
 
 ##################################
 # Reserva
@@ -80,12 +91,37 @@ print(migracao("Cliente", atributos))
 
 atributos = ["_id", "Funcionario", "Cliente", "Data_Inicio", "Data_Fim", "Preco", "Adultos", "Criancas"]
 
-print(migracao("Reserva", atributos))
+reservas = migracao("Reserva", atributos)
 
 ##################################
 # Reserva_Alojamento
 ##################################
 
-atributos = ["_id", "Reserva", "Alojamento"]
+atributos = ["Reserva", "Alojamento"]
 
-print(migracao("Reserva_Alojamento", atributos))
+reserva_alojamento = migracao("Reserva_Alojamento", atributos)
+
+##################################
+# Adicionar relação Reserva/Alojamento
+##################################
+
+for x in reserva_alojamento:
+    id_reserva = x["Reserva"]
+    id_alojamento = x["Alojamento"]
+
+    for reserva in filter(lambda e: e["_id"] == id_reserva, reservas):
+        if "alojamentos" not in reserva:
+            reserva["alojamentos"] = []
+        reserva["alojamentos"].append(id_alojamento)
+
+mongoColection = mongoDb["Reserva"]
+mongoColection.drop()
+x = mongoColection.insert_many(reservas)
+print("Coleção Reserva criada.")
+
+'''
+Sugestão:
+
+- Adicionar Alojamento à coleção de edificios (embedded)
+
+'''
