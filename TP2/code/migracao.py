@@ -97,7 +97,7 @@ reservas = migracao("Reserva", atributos)
 # Reserva_Alojamento
 ##################################
 
-atributos = ["Reserva", "Alojamento"]
+atributos = ["Reserva", "Alojamento", "Preco"]
 
 reserva_alojamento = migracao("Reserva_Alojamento", atributos)
 
@@ -108,11 +108,12 @@ reserva_alojamento = migracao("Reserva_Alojamento", atributos)
 for x in reserva_alojamento:
     id_reserva = x["Reserva"]
     id_alojamento = x["Alojamento"]
+    preco = x["Preco"]
 
     for reserva in filter(lambda e: e["_id"] == id_reserva, reservas):
-        if "alojamentos" not in reserva:
-            reserva["alojamentos"] = []
-        reserva["alojamentos"].append(id_alojamento)
+        if "Alojamentos" not in reserva:
+            reserva["Alojamentos"] = []
+        reserva["Alojamentos"].append({"Alojamento": id_alojamento, "Preco":preco})
 
 mongoColection = mongoDb["Reserva"]
 mongoColection.drop()
