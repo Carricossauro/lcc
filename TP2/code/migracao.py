@@ -20,6 +20,7 @@ def migracao(tabela, atributos):
     cursor.execute(f"select * from {tabela}")
     res = []
     for row in cursor:
+        print(row)
         obj = []
         for i in range(len(row)):
             if isinstance(row[i], decimal.Decimal):
@@ -89,7 +90,7 @@ print("Coleção Cliente criada.")
 # Reserva
 ##################################
 
-atributos = ["_id", "Funcionario", "Cliente", "Data_Inicio", "Data_Fim", "Preco", "Adultos", "Criancas"]
+atributos = ["_id", "Funcionario", "Cliente", "Data_Inicio", "Data_Fim", "Adultos", "Criancas"]
 
 reservas = migracao("Reserva", atributos)
 
