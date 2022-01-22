@@ -41,7 +41,7 @@ def migracao(tabela, atributos):
 # Edificio
 ##################################
 
-atributos = ["_id", "Rua/Morada", "Localidade/Morada", "Codigo_Postal/Localidade"]
+atributos = ["_id", "Rua/Morada", "Localidade/Morada", "Codigo_Postal/Morada"]
 
 edificio = migracao("Edificio", atributos)
 mongoColection = mongoDb["Edificio"]
