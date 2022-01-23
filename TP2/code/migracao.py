@@ -57,10 +57,6 @@ print("Coleção Edificio criada.")
 atributos = ["_id", "Numero", "Edificio", "Preco_Base", "Lotacao", "Numero_Quartos"]
 
 alojamento = migracao("Alojamento", atributos)
-mongoColection = mongoDb["Alojamento"]
-mongoColection.drop()
-x = mongoColection.insert_many(alojamento)
-print("Coleção Alojamento criada.")
 
 ##################################
 # Funcionario
@@ -114,7 +110,17 @@ for x in reserva_alojamento:
     for reserva in filter(lambda e: e["_id"] == id_reserva, reservas):
         if "Alojamentos" not in reserva:
             reserva["Alojamentos"] = []
-        reserva["Alojamentos"].append({"Alojamento": id_alojamento, "Preco":preco})
+        reserva["Alojamentos"].append({"Alojamento": id_alojamento, "Preco": preco})
+
+    for aloj in filter(lambda e: e["_id"] == id_alojamento, alojamento):
+        if "Reservas" not in aloj:
+            aloj["Reservas"] = []
+        aloj["Reservas"].append({"Reserva": id_reserva, "Preco": preco})
+
+mongoColection = mongoDb["Alojamento"]
+mongoColection.drop()
+x = mongoColection.insert_many(alojamento)
+print("Coleção Alojamento criada.")
 
 mongoColection = mongoDb["Reserva"]
 mongoColection.drop()
