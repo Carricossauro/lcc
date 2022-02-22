@@ -7,6 +7,9 @@
 #include <math.h>
 
 int degree = 0;
+int offsetX = 0;
+int offsetZ = 0;
+int mode = 0;
 
 void changeSize(int w, int h) {
 
@@ -59,14 +62,20 @@ void renderScene(void) {
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(0.0, 0.0, 5.0);
 
-	glColor3f(1.0, 1.0, 1.0);
     glEnd();
 
 	// put the geometric transformations here
 	glRotatef(degree, 0, 1, 0);
+	glTranslatef(offsetX, 0, offsetZ);
+	if (mode == 0) {
+		glPolygonMode(GL_FRONT, GL_FILL);
+	} else if (mode == 1) {
+		glPolygonMode(GL_FRONT, GL_LINE);
+	}
 
 	// put drawing instructions here
 
+	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_TRIANGLES);
 
 	glVertex3f(1.0f, 0.0f, -1.0f);
@@ -104,8 +113,6 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
-
-
 // write function to process keyboard events
 
 void onKeyboard(unsigned char key_code, int x, int y) {
@@ -114,6 +121,21 @@ void onKeyboard(unsigned char key_code, int x, int y) {
 		glutPostRedisplay();
 	} else if (key_code == 'q') {
 		degree -= 15;
+		glutPostRedisplay();
+	} else if (key_code == 'w' || key_code == 'W') {
+		offsetX -= 1;
+		glutPostRedisplay();
+	} else if (key_code == 's' || key_code == 'S') {
+		offsetX += 1;
+		glutPostRedisplay();
+	} else if (key_code == 'a') {
+		offsetZ += 1;
+		glutPostRedisplay();
+	} else if (key_code == 'd') {
+		offsetZ -= 1;
+		glutPostRedisplay();
+	} else if (key_code == ' ') {
+		mode = (mode + 1) % 2;
 		glutPostRedisplay();
 	}
 }
@@ -130,11 +152,9 @@ int main(int argc, char **argv) {
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-
 	
 	// put here the registration of the keyboard callbacks
 	glutKeyboardFunc(onKeyboard);
-
 
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
