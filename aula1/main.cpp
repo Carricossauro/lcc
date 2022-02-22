@@ -46,11 +46,11 @@ void renderScene(void)
 		0.0f, 1.0f, 0.0f);
 		
 	// put drawing instructions here
-	glutWireTeapot(1);
+	glutWireTeapot(size);
 	
-	// size += inc;
-	// if (size >= 2) inc = -0.05;
-	// else if (size <= 0.1) inc = 0.05;
+	size += inc;
+	if (size >= 2) inc = -0.05;
+	else if (size <= 0.1) inc = 0.05;
 
 	glBegin(GL_LINES);
 
