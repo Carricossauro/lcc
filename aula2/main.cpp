@@ -6,6 +6,8 @@
 
 #include <math.h>
 
+int degree = 0;
+
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -42,11 +44,60 @@ void renderScene(void) {
 	gluLookAt(5.0,5.0,5.0, 
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
+	
+	glBegin(GL_LINES);
 
-// put the geometric transformations here
+    glColor3f (1.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(5.0, 0.0, 0.0);
 
+    glColor3f (0.0, 1.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 5.0, 0.0);
 
-// put drawing instructions here
+    glColor3f (0.0, 0.0, 1.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 5.0);
+
+	glColor3f(1.0, 1.0, 1.0);
+    glEnd();
+
+	// put the geometric transformations here
+	glRotatef(degree, 0, 1, 0);
+
+	// put drawing instructions here
+
+	glBegin(GL_TRIANGLES);
+
+	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, 0.0f, 1.0f);	
+
+	glVertex3f(-1.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 1.0f);
+
+	glColor3f(0.6, 0.6, 0.6);
+	glVertex3f(1.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(-1.0f, 0.0f, 1.0f);
+
+	glColor3f(0.7, 0.7, 0.7);
+	glVertex3f(-1.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(-1.0f, 0.0f, -1.0f);
+
+	glColor3f(0.8, 0.8, 0.8);
+	glVertex3f(-1.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+
+	glEnd();
 
 
 	// End of frame
@@ -57,34 +108,39 @@ void renderScene(void) {
 
 // write function to process keyboard events
 
-
-
-
-
+void onKeyboard(unsigned char key_code, int x, int y) {
+	if (key_code == 'e') {
+		degree += 15;
+		glutPostRedisplay();
+	} else if (key_code == 'q') {
+		degree -= 15;
+		glutPostRedisplay();
+	}
+}
 
 int main(int argc, char **argv) {
 
-// init GLUT and the window
+	// init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,800);
-	glutCreateWindow("CG@DI-UM");
+	glutCreateWindow("CG@A2");
 		
-// Required callback registry 
+	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 	
-// put here the registration of the keyboard callbacks
+	// put here the registration of the keyboard callbacks
+	glutKeyboardFunc(onKeyboard);
 
 
-
-//  OpenGL settings
+	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	
-// enter GLUT's main cycle
+	// enter GLUT's main cycle
 	glutMainLoop();
 	
 	return 1;
