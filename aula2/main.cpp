@@ -65,6 +65,7 @@ void renderScene(void) {
     glEnd();
 
 	// put the geometric transformations here
+	
 	glRotatef(degree, 0, 1, 0);
 	glTranslatef(offsetX, 0, offsetZ);
 	if (mode == 0) {
