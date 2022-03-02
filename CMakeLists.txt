@@ -9,12 +9,10 @@ set(OpenGL_GL_PREFERENCE GLVND)
 set(
         OBJECTS
         tinyxml2.cpp
-        draw.cpp
 )
 set(
         HEADERS
         tinyxml2.h
-        draw.h
 )
 
 
