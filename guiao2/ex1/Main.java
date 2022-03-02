@@ -1,20 +1,19 @@
 public class Main {
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
         final int N = Integer.parseInt(args[0]);
         final int I = Integer.parseInt(args[1]);
         Counter counter = new Counter();
+        Incrementer[] a = new Incrementer[N];
 
-        for (int i = 0; i < N; i++) {
-            Incrementer t = new Incrementer(counter, I);
-
-            t.start();
-            // t.join();
-        }
+        for (int i = 0; i < N; i++) { a[i] = new Incrementer(counter, I); }
+        for (int i = 0; i < N; i++) { a[i].start(); }
+        for (int i = 0; i < N; i++) { a[i].join(); }
+        
 
         counter.printX();
         System.out.println("Done");
     }
-}   
+}
 
 class Counter {
     private int x;
@@ -23,7 +22,7 @@ class Counter {
         this.x = 0;
     }
 
-    public void increment() {
+    synchronized void increment() {
         this.x++;
     }
 
