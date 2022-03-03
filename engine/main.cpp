@@ -10,6 +10,7 @@
 #include <vector>
 #include "tinyxml2.h"
 
+// estrutura que representa um ponto no espaço
 struct Point{
     float x,y,z;
     Point(float x, float y, float z){
@@ -19,38 +20,23 @@ struct Point{
     }
 };
 
+// caminho para os ficheiros .3d
+std::string path_3d;
+// caminho para os ficheiros xml
+std::string path_xml;
+// vetor de vetores de Point onde sao armazenados os pontos lidos dos ficheiros .3d
 std::vector<std::vector<Point>> models;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0;
 
-void drawAxis(){
-
-    glBegin(GL_LINES);
-    glColor3f(1.0,0.0,0.0);
-    glVertex3f(-radius,0,0);
-    glVertex3f(radius,0,0);
-
-    glColor3f(0.0,1.0,0.0);
-    glVertex3f(0,-radius,0);
-    glVertex3f(0,radius,0);
-
-    glColor3f(0,0,1);
-    glVertex3f(0,0,-radius);
-    glVertex3f(0,0,radius);
-
-    glEnd();
-    glColor3f(1.0,1.0,1.0);
-}
-
+// funçao que calcula a posição da camera
 void spherical2Cartesian() {
 
     eyeX = radius * cos(beta) * sin(alpha);
     eyeY = radius * sin(beta);
     eyeZ = radius * cos(beta) * cos(alpha);
 }
-
-
 
 void changeSize(int w, int h) {
 
@@ -77,6 +63,10 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+
+
+
+/*
 void drawPlane(float length, int divisions) {
     float unit = length / divisions;
     float offset = length / 2;
@@ -205,13 +195,17 @@ void drawSphere(float radius, float slices, float stacks ) {
             z3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*(i+1));
             z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*(i+1));
 
-            glVertex3f(x1, y1, z1);
-            glVertex3f(x2, y2, z2);
-            glVertex3f(x3, y2, z3);
+            if(j!=stacks-1) {
+                glVertex3f(x1, y1, z1);
+                glVertex3f(x2, y2, z2);
+                glVertex3f(x3, y2, z3);
+            }
+            if(j!=0){
+                glVertex3f(x1, y1, z1);
+                glVertex3f(x3, y2, z3);
+                glVertex3f(x4, y1, z4);
 
-            glVertex3f(x1, y1, z1);
-            glVertex3f(x3, y2, z3);
-            glVertex3f(x4, y1, z4);
+            }
 
         }
     }
@@ -234,8 +228,8 @@ void drawCone(float radius, float height, float slices, float stacks) {
         glVertex3f(x2, 0, z2);
     }
 
-    for (int i = 0; i < slices; i++) {
-        for (int j = 0; j < stacks; j++) {
+    for (int i = 0; i < stacks; i++) {
+        for (int j = 0; j < slices; j++) {
             h1 = height - (i * stack_size);
             h2 = height - ((i+1) * stack_size);
             r1 = h1 / ratio;
@@ -256,14 +250,69 @@ void drawCone(float radius, float height, float slices, float stacks) {
             glVertex3f(x2, y1, z2);
             glVertex3f(x4, y2, z4);
 
-            glVertex3f(x4, y2, z4);
-            glVertex3f(x2, y1, z2);
-            glVertex3f(x3, y2, z3);
+            if (i!=stacks-1){
+                glVertex3f(x4, y2, z4);
+                glVertex3f(x2, y1, z2);
+                glVertex3f(x3, y2, z3);
+
+            }
         }
     }
 
     glEnd();
+}*/
+
+// le pontos armazenados em source (fuicheiro .3d) e armazena em models (vetor de vetores de Point)
+void getModel(std::string source){
+    std::ifstream file_input(source) ;
+    float x,y,z;
+    std::vector<Point> model;
+    while(file_input >> x >> y >> z) {
+        model.push_back(Point(x,y,z));
+    }
+    models.push_back(model);
+    file_input.close();
 }
+
+
+// le o ficheiro xml com as configurações
+// por fazer
+void readXML(std::string source);
+
+
+// desenha as figuras com os pontos armazenados no vetor models
+void drawModels(){
+    glColor3f(1.0f, 1.0f, 1.0f);
+    for (std::vector<Point> model : models){
+        glBegin(GL_TRIANGLES);
+        for (Point p : model){
+            glVertex3f(p.x,p.y,p.z);
+        }
+        glEnd();
+    }
+}
+
+
+// desenha os eixos x y z
+void drawAxis(){
+
+    glBegin(GL_LINES);
+    glColor3f(1.0,0.0,0.0);
+    glVertex3f(-radius,0,0);
+    glVertex3f(radius,0,0);
+
+    glColor3f(0.0,1.0,0.0);
+    glVertex3f(0,-radius,0);
+    glVertex3f(0,radius,0);
+
+    glColor3f(0,0,1);
+    glVertex3f(0,0,-radius);
+    glVertex3f(0,0,radius);
+
+    glEnd();
+    glColor3f(1.0,1.0,1.0);
+}
+
 
 void renderScene(void) {
 
@@ -281,8 +330,10 @@ void renderScene(void) {
     drawAxis();
     //drawPlane(2,2);
     // drawBox(2,2);
-    // drawSphere(1,10,10);
-    drawCone(1, 2, 25, 25);
+    //drawSphere(1,10,10);
+    //drawCone(1, 5, 10, 10);
+    drawModels();
+
 
 
     // End of frame
@@ -330,7 +381,7 @@ void processSpecialKeys(int key, int xx, int yy) {
             break;
     }
     spherical2Cartesian();
-    //glutPostRedisplay();
+    glutPostRedisplay();
 
 }
 
@@ -338,6 +389,19 @@ void processSpecialKeys(int key, int xx, int yy) {
 int main(int argc, char **argv) {
 
 
+    // caminho para os ficheiros 3d e xml
+    path_3d = "../../3d/";
+    path_xml = "../../xml/";
+
+    // estas quatro chamadas sao para substituir por uma unica chamada da função readXML
+    getModel(path_3d + "plane.3d");
+    getModel(path_3d + "box.3d");
+    getModel(path_3d + "sphere.3d");
+    getModel(path_3d + "code.3d");
+
+    //readXML(path_xml + "test_1_3.xml");
+
+    spherical2Cartesian();
 
 
 // init GLUT and the window
@@ -351,7 +415,7 @@ int main(int argc, char **argv) {
 // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
-    glutIdleFunc(renderScene);
+    //glutIdleFunc(renderScene);
 
 
     glutSpecialFunc(processSpecialKeys);
