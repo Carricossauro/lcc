@@ -272,7 +272,7 @@ void generateCone(float radius, float height, int slices, int stacks ){
             //glVertex3f(x4, y2, z4);
             output << x4 << ' ' << y2 << ' ' << z4 << '\n';
 
-            //if (i!=stacks-1){
+            if (i!=stacks-1){
                 //glVertex3f(x4, y2, z4);
                 output << x4 << ' ' << y2 << ' ' << z4 << '\n';
                 //glVertex3f(x2, y1, z2);
@@ -280,7 +280,7 @@ void generateCone(float radius, float height, int slices, int stacks ){
                 //glVertex3f(x3, y2, z3);
                 output << x3 << ' ' << y2 << ' ' << z3 << '\n';
 
-            //}
+            }
         }
     }
 
