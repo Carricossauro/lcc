@@ -397,7 +397,7 @@ int main(int argc, char **argv) {
     getModel(path_3d + "plane.3d");
     getModel(path_3d + "box.3d");
     getModel(path_3d + "sphere.3d");
-    getModel(path_3d + "code.3d");
+    getModel(path_3d + "cone.3d");
 
     //readXML(path_xml + "test_1_3.xml");
 
