@@ -5,15 +5,15 @@
 #include <string.h>
 #include <math.h>
 
-std::ofstream file;
+
 
 enum Model {plane, box, sphere, cone};
 
 
-void generatePlane(float length, int divisions ){
+std::string generatePlane(float length, int divisions ){
 
 
-    std::stringstream output;
+    std::stringstream buffer;
     
     float unit = length / divisions;
     float offset = length / 2;
@@ -28,31 +28,32 @@ void generatePlane(float length, int divisions ){
             z2 = (j+1) * unit - offset;
 
             //glVertex3f(x1, 0, z1);
-            output << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
             //glVertex3f(x2, 0, z2);
-            output << x2 << ' ' << 0 << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
             //glVertex3f(x2, 0, z1);
-            output << x2 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << x2 << ' ' << 0 << ' ' << z1 << '\n';
 
             //glVertex3f(x1, 0, z1);
-            output << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
             //glVertex3f(x1, 0, z2);
-            output << x1 << ' ' << 0 << ' ' << z2 << '\n';
+            buffer << x1 << ' ' << 0 << ' ' << z2 << '\n';
             //glVertex3f(x2, 0, z2);
-            output << x2 << ' ' << 0 << ' ' <<z2 << '\n';
+            buffer << x2 << ' ' << 0 << ' ' <<z2 << '\n';
         }
     }
     //glEnd();
 
-    file << output.str();
+    return buffer.str();
 
 }
 
+// centro na origem
+/*
 
+std::string generateBox(float length, int divisions){
 
-void generateBox(float length, int divisions){
-
-    std::stringstream output;
+    std::stringstream buffer;
 
     float unit = length / divisions;
     float offset = length / 2;
@@ -67,32 +68,32 @@ void generateBox(float length, int divisions){
             z2 = (j+1) * unit - offset;
 
             //glVertex3f(x1, offset, z1);
-            output << x1 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << offset << ' ' << z1 << '\n';
             //glVertex3f(x2, offset, z2);
-            output << x2 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << offset << ' ' << z2 << '\n';
             //glVertex3f(x2, offset, z1);
-            output << x2 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << x2 << ' ' << offset << ' ' << z1 << '\n';
 
             //glVertex3f(x1, offset, z1);
-            output << x1 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << offset << ' ' << z1 << '\n';
             //glVertex3f(x1, offset, z2);
-            output << x1 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << x1 << ' ' << offset << ' ' << z2 << '\n';
             //glVertex3f(x2, offset, z2);
-            output << x2 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << offset << ' ' << z2 << '\n';
 
             //glVertex3f(x2, -offset, z2);
-            output << x2 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << -offset << ' ' << z2 << '\n';
             //glVertex3f(x1, -offset, z1);
-            output << x1 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << -offset << ' ' << z1 << '\n';
             //glVertex3f(x2, -offset, z1);
-            output << x2 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << x2 << ' ' << -offset << ' ' << z1 << '\n';
 
             //glVertex3f(x1, -offset, z2);
-            output << x1 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << x1 << ' ' << -offset << ' ' << z2 << '\n';
             //glVertex3f(x1, -offset, z1);
-            output << x1 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << -offset << ' ' << z1 << '\n';
             //glVertex3f(x2, -offset, z2);
-            output << x2 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << -offset << ' ' << z2 << '\n';
         }
     }
 
@@ -104,32 +105,32 @@ void generateBox(float length, int divisions){
             y2 = (j+1) * unit - offset;
 
             //glVertex3f(x2, y2, offset);
-            output << x2 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
             //glVertex3f(x1, y1, offset);
-            output << x1 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
             //glVertex3f(x2, y1, offset);
-            output << x2 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << offset << '\n';
 
             //glVertex3f(x1, y2, offset);
-            output << x1 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << x1 << ' ' << y2 << ' ' << offset << '\n';
             //glVertex3f(x1, y1, offset);
-            output << x1 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
             //glVertex3f(x2, y2, offset);
-            output << x2 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
 
             //glVertex3f(x1, y1, -offset);
-            output << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
             //glVertex3f(x2, y2, -offset);
-            output << x2 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
             //glVertex3f(x2, y1, -offset);
-            output << x2 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << -offset << '\n';
 
             //glVertex3f(x1, y1, -offset);
-            output << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
             //glVertex3f(x1, y2, -offset);
-            output << x1 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << x1 << ' ' << y2 << ' ' << -offset << '\n';
             //glVertex3f(x2, y2, -offset);
-            output << x2 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
         }
     }
 
@@ -141,45 +142,177 @@ void generateBox(float length, int divisions){
             y2 = (j+1) * unit - offset;
 
             //glVertex3f(offset, y1, z1);
-            output << offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
             //glVertex3f(offset, y2, z2);
-            output << offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
             //glVertex3f(offset, y1, z2);
-            output << offset << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z2 << '\n';
 
             //glVertex3f(offset, y1, z1);
-            output << offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
             //glVertex3f(offset, y2, z1);
-            output << offset << ' ' << y2 << ' ' << z1 << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z1 << '\n';
             //glVertex3f(offset, y2, z2);
-            output << offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
 
             //glVertex3f(-offset, y2, z2);
-            output << -offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
             //glVertex3f(-offset, y1, z1);
-            output << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
             //glVertex3f(-offset, y1, z2);
-            output << -offset << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z2 << '\n';
 
             //glVertex3f(-offset, y2, z1);
-            output << -offset << ' ' << y2 << ' ' << z1 << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z1 << '\n';
             //glVertex3f(-offset, y1, z1);
-            output << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
             //glVertex3f(-offset, y2, z2);
-            output << -offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
         }
     }
 
     //glEnd();
 
-    file << output.str();
+    return buffer.str();
+
+}
+*/
+
+
+
+
+std::string generateBox(float length, int divisions){
+
+    std::stringstream buffer;
+
+    float unit = length / divisions;
+    float offset = length/2;
+    float x1, x2, y1, y2, z1, z2;
+
+    //glBegin(GL_TRIANGLES);
+    for (int i = 0; i < divisions; i++) {
+        for (int j = 0; j < divisions; j++) {
+            x1 = i * unit - offset;
+            z1 = j * unit - offset;
+            x2 = (i+1) * unit - offset;
+            z2 = (j+1) * unit - offset;
+
+            //glVertex3f(x1, offset, z1);
+            buffer << x1 << ' ' << length << ' ' << z1 << '\n';
+            //glVertex3f(x2, offset, z2);
+            buffer << x2 << ' ' << length << ' ' << z2 << '\n';
+            //glVertex3f(x2, offset, z1);
+            buffer << x2 << ' ' << length << ' ' << z1 << '\n';
+
+            //glVertex3f(x1, offset, z1);
+            buffer << x1 << ' ' << length << ' ' << z1 << '\n';
+            //glVertex3f(x1, offset, z2);
+            buffer << x1 << ' ' << length << ' ' << z2 << '\n';
+            //glVertex3f(x2, offset, z2);
+            buffer << x2 << ' ' << length << ' ' << z2 << '\n';
+
+            //glVertex3f(x2, -offset, z2);
+            buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+            //glVertex3f(x1, -offset, z1);
+            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            //glVertex3f(x2, -offset, z1);
+            buffer << x2 << ' ' << 0 << ' ' << z1 << '\n';
+
+            //glVertex3f(x1, -offset, z2);
+            buffer << x1 << ' ' << 0 << ' ' << z2 << '\n';
+            //glVertex3f(x1, -offset, z1);
+            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            //glVertex3f(x2, -offset, z2);
+            buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+        }
+    }
+
+    for (int i = 0; i< divisions; i++) {
+        for (int j = 0; j < divisions; j++) {
+            x1 = i * unit - offset;
+            y1 = j * unit;
+            x2 = (i+1) * unit - offset;
+            y2 = (j+1) * unit;
+
+            //glVertex3f(x2, y2, offset);
+            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
+            //glVertex3f(x1, y1, offset);
+            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
+            //glVertex3f(x2, y1, offset);
+            buffer << x2 << ' ' << y1 << ' ' << offset << '\n';
+
+            //glVertex3f(x1, y2, offset);
+            buffer << x1 << ' ' << y2 << ' ' << offset << '\n';
+            //glVertex3f(x1, y1, offset);
+            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
+            //glVertex3f(x2, y2, offset);
+            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
+
+            //glVertex3f(x1, y1, -offset);
+            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            //glVertex3f(x2, y2, -offset);
+            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
+            //glVertex3f(x2, y1, -offset);
+            buffer << x2 << ' ' << y1 << ' ' << -offset << '\n';
+
+            //glVertex3f(x1, y1, -offset);
+            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            //glVertex3f(x1, y2, -offset);
+            buffer << x1 << ' ' << y2 << ' ' << -offset << '\n';
+            //glVertex3f(x2, y2, -offset);
+            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
+        }
+    }
+
+    for (int i = 0; i< divisions; i++) {
+        for (int j = 0; j < divisions; j++) {
+            z1 = i * unit - offset;
+            y1 = j * unit;
+            z2 = (i+1) * unit - offset;
+            y2 = (j+1) * unit;
+
+            //glVertex3f(offset, y1, z1);
+            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(offset, y2, z2);
+            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
+            //glVertex3f(offset, y1, z2);
+            buffer << offset << ' ' << y1 << ' ' << z2 << '\n';
+
+            //glVertex3f(offset, y1, z1);
+            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(offset, y2, z1);
+            buffer << offset << ' ' << y2 << ' ' << z1 << '\n';
+            //glVertex3f(offset, y2, z2);
+            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
+
+            //glVertex3f(-offset, y2, z2);
+            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
+            //glVertex3f(-offset, y1, z1);
+            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(-offset, y1, z2);
+            buffer << -offset << ' ' << y1 << ' ' << z2 << '\n';
+
+            //glVertex3f(-offset, y2, z1);
+            buffer << -offset << ' ' << y2 << ' ' << z1 << '\n';
+            //glVertex3f(-offset, y1, z1);
+            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(-offset, y2, z2);
+            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
+        }
+    }
+
+    //glEnd();
+
+    return buffer.str();
 
 }
 
-
-
-void generateSphere(float radius, int slices, int stacks){
-    std::stringstream output;
+// centro na origem
+/*
+std::string generateSphere(float radius, int slices, int stacks){
+    
+    std::stringstream buffer;
+    
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, arch_alfa = 2*M_PI / slices, arch_beta = M_PI / stacks;
 
     //glBegin(GL_TRIANGLES);
@@ -200,19 +333,19 @@ void generateSphere(float radius, int slices, int stacks){
 
             if(j!=stacks-1) {
                 //glVertex3f(x1, y1, z1);
-                output << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
                 //glVertex3f(x2, y2, z2);
-                output << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
                 //glVertex3f(x3, y2, z3);
-                output << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
             }
             if(j!=0){
                 //glVertex3f(x1, y1, z1);
-                output << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
                 //glVertex3f(x3, y2, z3);
-                output << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
                 //glVertex3f(x4, y1, z4);
-                output << x4 << ' ' << y1 << ' ' << z4 << '\n';
+                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
 
             }
 
@@ -220,14 +353,68 @@ void generateSphere(float radius, int slices, int stacks){
     }
     //glEnd();
     
-    file << output.str();
+    return buffer.str();
+
+}
+*/
+
+
+
+std::string generateSphere(float radius, int slices, int stacks){
+    
+    std::stringstream buffer;
+    
+    float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, arch_alfa = 2*M_PI / slices, arch_beta = M_PI / stacks;
+
+    //glBegin(GL_TRIANGLES);
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < stacks; j++) {
+            x1 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa*i);
+            x2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa*i);
+            x3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa*(i+1));
+            x4 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa*(i+1));
+
+            y1 = radius + radius * sin(M_PI_2 - arch_beta*j);
+            y2 = radius + radius * sin(M_PI_2 - arch_beta * (j+1));
+
+            z1 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*i);
+            z2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*i);
+            z3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*(i+1));
+            z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*(i+1));
+
+            if(j!=stacks-1) {
+                //glVertex3f(x1, y1, z1);
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                //glVertex3f(x2, y2, z2);
+                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                //glVertex3f(x3, y2, z3);
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            }
+            if(j!=0){
+                //glVertex3f(x1, y1, z1);
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                //glVertex3f(x3, y2, z3);
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                //glVertex3f(x4, y1, z4);
+                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+
+            }
+
+        }
+    }
+    //glEnd();
+    
+    return buffer.str();
 
 }
 
 
-void generateCone(float radius, float height, int slices, int stacks ){
+
+
+
+std::string generateCone(float radius, float height, int slices, int stacks ){
     
-    std::stringstream output;
+    std::stringstream buffer;
 
     float arch_alfa = 2*M_PI / slices,ratio = height/radius, stack_size = height/stacks;
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, h1, h2, r1, r2;
@@ -240,11 +427,11 @@ void generateCone(float radius, float height, int slices, int stacks ){
         z2 = radius * cos(arch_alfa * (i+1));
 
         //glVertex3f(x1, 0, z1);
-        output << x1 << ' ' << 0 << ' ' << z1 << '\n';
+        buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
         //glVertex3f(0, 0, 0);
-        output << 0 << ' ' << 0 << ' ' << 0 << '\n';
+        buffer << 0 << ' ' << 0 << ' ' << 0 << '\n';
         //glVertex3f(x2, 0, z2);
-        output << x2 << ' ' << 0 << ' ' << z2 << '\n';
+        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
     }
 
     for (int i = 0; i < stacks; i++) {
@@ -266,19 +453,19 @@ void generateCone(float radius, float height, int slices, int stacks ){
             z4 = r2 * cos(arch_alfa * j);
 
             //glVertex3f(x1, y1, z1);
-            output << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
             //glVertex3f(x2, y1, z2);
-            output << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
             //glVertex3f(x4, y2, z4);
-            output << x4 << ' ' << y2 << ' ' << z4 << '\n';
+            buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
 
             if (i!=stacks-1){
                 //glVertex3f(x4, y2, z4);
-                output << x4 << ' ' << y2 << ' ' << z4 << '\n';
+                buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
                 //glVertex3f(x2, y1, z2);
-                output << x2 << ' ' << y1 << ' ' << z2 << '\n';
+                buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
                 //glVertex3f(x3, y2, z3);
-                output << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
 
             }
         }
@@ -286,7 +473,40 @@ void generateCone(float radius, float height, int slices, int stacks ){
 
     //glEnd();
 
-    file << output.str();
+    return buffer.str();
+}
+
+
+int isInt(const char number[]){
+    int r = 1;
+    for(int i=0; number[i] && r; i++){
+        if(! std::isdigit(number[i]))
+            r=0;
+    }
+
+    return r;
+
+
+}
+
+
+
+int isFloat(const char number[]){
+    int r = 1;
+    int comma = 0;
+    for(int i=0; number[i] && r; i++){
+        if ((number[i] == '.' || number[i] == ',') && i == 0)
+            r = 0;
+        else if(number[i] == '.' || number[i] == ',')
+            comma++;
+        else if(! std::isdigit(number[i]))
+            r=0;
+        if (comma >1)
+            r = 0;
+    }
+
+    return r;
+
 }
 
 
@@ -295,13 +515,13 @@ int selectModel(int argc, char const *argv[]){
     int r;
     if(argc <=1)
         r = -1;
-    else if( strcmp((argv[1]),"plane") == 0   && argc == 5)
+    else if( strcmp((argv[1]),"plane") == 0  && argc == 5 && isFloat(argv[2]) && isInt(argv[3]))
         r = plane;
-    else if(strcmp((argv[1]),"box") == 0 && argc == 5)
+    else if(strcmp((argv[1]),"box") == 0 && argc == 5 && isFloat(argv[2]) && isInt(argv[3]))
         r = box;
-    else if(strcmp((argv[1]),"sphere") == 0 && argc == 6)
+    else if(strcmp((argv[1]),"sphere") == 0 && argc == 6 && isFloat(argv[2]) && isInt(argv[3]) && isInt(argv[4]))
         r =  sphere;
-    else if(strcmp((argv[1]),"cone") == 0 && argc == 7)
+    else if(strcmp((argv[1]),"cone") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = cone;
     else
         r = -1;
@@ -312,13 +532,15 @@ int selectModel(int argc, char const *argv[]){
 
 
 
+
+
+
 int main(int argc, char const *argv[])
 {
     
-
-    int choice = selectModel(argc, argv);
+    int option = selectModel(argc, argv);
     
-    if(choice==-1){
+    if(option==-1){
         std::cout <<"error: Invalid arguments! Supported syntax:\n";
         std::cout <<"* plane [length] [divisions] [output file]\n";
         std::cout <<"* box [length] [divisions] [output file]\n";
@@ -329,27 +551,27 @@ int main(int argc, char const *argv[])
     }
 
 
-    file.open( std::string("3d/") + argv[argc-1]);
+    std::ofstream fp(std::string("3d/") + argv[argc-1]);
 
-    if(!file){
+    if(!fp){
         std::cout <<"error: Opening file " << argv[argc-1] <<"\n";
         return 0;
     }
 
     std::cout <<"Processing...";
 
-    switch(choice){
+    switch(option){
         case plane:
-            generatePlane(std::stof(argv[2]),std::stof(argv[3]));
+            fp << generatePlane(std::stof(argv[2]),std::stoi(argv[3]));
             break;
         case box:
-            generateBox(std::stof(argv[2]),std::stof(argv[3]));
+            fp << generateBox(std::stof(argv[2]),std::stoi(argv[3]));
             break;
         case sphere:
-            generateSphere(std::stof(argv[2]),std::stof(argv[3]),std::stof(argv[4]));
+            fp << generateSphere(std::stof(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]));
             break;
         case cone:
-            generateCone(std::stof(argv[2]),std::stof(argv[3]),std::stof(argv[4]),std::stof(argv[5]));
+            fp << generateCone(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]),std::stoi(argv[5]));
             break;
         default:
             break;
@@ -359,7 +581,7 @@ int main(int argc, char const *argv[])
     std::cout <<"Done\n";
     
 
-    file.close();
+    fp.close();
     
     
 
