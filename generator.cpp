@@ -48,8 +48,6 @@ std::string generatePlane(float length, int divisions ){
 
 }
 
-// centro na origem
-/*
 
 std::string generateBox(float length, int divisions){
 
@@ -176,145 +174,12 @@ std::string generateBox(float length, int divisions){
     return buffer.str();
 
 }
-*/
 
-
-
-
-std::string generateBox(float length, int divisions){
-
-    std::stringstream buffer;
-
-    float unit = length / divisions;
-    float offset = length/2;
-    float x1, x2, y1, y2, z1, z2;
-
-    //glBegin(GL_TRIANGLES);
-    for (int i = 0; i < divisions; i++) {
-        for (int j = 0; j < divisions; j++) {
-            x1 = i * unit - offset;
-            z1 = j * unit - offset;
-            x2 = (i+1) * unit - offset;
-            z2 = (j+1) * unit - offset;
-
-            //glVertex3f(x1, offset, z1);
-            buffer << x1 << ' ' << length << ' ' << z1 << '\n';
-            //glVertex3f(x2, offset, z2);
-            buffer << x2 << ' ' << length << ' ' << z2 << '\n';
-            //glVertex3f(x2, offset, z1);
-            buffer << x2 << ' ' << length << ' ' << z1 << '\n';
-
-            //glVertex3f(x1, offset, z1);
-            buffer << x1 << ' ' << length << ' ' << z1 << '\n';
-            //glVertex3f(x1, offset, z2);
-            buffer << x1 << ' ' << length << ' ' << z2 << '\n';
-            //glVertex3f(x2, offset, z2);
-            buffer << x2 << ' ' << length << ' ' << z2 << '\n';
-
-            //glVertex3f(x2, -offset, z2);
-            buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
-            //glVertex3f(x1, -offset, z1);
-            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
-            //glVertex3f(x2, -offset, z1);
-            buffer << x2 << ' ' << 0 << ' ' << z1 << '\n';
-
-            //glVertex3f(x1, -offset, z2);
-            buffer << x1 << ' ' << 0 << ' ' << z2 << '\n';
-            //glVertex3f(x1, -offset, z1);
-            buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
-            //glVertex3f(x2, -offset, z2);
-            buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
-        }
-    }
-
-    for (int i = 0; i< divisions; i++) {
-        for (int j = 0; j < divisions; j++) {
-            x1 = i * unit - offset;
-            y1 = j * unit;
-            x2 = (i+1) * unit - offset;
-            y2 = (j+1) * unit;
-
-            //glVertex3f(x2, y2, offset);
-            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
-            //glVertex3f(x1, y1, offset);
-            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
-            //glVertex3f(x2, y1, offset);
-            buffer << x2 << ' ' << y1 << ' ' << offset << '\n';
-
-            //glVertex3f(x1, y2, offset);
-            buffer << x1 << ' ' << y2 << ' ' << offset << '\n';
-            //glVertex3f(x1, y1, offset);
-            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
-            //glVertex3f(x2, y2, offset);
-            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
-
-            //glVertex3f(x1, y1, -offset);
-            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
-            //glVertex3f(x2, y2, -offset);
-            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
-            //glVertex3f(x2, y1, -offset);
-            buffer << x2 << ' ' << y1 << ' ' << -offset << '\n';
-
-            //glVertex3f(x1, y1, -offset);
-            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
-            //glVertex3f(x1, y2, -offset);
-            buffer << x1 << ' ' << y2 << ' ' << -offset << '\n';
-            //glVertex3f(x2, y2, -offset);
-            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
-        }
-    }
-
-    for (int i = 0; i< divisions; i++) {
-        for (int j = 0; j < divisions; j++) {
-            z1 = i * unit - offset;
-            y1 = j * unit;
-            z2 = (i+1) * unit - offset;
-            y2 = (j+1) * unit;
-
-            //glVertex3f(offset, y1, z1);
-            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(offset, y2, z2);
-            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
-            //glVertex3f(offset, y1, z2);
-            buffer << offset << ' ' << y1 << ' ' << z2 << '\n';
-
-            //glVertex3f(offset, y1, z1);
-            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(offset, y2, z1);
-            buffer << offset << ' ' << y2 << ' ' << z1 << '\n';
-            //glVertex3f(offset, y2, z2);
-            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
-
-            //glVertex3f(-offset, y2, z2);
-            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
-            //glVertex3f(-offset, y1, z1);
-            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(-offset, y1, z2);
-            buffer << -offset << ' ' << y1 << ' ' << z2 << '\n';
-
-            //glVertex3f(-offset, y2, z1);
-            buffer << -offset << ' ' << y2 << ' ' << z1 << '\n';
-            //glVertex3f(-offset, y1, z1);
-            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(-offset, y2, z2);
-            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
-        }
-    }
-
-    //glEnd();
-
-    return buffer.str();
-
-}
-
-// centro na origem
-/*
 std::string generateSphere(float radius, int slices, int stacks){
     
     std::stringstream buffer;
     
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, arch_alfa = 2*M_PI / slices, arch_beta = M_PI / stacks;
-
     //glBegin(GL_TRIANGLES);
     for (int i = 0; i < slices; i++) {
         for (int j = 0; j < stacks; j++) {
@@ -331,23 +196,21 @@ std::string generateSphere(float radius, int slices, int stacks){
             z3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*(i+1));
             z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*(i+1));
 
-            if(j!=stacks-1) {
-                //glVertex3f(x1, y1, z1);
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-                //glVertex3f(x2, y2, z2);
-                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
-                //glVertex3f(x3, y2, z3);
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-            }
-            if(j!=0){
-                //glVertex3f(x1, y1, z1);
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-                //glVertex3f(x3, y2, z3);
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-                //glVertex3f(x4, y1, z4);
-                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
 
-            }
+            //glVertex3f(x1, y1, z1);
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(x2, y2, z2);
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            //glVertex3f(x3, y2, z3);
+            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+        
+            //glVertex3f(x1, y1, z1);
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(x3, y2, z3);
+            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            //glVertex3f(x4, y1, z4);
+            buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+
 
         }
     }
@@ -356,58 +219,6 @@ std::string generateSphere(float radius, int slices, int stacks){
     return buffer.str();
 
 }
-*/
-
-
-
-std::string generateSphere(float radius, int slices, int stacks){
-    
-    std::stringstream buffer;
-    
-    float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, arch_alfa = 2*M_PI / slices, arch_beta = M_PI / stacks;
-
-    //glBegin(GL_TRIANGLES);
-    for (int i = 0; i < slices; i++) {
-        for (int j = 0; j < stacks; j++) {
-            x1 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa*i);
-            x2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa*i);
-            x3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa*(i+1));
-            x4 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa*(i+1));
-
-            y1 = radius + radius * sin(M_PI_2 - arch_beta*j);
-            y2 = radius + radius * sin(M_PI_2 - arch_beta * (j+1));
-
-            z1 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*i);
-            z2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*i);
-            z3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa*(i+1));
-            z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*(i+1));
-
-            if(j!=stacks-1) {
-                //glVertex3f(x1, y1, z1);
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-                //glVertex3f(x2, y2, z2);
-                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
-                //glVertex3f(x3, y2, z3);
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-            }
-            if(j!=0){
-                //glVertex3f(x1, y1, z1);
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-                //glVertex3f(x3, y2, z3);
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-                //glVertex3f(x4, y1, z4);
-                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
-
-            }
-
-        }
-    }
-    //glEnd();
-    
-    return buffer.str();
-
-}
-
 
 
 
@@ -459,15 +270,14 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
             //glVertex3f(x4, y2, z4);
             buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
 
-            if (i!=stacks-1){
-                //glVertex3f(x4, y2, z4);
-                buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
-                //glVertex3f(x2, y1, z2);
-                buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
-                //glVertex3f(x3, y2, z3);
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            
+            //glVertex3f(x4, y2, z4);
+            buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
+            //glVertex3f(x2, y1, z2);
+            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            //glVertex3f(x3, y2, z3);
+            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
 
-            }
         }
     }
 

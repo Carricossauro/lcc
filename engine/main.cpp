@@ -157,6 +157,7 @@ void renderScene(void) {
 
     drawAxis();
     drawModels();
+    //glutWireSphere(0.5,10,1);
 
     // End of frame
     glutSwapBuffers();
@@ -210,7 +211,7 @@ int main(int argc, char **argv) {
     path_xml = "../../xml/";
 
     spherical2Cartesian();
-    readXML(path_xml + "test_1_0.xml");
+    readXML(path_xml + "test_1_5.xml");
 
 // init GLUT and the window
     glutInit(&argc, argv);
