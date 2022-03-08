@@ -11,7 +11,6 @@ float alpha_cam = M_PI, beta_cam = 0, radius_cam = 10;
 float px = 0, py = 0, pz = 5.0f, dx = 0, dy = 0, dz = 0;
 
 void changeSize(int w, int h) {
-
 	// Prevent a divide by zero, when window is too short
 	// (you cant make a window with zero width).
 	if(h == 0)
@@ -77,9 +76,7 @@ void drawCylinder(float radius, float height, int slices) {
 	glEnd();
 }
 
-
 void renderScene(void) {
-
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -116,24 +113,32 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
-
 void processKeys(unsigned char c, int xx, int yy) {
 	// dx = sin(alpha_cam) * cos(beta_cam);
 	// dy = sin(beta_cam);
 	// dz = cos(alpha_cam) * cos(beta_cam);
+	float alpha_mov, beta_mov;
 	if (c == 'w') {
-
+		alpha_mov = alpha_cam;
+		beta_mov = beta_cam;
 	} else if (c == 's') {
-
+		alpha_mov = alpha_cam + M_PI;
+		beta_mov = beta_cam;
 	} else if (c == 'a') {
-		float alpha_mov = alpha_cam + M_PI_2;
-		
+		alpha_mov = alpha_cam + M_PI_2;
+		beta_mov = beta_cam;
 	} else if (c == 'd') {
-		float alpha_mov = alpha_cam - M_PI_2;
+		alpha_mov = alpha_cam - M_PI_2;
+		beta_mov = beta_cam;
 	}
-
+	float dx_mov = sin(alpha_mov) * cos(beta_mov);
+	float dy_mov = sin(beta_mov);
+	float dz_mov = cos(alpha_mov) * cos(beta_mov);
+	px += dx_mov * 0.05;
+	py += dy_mov * 0.05;
+	pz += dz_mov * 0.05;
+	glutPostRedisplay();
 }
-
 
 void processSpecialKeys(int key, int xx, int yy) {
 	if (key == GLUT_KEY_RIGHT) {
@@ -148,9 +153,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 	glutPostRedisplay();
 }
 
-
 int main(int argc, char **argv) {
-
 // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
