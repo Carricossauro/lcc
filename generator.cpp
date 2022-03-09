@@ -197,19 +197,23 @@ std::string generateSphere(float radius, int slices, int stacks){
             z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa*(i+1));
 
 
-            //glVertex3f(x1, y1, z1);
-            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(x2, y2, z2);
-            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
-            //glVertex3f(x3, y2, z3);
-            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            if (j != stacks-1) {
+                //glVertex3f(x1, y1, z1);
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                //glVertex3f(x2, y2, z2);
+                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                //glVertex3f(x3, y2, z3);
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            }
         
-            //glVertex3f(x1, y1, z1);
-            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-            //glVertex3f(x3, y2, z3);
-            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-            //glVertex3f(x4, y1, z4);
-            buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+            if (j != 0) {
+                //glVertex3f(x1, y1, z1);
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                //glVertex3f(x3, y2, z3);
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                //glVertex3f(x4, y1, z4);
+                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+            }
 
 
         }
@@ -256,8 +260,8 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
             x2 = r1 * sin(arch_alfa * (j+1));
             x3 = r2 * sin(arch_alfa * (j+1));
             x4 = r2 * sin(arch_alfa * j);
-            y1 = height - h1;
-            y2 = height - h2;
+            y1 = (i * stack_size);
+            y2 = (i+1) * stack_size;
             z1 = r1 * cos(arch_alfa * j);
             z2 = r1 * cos(arch_alfa * (j+1));
             z3 = r2 * cos(arch_alfa * (j+1));
@@ -270,13 +274,14 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
             //glVertex3f(x4, y2, z4);
             buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
 
-            
-            //glVertex3f(x4, y2, z4);
-            buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
-            //glVertex3f(x2, y1, z2);
-            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
-            //glVertex3f(x3, y2, z3);
-            buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            if (j != slices - 1) {
+                //glVertex3f(x4, y2, z4);
+                buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
+                //glVertex3f(x2, y1, z2);
+                buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+                //glVertex3f(x3, y2, z3);
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+            }            
 
         }
     }
