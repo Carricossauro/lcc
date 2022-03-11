@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
 
     if (argc < 2) {
         std::cout <<"error: Invalid arguments! Supported syntax:\n";
-        std::cout << "./engine [input file]\n";
+        std::cout << "./engine [input file]\nx";
         return -1;
     }
 
