@@ -211,7 +211,7 @@ int main(int argc, char **argv) {
     path_xml = "../../xml/";
 
     spherical2Cartesian();
-    readXML(path_xml + "test_1_3.xml");
+    readXML(path_xml + "test_plane.xml");
 
 // init GLUT and the window
     glutInit(&argc, argv);
