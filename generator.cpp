@@ -7,7 +7,7 @@
 
 
 
-enum Model {plane, box, sphere, cone};
+enum Model {plane, box, sphere, cone, cylinder};
 
 
 std::string generatePlane(float length, int divisions ){
@@ -291,6 +291,54 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
     return buffer.str();
 }
 
+std::string generateCylinder(float radius, float height, int slices){
+
+    std::stringstream buffer;
+
+    float arch_alfa = 2*M_PI / slices;
+    float x1, x2, z1, z2;
+
+    //glBegin(GL_TRIANGLES);
+
+    for (int i = 0; i < slices; i++) {
+        x1 = radius * sin(arch_alfa * i);
+        x2 = radius * sin(arch_alfa * (i+1));
+        z1 = radius * cos(arch_alfa * i);
+        z2 = radius * cos(arch_alfa * (i+1));
+
+        //glVertex3f(x1, 0, z1);
+        buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+        //glVertex3f(0, 0, 0);
+        buffer << 0 << ' ' << 0 << ' ' << 0 << '\n';
+        //glVertex3f(x2, 0, z2);
+        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+
+        //glVertex3f(0, height, 0);
+        buffer << 0 << ' ' << height << ' ' << 0 << '\n';
+        //glVertex3f(x1, height, z1);
+        buffer << x1 << ' ' << height << ' ' << z1 << '\n';
+        //glVertex3f(x2, height, z2);
+        buffer << x2 << ' ' << height << ' ' << z2 << '\n';
+
+        //glVertex3f(x1, 0, z1);
+        buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+        //glVertex3f(x2, 0, z2);
+        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+        //glVertex3f(x1, height, z1);
+        buffer << x1 << ' ' << height << ' ' << z1 << '\n';
+
+        //glVertex3f(x2, height, z2);
+        buffer << x2 << ' ' << height << ' ' << z2 << '\n';
+        //glVertex3f(x1, height, z1);
+        buffer << x1 << ' ' << height << ' ' << z1 << '\n';
+        //glVertex3f(x2, 0, z2);
+        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+    }
+
+    //glEnd();
+    return buffer.str();
+}
+
 
 int isInt(const char number[]){
     int r = 1;
@@ -338,6 +386,8 @@ int selectModel(int argc, char const *argv[]){
         r =  sphere;
     else if(strcmp((argv[1]),"cone") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = cone;
+    else if(strcmp((argv[1]),"cylinder") == 0 && argc == 6 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) )
+        r = cylinder;
     else
         r = -1;
 
@@ -361,6 +411,7 @@ int main(int argc, char const *argv[])
         std::cout <<"* box [length] [divisions] [output file]\n";
         std::cout <<"* sphere [radius] [slices] [stacks] [output file]\n";
         std::cout <<"* cone [radius] [height] [slices] [stacks] [output file]\n";
+        std::cout <<"* cylinder [radius] [height] [slices] [output file]\n";
 
         return 0;
     }
@@ -387,6 +438,9 @@ int main(int argc, char const *argv[])
             break;
         case cone:
             fp << generateCone(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]),std::stoi(argv[5]));
+            break;
+        case cylinder:
+            fp << generateCylinder(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]));
             break;
         default:
             break;
