@@ -210,14 +210,14 @@ int main(int argc, char **argv) {
     path_3d = "../../3d/";
     path_xml = "../../xml/";
 
-    if (argc < 2) {
-        std::cout <<"error: Invalid arguments! Supported syntax:\n";
-        std::cout << "./engine [input file]\nx";
-        return -1;
-    }
 
     spherical2Cartesian();
-    readXML(path_xml + argv[1]);
+
+    if(argc == 2)
+        readXML(path_xml + argv[1]);
+    else
+        readXML(path_xml + "test_1_5.xml");
+
 
 // init GLUT and the window
     glutInit(&argc, argv);
