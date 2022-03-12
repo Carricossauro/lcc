@@ -28,7 +28,7 @@ std::string path_xml;
 std::vector<std::vector<Point>> models;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
-float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0;
+float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f;
 
 // funçao que calcula a posição da camera
 void spherical2Cartesian() {
@@ -55,7 +55,7 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
     // Set perspective
-    gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+    gluPerspective(fov ,ratio, near ,far);
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
@@ -99,6 +99,13 @@ void readXML(std::string source) {
     upX = atof(up->Attribute("x"));
     upY = atof(up->Attribute("y"));
     upZ = atof(up->Attribute("z"));
+
+    XMLElement *projection = camera->FirstChildElement("projection");
+    fov = atof(projection->Attribute("fov"));
+    near = atof(projection->Attribute("near"));
+    far = atof(projection->Attribute("far"));
+
+
 
     XMLElement *MODELS = doc.FirstChildElement("world")->FirstChildElement("group")->FirstChildElement("models");
     XMLElement *model = MODELS->FirstChildElement("model");
