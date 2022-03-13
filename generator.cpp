@@ -7,7 +7,7 @@
 
 
 
-enum Model {plane, box, sphere, cone, cylinder};
+enum Model {plane, box, sphere, cone, cylinder, torus};
 
 
 std::string generatePlane(float length, int divisions ){
@@ -345,6 +345,54 @@ std::string generateCylinder(float radius, float height, int slices, int stacks)
     return buffer.str();
 }
 
+std::string generateTorus(float R, float r, int slices, int stacks) {
+    std::stringstream buffer;
+
+    float arch_alpha = (2 * M_PI) / stacks, arch_beta = (2 * M_PI) / slices;
+    float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+
+    R = (R + r) / 2;
+    r = R - r;
+
+    // glPolygonMode(GL_FRONT, GL_LINE);
+    // glBegin(GL_TRIANGLES);
+    for (int i = 0; i < stacks; i++) {
+        for (int j = 0; j < slices; j++) {
+            x1 = (R + r * cos(arch_alpha * i)) * cos(arch_beta * j);
+            x2 = (R + r * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
+            x3 = (R + r * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
+            x4 = (R + r * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
+
+            y1 = r * sin(arch_alpha * i);
+            y2 = r * sin(arch_alpha * (i+1));
+            y3 = r * sin(arch_alpha * (i+1));
+            y4 = r * sin(arch_alpha * i);
+
+            z1 = (R + r * cos(arch_alpha * i)) * sin(arch_beta * j);
+            z2 = (R + r * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
+            z3 = (R + r * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
+            z4 = (R + r * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
+
+            // glVertex3f(x1, y1, z1);
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            // glVertex3f(x2, y2, z2);
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            // glVertex3f(x4, y4, z4);
+            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
+
+            // glVertex3f(x2, y2, z2);
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            // glVertex3f(x3, y3, z3);
+            buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
+            // glVertex3f(x4, y4, z4);
+            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
+
+        }
+    }
+    // glEnd();
+    return buffer.str();
+}
+
 
 int isInt(const char number[]){
     int r = 1;
@@ -394,6 +442,8 @@ int selectModel(int argc, char const *argv[]){
         r = cone;
     else if(strcmp((argv[1]),"cylinder") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = cylinder;
+    else if(strcmp((argv[1]),"torus") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
+        r = torus;
     else
         r = -1;
 
@@ -418,6 +468,7 @@ int main(int argc, char const *argv[])
         std::cout <<"* sphere [radius] [slices] [stacks] [output file]\n";
         std::cout <<"* cone [radius] [height] [slices] [stacks] [output file]\n";
         std::cout <<"* cylinder [radius] [height] [slices] [stacks] [output file]\n";
+        std::cout <<"* torus [Radius] [thickness] [slices] [stacks] [output file]\n";
 
         return 0;
     }
@@ -448,9 +499,11 @@ int main(int argc, char const *argv[])
         case cylinder:
             fp << generateCylinder(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]), std::stoi(argv[5]));
             break;
+        case torus:
+            fp << generateTorus(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]), std::stoi(argv[5]));
+            break;
         default:
             break;
-
     }
 
     std::cout <<"Done\n";
