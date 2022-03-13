@@ -291,12 +291,12 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
     return buffer.str();
 }
 
-std::string generateCylinder(float radius, float height, int slices){
+std::string generateCylinder(float radius, float height, int slices, int stacks){
 
     std::stringstream buffer;
 
-    float arch_alfa = 2*M_PI / slices;
-    float x1, x2, z1, z2;
+    float arch_alfa = 2*M_PI / slices, stack_size = height/stacks;
+    float x1, x2, y1, y2, z1, z2;
 
     //glBegin(GL_TRIANGLES);
 
@@ -320,19 +320,25 @@ std::string generateCylinder(float radius, float height, int slices){
         //glVertex3f(x2, height, z2);
         buffer << x2 << ' ' << height << ' ' << z2 << '\n';
 
-        //glVertex3f(x1, 0, z1);
-        buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
-        //glVertex3f(x2, 0, z2);
-        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
-        //glVertex3f(x1, height, z1);
-        buffer << x1 << ' ' << height << ' ' << z1 << '\n';
+        for (int j = 0; j < stacks; j++){
+            y1 = (j * stack_size);
+            y2 = (j+1) * stack_size;
 
-        //glVertex3f(x2, height, z2);
-        buffer << x2 << ' ' << height << ' ' << z2 << '\n';
-        //glVertex3f(x1, height, z1);
-        buffer << x1 << ' ' << height << ' ' << z1 << '\n';
-        //glVertex3f(x2, 0, z2);
-        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+            //glVertex3f(x1, 0, z1);
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            //glVertex3f(x2, 0, z2);
+            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            //glVertex3f(x1, height, z1);
+            buffer << x1 << ' ' << y2 << ' ' << z1 << '\n';
+
+            //glVertex3f(x2, height, z2);
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            //glVertex3f(x1, height, z1);
+            buffer << x1 << ' ' << y2 << ' ' << z1 << '\n';
+            //glVertex3f(x2, 0, z2);
+            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+        }
+
     }
 
     //glEnd();
@@ -386,7 +392,7 @@ int selectModel(int argc, char const *argv[]){
         r =  sphere;
     else if(strcmp((argv[1]),"cone") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = cone;
-    else if(strcmp((argv[1]),"cylinder") == 0 && argc == 6 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) )
+    else if(strcmp((argv[1]),"cylinder") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = cylinder;
     else
         r = -1;
@@ -411,7 +417,7 @@ int main(int argc, char const *argv[])
         std::cout <<"* box [length] [divisions] [output file]\n";
         std::cout <<"* sphere [radius] [slices] [stacks] [output file]\n";
         std::cout <<"* cone [radius] [height] [slices] [stacks] [output file]\n";
-        std::cout <<"* cylinder [radius] [height] [slices] [output file]\n";
+        std::cout <<"* cylinder [radius] [height] [slices] [stacks] [output file]\n";
 
         return 0;
     }
@@ -440,7 +446,7 @@ int main(int argc, char const *argv[])
             fp << generateCone(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]),std::stoi(argv[5]));
             break;
         case cylinder:
-            fp << generateCylinder(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]));
+            fp << generateCylinder(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]), std::stoi(argv[5]));
             break;
         default:
             break;
