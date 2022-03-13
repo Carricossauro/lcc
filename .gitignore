@@ -84,3 +84,5 @@ fabric.properties
 
 generator
 a.out
+
+.DS_Store
