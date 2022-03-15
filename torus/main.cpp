@@ -111,7 +111,7 @@ void renderScene(void) {
     glEnd();
 
 	// drawCylinder(1,2,20);
-	drawTorus(6, 5.8, 50, 50);
+	drawTorus(3, 2, 20, 3);
 
 	// End of frame
 	glutSwapBuffers();
