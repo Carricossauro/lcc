@@ -23,19 +23,19 @@ class Bank {
     }
 
     private HashMap<Integer ,Account> accounts = new HashMap<Integer, Account>();
-    Lock lock = new ReentrantLock();
+    private Lock lock = new ReentrantLock();
     private int number_account = 0;
 
     int createAccount(int initialBalance) {
         this.lock.lock();
 
         try {
-            this.accounts.put(this.number_account, new Account(initialBalance));
+            this.accounts.put(this.number_account++, new Account(initialBalance));
         } finally {
             this.lock.unlock();
         }
 
-        return this.number_account++;
+        return this.number_account - 1;
     }
 
     int closeAccount(int id) throws InvalidAccount {
