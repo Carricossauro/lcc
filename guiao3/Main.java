@@ -106,16 +106,23 @@ class Bank {
     }
 
     void transfer(int from, int to, int amount) throws InvalidAccount, NotEnoughFunds {
-        if (!this.accounts.containsKey(from)) throw new InvalidAccount();
-        if (!this.accounts.containsKey(to)) throw new InvalidAccount();
+        Account o1, o2, cfrom, cto;
 
-        Account o1 = this.accounts.get(Math.min(from, to));
-        Account o2 = this.accounts.get(Math.max(from, to));
-        Account cfrom = this.accounts.get(from);
-        Account cto = this.accounts.get(to);
+        this.lock.lock();
 
-        o1.lock.lock();
-        o2.lock.lock();
+        try {
+            o1 = this.accounts.get(Math.min(from, to));
+            o2 = this.accounts.get(Math.max(from, to));
+            cfrom = this.accounts.get(from);
+            cto = this.accounts.get(to);
+
+            if (o1 == null || o2 == null || cfrom == null || cto == null) throw new InvalidAccount();
+
+            o1.lock.lock();
+            o2.lock.lock();
+        } finally {
+            this.lock.unlock();
+        }
 
         try {
             cfrom.withdraw(amount);
