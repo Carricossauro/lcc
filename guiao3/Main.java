@@ -22,39 +22,87 @@ class Bank {
         }
     }
 
-    private HashMap<Integer ,Account> accounts;
+    private HashMap<Integer ,Account> accounts = new HashMap<Integer, Account>();
     Lock lock = new ReentrantLock();
-    private int number_account;
+    private int number_account = 0;
 
-    Bank() {
-        this.accounts = new HashMap<Integer, Account>();
-        this.number_account = 0;
-    }
+    int createAccount(int initialBalance) {
+        this.lock.lock();
 
-    synchronized int createAccount(int initialBalance) {
-        this.accounts.put(this.number_account, new Account(initialBalance));
+        try {
+            this.accounts.put(this.number_account, new Account(initialBalance));
+        } finally {
+            this.lock.unlock();
+        }
+
         return this.number_account++;
     }
 
-    synchronized int closeAccount(int id) throws InvalidAccount {
-        if (!this.accounts.containsKey(id)) throw new InvalidAccount();
+    int closeAccount(int id) throws InvalidAccount {
+        Account a;
+        this.lock.lock();
+        
+        try {
+            a = this.accounts.get(id);
 
-        Account a = this.accounts.get(id);
-        this.accounts.remove(id);
+            if (a == null) throw new InvalidAccount();
 
-        return a.balance();
+            a.lock.lock();
+        } finally {
+            this.lock.unlock();
+        }
+
+        try {
+            this.accounts.remove(id);
+
+            return a.balance();
+        } finally {
+            a.lock.unlock();
+        }
     }
 
     void deposit(int id, int val) throws InvalidAccount {
-        if (!this.accounts.containsKey(id)) throw new InvalidAccount();
+        Account a;
 
-        this.accounts.get(id).deposit(val);
+        this.lock.lock();
+
+        try {
+            a = this.accounts.get(id);
+
+            if (a == null) throw new InvalidAccount();
+
+            a.lock.lock();
+        } finally {
+            this.lock.unlock();
+        }
+
+        try {
+            a.deposit(val);
+        } finally {
+            a.lock.unlock();
+        }
     }
 
     void withdraw(int id, int val) throws InvalidAccount, NotEnoughFunds {
-        if (!this.accounts.containsKey(id)) throw new InvalidAccount();
+        Account a;
 
-        this.accounts.get(id).withdraw(val);
+        this.lock.lock();
+        
+        try {
+            a = this.accounts.get(id);
+
+            if (a == null) throw new InvalidAccount();
+
+            a.lock.lock();
+        } finally {
+            this.lock.unlock();
+        }
+
+        try {
+            a.withdraw(val);
+        } finally {
+            a.lock.unlock();
+        }
     }
 
     void transfer(int from, int to, int amount) throws InvalidAccount, NotEnoughFunds {
@@ -72,10 +120,6 @@ class Bank {
         try {
             cfrom.withdraw(amount);
             cto.deposit(amount);
-        } catch (NotEnoughFunds nef) {
-            o1.lock.unlock();
-            o2.lock.unlock();
-            throw nef;
         } finally {
             o1.lock.unlock();
             o2.lock.unlock();
@@ -83,20 +127,49 @@ class Bank {
     }
 
     int totalBalance(int accs[]) throws InvalidAccount {
+        Account a;
         int total = 0;
-        for (int i = 0; i < accs.length; i++) {
-            if (!this.accounts.containsKey(accs[i])) throw new InvalidAccount();
 
-            total += this.accounts.get(accs[i]).balance();
+        for (int i = 0; i < accs.length; i++) {
+            this.lock.lock();
+            try {
+                a = this.accounts.get(accs[i]);
+
+                if (a == null) throw new InvalidAccount();
+                a.lock.lock();
+            } finally {
+                this.lock.unlock();
+            }
+
+            try {
+                total += a.balance();
+            } finally {
+                a.lock.unlock();
+            }
         }
 
         return total;
     }
 
     int accountBalance(int id) throws InvalidAccount {
-        if (!this.accounts.containsKey(id)) throw new InvalidAccount();
+        this.lock.lock();
+        Account a;
 
-        return this.accounts.get(id).balance();
+        try {
+            a = this.accounts.get(id);
+
+            if (a == null) throw new InvalidAccount();
+
+            a.lock.lock();
+        } finally {
+            this.lock.unlock();
+        }
+
+        try {
+            return a.balance();
+        } finally {
+            a.lock.unlock();
+        }
     }
 }
 
@@ -115,7 +188,8 @@ public class Main {
                 System.out.println("Closed account 5 with $" + b.closeAccount(5) + ".");
 
                 b.transfer(9, 0, 300);
-                printAccountBalances(accounts, b, n);
+                int newList[] = {0,1,2,3,4,6,7,8,9};
+                System.out.println(b.totalBalance(newList));
             } catch (Exception e) {
                 e.printStackTrace();
             }
