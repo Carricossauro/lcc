@@ -47,14 +47,14 @@ class Bank {
 
             if (a == null) throw new InvalidAccount();
 
+            this.accounts.remove(id);
+
             a.lock.lock();
         } finally {
             this.lock.unlock();
         }
 
         try {
-            this.accounts.remove(id);
-
             return a.balance();
         } finally {
             a.lock.unlock();
