@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.ArrayList;
+import java.util.Collections;
 
 class NotEnoughFunds extends Exception {}
 class InvalidAccount extends Exception {}
@@ -134,13 +136,21 @@ class Bank {
     }
 
     int totalBalance(int accs[]) throws InvalidAccount {
+        ArrayList<Integer> account_list = new ArrayList<Integer>();
+
+        for (int i : accs) {
+            account_list.add(i);
+        }
+
+        Collections.sort(account_list);
+
         Account a;
         int total = 0;
 
-        for (int i = 0; i < accs.length; i++) {
+        for (int i : account_list) {
             this.lock.lock();
             try {
-                a = this.accounts.get(accs[i]);
+                a = this.accounts.get(i);
 
                 if (a == null) throw new InvalidAccount();
                 a.lock.lock();
