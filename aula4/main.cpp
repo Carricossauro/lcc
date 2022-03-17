@@ -10,11 +10,15 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <vector>
+#include <string.h>
+#include <iostream>
 
 float alfa = 0.0f, beta = 0.0f, radius = 5.0f;
 float camX, camY, camZ;
 
-GLuint vertices, verticeCount;
+bool optimized = false;
+
+GLuint vertices, verticeCount, body, top;
 
 std::vector<float> vertice_list;
 
@@ -24,9 +28,7 @@ void spherical2Cartesian() {
 	camZ = radius * cos(beta) * cos(alfa);
 }
 
-
 void changeSize(int w, int h) {
-
 	// Prevent a divide by zero, when window is too short
 	// (you cant make a window with zero width).
 	if(h == 0)
@@ -50,14 +52,11 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-
 /*----------------------------------------------------------------------------------- 
 	Draw Cylinder with strips and fans
 
 	  parameters: radius, height, sides
-
 -----------------------------------------------------------------------------------*/
-
 
 void cylinder0(float radius, float height, int sides) {
 	int i;
@@ -65,50 +64,57 @@ void cylinder0(float radius, float height, int sides) {
 
 	step = 360.0/sides;
 
-	glColor3f(1,0,0);
-	glBegin(GL_TRIANGLE_FAN);
 
-		glVertex3f(0,height*0.5,0);
-		for (i=0; i <= sides; i++) {
-			glVertex3f(cos(i * step * M_PI/180.0)*radius,height*0.5,-sin(i * step *M_PI/180.0)*radius);
-		}
-	glEnd();
+	//top
+	// glVertex3f(0,height*0.5,0);
+	vertice_list.push_back(0);
+	vertice_list.push_back(0.5 * height);
+	vertice_list.push_back(0);
+	for (i=0; i <= sides; i++) {
+		// glVertex3f(cos(i * step * M_PI/180.0)*radius,height*0.5,-sin(i * step *M_PI/180.0)*radius);
+		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
+		vertice_list.push_back(height*0.5);
+		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
+	}
+	top = 3*(sides);
 
-	glColor3f(0,1,0);
-	glBegin(GL_TRIANGLE_FAN);
+	// base
+	// glVertex3f(0,-height*0.5,0);
+	vertice_list.push_back(0);
+	vertice_list.push_back(-0.5 * height);
+	vertice_list.push_back(0);
+	for (i=0; i <= sides; i++) {
+		// glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,sin(i * step *M_PI/180.0)*radius);
+		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
+		vertice_list.push_back(-0.5 * height);
+		vertice_list.push_back(sin(i * step *M_PI/180.0)*radius);
+	}
 
-		glVertex3f(0,-height*0.5,0);
-		for (i=0; i <= sides; i++) {
-			glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,sin(i * step *M_PI/180.0)*radius);
-		}
-	glEnd();
-
-	glColor3f(0,0,1);
-	glBegin(GL_TRIANGLE_STRIP);
-
-		for (i=0; i <= sides; i++) {
-			glVertex3f(cos(i * step * M_PI/180.0)*radius, height*0.5,-sin(i * step *M_PI/180.0)*radius);
-			glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,-sin(i * step *M_PI/180.0)*radius);
-		}
-	glEnd();
+	// body
+	for (i=0; i <= sides; i++) {
+		// glVertex3f(cos(i * step * M_PI/180.0)*radius, height*0.5,-sin(i * step *M_PI/180.0)*radius);
+		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
+		vertice_list.push_back(height*0.5);
+		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
+		// glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,-sin(i * step *M_PI/180.0)*radius);
+		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
+		vertice_list.push_back(-height*0.5);
+		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
+	}
+	body = 6 * sides;
 }
-
 
 /*-----------------------------------------------------------------------------------
 	Draw Cylinder
 
 		parameters: radius, height, sides
-
 -----------------------------------------------------------------------------------*/
-
 
 void cylinder(float radius, float height, int sides) {
 	int i;
 	float step;
 
 	step = 360.0 / sides;
-
-	// glBegin(GL_TRIANGLES);
 
 	// top
 	for (i = 0; i < sides; i++) {
@@ -175,7 +181,11 @@ void cylinder(float radius, float height, int sides) {
 }
 
 void draw_buffer() {
-	cylinder(1,2,10);
+	if (!optimized) {
+		cylinder(1,2,10);
+	} else {
+		cylinder0(1,2,10);
+	}
 	
 	verticeCount = vertice_list.size() / 3;
 
@@ -192,7 +202,6 @@ void draw_buffer() {
 
 
 void renderScene(void) {
-
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -205,7 +214,16 @@ void renderScene(void) {
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertices);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, verticeCount);
+
+	if (optimized) {
+		glDrawArrays(GL_TRIANGLE_FAN, 0, top);
+
+		glDrawArrays(GL_TRIANGLE_FAN, top, top);
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 2 * top, body);
+	} else {
+		glDrawArrays(GL_TRIANGLES, 0, verticeCount);
+	}
 
 	// End of frame
 	glutSwapBuffers();
@@ -265,6 +283,10 @@ void printInfo() {
 
 int main(int argc, char **argv) {
 
+	if (argc > 1 && !strcmp(argv[1], "opt")) {
+		optimized = true;
+	}
+
 	// init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
@@ -296,7 +318,7 @@ int main(int argc, char **argv) {
 
 	printInfo();
 
-	// enter GLUT's main cycle
+	// enter GLUT's main cycle	
 	glutMainLoop();
 	
 	return 1;
