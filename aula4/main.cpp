@@ -96,10 +96,16 @@ void cylinder0(float radius, float height, int sides) {
 		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
 		vertice_list.push_back(height*0.5);
 		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
+		std::cout << cos(i * step * M_PI/180.0)*radius << " ";
+		std::cout << height*0.5 << " ";
+		std::cout << -sin(i * step *M_PI/180.0)*radius << " " << std::endl;
 		// glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,-sin(i * step *M_PI/180.0)*radius);
 		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
 		vertice_list.push_back(-height*0.5);
 		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
+		std::cout << cos(i * step * M_PI/180.0)*radius << " ";
+		std::cout << -height*0.5 << " ";
+		std::cout << -sin(i * step *M_PI/180.0)*radius << " " << std::endl << std::endl;
 	}
 	body = 6 * sides;
 }
@@ -181,10 +187,10 @@ void cylinder(float radius, float height, int sides) {
 }
 
 void draw_buffer() {
-	if (!optimized) {
-		cylinder(1,2,10);
-	} else {
+	if (optimized) {
 		cylinder0(1,2,10);
+	} else {
+		cylinder(1,2,10);
 	}
 	
 	verticeCount = vertice_list.size() / 3;
@@ -216,10 +222,13 @@ void renderScene(void) {
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 
 	if (optimized) {
+		glColor3f(1,0,0);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, top);
 
+		glColor3f(0,1,0);
 		glDrawArrays(GL_TRIANGLE_FAN, top, top);
 
+		glColor3f(0,0,1);
 		glDrawArrays(GL_TRIANGLE_STRIP, 2 * top, body);
 	} else {
 		glDrawArrays(GL_TRIANGLES, 0, verticeCount);
@@ -228,12 +237,6 @@ void renderScene(void) {
 	// End of frame
 	glutSwapBuffers();
 }
-
-
-void processKeys(unsigned char c, int xx, int yy) {
-	// put code to process regular keys in here
-}
-
 
 void processSpecialKeys(int key, int xx, int yy) {
 
@@ -283,8 +286,15 @@ void printInfo() {
 
 int main(int argc, char **argv) {
 
-	if (argc > 1 && !strcmp(argv[1], "opt")) {
+	if (argc > 1) {
+		if (!strcmp(argv[1], "opt")) {
 		optimized = true;
+		} else {
+			std::cout << "error: Invalid arguments! Supported syntax:"  << std::endl;
+			std::cout << "./class4"  << std::endl;
+			std::cout << "./class4 opt"  << std::endl;
+			return 1;
+		}
 	}
 
 	// init GLUT and the window
@@ -299,7 +309,6 @@ int main(int argc, char **argv) {
 	glutReshapeFunc(changeSize);
 	
 	// Callback registration for keyboard processing
-	glutKeyboardFunc(processKeys);
 	glutSpecialFunc(processSpecialKeys);
 
 	// init GLEW
