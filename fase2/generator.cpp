@@ -274,7 +274,7 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
             //glVertex3f(x4, y2, z4);
             buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
 
-            if (j != slices - 1) {
+            if (i != stacks - 1) {
                 //glVertex3f(x4, y2, z4);
                 buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
                 //glVertex3f(x2, y1, z2);

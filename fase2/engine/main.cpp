@@ -20,12 +20,70 @@ struct Point{
     }
 };
 
+class Transformation {
+public:
+    void virtual apply() = 0;
+};
+
+class Translate : public Transformation{
+    float x, y, z;
+public:
+    Translate(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glTranslatef(x, y, z);
+    }
+};
+
+class Rotate : public Transformation{
+    float x, y, z, angle;
+public:
+    Rotate(float angle, float x, float y, float z) {
+        this->angle = angle;
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glRotatef(angle, x, y, z);
+    }
+};
+
+class Scale : public Transformation{
+    float x, y, z;
+public:
+    Scale(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glScalef(x, y, z);
+    }
+};
+
+struct Model {
+    std::vector<Point> points;
+    std::vector<Transformation*> transformations;
+    Model(std::vector<Point> p, std::vector<Transformation*> t) {
+        this->points = p;
+        this->transformations = t;
+    }
+};
+
 // caminho para os ficheiros .3d
 std::string path_3d;
 // caminho para os ficheiros xml
 std::string path_xml;
 // vetor de vetores de Point onde sao armazenados os pontos lidos dos ficheiros .3d
-std::vector<std::vector<Point>> models;
+// std::vector<std::vector<Point>> models;
+std::vector<Model> models;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f;
@@ -62,15 +120,65 @@ void changeSize(int w, int h) {
 }
 
 // le pontos armazenados em source (ficheiro .3d) e armazena em models (vetor de vetores de Point)
-void getModel(std::string source){
+std::vector<Point> getModel(std::string source) {
     std::ifstream file_input(source) ;
     float x,y,z;
     std::vector<Point> model;
     while(file_input >> x >> y >> z) {
         model.push_back(Point(x,y,z));
     }
-    models.push_back(model);
     file_input.close();
+    return model;
+}
+
+void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
+    using namespace tinyxml2;
+    std::cout << "entrar readGroup\n";
+
+    while (group) {
+        XMLElement *transformation = group->FirstChildElement("transform");
+
+        if (transformation) {
+            for (XMLElement *t = transformation->FirstChildElement(); t; t = t->NextSiblingElement()) {
+                std::string name = std::string(t->Name());
+
+                if (name == "translate") {
+                    float x, y, z;
+                    x = atof(t->Attribute("x"));
+                    y = atof(t->Attribute("y"));
+                    z = atof(t->Attribute("z"));
+
+                    ts.push_back(new Translate(x, y, z));
+                } else if (name == "rotate") {
+                    float x, y, z, angle;
+                    angle = atof(t->Attribute("angle"));
+                    x = atof(t->Attribute("x"));
+                    y = atof(t->Attribute("y"));
+                    z = atof(t->Attribute("z"));
+
+                    ts.push_back(new Rotate(angle, x, y, z));
+                } else if (name == "scale") {
+                    float x, y, z;
+                    x = atof(t->Attribute("x"));
+                    y = atof(t->Attribute("y"));
+                    z = atof(t->Attribute("z"));
+
+                    ts.push_back(new Scale(x, y, z));
+                } else {
+                    std::cout << "error: incorrect syntax" << std::endl;
+                }
+            }
+        }
+
+        for(XMLElement *m = group->FirstChildElement("models")->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
+            std::vector<Point> points = getModel(path_3d + m->Attribute("file"));
+
+            models.push_back(Model(points, ts));
+        }
+
+        readGroup(group->FirstChildElement("group"), ts);
+        group = group->NextSiblingElement("group");
+    }
 }
 
 // le o ficheiro xml com as configurações
@@ -106,27 +214,27 @@ void readXML(std::string source) {
     far = atof(projection->Attribute("far"));
 
 
+    XMLElement* group = doc.FirstChildElement("world")->FirstChildElement("group");
 
-    XMLElement *MODELS = doc.FirstChildElement("world")->FirstChildElement("group")->FirstChildElement("models");
-    XMLElement *model = MODELS->FirstChildElement("model");
-    while (model) {
-        std::string model_path = model->Attribute("file");
-        getModel(path_3d + model_path);
-
-        model = model->NextSiblingElement("model");
-    }
+    std::vector<Transformation*> t;
+    readGroup(group, t);
 }
-
 
 // desenha as figuras com os pontos armazenados no vetor models
 void drawModels(){
     glColor3f(1.0f, 1.0f, 1.0f);
-    for (std::vector<Point> model : models){
+    for (Model model : models){
+        glPushMatrix();
+        for (Transformation* t : model.transformations) {
+            t->apply();
+        }
+
         glBegin(GL_TRIANGLES);
-        for (Point p : model){
+        for (Point p : model.points){
             glVertex3f(p.x,p.y,p.z);
         }
         glEnd();
+        glPopMatrix();
     }
 }
 
