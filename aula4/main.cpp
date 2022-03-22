@@ -96,16 +96,10 @@ void cylinder0(float radius, float height, int sides) {
 		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
 		vertice_list.push_back(height*0.5);
 		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
-		std::cout << cos(i * step * M_PI/180.0)*radius << " ";
-		std::cout << height*0.5 << " ";
-		std::cout << -sin(i * step *M_PI/180.0)*radius << " " << std::endl;
 		// glVertex3f(cos(i * step * M_PI/180.0)*radius,-height*0.5,-sin(i * step *M_PI/180.0)*radius);
 		vertice_list.push_back(cos(i * step * M_PI/180.0)*radius);
 		vertice_list.push_back(-height*0.5);
 		vertice_list.push_back(-sin(i * step *M_PI/180.0)*radius);
-		std::cout << cos(i * step * M_PI/180.0)*radius << " ";
-		std::cout << -height*0.5 << " ";
-		std::cout << -sin(i * step *M_PI/180.0)*radius << " " << std::endl << std::endl;
 	}
 	body = 6 * sides;
 }
@@ -230,6 +224,11 @@ void renderScene(void) {
 
 		glColor3f(0,0,1);
 		glDrawArrays(GL_TRIANGLE_STRIP, 2 * top, body);
+		for (int i = 3 * (2 * top); i < vertice_list.size(); i++) {
+			std::cout << i/3 << " " << vertice_list.at(i) << std::endl;
+			if (i % 3 == 2) std::cout << std::endl;
+		}
+		std::cout << top << std::endl << 3 * (2 * top) << std::endl;
 	} else {
 		glDrawArrays(GL_TRIANGLES, 0, verticeCount);
 	}
