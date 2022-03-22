@@ -134,13 +134,16 @@ std::vector<Point> getModel(std::string source) {
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     using namespace tinyxml2;
     std::cout << "entrar readGroup\n";
+    std::vector<Transformation*> backup = ts;
 
     while (group) {
+        ts = backup;
         XMLElement *transformation = group->FirstChildElement("transform");
 
         if (transformation) {
             for (XMLElement *t = transformation->FirstChildElement(); t; t = t->NextSiblingElement()) {
                 std::string name = std::string(t->Name());
+                std::cout << name << std::endl;
 
                 if (name == "translate") {
                     float x, y, z;
@@ -170,10 +173,14 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
             }
         }
 
-        for(XMLElement *m = group->FirstChildElement("models")->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
-            std::vector<Point> points = getModel(path_3d + m->Attribute("file"));
+        XMLElement *MODELS = group->FirstChildElement("models");
 
-            models.push_back(Model(points, ts));
+        if (MODELS) {
+            for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
+                std::vector<Point> points = getModel(path_3d + m->Attribute("file"));
+
+                models.push_back(Model(points, ts));
+            }
         }
 
         readGroup(group->FirstChildElement("group"), ts);
