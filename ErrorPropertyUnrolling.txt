@@ -1,0 +1,132 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+from pysmt.shortcuts import *
+from pysmt.typing import *
+
+
+# In[3]:
+
+
+# Auxiliares
+
+def prime(v):
+    return Symbol("next(%s)" % v.symbol_name(), v.symbol_type())
+
+def fresh(v):
+    return FreshSymbol(typename=v.symbol_type(),template=v.symbol_name()+"_%d")
+
+
+# In[4]:
+
+
+class EPU(object):      
+    """deteção de erro"""
+
+    def __init__(self, variables, init , trans, error, sname="z3"):
+              
+        self.variables = variables       # FOTS variables   
+        self.init  = init                # FOTS init as unary predicate in "variables"
+        self.error = error               # FOTS error condition as unary predicate in "variables"
+        self.trans = trans               # FOTS transition relation as a binary transition relation 
+                                         # in "variables" and "prime variables"
+        
+        self.prime_variables = [prime(v) for v in self.variables]
+        self.frames = [self.error]       # inializa com uma só frame: a situação de error
+        
+        self.solver = Solver(name=sname)
+        self.solver.add_assertion(self.init)     # adiciona o estado inicial como uma asserção sempre presente 
+
+    def new_frame(self):  
+        freshs = [fresh(v) for v in self.variables]
+        T = self.trans.substitute(dict(zip(self.prime_variables,freshs)))
+        F = self.frames[-1].substitute(dict(zip(self.variables,freshs)))
+        self.frames.append(Exists(freshs, And(T, F)))
+        
+    def unroll(self,bound=0):
+        n = 0
+        while True:
+            if n > bound:
+                print("falha: tentativas ultrapassam o limite %d "%bound)
+                break
+            elif self.solver.solve(self.frames):  
+                self.new_frame()
+                n += 1
+            else:
+                print("sucesso: tentativa %d "%n)
+                break   
+
+
+# In[13]:
+
+
+class Cycle(EPU):
+    def __init__(self,variables,pre,pos,control,body,sname="z3"):
+        init   = pre
+        trans = And(control,body)
+        error  = Or(control,Not(pos))
+        super().__init__(variables, init, trans, error, sname)
+
+
+# In[14]:
+
+
+bits = 8
+L = 20
+
+# constantes auxiliares
+N    = BV(L,width=bits)
+zero = BV(0,width=bits)
+um   = BV(1,width=bits)
+dois = BV(2,width=bits)
+
+# O ciclo
+x  = Symbol("x",BVType(bits))
+m  = Symbol("m",BVType(bits))
+n  = Symbol("n",BVType(bits))
+y  = Symbol("y",BVType(bits))
+r  = Symbol("r",BVType(bits))
+variables = [x,m,n,r,y]
+
+pre  =  And([BVUGE(m,zero),  # m > 0
+             BVUGE(n,zero),  # n > 0
+             Equals(r,zero), # r = 0
+             Equals(x,m),    # x = m
+             Equals(y,n),    # y = n
+             BVULT(m,N),     # m < N
+             BVULT(n,N)])    # n < N
+
+pos  =  Equals(r,BVMul(m,n)) # r = m * n
+
+cond =  BVUGT(y , zero)      # y > 0
+
+left      = And(Equals(prime(y), BVLShr(BVSub(y, um), um)), # y = (y-1) >> 1
+                Equals(prime(r), BVAdd(r, x)),              # r = r + x
+                Equals(prime(x), BVLShl(x, um)))            # x = x << 1
+
+right     = And(Equals(prime(y), BVLShr(y, um)),            # y = y >> 1
+                Equals(prime(x), BVLShl(x, um)))            # x = x << 1
+
+trans = Ite(Equals(BVAnd(y, um), um), left, right)       # if (y & 1 == 1) then left else right
+
+
+# In[15]:
+
+
+W = Cycle(variables,pre,pos,cond,trans)
+
+
+# In[16]:
+
+
+W.unroll(L)
+
+
+# In[ ]:
+
+
+
+
