@@ -18,8 +18,7 @@ float desvio_angulos[300];
 float color[300];
 int time_diff = -1;
 float time_angle_diff = (2 * M_PI) / 175;
-// float time_angle_diff = 0;
-float time_angle_diff_2 = 360 / 175;
+float time_angle_diff_2 = 360.0f / 175.0f;
 
 
 void spherical2Cartesian() {
@@ -102,6 +101,12 @@ void renderScene(void) {
 
 	glColor3f(1.0f, 0, 0);
 	glutSolidTorus(1, 3, 20, 20);
+	glPushMatrix();
+
+	glRotatef(90, 0, 1, 0);
+	glutSolidTorus(1, 3, 20, 20);
+
+	glPopMatrix();
 
 	float alpha_arch = (M_PI * 2) / 8;
 	float rotation_angle = 360 / 8;
@@ -131,13 +136,13 @@ void renderScene(void) {
 	for (int i = 0; i < 16; i++) {
 		glPushMatrix();
 		float alpha = alpha_arch * i + time_angle_diff * time_diff;
-		// float alpha = alpha_arch * i;
 
 		float x = ri * cos(alpha);
 		float z = ri * sin(alpha);
 
 		glTranslatef(x, 1.5f, z);
 		glRotatef(180-rotation_angle * i, 0, 1.0f, 0);
+		glRotatef(360-time_angle_diff_2 * time_diff, 0, 1.0f, 0);
 		glutSolidTeapot(2);
 
 		glPopMatrix();
