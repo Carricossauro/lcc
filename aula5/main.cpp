@@ -20,6 +20,9 @@ int time_diff = -1;
 float time_angle_diff = (2 * M_PI) / 175;
 float time_angle_diff_2 = 360.0f / 175.0f;
 
+float timebase, time_passed;
+float frames = 0, fps;
+
 
 void spherical2Cartesian() {
 	camX = radius * cos(beta) * sin(alfa);
@@ -158,6 +161,21 @@ void renderScene(void) {
 
 		arvore(x, z, color[i]);
 	}
+
+	// FPS Counter
+	frames++;
+	time_passed = glutGet(GLUT_ELAPSED_TIME);
+	if (time_passed - timebase > 1000) {
+		fps = frames*1000.0/(time_passed - timebase);
+		timebase = time_passed;
+		frames = 0;
+	}
+
+	char fps_buffer[50];
+
+	sprintf(fps_buffer, "%d", (int) fps);
+
+	glutSetWindowTitle(fps_buffer);
 	
 	glutSwapBuffers();
 }
@@ -222,6 +240,8 @@ int main(int argc, char **argv) {
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutIdleFunc(renderScene);
+
+	timebase = glutGet(GLUT_ELAPSED_TIME);
 	
 	// Callback registration for keyboard processing
 	glutSpecialFunc(processSpecialKeys);

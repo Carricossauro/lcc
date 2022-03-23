@@ -17,6 +17,9 @@ float alfa = 0.0f, beta = 0.0f, radius = 5.0f;
 float camX, camY, camZ;
 
 bool optimized = false;
+int timebase;
+float frames, time_passed, fps;
+char fps_buffer[100];
 
 GLuint vertices, verticeCount, body, top;
 
@@ -233,6 +236,18 @@ void renderScene(void) {
 		glDrawArrays(GL_TRIANGLES, 0, verticeCount);
 	}
 
+	frames++;
+	time_passed = glutGet(GLUT_ELAPSED_TIME);
+	if (time_passed - timebase > 1000) {
+		fps = frames*1000.0/(time_passed-timebase);
+		timebase = time_passed;
+		frames = 0;
+	}
+
+	sprintf(fps_buffer, "%d", (int) fps);
+
+	glutSetWindowTitle(fps_buffer);
+
 	// End of frame
 	glutSwapBuffers();
 }
@@ -302,6 +317,8 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,800);
 	glutCreateWindow("CG@DI-UM");cylinder(1,2,10);
+
+	timebase = glutGet(GLUT_ELAPSED_TIME); 
 		
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
