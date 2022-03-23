@@ -86,14 +86,11 @@ std::string path_xml;
 std::vector<Model> models;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f;
-float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f;
+float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
+    dx=0, dy=0,dz=0,rx=0,ry=0,rz=0;
 
 // funçao que calcula a posição da camera
-void spherical2Cartesian() {
-    eyeX = radius * cos(beta) * sin(alpha);
-    eyeY = radius * sin(beta);
-    eyeZ = radius * cos(beta) * cos(alpha);
-}
+
 
 void changeSize(int w, int h) {
     // Prevent a divide by zero, when window is too short
@@ -199,14 +196,22 @@ void readXML(std::string source) {
     eyeY = atof(position->Attribute("y"));
     eyeZ = atof(position->Attribute("z"));
 
-    radius = sqrt(eyeX * eyeX + eyeY * eyeY + eyeZ * eyeZ);
-    beta = asin(eyeY / radius);
-    alpha = asin(eyeX / (radius * cos(beta)));
+
 
     XMLElement *lookAt = camera->FirstChildElement("lookAt");
     centerX = atof(lookAt->Attribute("x"));
     centerY = atof(lookAt->Attribute("y"));
     centerZ = atof(lookAt->Attribute("z"));
+    dx = centerX - eyeX;
+    dy = centerY - eyeY;
+    dz = centerZ - eyeZ;
+    rx = dy*upZ - dz*upY;
+    ry = dz*upX - dx*upZ;
+    rz = dx*upY - dy*upX;
+
+    radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
+    beta = asin(eyeY / radius);
+    alpha = asin(eyeX / (radius * cos(beta)));
 
     XMLElement *up = camera->FirstChildElement("up");
     upX = atof(up->Attribute("x"));
@@ -283,6 +288,18 @@ void renderScene(void) {
     glutSwapBuffers();
 }
 
+void spherical2Cartesian() {
+    eyeX = centerX + radius * cos(beta) * sin(alpha);
+    eyeY = centerY + radius * sin(beta);
+    eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+    dx = centerX - eyeX;
+    dy = centerY - eyeY;
+    dz = centerZ - eyeZ;
+    rx = dy*upZ - dz*upY;
+    ry = dz*upX - dx*upZ;
+    rz = dx*upY - dy*upX;
+}
+
 void processSpecialKeys(int key, int xx, int yy) {
 
     switch (key) {
@@ -325,6 +342,46 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 }
 
+void processKeys(unsigned char c, int xx, int yy) {
+    switch (c) {
+        case 'w':
+            centerX += 0.1*dx;
+            eyeX += 0.1*dx;
+            centerY += 0.1*dy;
+            eyeY += 0.1*dy;
+            centerZ += 0.1*dz;
+            eyeZ += 0.1*dz;
+            break;
+        case 's':
+            centerX -= 0.1*dx;
+            eyeX -= 0.1*dx;
+            centerY -= 0.1*dy;
+            eyeY -= 0.1*dy;
+            centerZ -= 0.1*dz;
+            eyeZ -= 0.1*dz;
+            break;
+        case 'a':
+            centerX -= 0.1*rx;
+            eyeX -= 0.1*rx;
+            centerY -= 0.1*ry;
+            eyeY -= 0.1*ry;
+            centerZ -= 0.1*rz;
+            eyeZ -= 0.1*rz;
+            break;
+        case 'd':
+            centerX += 0.1*rx;
+            eyeX += 0.1*rx;
+            centerY += 0.1*ry;
+            eyeY += 0.1*ry;
+            centerZ += 0.1*rz;
+            eyeZ += 0.1*rz;
+            break;
+    }
+    glutPostRedisplay();
+
+
+}
+
 int main(int argc, char **argv) {
     // caminho para os ficheiros 3d e xml
     path_3d = "../../3d/";
@@ -351,6 +408,7 @@ int main(int argc, char **argv) {
     glutReshapeFunc(changeSize);
     //glutIdleFunc(renderScene);
 
+    glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
 
 //  OpenGL settings
