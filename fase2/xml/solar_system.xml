@@ -1,0 +1,82 @@
+<world> <!-- a world can have a camera, a set of lights, and a single group -->
+
+    <camera> 
+	    <position x="1509" y="300" z="300" />
+	    <lookAt x="1509" y="0" z="0" />
+	    <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="4000" /> <!-- optional, use these values as default-->
+    </camera>
+
+    <group>
+        <group> <!-- Sun -->
+            <transform>
+                <scale x="109" y="109" z="109" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Mercury -->
+            <transform>
+                <translate x="168" y="0" z="0" />
+                <scale x="0.4" y="0.4" z="0.4" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Venus -->
+            <transform>
+                <translate x="217" y="0" z="0" />
+                <scale x="0.9" y="0.9" z="0.9" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Earth -->
+            <transform>
+                <translate x="258" y="0" z="0" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Mars -->
+            <transform>
+                <translate x="313" y="0" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Jupiter -->
+            <transform>
+                <translate x="853" y="0" z="0" />
+                <scale x="11.2" y="11.2" z="11.2" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Saturn -->
+            <transform>
+                <translate x="1590" y="0" z="0" />
+                <scale x="9.4" y="9.4" z="9.4" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+            <group >
+                <transform>
+                    <scale x="3" y="3" z="3"/>
+                    <rotate angle= "45" x = "1" y = "0" z = "0" />
+                </transform>
+                <models>
+                    <model file="torus.3d" />
+                </models>
+            </group>
+        </group>
+	</group>
+</world>

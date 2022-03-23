@@ -85,7 +85,7 @@ std::string path_xml;
 // std::vector<std::vector<Point>> models;
 std::vector<Model> models;
 
-float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
+float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f;
 
 // funçao que calcula a posição da camera
@@ -133,7 +133,6 @@ std::vector<Point> getModel(std::string source) {
 
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     using namespace tinyxml2;
-    std::cout << "entrar readGroup\n";
     std::vector<Transformation*> backup = ts;
 
     while (group) {
@@ -143,7 +142,6 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
         if (transformation) {
             for (XMLElement *t = transformation->FirstChildElement(); t; t = t->NextSiblingElement()) {
                 std::string name = std::string(t->Name());
-                std::cout << name << std::endl;
 
                 if (name == "translate") {
                     float x, y, z;
@@ -310,13 +308,13 @@ void processSpecialKeys(int key, int xx, int yy) {
             break;
 
         case GLUT_KEY_PAGE_DOWN:
-            radius -= 0.1f;
+            radius -= radius_diff;
             if (radius < 0.1f)
                 radius = 0.1f;
             break;
 
         case GLUT_KEY_PAGE_UP:
-            radius += 0.1f;
+            radius += radius_diff;
         break;
 
         default:
