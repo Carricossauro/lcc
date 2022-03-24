@@ -88,6 +88,7 @@ std::vector<Model> models;
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
     dx=0, dy=0,dz=0,rx=0,ry=0,rz=0;
+int mode = 0;
 
 // funçao que calcula a posição da camera
 
@@ -289,9 +290,11 @@ void renderScene(void) {
 }
 
 void spherical2Cartesian() {
-    eyeX = centerX + radius * cos(beta) * sin(alpha);
-    eyeY = centerY + radius * sin(beta);
-    eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+    if(mode==1){
+        eyeX = centerX + radius * cos(beta) * sin(alpha);
+        eyeY = centerY + radius * sin(beta);
+        eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+    }
     dx = centerX - eyeX;
     dy = centerY - eyeY;
     dz = centerZ - eyeZ;
@@ -305,24 +308,51 @@ void processSpecialKeys(int key, int xx, int yy) {
     switch (key) {
 
         case GLUT_KEY_RIGHT:
-            alpha -= 0.1;
+            if(mode==1)
+                alpha -= 0.1;
+            else{
+                centerX += 0.1*rx;
+                centerY += 0.1*ry;
+                centerZ += 0.1*rz;
+            }
             break;
 
         case GLUT_KEY_LEFT:
-            alpha += 0.1;
+            if(mode==1)
+                alpha += 0.1;
+            else{
+                centerX -= 0.1*rx;
+                centerY -= 0.1*ry;
+                centerZ -= 0.1*rz;
+            }
             break;
 
         case GLUT_KEY_UP:
-            beta += 0.1f;
-            if (beta > 1.5f)
-                beta = 1.5f;
+            if(mode==1){
+                beta += 0.1f;
+                if (beta > 1.5f)
+                    beta = 1.5f;
+            }
+            else{
+                centerX += 0.1*upX;
+                centerY += 0.1*upY;
+                centerZ += 0.1*upZ;
+            }
             break;
 
         case GLUT_KEY_DOWN:
-            beta -= 0.1f;
-            if (beta < -1.5f)
-                beta = -1.5f;
+            if(mode==1){
+                beta -= 0.1f;
+                if (beta < -1.5f)
+                    beta = -1.5f;
+            }
+            else{
+                centerX -= 0.1*upX;
+                centerY -= 0.1*upY;
+                centerZ -= 0.1*upZ;
+            }
             break;
+
 
         case GLUT_KEY_PAGE_DOWN:
             radius -= radius_diff;
@@ -375,6 +405,10 @@ void processKeys(unsigned char c, int xx, int yy) {
             eyeY += 0.1*ry;
             centerZ += 0.1*rz;
             eyeZ += 0.1*rz;
+            break;
+        case 'm':
+            mode++;
+            mode %=2;
             break;
     }
     glutPostRedisplay();
