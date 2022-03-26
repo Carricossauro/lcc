@@ -211,8 +211,8 @@ void readXML(std::string source) {
     rz = dx*upY - dy*upX;
 
     radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
-    beta = asin(eyeY / radius);
-    alpha = asin(eyeX / (radius * cos(beta)));
+    beta = asin((eyeY - centerY)/radius);
+    alpha = asin((eyeX - centerX)/(radius*cos(beta)));
 
     XMLElement *up = camera->FirstChildElement("up");
     upX = atof(up->Attribute("x"));
@@ -290,11 +290,18 @@ void renderScene(void) {
 }
 
 void spherical2Cartesian() {
-    if(mode==1){
-        eyeX = centerX + radius * cos(beta) * sin(alpha);
-        eyeY = centerY + radius * sin(beta);
-        eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+
+    if(mode==0){
+        radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
+        beta = asin((eyeY - centerY)/radius);
+        alpha = asin((eyeX - centerX)/(radius*cos(beta)));
     }
+
+    eyeX = centerX + radius * cos(beta) * sin(alpha);
+    eyeY = centerY + radius * sin(beta);
+    eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+
+
     dx = centerX - eyeX;
     dy = centerY - eyeY;
     dz = centerZ - eyeZ;
@@ -411,6 +418,7 @@ void processKeys(unsigned char c, int xx, int yy) {
             mode %=2;
             break;
     }
+    spherical2Cartesian();
     glutPostRedisplay();
 
 
