@@ -88,7 +88,6 @@ std::vector<Model> models;
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
     dx=0, dy=0,dz=0,rx=0,ry=0,rz=0;
-int mode = 0;
 
 // funçao que calcula a posição da camera
 
@@ -203,6 +202,7 @@ void readXML(std::string source) {
     centerX = atof(lookAt->Attribute("x"));
     centerY = atof(lookAt->Attribute("y"));
     centerZ = atof(lookAt->Attribute("z"));
+
     dx = centerX - eyeX;
     dy = centerY - eyeY;
     dz = centerZ - eyeZ;
@@ -211,8 +211,9 @@ void readXML(std::string source) {
     rz = dx*upY - dy*upX;
 
     radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
-    beta = asin((eyeY - centerY)/radius);
-    alpha = asin((eyeX - centerX)/(radius*cos(beta)));
+    beta = asin((eyeY-centerY )/radius);
+    alpha = asin((eyeX-centerX)/(radius*cos(beta)));
+
 
     XMLElement *up = camera->FirstChildElement("up");
     upX = atof(up->Attribute("x"));
@@ -281,7 +282,7 @@ void renderScene(void) {
 
     glPolygonMode(GL_FRONT,GL_LINE);
 
-    drawAxis();
+    //drawAxis();
     drawModels();
     //glutWireSphere(0.5,10,1);
 
@@ -291,15 +292,9 @@ void renderScene(void) {
 
 void spherical2Cartesian() {
 
-    if(mode==0){
-        radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
-        beta = asin((eyeY - centerY)/radius);
-        alpha = asin((eyeX - centerX)/(radius*cos(beta)));
-    }
-
-    eyeX = centerX + radius * cos(beta) * sin(alpha);
-    eyeY = centerY + radius * sin(beta);
-    eyeZ = centerZ + radius * cos(beta) * cos(alpha);
+    centerX =  eyeX - radius * cos(beta) * sin(alpha);
+    centerY =  eyeY - radius * sin(beta);
+    centerZ =  eyeZ - radius * cos(beta) * cos(alpha);
 
 
     dx = centerX - eyeX;
@@ -315,49 +310,24 @@ void processSpecialKeys(int key, int xx, int yy) {
     switch (key) {
 
         case GLUT_KEY_RIGHT:
-            if(mode==1)
-                alpha -= 0.1;
-            else{
-                centerX += 0.1*rx;
-                centerY += 0.1*ry;
-                centerZ += 0.1*rz;
-            }
+            alpha -= 0.1;
+
             break;
 
         case GLUT_KEY_LEFT:
-            if(mode==1)
-                alpha += 0.1;
-            else{
-                centerX -= 0.1*rx;
-                centerY -= 0.1*ry;
-                centerZ -= 0.1*rz;
-            }
-            break;
-
-        case GLUT_KEY_UP:
-            if(mode==1){
-                beta += 0.1f;
-                if (beta > 1.5f)
-                    beta = 1.5f;
-            }
-            else{
-                centerX += 0.1*upX;
-                centerY += 0.1*upY;
-                centerZ += 0.1*upZ;
-            }
+            alpha += 0.1;
             break;
 
         case GLUT_KEY_DOWN:
-            if(mode==1){
-                beta -= 0.1f;
-                if (beta < -1.5f)
-                    beta = -1.5f;
-            }
-            else{
-                centerX -= 0.1*upX;
-                centerY -= 0.1*upY;
-                centerZ -= 0.1*upZ;
-            }
+            beta += 0.1f;
+            if (beta > 1.5f)
+                beta = 1.5f;
+            break;
+
+        case GLUT_KEY_UP:
+            beta -= 0.1f;
+            if (beta < -1.5f)
+                beta = -1.5f;
             break;
 
 
@@ -413,12 +383,9 @@ void processKeys(unsigned char c, int xx, int yy) {
             centerZ += 0.1*rz;
             eyeZ += 0.1*rz;
             break;
-        case 'm':
-            mode++;
-            mode %=2;
-            break;
+
     }
-    spherical2Cartesian();
+
     glutPostRedisplay();
 
 
@@ -435,7 +402,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_saturno.xml");
+        readXML(path_xml + "solar_system.xml");
 
 
 // init GLUT and the window
