@@ -60,7 +60,7 @@
 \begin{figure}
     \includegraphics[scale=0.3]{logoum.png}
 \end{figure}
-\title{\textbf{Primitivas Gráficas}\\
+\title{\textbf{Transformações Geométricas}\\
        \textbf{Unidade Curricular de Computação Gráfica}\\ Licenciatura em Ciências da Computação\\Universidade do Minho
        } %Titulo do documento
 \author{Bruno Jardim\\ (A91680) \and Inês Presa\\ (A90355)
@@ -81,195 +81,124 @@
 No âmbito da unidade curricular de Computação Gráfica da Licenciatura em Ciências da Computação foi proposta o desenvolvimento em \textit{Opengl} de um motor gráfico genérico que terá como função a criação de um sistema solar. Desenvolvimento esse que deve ser composto por quatro etapas. 
 
 \section{Enunciado}
-Nesta primeira etapa foi proposta a criação de duas aplicações:
+Nesta segunda etapa foi proposto:
 
 \begin{itemize}
-    \item \textbf{Gerador}
+    \item \textbf{Cenas hierárquicas}
         \begin{description}
-        \item Funcionalidade: Gerar ficheiros com os pontos no espaço necessários para desenhar primitivas gráficas, como por exemplo, planos, cubos, esferas e cones.
+        \item Alteração do \textit{engine} de modo a ler ficheiros XML com vários grupos dispostos hierarquicamente. Um grupo pode ser composto por varias transformações geométricas(translação, rotação e escala), onde a ordem é relevante e opcionalmente por um ou mais modelos. 
         \end{description}
 
-    \item \textbf{Motor Gráfico}
+    \item \textbf{Ficheiro de configuração}
     \begin{description}
-    \item Funcionalidade: Interpretar um ficheiro XML com a configuração da câmara e os ficheiros com os pontos previamente gerados, e desenhar as primitivas.
+    \item Criação de um ficheiro de configuração XML que recrie um modelo estático do sistema solar, composto pelo sol, planetas, e luas dispostas hierarquicamente. 
     \end{description}
 \end{itemize}
 
 
 \chapter{Apresentação das soluções}
-\section{Gerador}
-O gerador permite, através de um conjunto de parâmetros, gerar diversos tipos de primitivas gráficas, escrevendo as coordenadas dos pontos que compõem a primitiva pretendida num ficheiro com extensão \textit{.3d} para mais tarde ser carregado e utilizado pelo motor gráfico.
+\section{Cenas hierárquicas}
+Para a criação de cenas hierárquicas, procedeu-se à alteração do leitor XML desenvolvido na primeira fase. Assim sendo ao invés do que acontecia anteriormente de forma iterativa, agora o leitor trabalha de forma recursiva, numa de espécie de travessia em profundidade. Para tal, foi construída uma função auxiliar que recebe como argumentos qual o grupo a ler e um vetor com as transformações que vai herdar. Após a leitura de cada modelo, este é armazenado num vetor de modelos que é uma estrutura composta por um vetor de pontos, para desenhar a primitiva gráfica, e um vetor de transformações a aplicar antes da primitiva ser desenhada. De seguida, a função é chamada novamente recebendo como parametros o grupo descendente do atual e um vetor de transformações atualizado. Quando a função retorna do proceso recursivo para esta etapa, o processo é repetido para o grupo "irmão" do atual. \par
+Para o a execução das transformaçoes foi criada uma classe abstracta chamada \textit{Transformation} com um metodo \textit{apply} e mais três outras classes, \textit{Translation}, \textit{Rotation},  e \textit{Scale} que implementam esta classe. Desta forma, para cada primitiva é possível iterar pelo vetor que armazena as transformações e simplesmente invocar o metodo \textit{apply}, não sendo por isso necessário executar instruções condicionais, como por exemplo \textit{if else}.  
 
-\subsection{Plano}
-\vspace{0.5cm}
-Para gerar o plano iterou-se no comprimento e largura do mesmo através de dois ciclos \textit{for}, partindo do canto cujas coordenadas \textit{x} e \textit{z} são negativas, percorrendo cada linha e desenhando simultaneamente os dois triângulos que constituem cada secção do plano. 
+\subsection{Demonstração do funcionamento do engine}
+
 \vspace{1cm}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width = 8cm,height = 8cm]{plano1.png}
-  \caption{\texttt{./generator plane 1 3 plane.3d}}
-  \label{fig:plano1}
+  \includegraphics[width = 8cm,height = 8cm]{box.png}
+  \caption{\texttt{test\_2\_1.xml}}
+  \label{fig:box}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width = 8cm,height = 8cm]{plano2.png}
-  \caption{\texttt{./generator plane 1 30 plane.3d}}
-  \label{fig:plano2}
+  \includegraphics[width = 8cm,height = 8cm]{construction.png}
+  \caption{\texttt{test\_2\_2.xml}}
+  \label{fig:construction}
 \end{subfigure}
-\caption{Exemplos de planos}
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{snowman.png}
+  \caption{\texttt{test\_2\_3.xml}}
+  \label{fig:snowman}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{boxes.png}
+  \caption{\texttt{test\_2\_4.xml}}
+  \label{fig:sboxes}
+\end{subfigure}
 \label{fig:plano}
+\caption{Execução dos ficheiros XML de teste}
 \end{figure}
+\textbf{Nota:} Nas imagens de teste apresentadas as esfera foram criadas com um número de stacks e slices superiores ao sugerido no ficheiro de configuração.
 
 
 \newpage
-\subsection{Caixa}
-\vspace{0.5cm}
-Com a primitiva do plano feita, facilmente se chegou à caixa, uma vez que esta é obtida através de 6 planos paralelos, dois a dois e a cada um dos planos coordenados. Sendo que se deu atenção à sua orientação para que sejam visíveis de fora da caixa.
-\vspace{1cm}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{caixa1.png}
-  \caption{\texttt{./generator box 2 3 box.3d}}
-  \label{fig:caixa1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{caixa2.png}
-  \caption{\texttt{./generator box 2 30 box.3d}}
-  \label{fig:caixa2}
-\end{subfigure}
-\caption{Exemplos de caixas}
-\label{fig:caixa}
-\end{figure}
-\newpage
+\section{Ficheiro de configuração}
+No ficheiro de configuração XML foi colocado o sol, os planetas e algumas das luas e anéis (conjuntos de luas) que orbitam os planetas. Para o calculo das distancias e tamanho dos planetas foi utilizado como medida de escala o diâmetro da Terra.
 
-\subsection{Esfera}
-\vspace{0.5cm}
-Começando no pólo superior e iterando por cada \textit{slice} da esfera, construiu-se o sólido, utilizando coordenadas polares para que fosse possível descrever com precisão as coordenadas de cada ponto da esfera, tornando assim a representação o mais fiel possível.
 \vspace{1cm}
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{esfera1.png}
-  \caption{\texttt{./generator sphere 1 10 10 sphere.3d}}
-  \label{fig:esfera1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{esfera2.png}
-  \caption{\texttt{./generator sphere 1 50 50 sphere.3d}}
-  \label{fig:esfera2}
-\end{subfigure}
-\caption{Exemplos de esferas}
-\label{fig:esfera}
+\includegraphics[width = 15cm,height = 10cm]{1.png}
+\caption{\texttt{demo1}}
+\label{fig:demo1}
 \end{figure}
-\newpage
-\subsection{Cone}
-\vspace{0.5cm}
-Tendo como ponto de partida a origem do referencial criou-se um circulo sobre o plano \textit{$y = 0$}, este será a base do cone. Com isto foi desenhada, \textit{stack} por \textit{stack}, a face do cone, mais uma vez, utilizando coordenadas polares e o teorema de Tales para descobrir o valor do raio em cada \textit{stack}.
-\vspace{1cm}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{cone1.png}
-  \caption{\texttt{./generator cone 1 2 4 3 cone.3d}}
-  \label{fig:cone1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{cone2.png}
-  \caption{\texttt{./generator cone 1 2 20 20 cone.3d}}
-  \label{fig:cone2}
-\end{subfigure}
-\caption{Exemplos de cones}
-\label{fig:cone}
-\end{figure}
-\newpage
-\subsection{Cilindro}
-\vspace{0.5cm}
-Utilizando o cilindro desenvolvido nas aulas, foi introduzido um novo parâmetro, o numero de \textit{stacks}, pois assim consegue-se um nível de detalhe superior no cilindro.
-Com a estratégia usada para construir o cone, fez-se uma alteração para que o raio do cilindro não diminuísse com o aumento da altura, em oposição ao que acontece no caso do cone.
-\vspace{1cm}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{cilindro1.png}
-  \caption{\texttt{./generator cylinder 2 3 5 5 cylinder.3d}}
-  \label{fig:cylinder1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{cilindro2.png}
-  \caption{\texttt{./generator cylinder 2 3 30 30 cylinder.3d}}
-  \label{fig:cylinder2}
-\end{subfigure}
-\caption{Exemplos de cilindros}
-\label{fig:cylinder}
-\end{figure}
-\newpage
-\subsection{Torus}
-\vspace{0.5cm}
-Através das fórmulas disponibilizadas \href{https://en.wikipedia.org/wiki/Torus#Geometry}{\textbf{aqui}}, conseguiu-se gerar uma representação de um \textit{torus}, algo que futuramente vai permitir desenhar os vários anéis dos planetas do sistema solar.
-\vspace{1cm}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{torus1.png}
-  \caption{\texttt{./generator torus 5 3 5 5 torus.3d}}
-  \label{fig:torus1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width = 8cm,height = 8cm]{torus2.png}
-  \caption{\texttt{./generator torus 5 3 30 30 torus.3d}}
-  \label{fig:torus2}
-\end{subfigure}
-\caption{Exemplo de torus}
-\label{fig:torus}
-\end{figure}
-\newpage
-\section{Motor Gráfico}
-O motor gráfico interpreta um ficheiro XML e com a informação nele contido irá gerar uma cena. Para que o motor tivesse esta funcionalidade, tomou-se vantagem do \textit{parser} \href{http://www.grinninglizard.com/tinyxml/}{\textbf{tinyXML}}.
-Após ser executado o \textit{parser} extrai a seguinte informação do ficheiro:
-\begin{itemize}
-    \item Câmara
-    \begin{itemize}
-        \item Posição da câmara (\textit{position})
-        \item Ponto para onde a câmara está a olhar (\textit{lookAt})
-        \item Inclinação da câmara (\textit{up})
-        \item \textit{View Frustum} 
-    \end{itemize}
-    \item Modelos
-    \begin{itemize}
-        \item Nome dos ficheiros \textit{.3d} a carregar
-        
-    \end{itemize}
-    
-    
-    
-\end{itemize}
 
-Após carregar os ficheiros \textit{.3d} os pontos neles contidos são armazenados num vetor de vetores de \textit{Point}, uma estrutura de dados previamente definida, que representa um ponto no espaço. Cada vetor armazena os pontos constituintes de uma primitiva gráfica, permitindo assim carregar múltiplas primitivas na mesma cena.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{2.png}
+\caption{\texttt{demo2}}
+\label{fig:demo2}
+\end{figure}
 
-\newline 
-Mais ainda, o  motor gráfico tem implementado uma câmara em modo \textit{explorer} que  permite rodar em torno da cena através das \textit{arrowkeys} e com as teclas \textit{Page Up} e \textit{Page Down} possibilita aproximar e afastar, respetivamente, a câmara da origem do referencial.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{3.png}
+\caption{\texttt{demo3}}
+\label{fig:demo3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{4.png}
+\caption{\texttt{demo4}}
+\label{fig:demo4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{5.png}
+\caption{\texttt{demo5}}
+\label{fig:demo5}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{6.png}
+\caption{\texttt{demo6}}
+\label{fig:demo6}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm,height = 10cm]{7.png}
+\caption{\texttt{demo7}}
+\label{fig:demo7}
+\end{figure}
+
 
 
 \newpage
 \chapter{Conclusão}
-A principal dificuldade enfrentada durante esta fase do trabalho foi, inicialmente a adaptação às coordenadas polares, logo ambos o cone e a esfera tornaram-se um desafio. No entanto considera-se que foi ultrapassada agilmente.
+A principal dificuldade enfrentada durante esta fase do trabalho foi a alteração da função que faz a leitura de ficheiros XML. A forma como o idealizamos o seu funcionamento não foi muito difícil, no entanto durante a sua implementação depara-mo-nos com alguns problemas de \textit{segmentation fault}, assim como transformações que ocorriam em locais inesperados. 
 
-A adaptação à linguagem foi também uma dificuldade, já que nenhum elemento do grupo tinha experiência prévia com a linguagem em questão, nomeadamente \texttt{\textbf{C++}}. 
+Um fator que também criou dificuldades foi a escolha de uma escalada adequada para definir o tamanho dos planetas e a distancia entre eles. Apesar de assim ser mais realista, não temos a certeza se foi a melhor opção.
 
-Por último, a utilização do \href{http://www.grinninglizard.com/tinyxml/}{\textbf{parser de XML}} de terceiros também condicionou o nosso progresso uma vez que o grupo não estava familiarizado com a ferramenta.
+Por ultimo, a alteração da câmara por forma a permitir "viajar" pelo sistema solar também não foi tarefa fácil e pensamos que a mesma ainda pode ser melhorada.
 
-Concluindo, apesar das dificuldades enfrentadas, os objetivos foram atingidos prontamente, no que o grupo considera ser um balanço muito positivo.
+Contudo, apesar das dificuldades enfrentadas, podemos concluir que os objectivos foram atingidos.
 \end{document}
