@@ -45,8 +45,8 @@
             </group>
             <group> <!-- Moon -->
                 <transform>
-                    <translate x="0" y="0.03" z="1.37" />
-                    <scale x="0.2727" y="0.2727" z="0.2727" />
+                    <translate x="0" y="0.03" z="1.38" />
+                    <scale x="0.2725" y="0.2725" z="0.2725" />
                 </transform>
                 <models>
                     <model file="sphere.3d" />
