@@ -85,12 +85,18 @@ std::string path_xml;
 // std::vector<std::vector<Point>> models;
 std::vector<Model> models;
 
-float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f;
+float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f, speed = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
     dx=0, dy=0,dz=0,rx=0,ry=0,rz=0;
 
-// funçao que calcula a posição da camera
+void printInfo() {
+    printf("\e[1;1H\e[2J");
+	printf("Vendor: %s\n", glGetString(GL_VENDOR));
+	printf("Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("Version: %s\n", glGetString(GL_VERSION));
 
+    std::cout << "Speed: " << speed << std::endl;
+}
 
 void changeSize(int w, int h) {
     // Prevent a divide by zero, when window is too short
@@ -203,17 +209,6 @@ void readXML(std::string source) {
     centerY = atof(lookAt->Attribute("y"));
     centerZ = atof(lookAt->Attribute("z"));
 
-    dx = centerX - eyeX;
-    dy = centerY - eyeY;
-    dz = centerZ - eyeZ;
-    rx = dy*upZ - dz*upY;
-    ry = dz*upX - dx*upZ;
-    rz = dx*upY - dy*upX;
-
-    radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
-    beta = asin((eyeY-centerY )/radius);
-    alpha = asin((eyeX-centerX)/(radius*cos(beta)));
-
 
     XMLElement *up = camera->FirstChildElement("up");
     upX = atof(up->Attribute("x"));
@@ -224,6 +219,25 @@ void readXML(std::string source) {
     fov = atof(projection->Attribute("fov"));
     near = atof(projection->Attribute("near"));
     far = atof(projection->Attribute("far"));
+
+    dx = centerX - eyeX;
+    dy = centerY - eyeY;
+    dz = centerZ - eyeZ;
+    float norm = sqrt(dx * dx + dy * dy + dz * dz);
+    dx /= norm;
+    dy /= norm;
+    dz /= norm;
+    rx = dy*upZ - dz*upY;
+    ry = dz*upX - dx*upZ;
+    rz = dx*upY - dy*upX;
+    float upNorm = sqrt(upX * upX + upY * upY + upZ * upZ);
+    upX /= upNorm;
+    upY /= upNorm;
+    upZ /= upNorm;
+
+    radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
+    beta = asin((eyeY-centerY )/radius);
+    alpha = asin((eyeX-centerX)/(radius*cos(beta)));
 
 
     XMLElement* group = doc.FirstChildElement("world")->FirstChildElement("group");
@@ -300,6 +314,10 @@ void spherical2Cartesian() {
     dx = centerX - eyeX;
     dy = centerY - eyeY;
     dz = centerZ - eyeZ;
+    float norm = sqrt(dx * dx + dy * dy + dz * dz);
+    dx /= norm;
+    dy /= norm;
+    dz /= norm;
     rx = dy*upZ - dz*upY;
     ry = dz*upX - dx*upZ;
     rz = dx*upY - dy*upX;
@@ -308,28 +326,25 @@ void spherical2Cartesian() {
 void processSpecialKeys(int key, int xx, int yy) {
 
     switch (key) {
-
         case GLUT_KEY_RIGHT:
-            alpha -= 0.1;
-
+            alpha -= 0.05;
             break;
 
         case GLUT_KEY_LEFT:
-            alpha += 0.1;
+            alpha += 0.05;
             break;
 
         case GLUT_KEY_DOWN:
-            beta += 0.1f;
+            beta += 0.05f;
             if (beta > 1.5f)
                 beta = 1.5f;
             break;
 
         case GLUT_KEY_UP:
-            beta -= 0.1f;
+            beta -= 0.05f;
             if (beta < -1.5f)
                 beta = -1.5f;
             break;
-
 
         case GLUT_KEY_PAGE_DOWN:
             radius -= radius_diff;
@@ -352,36 +367,46 @@ void processSpecialKeys(int key, int xx, int yy) {
 void processKeys(unsigned char c, int xx, int yy) {
     switch (c) {
         case 'w':
-            centerX += 0.1*dx;
-            eyeX += 0.1*dx;
-            centerY += 0.1*dy;
-            eyeY += 0.1*dy;
-            centerZ += 0.1*dz;
-            eyeZ += 0.1*dz;
+            centerX += speed*dx;
+            eyeX += speed*dx;
+            centerY += speed*dy;
+            eyeY += speed*dy;
+            centerZ += speed*dz;
+            eyeZ += speed*dz;
             break;
         case 's':
-            centerX -= 0.1*dx;
-            eyeX -= 0.1*dx;
-            centerY -= 0.1*dy;
-            eyeY -= 0.1*dy;
-            centerZ -= 0.1*dz;
-            eyeZ -= 0.1*dz;
+            centerX -= speed*dx;
+            eyeX -= speed*dx;
+            centerY -= speed*dy;
+            eyeY -= speed*dy;
+            centerZ -= speed*dz;
+            eyeZ -= speed*dz;
             break;
         case 'a':
-            centerX -= 0.1*rx;
-            eyeX -= 0.1*rx;
-            centerY -= 0.1*ry;
-            eyeY -= 0.1*ry;
-            centerZ -= 0.1*rz;
-            eyeZ -= 0.1*rz;
+            centerX -= speed*rx;
+            eyeX -= speed*rx;
+            centerY -= speed*ry;
+            eyeY -= speed*ry;
+            centerZ -= speed*rz;
+            eyeZ -= speed*rz;
             break;
         case 'd':
-            centerX += 0.1*rx;
-            eyeX += 0.1*rx;
-            centerY += 0.1*ry;
-            eyeY += 0.1*ry;
-            centerZ += 0.1*rz;
-            eyeZ += 0.1*rz;
+            centerX += speed*rx;
+            eyeX += speed*rx;
+            centerY += speed*ry;
+            eyeY += speed*ry;
+            centerZ += speed*rz;
+            eyeZ += speed*rz;
+            break;
+        case '+':
+            speed *= 2;
+            if (speed > 64.0f) speed = 64.0f;
+            printInfo();
+            break;
+        case '-':
+            speed /= 2;
+            if (speed < 0.1f) speed = 0.1f;
+            printInfo();
             break;
 
     }
@@ -405,14 +430,14 @@ int main(int argc, char **argv) {
         readXML(path_xml + "test_2_2.xml");
 
 
-// init GLUT and the window
+    // init GLUT and the window
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
     glutInitWindowPosition(100,100);
     glutInitWindowSize(800,800);
     glutCreateWindow("Models");
 
-// Required callback registry
+    // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     //glutIdleFunc(renderScene);
@@ -420,11 +445,12 @@ int main(int argc, char **argv) {
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
 
-//  OpenGL settings
+    //  OpenGL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-// enter GLUT's main cycle
+    printInfo();
+    // enter GLUT's main cycle
     glutMainLoop();
 
     return 1;
