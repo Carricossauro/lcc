@@ -81,7 +81,7 @@ struct Model {
 std::string path_3d;
 // caminho para os ficheiros xml
 std::string path_xml;
-// vetor de vetores de Point onde sao armazenados os pontos lidos dos ficheiros .3d
+// vetor de Model onde sao armazenados os vetores com os pontos e as transformações
 // std::vector<std::vector<Point>> models;
 std::vector<Model> models;
 
@@ -122,7 +122,7 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-// le pontos armazenados em source (ficheiro .3d) e armazena em models (vetor de vetores de Point)
+// le pontos armazenados em source (ficheiro .3d) e retorna um vetor de vetores de Point
 std::vector<Point> getModel(std::string source) {
     std::ifstream file_input(source) ;
     float x,y,z;
@@ -133,7 +133,7 @@ std::vector<Point> getModel(std::string source) {
     file_input.close();
     return model;
 }
-
+// funçao auxiliar do readXML que le um grupo
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     using namespace tinyxml2;
     std::vector<Transformation*> backup = ts;
@@ -215,6 +215,11 @@ void readXML(std::string source) {
     upY = atof(up->Attribute("y"));
     upZ = atof(up->Attribute("z"));
 
+    float upNorm = sqrt(upX * upX + upY * upY + upZ * upZ);
+    upX /= upNorm;
+    upY /= upNorm;
+    upZ /= upNorm;
+
     XMLElement *projection = camera->FirstChildElement("projection");
     fov = atof(projection->Attribute("fov"));
     near = atof(projection->Attribute("near"));
@@ -227,13 +232,11 @@ void readXML(std::string source) {
     dx /= norm;
     dy /= norm;
     dz /= norm;
+
     rx = dy*upZ - dz*upY;
     ry = dz*upX - dx*upZ;
     rz = dx*upY - dy*upX;
-    float upNorm = sqrt(upX * upX + upY * upY + upZ * upZ);
-    upX /= upNorm;
-    upY /= upNorm;
-    upZ /= upNorm;
+
 
     radius = sqrt((eyeX-centerX) * (eyeX-centerX) + (eyeY-centerY) * (eyeY-centerY) + (eyeZ-centerZ) * (eyeZ-centerZ));
     beta = asin((eyeY-centerY )/radius);
@@ -246,7 +249,27 @@ void readXML(std::string source) {
     readGroup(group, t);
 }
 
-// desenha as figuras com os pontos armazenados no vetor models
+void spherical2Cartesian() {
+
+    centerX =  eyeX - cos(beta) * sin(alpha);
+    centerY =  eyeY - sin(beta);
+    centerZ =  eyeZ - cos(beta) * cos(alpha);
+
+
+    dx = centerX - eyeX;
+    dy = centerY - eyeY;
+    dz = centerZ - eyeZ;
+    float norm = sqrt(dx * dx + dy * dy + dz * dz);
+    dx /= norm;
+    dy /= norm;
+    dz /= norm;
+    rx = dy*upZ - dz*upY;
+    ry = dz*upX - dx*upZ;
+    rz = dx*upY - dy*upX;
+}
+
+
+// desenha as figuras com os pontos e transformações armazenados no vetor models
 void drawModels(){
     glColor3f(1.0f, 1.0f, 1.0f);
     for (Model model : models){
@@ -269,16 +292,16 @@ void drawAxis(){
 
     glBegin(GL_LINES);
     glColor3f(1.0,0.0,0.0);
-    glVertex3f(-radius,0,0);
-    glVertex3f(radius,0,0);
+    glVertex3f(centerX-far,0,0);
+    glVertex3f(centerX+far,0,0);
 
     glColor3f(0.0,1.0,0.0);
-    glVertex3f(0,-radius,0);
-    glVertex3f(0,radius,0);
+    glVertex3f(0,centerY-far,0);
+    glVertex3f(0,centerY+far,0);
 
     glColor3f(0,0,1);
-    glVertex3f(0,0,-radius);
-    glVertex3f(0,0,radius);
+    glVertex3f(0,0,centerZ-far);
+    glVertex3f(0,0,centerZ+far);
 
     glEnd();
     glColor3f(1.0,1.0,1.0);
@@ -298,30 +321,13 @@ void renderScene(void) {
 
     //drawAxis();
     drawModels();
-    //glutWireSphere(0.5,10,1);
+
 
     // End of frame
     glutSwapBuffers();
 }
 
-void spherical2Cartesian() {
 
-    centerX =  eyeX - cos(beta) * sin(alpha);
-    centerY =  eyeY - sin(beta);
-    centerZ =  eyeZ - cos(beta) * cos(alpha);
-
-
-    dx = centerX - eyeX;
-    dy = centerY - eyeY;
-    dz = centerZ - eyeZ;
-    float norm = sqrt(dx * dx + dy * dy + dz * dz);
-    dx /= norm;
-    dy /= norm;
-    dz /= norm;
-    rx = dy*upZ - dz*upY;
-    ry = dz*upX - dx*upZ;
-    rz = dx*upY - dy*upX;
-}
 
 void processSpecialKeys(int key, int xx, int yy) {
 
