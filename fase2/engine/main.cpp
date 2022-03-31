@@ -296,7 +296,7 @@ void renderScene(void) {
 
     glPolygonMode(GL_FRONT,GL_LINE);
 
-    drawAxis();
+    //drawAxis();
     drawModels();
     //glutWireSphere(0.5,10,1);
 
@@ -306,9 +306,9 @@ void renderScene(void) {
 
 void spherical2Cartesian() {
 
-    centerX =  eyeX - radius * cos(beta) * sin(alpha);
-    centerY =  eyeY - radius * sin(beta);
-    centerZ =  eyeZ - radius * cos(beta) * cos(alpha);
+    centerX =  eyeX - cos(beta) * sin(alpha);
+    centerY =  eyeY - sin(beta);
+    centerZ =  eyeZ - cos(beta) * cos(alpha);
 
 
     dx = centerX - eyeX;
@@ -427,7 +427,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_2_2.xml");
+        readXML(path_xml + "solar_system.xml");
 
 
     // init GLUT and the window

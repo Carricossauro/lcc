@@ -86,7 +86,7 @@ Nesta segunda etapa foi proposto:
 \begin{itemize}
     \item \textbf{Cenas hierárquicas}
         \begin{description}
-        \item Alteração do \textit{engine} de modo a ler ficheiros XML com vários grupos dispostos hierarquicamente. Um grupo pode ser composto por varias transformações geométricas(translação, rotação e escala), onde a ordem é relevante e opcionalmente por um ou mais modelos. 
+        \item Alteração do \textit{engine} de modo a ler ficheiros XML com vários grupos dispostos hierarquicamente. Um grupo pode ser composto por várias transformações geométricas(translação, rotação e escala), onde a ordem é relevante, e opcionalmente por um ou mais modelos. 
         \end{description}
 
     \item \textbf{Ficheiro de configuração}
@@ -98,8 +98,8 @@ Nesta segunda etapa foi proposto:
 
 \chapter{Apresentação das soluções}
 \section{Cenas hierárquicas}
-Para a criação de cenas hierárquicas, procedeu-se à alteração do leitor XML desenvolvido na primeira fase. Assim sendo ao invés do que acontecia anteriormente de forma iterativa, agora o leitor trabalha de forma recursiva, numa de espécie de travessia em profundidade. Para tal, foi construída uma função auxiliar que recebe como argumentos qual o grupo a ler e um vetor com as transformações que vai herdar. Após a leitura de cada modelo, este é armazenado num vetor de modelos que é uma estrutura composta por um vetor de pontos, para desenhar a primitiva gráfica, e um vetor de transformações a aplicar antes da primitiva ser desenhada. De seguida, a função é chamada novamente recebendo como parametros o grupo descendente do atual e um vetor de transformações atualizado. Quando a função retorna do proceso recursivo para esta etapa, o processo é repetido para o grupo "irmão" do atual. \par
-Para o a execução das transformaçoes foi criada uma classe abstracta chamada \textit{Transformation} com um metodo \textit{apply} e mais três outras classes, \textit{Translation}, \textit{Rotation},  e \textit{Scale} que implementam esta classe. Desta forma, para cada primitiva é possível iterar pelo vetor que armazena as transformações e simplesmente invocar o metodo \textit{apply}, não sendo por isso necessário executar instruções condicionais, como por exemplo \textit{if else}.  
+Para a criação de cenas hierárquicas, procedeu-se à alteração do leitor XML desenvolvido na primeira fase. Assim sendo, em oposição ao método iterativo usado anteriormente, nesta nova versão, o leitor trabalha de forma recursiva, análogamente a uma travessia em profundidade. Para tal, foi construída uma função auxiliar que recebe como argumentos o grupo a ler e um vetor com as transformações que vai herdar. Após a leitura de cada modelo, este é armazenado num vetor de modelos, que é uma estrutura composta por um vetor de pontos para desenhar a primitiva gráfica, e um vetor de transformações a aplicar antes da primitiva ser desenhada. De seguida, a função é chamada novamente recebendo como parâmetros o grupo descendente do atual e um vetor de transformações atualizado. Quando a função retorna do processo recursivo para esta etapa, o processo é repetido para o grupo "irmão" do atual. \par
+Para a execução das transformações foi criada uma classe abstracta chamada \textit{Transformation} com um método \textit{apply} e mais três outras classes, \textit{Translation}, \textit{Rotation},  e \textit{Scale}, que implementam esta classe. Desta forma, para cada primitiva é possível iterar pelo vetor que armazena as transformações e simplesmente invocar o método \textit{apply}, não sendo por isso necessário executar instruções condicionais, como por exemplo \textit{if else}.  
 
 \subsection{Demonstração do funcionamento do engine}
 
@@ -133,72 +133,87 @@ Para o a execução das transformaçoes foi criada uma classe abstracta chamada 
 \label{fig:plano}
 \caption{Execução dos ficheiros XML de teste}
 \end{figure}
-\textbf{Nota:} Nas imagens de teste apresentadas as esfera foram criadas com um número de stacks e slices superiores ao sugerido no ficheiro de configuração.
+\textbf{Nota:} Nas imagens de teste apresentadas as esferas foram criadas com um número de \textit{stacks} e \textit{slices} superiores ao sugerido no ficheiro de configuração.
 
 
 \newpage
 \section{Ficheiro de configuração}
-No ficheiro de configuração XML foi colocado o sol, os planetas e algumas das luas e anéis (conjuntos de luas) que orbitam os planetas. Para o calculo das distancias e tamanho dos planetas foi utilizado como medida de escala o diâmetro da Terra.
+No ficheiro de configuração XML colocou-se o sol, os planetas e algumas das luas e anéis que orbitam os planetas. 
+
+Uma vez que usando uma escala que representasse fielmente as distâncias e tamanhos tornaria inviável a visualização de todos os componentes do Sistema, decidiu-se implementar da seguinte forma:
+
+\begin{itemize}
+    \item \textbf{Tamanho dos objetos:} usou-se como medida de escala o diâmetro da Terra.
+    \item \textbf{Distância entre objetos:} utilizou-se a seguinte escala $10^6 \ km \rightarrow 1$ unidade.
+\end{itemize}
+
 
 \vspace{1cm}
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{1.png}
-\caption{\texttt{demo1}}
+\includegraphics[width = 18cm,height = 10cm]{1.png}
+\caption{Vista global}
 \label{fig:demo1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{2.png}
-\caption{\texttt{demo2}}
+\includegraphics[width = 18cm,height = 10cm]{2.png}
+\caption{Sol - Terra}
 \label{fig:demo2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{3.png}
-\caption{\texttt{demo3}}
+\includegraphics[width = 18cm,height = 10cm]{3.png}
+\caption{Terra - Lua}
 \label{fig:demo3}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{4.png}
-\caption{\texttt{demo4}}
+\includegraphics[width = 18cm,height = 10cm]{4.png}
+\caption{Júpiter com as luas de Galileu}
 \label{fig:demo4}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{5.png}
-\caption{\texttt{demo5}}
+\includegraphics[width = 18cm,height = 10cm]{5.png}
+\caption{Saturno e as luas : Titan, Rhea e Iapetus}
 \label{fig:demo5}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{6.png}
-\caption{\texttt{demo6}}
+\includegraphics[width = 18cm,height = 10cm]{6.png}
+\caption{Úrano com as suas luas: Titania, Oberon e Umbriel}
 \label{fig:demo6}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 15cm,height = 10cm]{7.png}
-\caption{\texttt{demo7}}
+\includegraphics[width = 18cm,height = 10cm]{7.png}
+\caption{Sol - Saturno}
 \label{fig:demo7}
 \end{figure}
 
 
+\chapter{Extras}
+\section{Implementação de câmara FPS}
+
+Para ser possível viajar pelo Universo e dessa forma "visitar" os diferentes planetas, tomou-se a decisão de implementar uma \textit{câmara FPS}. Esta permite rodar a câmara com as \textit{arrowkeys} e movimentar, para a frente, trás, esquerda e direita, com as teclas \texttt{w}, \texttt{s}, \texttt{a}, \texttt{d}, respetivamente.
+
+
+Para demonstrar esta função encontra-se um vídeo em anexo.
 
 \newpage
 \chapter{Conclusão}
-A principal dificuldade enfrentada durante esta fase do trabalho foi a alteração da função que faz a leitura de ficheiros XML. A forma como o idealizamos o seu funcionamento não foi muito difícil, no entanto durante a sua implementação depara-mo-nos com alguns problemas de \textit{segmentation fault}, assim como transformações que ocorriam em locais inesperados. 
+A principal dificuldade enfrentada durante esta fase do trabalho foi a alteração da função que faz a leitura de ficheiros XML. A forma como idealizamos o seu funcionamento não foi muito difícil, no entanto durante a sua implementação depara-mo-nos com alguns problemas de \textit{segmentation fault}, assim como transformações que ocorriam em locais inesperados. 
 
-Um fator que também criou dificuldades foi a escolha de uma escalada adequada para definir o tamanho dos planetas e a distancia entre eles. Apesar de assim ser mais realista, não temos a certeza se foi a melhor opção.
+Um fator que também criou dificuldades foi a escolha de uma escala adequada para definir o tamanho das diferentes componentes do Sistema Solar e as distâncias entre elas. Uma vez que as escolhidas não são totalmente fiéis à realidade não temos a certeza se as decisões tomadas foram as melhores, pelo que, esta componente poderá sofrer alterações futuramente.
 
-Por ultimo, a alteração da câmara por forma a permitir "viajar" pelo sistema solar também não foi tarefa fácil e pensamos que a mesma ainda pode ser melhorada.
+Por último, a alteração da câmara por forma a permitir "viajar" pelo sistema solar também foi um desafio e pensamos que a mesma ainda pode ser melhorada.
 
 Contudo, apesar das dificuldades enfrentadas, podemos concluir que os objectivos foram atingidos.
 \end{document}
