@@ -133,7 +133,7 @@
                 <models>
                     <model file="sphere.3d" />
                 </models>
-                <group >
+                <group > <!-- Ring -->
                     <transform>
                         <scale x="3" y="3" z="3"/>
                         
