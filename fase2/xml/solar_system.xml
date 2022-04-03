@@ -184,7 +184,7 @@
                 
             <group>        
                 <transform>
-                    <rotate angle = "90" x = "0" y = "0" z = "1" />
+                    <rotate angle = "97.7" x = "0" y = "0" z = "1" />
                     <scale x="4" y="4" z="4" />
                 </transform>
                 <models>
