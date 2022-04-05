@@ -1,3 +1,0 @@
-/home/carricossauro/Documents/LCC 3º ano/CG/aula4/build/CMakeFiles/rebuild_cache.dir
-/home/carricossauro/Documents/LCC 3º ano/CG/aula4/build/CMakeFiles/class4.dir
-/home/carricossauro/Documents/LCC 3º ano/CG/aula4/build/CMakeFiles/edit_cache.dir

@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/carricossauro/Documents/LCC 3º ano/CG/aulas5e6/main.cpp
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+vector
+-
+IL/il.h
+-
+GLUT/glut.h
+-
+GL/glew.h
+-
+GL/glut.h
+-
+iostream
+-
+vector
+-
+cmath
+-
+algorithm
+-
+
