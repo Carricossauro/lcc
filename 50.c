@@ -1,243 +1,300 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-int ex1() {
-	int p;
-	scanf("%d", &p);
-	int max = p;
-	while(p != 0) {
-		scanf("%d", &p);
-		if (p > max)
-			max = p;
-	}
-	printf("%d", max);
-	return max;
+//1 (n é o número de elementos da lista)
+int maiorSeq(int n){
+    int lista[n];
+    int max = 0, i;
+    for (i=0; i < n; i++){
+        int numero; printf("Número %d:",i); scanf("%d",&numero);
+        lista[i] = numero;
+        if (numero > max){
+            max = numero;
+        }
+    }
+    printf("%d\n",max);
+    return max;
+}
+//2 (n é o número de elementos da lista)
+int sMaiorSeq(int n){
+   int lista[n];
+   int valortotal = 0;
+   float media;
+   for (int i =0 ; i < n; i++){
+       int numero; printf("Número %d:",i); scanf("%d",&numero);
+       valortotal += numero;
+       lista[i] = numero;
+   }    
+   media = valortotal / n + (valortotal % n)*0.1;
+   return media;
 }
 
-int ex2() { //Vou imprimir a média em int porque não especifica
-	int numElementos = 1, x, soma;
-	scanf("%d", &soma);
-	x = soma;
-	while(x != 0) {
-		scanf("%d", &x);
-		if (x != 0) {
-			soma += x;
-			numElementos++;
-		}
-	}
-	int media = soma/numElementos;
-	printf("%d", media);
-	return media;
+
+// 3 (n é o número de elementos da lista)
+int sMaiorSeq(int n){
+   int lista[n];
+   int max = 0, max2 = 0;
+   for (int i =0 ; i < n; i++){
+       int numero; printf("Número %d:",i); scanf("%d",&numero);
+       if (numero > max2 && numero >= max){
+           max2 = max;
+           max = numero;
+       }
+       else if(numero > max2 && numero < max){
+           max2 = numero;
+       }
+       lista[i] = numero;
+   }    
+   return max2;
 }
 
-int ex3() {
-	int maior, sMaior;
-	int x;
-	scanf("%d", &x);
-	maior = x;
-	scanf("%d", &x);
-	if (x > maior) {
-		sMaior = maior;
-		maior = x;
-	} else sMaior = x;
-	while(x != 0) {
-		scanf("%d", &x);
-		if (x!= 0 && x > sMaior) {
-			if (x > maior) {
-				sMaior = maior;
-				maior = x;
-			} else sMaior = x;
-		}
-	}
-	printf("%d", sMaior);
-	return sMaior;
+//4
+int bitsUm(unsigned int n){
+    int um=0;
+    for(int i = n; i > 0 ; i /= 2){
+            if(i % 2 == 1) um++;
+    }
+    return um;
 }
 
-// Ex 4
-int bitsUm(unsigned int n) {
-	int i, uns = 0;
-	for(i = n; i > 0; i/=2) {
-		if (i % 2 == 1) uns++;
-	}
-	return uns;
+//5 
+int trailingZ(unsigned int n){
+    int zero=0;
+    for(int i = n; i > 0 ; i /= 2){
+            if(i % 2 == 0) zero++;
+    }
+    return zero;
+}
+/ 5
+
+int trailingZ (unsigned int n) {
+    if(n % 2) return 0;
+    else return 1 + trailingZ(n >> 1);
 }
 
-//Ex 5
-//unsigned int mas o codeboard use valores negativos para testar lol
-int trailingZ(unsigned int n) {
-	int i, zeros = 0;
-	for(i = n; i > 0; i/=2)
-		if (i % 2 == 0) zeros++;
-	return zeros;
+// 6
+
+int qDig (unsigned int n) {
+    if(n / 10 < 1) return 1;
+    else return 1 + qDig(n / 10);
 }
 
-//Ex 6
-int qDig(unsigned int n) {
-	int i,x = 0, resto = 1;
-	for(i = 1; resto != n; i*=10) {
-		resto = n % i;
-		if (resto != n)
-			x++;
-	}
-	return x;
+// 7
+
+char* mystrcat(char s1[], char s2[]) {
+    char* cat = s1;
+    while(*s1) s1++;
+    while((*s1 = *s2)) {s1++; s2++;}
+    *s1 = '\0';
+    return cat;
 }
 
-//Ex 7
-char *mystrcat(char s1[], char s2[]) {
-	int p,i;
-	for(p = 0; s1[p] != '\0'; p++); //p final tem s1[p] == '\0'
-	for (i = 0; s2[i] != '\0';i++,p++)
-		s1[p] = s2[i];
-	s1[p] = '\0';
-	return s1;
+// 8
+
+char* mystrcpy(char* dest, char source[]) {
+    char* result = dest;
+    while((*dest = *source)) { source++; dest++; }
+    return result;
 }
 
-//Ex 8
-char *mystrcpy(char *dest, char source[]) {
-	int i = 0;
-	for(i = 0; source[i] != '\0'; i++)
-		dest[i] = source[i];
-	dest[i] = '\0';
-	return dest;
-}
+// 9
 
-//Ex 9
 int mystrcmp(char s1[], char s2[]) {
-	int i;
-	for(i = 0; s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i]; i++);
-	return s1[i]-s2[i];
+    while(*s1 == *s2 && *s1) { s1++; s2++; }
+    return *s1 - *s2;
+}
 }
 
-//Ex 10
-char *mystrstr(char s1[], char s2[]) {
-    char *res = NULL;
-    int i,p;
-    if (s2[0] == '\0') return s1;
-    for(i = 0; s1[i] != '\0' && res == NULL; i++) {
-        for(p = 0; s2[p] != '\0' && s2[p] == s1[i+p];p++);
-        if (s2[p] == '\0')
-            res = s1 + i;
+// 13
+
+void truncW (char t[], int n) {
+    int wordLen = 0;
+    while(*t) {
+        if(*t == ' ' || *t == '\n' || *t == '\t') {t++; wordLen = 0;}
+        else {
+            if(wordLen++ >= n) tail(t);
+            else t++;
+        }
+    } 
+}
+
+// 14
+
+int freqC(char ch, char s[]) {
+    int freq = 0;
+    for(int i = 0; s[i]; i++) {
+        if(s[i] == ch) freq++;
     }
-    return res;
+    return freq;
 }
 
-//Ex 11
-void strrev(char s[]) {
-	int size;
-	char temp;
-	for (size = 0; s[size] != '\0'; size++);
-	for (int i = 0; i < size/2; i++) {
-		temp = s[i];
-		s[i] = s[size-i-1];
-		s[size-i-1] = temp;
-	}
-}
-
-//Ex 12
-void strnoV (char t[]){
-    int i, pos;
-    for (i = 0, pos = 0; t[i] != '\0';i++) {
-        if (t[i] != 'a' &&
-			t[i] != 'e' &&
-			t[i] != 'i' &&
-			t[i] != 'o' &&
-			t[i] != 'u' &&
-			t[i] != 'A' &&
-			t[i] != 'E' &&
-			t[i] != 'I' &&
-			t[i] != 'O' &&
-			t[i] != 'U') {
-			t[pos++] = t[i];
-		}
-    }
-    t[pos] = '\0';
-}
-
-//Ex 13
-void truncW(char t[], int n) {
-    int i, adi, pos;
-    for (i = 0, pos = 0, adi = 0; t[i] != '\0'; i++) {
-        if (t[i] == ' ') {
-            adi = 0;
-            t[pos++] = ' ';
-        } else if (adi < n) {
-            t[pos++] = t[i];
-            adi++;
+char charMaisFreq(char s[]) {
+    char maisFreq = 0;
+    int freqMax = 0, freq;
+    for(int i = 0; s[i]; i++) {
+        if((freq = freqC(s[i],s)) > freqMax) {
+            freqMax = freq;
+            maisFreq = s[i];
         }
     }
-    t[pos] = '\0';
+    return maisFreq;
 }
 
-//Ex 14
-char charMaisfreq (char s[]) {
-	char maisFreq = '0';
-	int i, j, freq = 0, f;
-	for(i = 0; s[i] != '\0'; i++) {
-		f = 0;
-		for (j = 0; s[j] != '\0'; j++) {
-			if (s[j] == s[i]) f++;
-		}
-		if (f > freq) {
-			freq = f;
-			maisFreq = s[i];
-		}
-	}
-	return maisFreq;
-}
+// 15
 
-//Ex 15
 int iguaisConsecutivos (char s[]) {
-    int i, k;
-    int seq = 0, n;
-    for (i = 0, n = 0; s[i] != '\0'; i++, n = 0) {
-        for (k = i; s[k] == s[i] && s[k] != '\0'; k++) n++;
-        if (n > seq) seq = n;
-    }
-    return seq;
-}
-
-//Ex 16
-int ex16(char s[]) {
-    int n = strlen(s), vs = 0, r = 0, i, o;
-    for (i = 0; i < n; i++) {
-        vs = 0;
-        for (o = i; o < n; o++) {
-            if (o == 0) vs++;
-            else if (s[o] == ' ') continue;
-            else if (s[o - 1] == s[o]) break;
-            else vs++;
+    int consec = 1, max = 0;
+    for(int i = 0; s[i]; i++) {
+        if(s[i] == s[i + 1]) consec++;
+        else {
+            if(consec > max) max = consec;
+            consec = 1;
         }
-        if (vs > r) r = vs;
     }
-    return r;
+    return max;
 }
 
-//Ex 17
+int difConsecutivos(char s[]) {
+    int ans = 0;
+    for(size_t i = 0; s[i]; i++) {
+        int consec = 0;
+        for(size_t j = i; s[j]; j++) {
+            if(not_in_prev(s,i,j)) consec++;
+            else break;
+        }
+        if (consec > ans) ans = consec;
+    }
+    return ans;
+}
+
+// 17
+
 int maiorPrefixo (char s1 [], char s2 []) {
-	int prefixo = 0;
-	int i, k, pre;
-	for (i = 0, pre = 0; s1[i] != '\0' && s2[i] != '\0'; i++, pre = 0) {
-		for (k = 0; s1[k] != '\0' && s2[k] != '\0' && s1[k] == s2[k]; k++) pre++;
-		if (pre > prefixo) prefixo = pre;
-	}
-	return prefixo;
+    int i;
+    for(i = 0; s1[i] == s2[i] && s1[i]; i++);
+    return i;
 }
 
-//Ex 18
+// 18
+
 int maiorSufixo (char s1 [], char s2 []) {
-    int n1 = strlen(s1), n2 = strlen(s2), i;
-    int n = (n1 < n2 ? n1 : n2), r = 0, pos = 0;
-    char s1i[n1], s2i[n2];
-
-    for (i = n1 - 1; i >= 0; i--) s1i[pos++] = s1[i];
-    pos = 0;
-    for (i = n2 - 1; i >= 0; i--) s2i[pos++] = s2[i];
-
-    for (i = 0; i < n; i++) {
-        if (s1i[i] == s2i[i]) r++;
-        else break;
-    }
-    return r;
+    int i, j, ans = -1;
+    for(i = 0; s1[i]; i++);
+    for(j = 0; s2[j]; j++);
+    while(s1[i--] == s2[j--]) ans++;
+    return ans;
 }
 
-//Ex 19
+// 19
+
+int sufPref (char s1[], char s2[]) {
+    int ans = 0, i, j = 0;
+    for(i = 0; s1[i]; i++) {
+        if(s1[i] == s2[j++]) ans++;
+        else ans = j = 0;
+    }
+    return ans;
+}
+
+// 20
+
+int contaPal (char s[]) {
+    int inWord = 0, total = 0;
+    for(int i = 0; s[i]; i++) {
+        if(s[i] == ' ' || s[i] == '\n') {
+            if(inWord) total++;
+            inWord = 0;
+        }
+        else inWord = 1;
+    }
+    if(inWord) total++;
+    return total;
+}
+
+//21
+
+int contaVogais (char s[]) {
+    int total = 0;
+    for(int i = 0; s[i]; i++) {
+        switch(s[i]) {
+            case 'a': case 'e': case 'i': case 'o': case 'u':
+            case 'A': case 'E': case 'I': case 'O': case 'U':
+                total++;
+        }
+    }
+    return total;
+}
+
+// 34
+
+int elimRepOrd (int v[], int n) {return elimRep(v,n);}
+
+// 35
+
+int comunsOrd (int a[], int na, int b[], int nb) {
+    int i = 0, j = 0, ans = 0;
+    while(i < na && j < nb) {
+        if(a[i++] == b[j++]) {
+            ans++;
+            i++;
+            j++;
+        }
+        else if(a[i] > b[j]) j++;
+        else i++;
+    }
+    return ans;
+}
+
+// 36
+
+int comuns (int a[], int na, int b[], int nb) {
+    int ans = 0;
+    for(int i = 0; i < na; i++) {
+        int belongs = 0;
+        for(int j = 0; j < nb; j++) if(a[i] == b[j]) belongs = 1;
+        if(belongs) ans++;
+    }
+    return ans;
+}
+
+// 37
+
+int minInd (int v[], int n) {
+    int minIndex = 0;
+    for(int i = 1; i < n; i++) 
+        if(v[i] < v[minIndex]) 
+            minIndex = i;
+    return minIndex;
+}
+
+// 38
+
+void somasAc (int v[], int Ac [], int N) {
+    for(int i = 0; i < N; i++) {
+        Ac[i] = 0;
+        for(int j = 0; j <= i; j++) {
+            Ac[i] += v[j];
+        }
+    }
+}
+
+// 39
+
+int triSup (int N, float m [N][N]) {
+    int x = 1;
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < i; j++) {
+            if(m[i][j]) x = 0;
+        }
+    }
+    return x;
+}
+
+// 40
+
+void transposta (int N, float m[N][N]) {
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < i; j++) {
+            float temp = m[i][j];
+            m[i][j] = m[j][i];
+            m[j][i] = temp;
+        }
+    }
+}
