@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./NavBar.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,10 @@ import { faBrain, faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar(props) {
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    if (props.size >= 1024) setExpanded(false);
+  }, [props.size]);
 
   const changeExpanded = () => {
     setExpanded((state) => {
@@ -49,7 +53,10 @@ export default function NavBar(props) {
             </button>
           </div>
           <div className="flex justify-center mx-3 mr-6">
-            <button className="flex items-center justify-center px-5 h-9 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000">
+            <button
+              className="flex items-center justify-center w-24 h-9 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+              onClick={props.setPopUp}
+            >
               LOGIN
             </button>
           </div>
@@ -77,7 +84,13 @@ export default function NavBar(props) {
             </button>
           </div>
           <div className="flex justify-center my-3">
-            <button className="flex items-center justify-center h-9 w-32 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000">
+            <button
+              className="flex items-center justify-center h-9 w-32 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+              onClick={() => {
+                props.setPopUp();
+                changeExpanded();
+              }}
+            >
               LOGIN
             </button>
           </div>
