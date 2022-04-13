@@ -26,12 +26,15 @@ export default function LoginPopUp({ setPopUp }) {
         >
           Player Login
         </button>
-        <button className="flex items-center justify-center px-5 h-10 w-96 hover:bg-color4 border border-color4 rounded cursor-pointer duration-700 self-center">
+        <button
+          className="flex items-center justify-center px-5 h-10 w-96 hover:bg-color4 border border-color4 rounded cursor-pointer duration-700 self-center"
+          onClick={() => redirect("/Author/Login")}
+        >
           Author Login
         </button>
         <div className="w-full text-center my-5">______________________</div>
         <div className="w-full text-center">Don't have an account?</div>
-        <div className="w-full text-center mt-5 cursor-pointer hover:text-color5 duration-100 font-bold">
+        <div className="w-full text-center mt-5 cursor-pointer hover:text-color5 duration-100 font-bold hover:underline">
           Create an account now!
         </div>
       </div>

@@ -17,6 +17,10 @@ export default function NavBar(props) {
     });
   };
 
+  const redirect = (page) => {
+    window.location.href = page;
+  };
+
   return (
     <div className="fixed top-0 left-0 h-16 w-screen bg-color5 flex flex-wrap text-white shadow-md">
       <div className="w-full h-16 lg:w-2/5 h-inherit flex items-center pl-2">
@@ -48,7 +52,10 @@ export default function NavBar(props) {
             </button>
           </div>
           <div className="flex justify-center mx-3">
-            <button className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000">
+            <button
+              className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/SignUp")}
+            >
               SIGN UP
             </button>
           </div>
@@ -79,7 +86,10 @@ export default function NavBar(props) {
             </button>
           </div>
           <div className="flex justify-center my-3">
-            <button className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000">
+            <button
+              className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/Author/Login")}
+            >
               SIGN UP
             </button>
           </div>

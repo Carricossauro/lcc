@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import LoginPopUp from "./models/LoginPopUp/LoginPopUp";
 import NavBar from "./models/NavBar/NavBar";
-
+import SignUp from "./models/SignUp/SignUp";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,12 +11,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import Player from "./models/Player/Player";
+import Author from "./models/Author/Author";
 import PlayerLogin from "./models/Player/PlayerLogin";
 
 const Index = () => {
   const [size, setSize] = useState(window.innerWidth);
   const [loginPopUp, setLoginPopUp] = useState(false);
   const [showNavBar, setShowNavBar] = useState(true);
+  const [isAuthor, setIsAuthor] = useState(true);
   const checkSize = () => {
     setSize(window.innerWidth);
   };
@@ -42,6 +44,21 @@ const Index = () => {
           <Route
             path="/Player/:playerPath"
             element={<Player setShowNavBar={setShowNavBar} size={size} />}
+          ></Route>
+          <Route
+            path="/Author/:authorPath"
+            element={<Author setShowNavBar={setShowNavBar} size={size} />}
+          ></Route>
+          <Route
+            path="/SignUp"
+            element={
+              <SignUp
+                setShowNavBar={setShowNavBar}
+                size={size}
+                setIsAuthor={setIsAuthor}
+                isAuthor={isAuthor}
+              />
+            }
           ></Route>
         </Routes>
       </Router>

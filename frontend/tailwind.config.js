@@ -9,6 +9,10 @@ module.exports = {
         color4: "#f7a072",
         color5: "#ff9b42",
       },
+      backgroundImage: {
+        "split-color2-white":
+          "linear-gradient(to bottom,  #d9e5d6 50%, white 50%);",
+      },
     },
   },
   plugins: [],
