@@ -132,7 +132,7 @@ mysql = MySQLdb.connect(host,user,password,schema)
 cursor = mysql.cursor()
 
 #insertAuthor('A1','Author2','1234','a2@gmail.com')
-#deleteAuthor('A1')
+deleteAuthor('A1')
 
 #insertPlayer('P1','Player1','1234','2020-01-01','p1@gmail.com')
 #deletePlayer('P1')
