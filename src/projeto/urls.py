@@ -16,12 +16,10 @@ Including another URLconf
 from operator import index
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
 
-from cm.views import front
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cm.urls')),
-    #path('',TemplateView.as_view(template_name='index.html')),
+    path('', include('backend.urls')),
+    
 ]

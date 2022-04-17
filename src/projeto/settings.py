@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cm',
+    'rest_framework',
+    'backend',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/build')
+            #os.path.join(BASE_DIR,'frontend/build')
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -138,6 +139,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIR = [
+'''STATICFILES_DIR = [
     os.path.join(BASE_DIR,'frontend/build/static'),
-]
+]'''
