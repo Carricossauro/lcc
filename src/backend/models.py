@@ -17,11 +17,15 @@ class Author(models.Model):
     class Meta:
         managed = False
         db_table = 'Author'
+    
+    def __str__(self):
+        return self.id
 
 
 class Content(models.Model):
-    question = models.OneToOneField('Question', models.DO_NOTHING, db_column='Question', primary_key=True)  # Field name made lowercase.
-    order = models.IntegerField(db_column='Order')  # Field name made lowercase.
+    
+    question = models.ForeignKey('Question', models.DO_NOTHING, db_column='Question',related_name='contents')  # Field name made lowercase.
+    order = models.IntegerField(db_column='Order',primary_key=True)  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=1)  # Field name made lowercase.
     media = models.TextField(db_column='Media')  # Field name made lowercase.
 
@@ -29,6 +33,8 @@ class Content(models.Model):
         managed = False
         db_table = 'Content'
         unique_together = (('question', 'order'),)
+
+    
 
 
 class History(models.Model):
@@ -46,7 +52,7 @@ class History(models.Model):
 
 class Option(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    question = models.ForeignKey('Question', models.DO_NOTHING, db_column='Question')  # Field name made lowercase.
+    question = models.ForeignKey('Question', models.DO_NOTHING, db_column='Question',related_name='options')  # Field name made lowercase.
     answer = models.TextField(db_column='Answer')  # Field name made lowercase.
     correct = models.IntegerField(db_column='Correct')  # Field name made lowercase.
 

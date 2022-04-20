@@ -1,13 +1,11 @@
-from logging import raiseExceptions
-from optparse import Values
-from os import stat
-from pyexpat import model
+
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from backend import models
 from backend import serializers
+from datetime import datetime
 
 # Create your views here.
 
@@ -68,7 +66,7 @@ def questions(request):
         serializer = serializers.Question(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.validated_data, status=201)
+        return Response(serializer.data, status=201)
 
 
 def getOptions(question):
@@ -86,17 +84,34 @@ def getContents(question):
 def question(request,id):
     question = get_object_or_404(models.Question.objects.filter(id=id))
     serializer = serializers.Question(instance=question)
-    options = getOptions(id)
-    contents = getContents(id)
-    response = serializer.data
-    response.update({'options':options,'contents':contents})
-    return Response(response)
-
-@api_view()
-def history(request):
-    history = models.History.objects.all()
-    serializer = serializers.History(instance=history,many=True)
     return Response(serializer.data)
+
+@api_view(http_method_names=['get','post'])
+def history(request):
+    if request.method == 'GET':
+        history = models.History.objects.all()
+        serializer = serializers.History(instance=history,many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        data = request.data
+        if 'answer' in request.data and 'question' in request.data:
+            correct = models.Option.objects.get(question=request.data['question'],correct=1 )
+            if correct:
+                correct = serializers.Option(instance=correct)
+                correct = correct.data
+                if request.data['answer'] == correct['answer']:
+                    data.update({'correct':1})
+                else:
+                    data.update({'correct':0})
+        if 'date' not in data:
+            formatted_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            data.update({'date':str(formatted_date)})
+        serializer = serializers.History(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=201)
+
 
 
 @api_view()

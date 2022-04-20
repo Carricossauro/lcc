@@ -1,5 +1,3 @@
-from wsgiref.validate import validator
-from attr import field
 from rest_framework import serializers
 from backend import models
 
@@ -14,26 +12,29 @@ class Player(serializers.ModelSerializer):
         model = models.Player
         fields = ['id','name','password','birthday','email']
     
-
-
-
-class Question(serializers.ModelSerializer):
-    class Meta:
-        model = models.Question
-        fields = ['id','author','title','type','score','dificulty','minage','maxage']
-
-
 class Option(serializers.ModelSerializer):
     class Meta:
         model = models.Option
-        fields = ['id','answer']
+        fields = ['id','answer','question','correct']
+
 
 class Content(serializers.ModelSerializer):
     class Meta:
         model = models.Content
-        fields = ['order','type','media']
+        fields = ['question','order','type','media']
+
+
+class Question(serializers.ModelSerializer):
+    options = Option(many=True, read_only=True)
+    contents = Content(many=True, read_only=True)
+    class Meta:
+        model = models.Question
+        fields = ['id','author','title','type','score','dificulty','minage','maxage','options','contents']
+
+
 
 class History(serializers.ModelSerializer):
     class Meta:
         model = models.History
-        fields = ['player','question','date','correct','answer']
+        fields = ['id','player','question','date','correct','answer']
+        read_only = ['correct','date']
