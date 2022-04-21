@@ -9,73 +9,7 @@
 #include <fstream>
 #include <vector>
 #include "tinyxml2.h"
-
-// estrutura que representa um ponto no espaço
-struct Point{
-    float x,y,z;
-    Point(float x, float y, float z){
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-};
-
-class Transformation {
-public:
-    void virtual apply() = 0;
-};
-
-class Translate : public Transformation{
-    float x, y, z;
-public:
-    Translate(float x, float y, float z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-
-    void apply() {
-        glTranslatef(x, y, z);
-    }
-};
-
-class Rotate : public Transformation{
-    float x, y, z, angle;
-public:
-    Rotate(float angle, float x, float y, float z) {
-        this->angle = angle;
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-
-    void apply() {
-        glRotatef(angle, x, y, z);
-    }
-};
-
-class Scale : public Transformation{
-    float x, y, z;
-public:
-    Scale(float x, float y, float z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-
-    void apply() {
-        glScalef(x, y, z);
-    }
-};
-
-struct Model {
-    std::vector<Point> points;
-    std::vector<Transformation*> transformations;
-    Model(std::vector<Point> p, std::vector<Transformation*> t) {
-        this->points = p;
-        this->transformations = t;
-    }
-};
+#include "structs.cpp"
 
 // caminho para os ficheiros .3d
 std::string path_3d;
@@ -145,14 +79,38 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
         if (transformation) {
             for (XMLElement *t = transformation->FirstChildElement(); t; t = t->NextSiblingElement()) {
                 std::string name = std::string(t->Name());
+                std::cout << name << std::endl;
 
                 if (name == "translate") {
-                    float x, y, z;
-                    x = atof(t->Attribute("x"));
-                    y = atof(t->Attribute("y"));
-                    z = atof(t->Attribute("z"));
+                    std::cout << "p1" << std::endl;
+                    if (t->Attribute("time") == nullptr) {
+                        float x, y, z;
+                        x = atof(t->Attribute("x"));
+                        y = atof(t->Attribute("y"));
+                        z = atof(t->Attribute("z"));
 
-                    ts.push_back(new Translate(x, y, z));
+                        ts.push_back(new Translate(x, y, z));
+                    } else {
+                        std::cout << "p2" << std::endl;
+                        float time;
+                        std::string align;
+                        std::vector<Point> curve;
+                        time = atof(t->Attribute("time"));
+                        align = t->Attribute("align");
+                        std::cout << "p3" << std::endl;
+
+                        for (XMLElement *p = t->FirstChildElement("point"); p; p = p->NextSiblingElement("point")) {
+                            float x, y, z;
+                            x = atof(p->Attribute("x"));
+                            y = atof(p->Attribute("y"));
+                            z = atof(p->Attribute("z"));
+
+                            curve.push_back(Point(x, y, z));
+                        }
+                        std::cout << "p4" << std::endl;
+
+                        ts.push_back(new Curve(0, curve, align == "True", time));
+                    }
                 } else if (name == "rotate") {
                     float x, y, z, angle;
                     angle = atof(t->Attribute("angle"));

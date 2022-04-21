@@ -9,6 +9,7 @@ set(OpenGL_GL_PREFERENCE GLVND)
 set(
         OBJECTS
         tinyxml2.cpp
+        structs.cpp
 )
 set(
         HEADERS
