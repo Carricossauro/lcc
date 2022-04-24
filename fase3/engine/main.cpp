@@ -1,7 +1,10 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>
+
+
 #endif
 
 #include <math.h>
@@ -238,12 +241,50 @@ public:
 };
 
 struct Model {
-    std::vector<Point> points;
+    //std::vector<Point> points;
+    std::vector<float> vertexB;
     std::vector<Transformation*> transformations;
+    GLuint vertices, verticeCount;
     Model(std::vector<Point> p, std::vector<Transformation*> t) {
-        this->points = p;
+        //this->points = p;
         this->transformations = t;
+        this->verticeCount = p.size();
+        for(Point point : p){
+            vertexB.push_back(point.x);
+            vertexB.push_back(point.y);
+            vertexB.push_back(point.z);
+        }
     }
+
+    void bind(){
+        glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
+        glBufferData(GL_ARRAY_BUFFER, vertexB.size() * sizeof(float), vertexB.data(), GL_STATIC_DRAW);
+
+    }
+    void draw(){
+        glPushMatrix();
+        for (Transformation* t : this->transformations) {
+            t->apply();
+        }
+        glBindBuffer(GL_ARRAY_BUFFER, vertices);
+        glVertexPointer(3, GL_FLOAT, 0, 0);
+        glDrawArrays(GL_TRIANGLES, 0, this->verticeCount);
+        glPopMatrix();
+    }
+
+    /*void draw(){
+        glPushMatrix();
+        for (Transformation* t : this->transformations) {
+            t->apply();
+        }
+
+        glBegin(GL_TRIANGLES);
+        for (Point p : this->points){
+            glVertex3f(p.x,p.y,p.z);
+        }
+        glEnd();
+        glPopMatrix();
+    }*/
 };
 
 // caminho para os ficheiros .3d
@@ -314,10 +355,10 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
         if (transformation) {
             for (XMLElement *t = transformation->FirstChildElement(); t; t = t->NextSiblingElement()) {
                 std::string name = std::string(t->Name());
-                std::cout << name << std::endl;
+
 
                 if (name == "translate") {
-                    std::cout << "p1" << std::endl;
+
                     if (t->Attribute("time") == nullptr) {
                         float x, y, z;
                         x = atof(t->Attribute("x"));
@@ -326,13 +367,13 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
                         ts.push_back(new Translate(x, y, z));
                     } else {
-                        std::cout << "p2" << std::endl;
+
                         float time;
                         std::string align;
                         std::vector<Point> curve;
                         time = atof(t->Attribute("time"));
                         align = t->Attribute("align");
-                        std::cout << "p3" << std::endl;
+
 
                         for (XMLElement *p = t->FirstChildElement("point"); p; p = p->NextSiblingElement("point")) {
                             float x, y, z;
@@ -342,7 +383,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
                             curve.push_back(Point(x, y, z));
                         }
-                        std::cout << "p4" << std::endl;
+
 
                         ts.push_back(new Curve( curve, align == "True", time));
                     }
@@ -471,17 +512,8 @@ void spherical2Cartesian() {
 void drawModels(){
     glColor3f(1.0f, 1.0f, 1.0f);
     for (Model model : models){
-        glPushMatrix();
-        for (Transformation* t : model.transformations) {
-            t->apply();
-        }
-
-        glBegin(GL_TRIANGLES);
-        for (Point p : model.points){
-            glVertex3f(p.x,p.y,p.z);
-        }
-        glEnd();
-        glPopMatrix();
+        //model.bind();
+        model.draw();
     }
 }
 
@@ -645,6 +677,20 @@ int main(int argc, char **argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     glutIdleFunc(renderScene);
+
+    glewInit();
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    GLuint buffers[models.size()];
+    glGenBuffers(models.size(),buffers);
+    for(int i=0; i<models.size();i++){
+        models[i].vertices = buffers[i];
+        models[i].bind();
+    }
+
+
+
+
 
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
