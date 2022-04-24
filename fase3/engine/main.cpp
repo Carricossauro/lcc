@@ -158,24 +158,18 @@ public:
 };
 
 class RotateTime : public Transformation{
-    float x, y, z, time, current_time;
+    float x, y, z, time;
 public:
     RotateTime(float time, float x, float y, float z) {
         this->time = time * 1000;
         this->x = x;
         this->y = y;
         this->z = z;
-        this->current_time = glutGet(GLUT_ELAPSED_TIME);
     }
 
     void apply() {
-        float new_time = glutGet(GLUT_ELAPSED_TIME);
-        float diff = new_time - current_time;
-
-        float angle = new_time*360/time;
+        float angle = glutGet(GLUT_ELAPSED_TIME)*360/time;
         glRotatef(angle, x, y, z);
-
-        current_time = new_time;
     }
 };
 
@@ -194,15 +188,16 @@ public:
 };
 
 class Curve : public Transformation {
-    float t, time;
+    float t, time, current_time;
     std::vector<Point> control_points;
     bool align;
     float prev_y[3];
 public:
-    Curve(float t, std::vector<Point> points, bool align, float time) {
-        this->t = t;
+    Curve(std::vector<Point> points, bool align, float time) {
+        this->t = 0;
         this->control_points = points;
-        this->time = time;
+        this->time = time*1000;
+        this->current_time = 0;
         this->align = align;
         this->prev_y[0] = 0;
         this->prev_y[1] = 1;
@@ -233,8 +228,11 @@ public:
             buildRotMatrix(x, y, z, m);
             glMultMatrixf(m);
         }
+            float new_time = glutGet(GLUT_ELAPSED_TIME);
+            float diff = new_time - current_time;
 
-        t += 0.001;
+        t += diff/time;
+        current_time = new_time;
     }
 
 };
@@ -346,7 +344,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
                         }
                         std::cout << "p4" << std::endl;
 
-                        ts.push_back(new Curve(0, curve, align == "True", time));
+                        ts.push_back(new Curve( curve, align == "True", time));
                     }
                 } else if (name == "rotate") {
                     float x, y, z, angle, time;
@@ -633,7 +631,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "solar_system.xml");
+        readXML(path_xml + "test_3_1.xml");
 
 
     // init GLUT and the window
