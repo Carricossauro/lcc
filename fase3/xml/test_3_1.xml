@@ -7,7 +7,7 @@
     </camera>
     <group> 
 		<transform>
-			<rotate angle="3" x="0" y="1" z="0" />
+			<rotate time="3" x="0" y="1" z="0" />
 		</transform>
 		<group>
 			<transform>
@@ -21,7 +21,7 @@
 				<scale x="0.5" y="0.5" z="0.5" />
 			</transform>
 			<models> 
-				<model file="sphere.3d" /> <!-- generator bezier teapot.patch 10 bezier.3d -->
+				<model file="cone.3d" /> <!-- generator bezier teapot.patch 10 bezier.3d -->
 			</models>
 		</group>
  	</group>

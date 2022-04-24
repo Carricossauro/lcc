@@ -110,6 +110,19 @@ void getGlobalCatmullRomPoint(float gt, float *pos, float *deriv, std::vector<Po
 	getCatmullRomPoint(t, p0, p1, p2, p3, pos, deriv);
 }
 
+void renderCatmullRomCurve(std::vector<Point> control_points) {
+	// draw curve using line segments with GL_LINE_LOOP
+	float pos[3], deriv[3];
+	float LINE_SEGMENTS = 100;
+	
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < LINE_SEGMENTS; i++) {
+		getGlobalCatmullRomPoint(1/LINE_SEGMENTS * i, pos, deriv, control_points);
+		glVertex3f(pos[0], pos[1], pos[2]);
+	}
+	glEnd();
+}
+
 class Transformation {
 public:
     void virtual apply() = 0;
@@ -129,10 +142,10 @@ public:
     }
 };
 
-class Rotate : public Transformation{
+class RotateAngle : public Transformation{
     float x, y, z, angle;
 public:
-    Rotate(float angle, float x, float y, float z) {
+    RotateAngle(float angle, float x, float y, float z) {
         this->angle = angle;
         this->x = x;
         this->y = y;
@@ -141,6 +154,28 @@ public:
 
     void apply() {
         glRotatef(angle, x, y, z);
+    }
+};
+
+class RotateTime : public Transformation{
+    float x, y, z, time, current_time;
+public:
+    RotateTime(float time, float x, float y, float z) {
+        this->time = time * 1000;
+        this->x = x;
+        this->y = y;
+        this->z = z;
+        this->current_time = glutGet(GLUT_ELAPSED_TIME);
+    }
+
+    void apply() {
+        float new_time = glutGet(GLUT_ELAPSED_TIME);
+        float diff = new_time - current_time;
+
+        float angle = new_time*360/time;
+        glRotatef(angle, x, y, z);
+
+        current_time = new_time;
     }
 };
 
@@ -176,10 +211,7 @@ public:
 
     void apply() {
         float pos[3], deriv[3];
-
-        for (Point p : control_points) {
-            std::cout << p.x << " " << p.y << " " << p.z << std::endl;
-        }
+        renderCatmullRomCurve(control_points);
 
         getGlobalCatmullRomPoint(t, pos, deriv, control_points);
 
@@ -317,13 +349,18 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
                         ts.push_back(new Curve(0, curve, align == "True", time));
                     }
                 } else if (name == "rotate") {
-                    float x, y, z, angle;
-                    angle = atof(t->Attribute("angle"));
+                    float x, y, z, angle, time;
                     x = atof(t->Attribute("x"));
                     y = atof(t->Attribute("y"));
                     z = atof(t->Attribute("z"));
+                    if (t->Attribute("time") == nullptr) {
+                        angle = atof(t->Attribute("angle"));
+                        ts.push_back(new RotateAngle(angle, x, y, z));
+                    } else {
+                        time = atof(t->Attribute("time"));
+                        ts.push_back(new RotateTime(time, x, y, z));
+                    }
 
-                    ts.push_back(new Rotate(angle, x, y, z));
                 } else if (name == "scale") {
                     float x, y, z;
                     x = atof(t->Attribute("x"));
