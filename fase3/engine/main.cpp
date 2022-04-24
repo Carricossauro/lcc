@@ -11,6 +11,211 @@
 #include "tinyxml2.h"
 #include "structs.cpp"
 
+struct Point{
+    float x,y,z;
+    Point(float x, float y, float z){
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+};
+
+void convertPoint(Point p, float* point) {
+    point[0] = p.x;
+    point[1] = p.y;
+    point[2] = p.z;
+}
+
+void buildRotMatrix(float *x, float *y, float *z, float *m) {
+	m[0] = x[0]; m[1] = x[1]; m[2] = x[2]; m[3] = 0;
+	m[4] = y[0]; m[5] = y[1]; m[6] = y[2]; m[7] = 0;
+	m[8] = z[0]; m[9] = z[1]; m[10] = z[2]; m[11] = 0;
+	m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+}
+
+void cross(float *a, float *b, float *res) {
+	res[0] = a[1]*b[2] - a[2]*b[1];
+	res[1] = a[2]*b[0] - a[0]*b[2];
+	res[2] = a[0]*b[1] - a[1]*b[0];
+}
+
+void normalize(float *a) {
+	float l = sqrt(a[0]*a[0] + a[1] * a[1] + a[2] * a[2]);
+	a[0] = a[0]/l;
+	a[1] = a[1]/l;
+	a[2] = a[2]/l;
+}
+
+float length(float *v) {
+	float res = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+	return res;
+
+}
+
+void multMatrixVector(float *m, float *v, float *res) {
+	for (int j = 0; j < 4; ++j) {
+		res[j] = 0;
+		for (int k = 0; k < 4; ++k) {
+			res[j] += v[k] * m[j * 4 + k];
+		}
+	}
+
+}
+
+void getCatmullRomPoint(float t, float *p0, float *p1, float *p2, float *p3, float *pos, float *deriv) {
+	// catmull-rom matrix
+	float m[4][4] = {	{-0.5f,  1.5f, -1.5f,  0.5f},
+						{ 1.0f, -2.5f,  2.0f, -0.5f},
+						{-0.5f,  0.0f,  0.5f,  0.0f},
+						{ 0.0f,  1.0f,  0.0f,  0.0f}};
+			
+
+	for (int i = 0; i < 3; i++) { // x y z
+		float A[4];
+		float temp[] = {p0[i], p1[i], p2[i], p3[i]};
+		multMatrixVector((float *) m, temp, A);
+
+		// Compute pos = T * A
+		// pos[i]
+		pos[i] = pow(t, 3) * A[0] + pow(t, 2) * A[1] + t * A[2] + A[3];
+
+		// Compute deriv = T' * A
+		// deriv[i]
+		deriv[i] = 3 * pow(t, 2) * A[0] + 2 * t * A[1] + A[2];
+	}
+}
+
+
+// given  global t, returns the point in the curve
+void getGlobalCatmullRomPoint(float gt, float *pos, float *deriv, std::vector<Point> p) {
+    int POINT_COUNT = p.size();
+
+	float t = gt * POINT_COUNT; // this is the real global t
+	int index = floor(t);  // which segment
+	t = t - index; // where within  the segment
+
+	// indices store the points
+	int indices[4]; 
+	indices[0] = (index + POINT_COUNT-1)%POINT_COUNT;	
+	indices[1] = (indices[0]+1)%POINT_COUNT;
+	indices[2] = (indices[1]+1)%POINT_COUNT; 
+	indices[3] = (indices[2]+1)%POINT_COUNT;
+
+    float p0[3], p1[3], p2[3], p3[3];
+    convertPoint(p[indices[0]], p0);
+    convertPoint(p[indices[1]], p1);
+    convertPoint(p[indices[2]], p2);
+    convertPoint(p[indices[3]], p3);
+
+	getCatmullRomPoint(t, p0, p1, p2, p3, pos, deriv);
+}
+
+class Transformation {
+public:
+    void virtual apply() = 0;
+};
+
+class Translate : public Transformation{
+    float x, y, z;
+public:
+    Translate(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glTranslatef(x, y, z);
+    }
+};
+
+class Rotate : public Transformation{
+    float x, y, z, angle;
+public:
+    Rotate(float angle, float x, float y, float z) {
+        this->angle = angle;
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glRotatef(angle, x, y, z);
+    }
+};
+
+class Scale : public Transformation{
+    float x, y, z;
+public:
+    Scale(float x, float y, float z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
+    void apply() {
+        glScalef(x, y, z);
+    }
+};
+
+class Curve : public Transformation {
+    float t, time;
+    std::vector<Point> control_points;
+    bool align;
+    float prev_y[3];
+public:
+    Curve(float t, std::vector<Point> points, bool align, float time) {
+        this->t = t;
+        this->control_points = points;
+        this->time = time;
+        this->align = align;
+        this->prev_y[0] = 0;
+        this->prev_y[1] = 1;
+        this->prev_y[2] = 0;
+    }
+
+    void apply() {
+        float pos[3], deriv[3];
+
+        for (Point p : control_points) {
+            std::cout << p.x << " " << p.y << " " << p.z << std::endl;
+        }
+
+        getGlobalCatmullRomPoint(t, pos, deriv, control_points);
+
+        glTranslatef(pos[0], pos[1], pos[2]);
+        if (align) {
+            float x[3] = {deriv[0], deriv[1], deriv[2]};
+            float y[3];
+            float z[3];
+            float m[16];
+
+            normalize(x);
+            cross(x, prev_y, z);
+            normalize(z);
+            cross(z, x, y);
+
+            normalize(y);
+            memcpy(prev_y, y, 3*sizeof(float));
+
+            buildRotMatrix(x, y, z, m);
+            glMultMatrixf(m);
+        }
+
+        t += 0.001;
+    }
+
+};
+
+struct Model {
+    std::vector<Point> points;
+    std::vector<Transformation*> transformations;
+    Model(std::vector<Point> p, std::vector<Transformation*> t) {
+        this->points = p;
+        this->transformations = t;
+    }
+};
+
 // caminho para os ficheiros .3d
 std::string path_3d;
 // caminho para os ficheiros xml
@@ -404,7 +609,7 @@ int main(int argc, char **argv) {
     // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
-    //glutIdleFunc(renderScene);
+    glutIdleFunc(renderScene);
 
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
