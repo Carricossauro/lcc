@@ -9,10 +9,14 @@ set(OpenGL_GL_PREFERENCE GLVND)
 set(
         OBJECTS
         tinyxml2.cpp
+        structs.cpp
+        #catmull.cpp
 )
 set(
         HEADERS
         tinyxml2.h
+        #catmull.h
+        structs.h
 )
 
 
