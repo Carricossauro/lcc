@@ -54,7 +54,7 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-// le pontos armazenados em source (ficheiro .3d) e retorna um vetor de vetores de Point
+
 std::vector<Point> getModel(std::string source) {
     std::ifstream file_input(source) ;
     float x,y,z;
@@ -65,7 +65,7 @@ std::vector<Point> getModel(std::string source) {
     file_input.close();
     return model;
 }
-// funçao auxiliar do readXML que le um grupo
+
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     using namespace tinyxml2;
     std::vector<Transformation*> backup = ts;
@@ -150,7 +150,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     }
 }
 
-// le o ficheiro xml com as configurações
+
 void readXML(std::string source) {
     using namespace tinyxml2;
 
@@ -230,16 +230,14 @@ void spherical2Cartesian() {
 }
 
 
-// desenha as figuras com os pontos e transformações armazenados no vetor models
 void drawModels(){
     glColor3f(1.0f, 1.0f, 1.0f);
     for (Model model : models){
-        //model.bind();
         model.draw();
     }
 }
 
-// desenha os eixos x y z
+
 void drawAxis(){
 
     glBegin(GL_LINES);
@@ -375,7 +373,6 @@ void processKeys(unsigned char c, int xx, int yy) {
 }
 
 int main(int argc, char **argv) {
-    // caminho para os ficheiros 3d e xml
     path_3d = "../../3d/";
     path_xml = "../../xml/";
 
@@ -410,10 +407,7 @@ int main(int argc, char **argv) {
         models[i].bind();
     }
 
-
-
-
-
+    
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
 
