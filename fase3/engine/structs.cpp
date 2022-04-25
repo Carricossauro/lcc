@@ -34,8 +34,6 @@ void RotateAngle::apply() {
 }
 
 
-
-
 RotateTime::RotateTime(float time, float x, float y, float z) {
         this->time = time * 1000;
         this->x = x;
@@ -104,7 +102,6 @@ void Curve::apply() {
 
 
 Model::Model(std::vector<Point> p, std::vector<Transformation*> t) {
-        //this->points = p;
         this->transformations = t;
         this->verticeCount = p.size();
         for(Point point : p){
