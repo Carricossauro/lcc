@@ -4,10 +4,26 @@
 #include <sstream>
 #include <string.h>
 #include <math.h>
+#include <vector>
 
 
+enum Model {plane, box, sphere, cone, cylinder, torus, bezier};
 
-enum Model {plane, box, sphere, cone, cylinder, torus};
+struct Point{
+    float x,y,z;
+    Point() {
+        this->x = 0;
+        this->y = 0;
+        this->z = 0;
+    }
+    Point(float x, float y, float z){
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+};
+
+
 
 
 std::string generatePlane(float length, int divisions ){
@@ -393,6 +409,181 @@ std::string generateTorus(float R, float r, int slices, int stacks) {
     return buffer.str();
 }
 
+void multMatrixVector(float m[4][4], float *v, float *res) {
+
+    for (int j = 0; j < 4; ++j) {
+        res[j] = 0;
+        for (int k = 0; k < 4; ++k) {
+            res[j] += v[k] * m[j][k];
+        }
+    }
+
+}
+
+void multMatrixMatrix(float a[4][4], float b[4][4], float res[4][4]){
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 4; j++){
+            res[i][j] = 0;
+            for(int k = 0; k < 4; k++)
+                res[i][j] += a[i][k] * b[k][j];
+        }
+}
+
+float B(float U, float V, float m[4][4]){
+
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = powf(V,3);
+    v[1] = powf(V,2);
+    v[2] = V;
+    v[3] = 1;
+
+    multMatrixVector(m,v,aux);
+
+    r = powf(U,3)*aux[0] + powf(U,2)*aux[1] + U*aux[2] + aux[3];
+
+
+
+    return r;
+
+}
+
+std::string generateSurface(float mx[4][4], float my[4][4], float mz[4][4], float tesselation){
+    std::stringstream buffer;
+    float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    float tesselation_level = 1/tesselation;
+
+    for(float i=0; i<1; i+=tesselation_level){
+        for(float j=0; j<1; j+=tesselation_level){
+            x1 = B(i,j,mx);
+            x2 = B(i+tesselation_level,j,mx);
+            x3 = B(i+tesselation_level,j+tesselation_level,mx);
+            x4 = B(i,j+tesselation_level,mx);
+
+            y1 = B(i,j,my);
+            y2 = B(i+tesselation_level,j,my);
+            y3 = B(i+tesselation_level,j+tesselation_level,my);
+            y4 = B(i,j+tesselation_level,my);
+
+            z1 = B(i,j,mz);
+            z2 = B(i+tesselation_level,j,mz);
+            z3 = B(i+tesselation_level,j+tesselation_level,mz);
+            z4 = B(i,j+tesselation_level,mz);
+
+            
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+
+            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
+            
+            
+            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+
+            buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
+
+            
+            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
+            
+            
+
+        }
+    }
+
+
+
+
+
+    return buffer.str();
+
+}
+
+std::string generateBezier(const char input[], float tesselation){
+    std::stringstream buffer;
+    std::ifstream fp(std::string("patch/") + input);
+    std::vector<std::vector<int>> indices;
+    std::vector<Point> points;
+    float mx[4][4];
+    float my[4][4];
+    float mz[4][4];
+    int num_patches, num_points;
+    float bezierMat[4][4] = {{-1.0f,  3.0f, -3.0f, 1.0f},
+                             { 3.0f, -6.0f,  3.0f, 0.0f},
+                             {-3.0f,  3.0f,  0.0f, 0.0f},
+                             { 1.0f,  0.0f,  0.0f, 0.0f}};
+    
+
+
+    fp >> num_patches;
+
+    for(int i=0; i<num_patches; i++){
+        std::vector<int> v;
+        int p;
+        std::string comma;
+        for (int j=0; j<16; j++){
+            fp >> p;
+            if(j!=15)
+                fp>>comma;
+            v.push_back(p);
+        }
+        indices.push_back(v);
+    }
+
+    fp >> num_points;
+
+    for(int i=0; i<num_points; i++){
+        float x,y,z;
+        std::string comma;
+        fp >> x; 
+        fp >> comma; 
+        fp >> y;
+        fp >> comma; 
+        fp >> z;
+
+        points.push_back(Point(x,y,z));
+    }
+
+    float aux[4][4];
+
+    
+
+    for(std::vector<int> indice: indices){
+        for(int i=0; i<4; i++){
+            for(int j = 0; j<4; j++){
+                mx[j][i] = points[indice[i*4+j]].x;
+                my[j][i] = points[indice[i*4+j]].y;
+                mz[j][i] = points[indice[i*4+j]].z;
+            }
+        }
+        multMatrixMatrix(bezierMat,mx,aux);
+        multMatrixMatrix(aux,bezierMat,mx);
+
+        multMatrixMatrix(bezierMat,my,aux);
+        multMatrixMatrix(aux,bezierMat,my);
+
+        multMatrixMatrix(bezierMat,mz,aux);
+        multMatrixMatrix(aux,bezierMat,mz);
+
+        buffer << generateSurface(mx,my,mz,tesselation);
+
+    }
+    
+
+
+
+
+
+    
+    
+
+    return buffer.str();
+}
+
+
+
+
 
 int isInt(const char number[]){
     int r = 1;
@@ -444,6 +635,16 @@ int selectModel(int argc, char const *argv[]){
         r = cylinder;
     else if(strcmp((argv[1]),"torus") == 0 && argc == 7 && isFloat(argv[2]) && isFloat(argv[3]) && isInt(argv[4]) && isInt(argv[5]))
         r = torus;
+    else if(argc == 4 && isFloat(argv[2]))
+    {
+        std::ifstream fp(std::string("patch/") + argv[1]);
+        if(!fp)
+            r = -1;
+        else{
+            r = bezier;
+            fp.close();
+        }
+    }
     else
         r = -1;
 
@@ -469,6 +670,7 @@ int main(int argc, char const *argv[])
         std::cout <<"* cone [radius] [height] [slices] [stacks] [output file]\n";
         std::cout <<"* cylinder [radius] [height] [slices] [stacks] [output file]\n";
         std::cout <<"* torus [Radius] [thickness] [slices] [stacks] [output file]\n";
+        std::cout <<"* [patch file] [tesselations] [output file]\n";
 
         return 0;
     }
@@ -502,6 +704,8 @@ int main(int argc, char const *argv[])
         case torus:
             fp << generateTorus(std::stof(argv[2]),std::stof(argv[3]),std::stoi(argv[4]), std::stoi(argv[5]));
             break;
+        case bezier:
+            fp << generateBezier(argv[1],std::stof(argv[2]));
         default:
             break;
     }
