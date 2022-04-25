@@ -55,15 +55,15 @@ void changeSize(int w, int h) {
 }
 
 
-std::vector<Point> getModel(std::string source) {
+std::vector<Point> getPoints(std::string source) {
     std::ifstream file_input(source) ;
     float x,y,z;
-    std::vector<Point> model;
+    std::vector<Point> points;
     while(file_input >> x >> y >> z) {
-        model.push_back(Point(x,y,z));
+        points.push_back(Point(x,y,z));
     }
     file_input.close();
-    return model;
+    return points;
 }
 
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
@@ -139,7 +139,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
         if (MODELS) {
             for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
-                std::vector<Point> points = getModel(path_3d + m->Attribute("file"));
+                std::vector<Point> points = getPoints(path_3d + m->Attribute("file"));
 
                 models.push_back(Model(points, ts));
             }
@@ -407,7 +407,7 @@ int main(int argc, char **argv) {
         models[i].bind();
     }
 
-    
+
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecialKeys);
 
