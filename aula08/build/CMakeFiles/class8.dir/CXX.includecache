@@ -6,29 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/carricossauro/Documents/LCC 3º ano/CG/aulas5e6/main.cpp
-stdio.h
--
+/home/carricossauro/Documents/LCC 3º ano/CG/aula08/catmull-rom.cpp
 stdlib.h
 -
 math.h
 -
-vector
--
-IL/il.h
+iostream
 -
 GLUT/glut.h
 -
-GL/glew.h
--
 GL/glut.h
--
-iostream
--
-vector
--
-cmath
--
-algorithm
 -
 

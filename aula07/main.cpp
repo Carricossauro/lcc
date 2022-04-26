@@ -31,14 +31,15 @@ float desvio_angulos[300];
 float color[300];
 float height[300];
 int time_diff = -1;
-float time_angle_diff = (2 * M_PI) / 175;
-float time_angle_diff_2 = 360.0f / 175.0f;
 
 float timebase, time_passed;
 float frames = 0, fps;
 
 unsigned int t, tw, th;
 unsigned char *imageData;
+
+std::vector<float> vertexB;
+GLuint buffer, verticeCount;
 
 void changeSize(int w, int h) {
 	// Prevent a divide by zero, when window is too short
@@ -114,14 +115,19 @@ void drawTerrain() {
 	float offsetX = tw/2;
 	float offsetZ = th/2;
 
-	glPolygonMode(GL_FRONT, GL_LINE);
-	for (float z = 0; z < th - 1; z+=0.25) {
-		glBegin(GL_TRIANGLE_STRIP);
-		for (float x = 0; x < tw; x+=0.25) {
-			glVertex3f(-offsetX + x, hf(x, z), -offsetZ + z);
-			glVertex3f(-offsetX + x, hf(x, z+1), -offsetZ + z + 1);
+	for (float z = 0; z < th - 1; z++) {
+		// glBegin(GL_TRIANGLE_STRIP);
+		for (float x = 0; x < tw; x++) {
+			//glVertex3f(-offsetX + x, hf(x, z), -offsetZ + z);
+			vertexB.push_back(-offsetX + x);
+			vertexB.push_back(hf(x, z));
+			vertexB.push_back(-offsetZ + z);
+			// glVertex3f(-offsetX + x, hf(x, z+1), -offsetZ + z + 1);
+			vertexB.push_back(-offsetX + x);
+			vertexB.push_back(hf(x, z + 1));
+			vertexB.push_back(-offsetZ + z + 1);
 		}
-		glEnd();
+		// glEnd();
 	}
 }
 
@@ -143,44 +149,6 @@ void drawAula5() {
 	glPopMatrix();
 
 	float alpha_arch = (M_PI * 2) / 8;
-	float rotation_angle = 360 / 8;
-	float rc = 15;
-
-	glColor3f(0, 0, 1.0f);
-	for (int i = 0; i < 8; i++) {
-		glPushMatrix();
-		float alpha = alpha_arch * i - time_angle_diff * time_diff;
-
-		float x = rc * cos(alpha);
-		float z = rc * sin(alpha);
-
-		glTranslatef(x, 1.5f, z);
-		glRotatef(-rotation_angle * i, 0, 1.0f, 0);
-		glRotatef(time_angle_diff_2 * time_diff, 0, 1.0f, 0);
-		glutSolidTeapot(2);
-
-		glPopMatrix();
-	}
-
-	glColor3f(1.0f, 0, 0);
-
-	alpha_arch = (2 * M_PI) / 16;
-	rotation_angle = 360 / 16;
-	float ri = 35;
-	for (int i = 0; i < 16; i++) {
-		glPushMatrix();
-		float alpha = alpha_arch * i + time_angle_diff * time_diff;
-
-		float x = ri * cos(alpha);
-		float z = ri * sin(alpha);
-
-		glTranslatef(x, 1.5f, z);
-		glRotatef(180-rotation_angle * i, 0, 1.0f, 0);
-		glRotatef(360-time_angle_diff_2 * time_diff, 0, 1.0f, 0);
-		glutSolidTeapot(2);
-
-		glPopMatrix();
-	}
 
 	float r = 50;
 	alpha_arch = (2 * M_PI) / tree_number;
@@ -222,10 +190,11 @@ void renderScene(void) {
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
 
-	glPolygonMode(GL_FRONT, GL_LINE);
+	// drawAula5();
 
-	drawTerrain();
-	drawAula5();
+	glBindBuffer(GL_ARRAY_BUFFER,buffer);
+	glVertexPointer(3,GL_FLOAT,0,0);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, verticeCount);
 
 	// End of frame
 	glutSwapBuffers();
@@ -328,9 +297,19 @@ void init() {
 		height[i] = hf(th/2.0f + x, tw/2.0f + z);
 	}
 
-// 	Build the vertex arrays
+	// 	Build the vertex arrays
+	glPolygonMode(GL_FRONT, GL_LINE);
 
-// 	OpenGL settings
+	drawTerrain();
+
+	verticeCount = vertexB.size() / 3;
+
+
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER,buffer);
+	glBufferData(GL_ARRAY_BUFFER, vertexB.size() * sizeof(float), vertexB.data(), GL_STATIC_DRAW);
+
+	// 	OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
 }
@@ -364,6 +343,10 @@ int main(int argc, char **argv) {
 	glutMotionFunc(processMouseMotion);
 
 	ilInit();
+
+	glewInit();
+
+	glEnableClientState(GL_VERTEX_ARRAY);
 
 	init();	
 

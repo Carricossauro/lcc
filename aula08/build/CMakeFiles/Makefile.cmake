@@ -22,8 +22,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake"
   "/usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake"
-  "/usr/share/cmake-3.10/Modules/FindDevIL.cmake"
-  "/usr/share/cmake-3.10/Modules/FindGLEW.cmake"
   "/usr/share/cmake-3.10/Modules/FindGLUT.cmake"
   "/usr/share/cmake-3.10/Modules/FindOpenGL.cmake"
   "/usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake"
@@ -33,7 +31,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake"
   "/usr/share/cmake-3.10/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake"
-  "/usr/share/cmake-3.10/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:
@@ -49,5 +46,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/class7.dir/DependInfo.cmake"
+  "CMakeFiles/class8.dir/DependInfo.cmake"
   )
