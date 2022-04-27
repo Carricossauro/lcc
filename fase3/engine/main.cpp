@@ -382,7 +382,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_3_1.xml");
+        readXML(path_xml + "solar_system.xml");
 
 
     // init GLUT and the window
