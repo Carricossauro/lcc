@@ -138,10 +138,10 @@
                     <point x="603.1563" y="0" z="-603.1563"/>
                     <point x="853" y="0" z="0"/>
                 </translate>
-                <rotate time="0.375" x="0" y="1" z="0" />
             </transform>
             <group>
                 <transform>
+                    <rotate time="0.375" x="0" y="1" z="0" />
                     <scale x="11.2" y="11.2" z="11.2" />
                 </transform>
                 <models>
@@ -150,7 +150,19 @@
             </group>
             <group> <!-- Europa -->
                 <transform>
-                    <translate x="0" y="0.02" z="11.86" />
+                    <!--translate x="0" y="0.02" z="11.86" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="1295.75" align="True" >
+                        <point x="12.65709" y="0" z="12.65709"/>
+                        <point x="0" y="0" z="17.9"/>
+                        <point x="-12.65709" y="0" z="12.65709"/>
+                        <point x="-17.9" y="0" z="0"/>
+                        <point x="-12.65709" y="0" z="-12.65709"/>
+                        <point x="0" y="0" z="-17.9"/>
+                        <point x="12.65709" y="0" z="-12.65709"/>
+                        <point x="17.9" y="0" z="0"/>
+                    </translate>
+
                     <scale x="0.24" y="0.24" z="0.24" />
                 </transform>
                 <models>
@@ -159,7 +171,18 @@
             </group>
             <group> <!-- Io -->
                 <transform>
-                    <translate x="0" y="0.015" z="-11.59" />
+                    <!--translate x="0" y="0.015" z="-11.59" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="646.05" align="True" >
+                        <point x="10.896411" y="0" z="10.896411"/>
+                        <point x="0" y="0" z="15.41"/>
+                        <point x="-10.896411" y="0" z="10.896411"/>
+                        <point x="-15.41" y="0" z="0"/>
+                        <point x="-10.896411" y="0" z="-10.896411"/>
+                        <point x="0" y="0" z="-15.41"/>
+                        <point x="10.896411" y="0" z="-10.896411"/>
+                        <point x="15.41" y="0" z="0"/>
+                    </translate>
                     <scale x="0.28" y="0.28" z="0.28" />
                 </transform>
                 <models>
@@ -168,7 +191,18 @@
             </group>
             <group> <!-- Ganymede -->
                 <transform>
-                    <translate x="12.2" y="0.03" z="0" />
+                    <!--translate x="12.2" y="0.03" z="0" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="2609.75" align="True" >
+                        <point x="14.99052" y="0" z="14.99052"/>
+                        <point x="0" y="0" z="21.2"/>
+                        <point x="-14.99052" y="0" z="14.99052"/>
+                        <point x="-21.2" y="0" z="0"/>
+                        <point x="-14.99052" y="0" z="-14.99052"/>
+                        <point x="0" y="0" z="-21.2"/>
+                        <point x="14.99052" y="0" z="-14.99052"/>
+                        <point x="21.2" y="0" z="0"/>
+                    </translate>
                     <scale x="0.41" y="0.41" z="0.41" />
                 </transform>
                 <models>
@@ -177,7 +211,18 @@
             </group>
             <group> <!-- Callisto -->
             <transform>
-                <translate x="-12.2" y="0.06" z="0" />
+                <!--translate x="-12.2" y="0.06" z="0" /-->
+                <rotate angle= "10" x = "0" y = "0" z = "1" />
+                <translate time="6091.85" align="True" >
+                    <point x="21.234213" y="0" z="21.234213"/>
+                    <point x="0" y="0" z="30.03"/>
+                    <point x="-21.234213" y="0" z="21.234213"/>
+                    <point x="-30.03" y="0" z="0"/>
+                    <point x="-21.234213" y="0" z="-21.234213"/>
+                    <point x="0" y="0" z="-30.03"/>
+                    <point x="21.234213" y="0" z="-21.234213"/>
+                    <point x="30.03" y="0" z="0"/>
+                </translate>
                 <scale x="0.37" y="0.37" z="0.37" />
             </transform>
             <models>
@@ -206,7 +251,7 @@
                     <rotate angle= "22.73" x = "0" y = "0" z = "1" />
                     <scale x="9.4" y="9.4" z="9.4" />
                 </transform>
-                <group>
+                <group> 
                     <transform>
                         <rotate time="0.4" x="0" y="1" z="0" />
                     </transform>
@@ -223,33 +268,66 @@
                     </models>
                 </group>
             </group>
-                <group>
-                    <transform>
-                        <translate x="0" y="0.007" z="10.6" />
-                        <scale x="0.404" y="0.404" z="0.404" />
-                    </transform>
-                    <models>
-                        <model file="sphere.3d" />
-                    </models>
-                </group>
-                <group> <!-- Rhea -->
-                    <transform>
-                        <translate x="0" y="0.003" z="-9.9" />
-                        <scale x="0.11" y="0.11" z="0.11" />
-                    </transform>
-                    <models>
-                        <model file="sphere.3d" />
-                    </models>
-                </group>
-                <group> <!-- Iapetus -->
-                    <transform>
-                        <translate x="-12.83" y="0.94" z="0" />
-                        <scale x="0.11" y="0.11" z="0.11" />
-                    </transform>
-                    <models>
-                        <model file="sphere.3d" />
-                    </models>
-                </group>
+            <group> <!-- Titan -->
+                <transform>
+                    <!--translate x="0" y="0.007" z="10.6" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "16" align="True" >
+                        <point x="7.91952" y="0" z="7.91952"/>
+                        <point x="0" y="0" z="11.2"/>
+                        <point x="-7.91952" y="0" z="7.91952"/>
+                        <point x="-11.2" y="0" z="0"/>
+                        <point x="-7.91952" y="0" z="-7.91952"/>
+                        <point x="0" y="0" z="-11.2"/>
+                        <point x="7.91952" y="0" z="-7.91952"/>
+                        <point x="11.2" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.404" y="0.404" z="0.404" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Rhea -->
+                <transform>
+                    <!--translate x="0" y="0.003" z="-9.9" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "4.5" align="True" >
+                        <point x="7.3729317" y="0" z="7.3729317"/>
+                        <point x="0" y="0" z="10.427"/>
+                        <point x="-7.3729317" y="0" z="7.3729317"/>
+                        <point x="-10.427" y="0" z="0"/>
+                        <point x="-7.3729317" y="0" z="-7.3729317"/>
+                        <point x="0" y="0" z="-10.427"/>
+                        <point x="7.3729317" y="0" z="-7.3729317"/>
+                        <point x="10.427" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.11" y="0.11" z="0.11" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Iapetus -->
+                <transform>
+                    <!--translate x="-12.83" y="0.94" z="0" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "79" align="True" >
+                        <point x="9.517566" y="0" z="9.517566"/>
+                        <point x="0" y="0" z="13.46"/>
+                        <point x="-9.517566" y="0" z="9.517566"/>
+                        <point x="-13.46" y="0" z="0"/>
+                        <point x="-9.517566" y="0" z="-9.517566"/>
+                        <point x="0" y="0" z="-13.46"/>
+                        <point x="9.517566" y="0" z="-9.517566"/>
+                        <point x="13.46" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.11" y="0.11" z="0.11" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
         </group>
         
         
@@ -268,11 +346,11 @@
                     <point x="2035.0338" y="0" z="-2035.0338"/>
                     <point x="2878" y="0" z="0"/>
                 </translate>
-                <rotate angle = "97.7" x = "0" y = "0" z = "1" />
             </transform>
                 
             <group>        
                 <transform>
+                    <rotate angle = "97.7" x = "0" y = "0" z = "1" />
                     <rotate time="0.7" x="0" y="-1" z="0"/>
                     <scale x="4" y="4" z="4" />
                 </transform>
@@ -282,7 +360,17 @@
             </group>
             <group> <!-- Titania -->
                 <transform>
-                    <translate x="0" y="4.39" z="0" />
+                    <!--translate x="0" y="4.39" z="0" /-->
+                    <translate time = "8.706" align="True" >
+                        <point x="3.5355" y="0" z="3.5355"/>
+                        <point x="0" y="0" z="5"/>
+                        <point x="-3.5355" y="0" z="3.5355"/>
+                        <point x="-5" y="0" z="0"/>
+                        <point x="-3.5355" y="0" z="-3.5355"/>
+                        <point x="0" y="0" z="-5"/>
+                        <point x="3.5355" y="0" z="-3.5355"/>
+                        <point x="5" y="0" z="0"/>
+                    </translate>
                     <scale x="0.12" y="0.12" z="0.12" />
                 </transform>
                 <models>
@@ -291,7 +379,18 @@
             </group>
             <group> <!-- Oberon -->
                 <transform>
-                    <translate x="0" y="-4.57" z="0" />
+                    <!--translate x="0" y="-4.57" z="0" /-->
+                    <translate time = "13.46" align="True" >
+                        <point x="3.8890499999999997" y="0" z="3.8890499999999997"/>
+                        <point x="0" y="0" z="5.5"/>
+                        <point x="-3.8890499999999997" y="0" z="3.8890499999999997"/>
+                        <point x="-5.5" y="0" z="0"/>
+                        <point x="-3.8890499999999997" y="0" z="-3.8890499999999997"/>
+                        <point x="0" y="0" z="-5.5"/>
+                        <point x="3.8890499999999997" y="0" z="-3.8890499999999997"/>
+                        <point x="5.5" y="0" z="0"/>
+                    </translate>
+
                     <scale x="0.115" y="0.115" z="0.115" />
                 </transform>
                 <models>
@@ -300,7 +399,17 @@
             </group>
             <group> <!-- Umbriel -->
                 <transform>
-                    <translate x="0" y="0" z="4.26" />
+                    <!--translate x="0" y="0" z="4.26" /-->
+                    <translate time = "4.144" align="True" >
+                        <point x="3.1366956" y="0" z="3.1366956"/>
+                        <point x="0" y="0" z="4.436"/>
+                        <point x="-3.1366956" y="0" z="3.1366956"/>
+                        <point x="-4.436" y="0" z="0"/>
+                        <point x="-3.1366956" y="0" z="-3.1366956"/>
+                        <point x="0" y="0" z="-4.436"/>
+                        <point x="3.1366956" y="0" z="-3.1366956"/>
+                        <point x="4.436" y="0" z="0"/>
+                    </translate>
                     <scale x="0.09" y="0.09" z="0.09" />
                 </transform>
                 <models>
@@ -336,7 +445,18 @@
             </group>
             <group> <!-- Triton -->
                 <transform>
-                    <translate x="0" y="0.14" z="4.15" />
+                    <!--translate x="0" y="0.14" z="4.15" /-->
+                    <translate time = "2.35" align="True" >
+                        <point x="2.934465" y="0" z="2.934465"/>
+                        <point x="0" y="0" z="4.15"/>
+                        <point x="-2.934465" y="0" z="2.934465"/>
+                        <point x="-4.15" y="0" z="0"/>
+                        <point x="-2.934465" y="0" z="-2.934465"/>
+                        <point x="0" y="0" z="-4.15"/>
+                        <point x="2.934465" y="0" z="-2.934465"/>
+                        <point x="4.15" y="0" z="0"/>
+                    </translate>
+
                     <scale x="0.21" y="0.21" z="0.21" />
                 </transform>
                 <models>
@@ -345,7 +465,7 @@
             </group>
         </group>
 
-        <group> <!-- cmet -->
+        <group> <!-- Comet -->
             <transform>
                 
                 <translate time = "100" align="True" >

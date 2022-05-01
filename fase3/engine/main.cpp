@@ -10,12 +10,15 @@
 #include <fstream>
 #include "tinyxml2.h"
 #include "structs.h"
+#include <map>
 
 
 
 std::string path_3d;
 std::string path_xml;
 std::vector<Model> models;
+std::map<std::string, std::vector<float>> modelPoints;
+std::map<std::string, GLuint> modelBuffer;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f, speed = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
@@ -55,12 +58,14 @@ void changeSize(int w, int h) {
 }
 
 
-std::vector<Point> getPoints(std::string source) {
+std::vector<float> getPoints(std::string source) {
     std::ifstream file_input(source) ;
     float x,y,z;
-    std::vector<Point> points;
+    std::vector<float> points;
     while(file_input >> x >> y >> z) {
-        points.push_back(Point(x,y,z));
+        points.push_back(x);
+        points.push_back(y);
+        points.push_back(z);
     }
     file_input.close();
     return points;
@@ -139,9 +144,12 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
         if (MODELS) {
             for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
-                std::vector<Point> points = getPoints(path_3d + m->Attribute("file"));
-
-                models.push_back(Model(points, ts));
+                std::string model = m->Attribute("file");
+                if(!modelPoints.count(model)){
+                    std::vector<float> points = getPoints(path_3d + model);
+                    modelPoints[model] = points;
+                }
+                models.push_back(Model(model, ts));
             }
         }
 
@@ -383,7 +391,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_3_1.xml");
+        readXML(path_xml + "solar_system.xml");
 
 
     // init GLUT and the window
@@ -400,12 +408,25 @@ int main(int argc, char **argv) {
 
     glewInit();
 
+    // inicializar e armazenar nos vbos
     glEnableClientState(GL_VERTEX_ARRAY);
-    GLuint buffers[models.size()];
-    glGenBuffers(models.size(),buffers);
-    for(int i=0; i<models.size();i++){
-        models[i].vertices = buffers[i];
-        models[i].bind();
+    GLuint buffers[modelPoints.size()];
+
+    glGenBuffers(modelPoints.size(),buffers);
+
+    int i = 0;
+    for (std::pair<std::string, std::vector<float>> element : modelPoints) {
+        std::string model = element.first;
+        std::vector<float> points = element.second;
+        modelBuffer[model] = buffers[i];
+        glBindBuffer(GL_ARRAY_BUFFER, modelBuffer[model]);
+        glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(float), points.data(), GL_STATIC_DRAW);
+        i++;
+    }
+
+
+    for(Model & group : models){
+        group.vertices = modelBuffer[group.model];
     }
 
 

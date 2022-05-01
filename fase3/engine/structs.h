@@ -16,6 +16,8 @@
 #include <math.h>
 #include "structs.h"
 #include "string.h"
+#include <string>
+
 
 
 struct Point{
@@ -70,13 +72,11 @@ public:
 
 };
 
-struct Model {
-    //std::vector<Point> points;
-    std::vector<float> vertexB;
+struct Model{
+    std::string model;
     std::vector<Transformation*> transformations;
     GLuint vertices, verticeCount;
-    Model(std::vector<Point> p, std::vector<Transformation*> t);
-    void bind();
+    Model(std::string model, std::vector<Transformation*> t);
     void draw();
 
 };
@@ -89,7 +89,6 @@ void cross(float *a, float *b, float *res);
 
 void normalize(float *a);
 
-float length(float *v);
 
 void multMatrixVector(float *m, float *v, float *res);
 

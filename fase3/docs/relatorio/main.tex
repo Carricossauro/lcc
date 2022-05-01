@@ -87,12 +87,12 @@ Nesta terceira etapa foi proposto:
 \begin{itemize}
     \item \textbf{Desenho de superfícies de Bezier}
         \begin{description}
-        \item Alteração do \textit{generator} de modo a ler ficheiros com \textit{patches} de Bezier e pontos de controlo e retornar a lista de triangulos necessarios para desenhar a supreficie, de acordo com o nível de tesselação requerido. 
+        \item Alteração do \textit{generator} de modo a ler ficheiros com \textit{patches} de Bezier e pontos de controlo e retornar a lista de triângulos necessários para desenhar a suprefície, de acordo com o nível de tesselação requerido. 
         \end{description}
 
     \item \textbf{Extensão das translações e rotações}
     \begin{description}
-    \item As translações devem poder ser constituidas por um conjunto de pontos de controlo, que definam um curva de Catmul-Rom por onde o modelo sobre o qual é aplicada a transformação vai passar, assim como o número de segundos que este demora a descrever a curva.
+    \item As translações devem poder ser constituídas por um conjunto de pontos de controlo, que definam uma curva de Catmul-Rom por onde o modelo sobre o qual é aplicada a transformação se vai mover, assim como o número de segundos que este demora a descrever a curva.
     \item Nas rotações, o ângulo deve poder ser substituído pelo tempo que o modelo demora a girar sobre si próprio. 
     \end{description}
     
@@ -112,13 +112,13 @@ Nesta terceira etapa foi proposto:
 
 \chapter{Apresentação das soluções}
 \section{Desenho de superfícies de Bezier}
-Para o desenho de supreficies de Bezier, alterou-se o \textit{generetor} de modo a que fosse possível ler um ficheiro com várias \textit{patches} e pontos de controlo e criar um ficheiro .3d com o conjunto de pontos necessários para o desenho das superficie, de acordo com o nível de tesselação. Assim sendo, para além do tipo de modelo, o \textit{generator} recebe como parâmetros:
+Para o desenho de suprefícies de Bezier, alterou-se o \textit{generetor} de modo a que fosse possível ler um ficheiro com várias \textit{patches} e pontos de controlo e criar um ficheiro .3d com o conjunto de pontos necessários para o desenho da superfície, de acordo com o nível de tesselação. Assim sendo, para além do tipo de modelo, o \textit{generator} recebe como parâmetros:
 \begin{itemize}
     \item o ficheiro \textit{input} com as \textit{patches} e pontos de controlo.
     \item o nível de tesselação.
     \item o ficheiro de \textit{output}.
 \end{itemize}
-Para a obtenção dos pontos necessarios à constução de cada superficie foi utilizada a seguinte fórmula:
+Para a obtenção dos pontos necessários à construção de cada superfície foi utilizada a seguinte fórmula:
 \par
 Seja a matriz de Bezier \emph{M =}
 \begin{bmatrix}
@@ -130,33 +130,33 @@ Seja a matriz de Bezier \emph{M =}
 \par
 \emph{T =} nível de tesselação
 \par
-4 curvas de Bezier \emph{C_0,C_1,C_2,C_3}
+4 curvas de Bezier \emph{$C_0$,$C_1$,$C_2$,$C_3$}
 \par
-\emph{C_0 = P_{00} , P_{10} , P_{20} , P_{30}}
+\emph{$C_0 = P_{00} , P_{10} , P_{20} , P_{30}$}
 \par
-\emph{C_1 = P_{01} , P_{11} , P_{12} , P_{13}}
+\emph{$C_1 = P_{01} , P_{11} , P_{21} , P_{31}$}
 \par
-\emph{C_2 = P_{02} , P_{12} , P_{22} , P_{32}}
+\emph{$C_2 = P_{02} , P_{12} , P_{22} , P_{32}$}
 \par
-\emph{C_3 = P_{03} , P_{13} , P_{23} , P_{33}}
+\emph{$C_3 = P_{03} , P_{13} , P_{23} , P_{33}$}
 \par
-\emph{B(u,v) =}
+\emph{$B(u,v) =$}
 \begin{bmatrix}
-u^3 & u^2 & u & 1\\
+\emph{$u^3$} & \emph{$u^2$} & \emph{$u$} & \emph{$1$}\\
 \end{bmatrix}
-\emph{M}
+\emph{$M$}
 \begin{bmatrix}
-P_{00} & P_{01} & P_{02} & P_{03}\\
-P_{10} & P_{11} & P_{12} & P_{13}\\
-P_{20} & P_{21} & P_{22} & P_{23}\\
-P_{30} & P_{31} & P_{32} & P_{33}
+\emph{$P_{00}$} & \emph{$P_{01}$} & \emph{$P_{02}$} & \emph{$P_{03}$}\\
+\emph{$P_{10}$} & \emph{$P_{11}$} & \emph{$P_{12}$} & \emph{$P_{13}$}\\
+\emph{$P_{20}$} & \emph{$P_{21}$} & \emph{$P_{22}$} & \emph{$P_{23}$}\\
+\emph{$P_{30}$} & \emph{$P_{31}$} & \emph{$P_{32}$} & \emph{$P_{33}$}
 \end{bmatrix} 
-\emph{M^T}
+\emph{$M^T$}
 \begin{bmatrix}
-v^3\\
-v^2\\
-v \\
-1 \\
+\emph{$v^3$}\\
+\emph{$v^2$}\\
+\emph{$v$} \\
+\emph{$1$} 
 \end{bmatrix}
 \par
 Os vários pontos da superfície são obtidos utilizando a função \emph{B} variando \emph{u} e \emph{v} entre 0 e 1.
@@ -191,7 +191,8 @@ Pode-se construir os triângulos \emph{a,b,d} e \emph{b,c,d}.
 
 \newpage
 \section{Extensão das translações e rotações}
-completar...
+Fizeram-se alterações quanto às translações e rotações de forma a que estas fossem capazes de, no caso das translações fazê-las sobre uma curva de Catmull-Rom, e no caso das rotações fazer com que estas funcionassem em função do tempo, para além de um ângulo tal como estava implementado previamente.
+
 
 
 \subsection{Demonstração}
@@ -230,25 +231,25 @@ completar...
 \newpage
 
 \section{Modelo dinâmico do sistema solar}
-Para construir as orbitas dos planetas foram utilizados 8 pontos de controlo para criar as curvas de Catmull-Rom. Assim sendo, utilizou-se a distancia dos planetas ao Sol que ja tinha sido calculado na fase anterior e procedeu-se da seguinte forma:
+Para construir as órbitas dos planetas foram utilizados 8 pontos de controlo de modo a criar as curvas de Catmull-Rom. Assim sendo, utilizou-se a distância dos planetas ao Sol que já tinha sido calculada na fase anterior e procedeu-se da seguinte forma:
 \par
-Seja  D a distância do planeta ao sol, F = \sqrt{2}/2 \ e \ {p_0}, {p_1}, {p_2}, {p_3}, {p_4}, {p_5}, {p_6}, {p_7} \ pontos \ de \ controlo, \ temos:
+Seja  D a distância do planeta ao sol, $F = \sqrt{2}/2 \ e \ {p_0},\ {p_1},\ {p_2},\ {p_3},\ {p_4},\ {p_5},\ {p_6},\ {p_7}$ \ pontos \ de \ controlo, temos:
 \par
-{p_0 = (F \times D, 0, F \times D)}
+{$p_0 = (F \times D, \ 0,\ F \times D)$}
 \par
-{p_1 = (0, 0, D)}
+{$p_1 = (0, \ 0, \ D)$}
 \par
-{p_2 = (- \ F \times D, 0, F \times D)}
+{$p_2 = (- \ F \times D,\ 0,\ F \times D)$}
 \par
-{p_3 = (- \ D, 0, 0)}
+{$p_3 = (- \ D,\ 0,\ 0)$}
 \par
-{p_4 = (- \ F \times D, 0, - \ F \times D)}
+{$p_4 = (- \ F \times D,\ 0, - \ F \times D)$}
 \par
-{p_5 = (F \times 0, 0, - \ D)}
+{$p_5 = (F \times 0,\ 0, - \ D)$}
 \par
-{p_6 = (F \times D, 0, - \ F \times D)}
+{$p_6 = (F \times D,\ 0, - \ F \times D)$}
 \par
-{p_7 = (D, 0, 0)}
+{$p_7 = (D,\ 0,\ 0)$}
 
 
 
@@ -267,7 +268,7 @@ Seja  D a distância do planeta ao sol, F = \sqrt{2}/2 \ e \ {p_0}, {p_1}, {p_2}
 \begin{figure}[H]
 \centering
 \includegraphics[width = 18cm,height = 10cm]{ss2.png}
-\caption{Jupiter - Saturno}
+\caption{Júpiter - Saturno}
 \label{fig:demo2}
 \end{figure}
 
@@ -281,19 +282,24 @@ Seja  D a distância do planeta ao sol, F = \sqrt{2}/2 \ e \ {p_0}, {p_1}, {p_2}
 \begin{figure}[H]
 \centering
 \includegraphics[width = 18cm,height = 10cm]{ss4.png}
-\caption{Orbita do cometa}
+\caption{Órbita do cometa}
 \label{fig:demo4}
 \end{figure}
 
-\newpage
+
+
 
 \section{VBOs}
-Na implementação dos VBOs optou-se por utilizar um VBO para cada figura, pois pareceu ser a solução mais simples.
+Na implementação dos VBOs optou-se por utilizar um VBO para cada figura, pois pareceu ser a solução mais simples. No entanto, cada modelo diferente possui um só VBO. Por exemplo, se existirem várias esferas iguais, apenas é utilizado um VBO para todas.
 
 \newpage
 
 
 \newpage
 \chapter{Conclusão}
-completar ...
+No início da construção da solução chegou-se ao consenso de que a funcionalidade mais complexa de se implementar seria a dos VBO's, dado isto, o grupo tomou a decisão de que esta seria a última a ser implementada. Para além da sua complexidade, outro motivo para esta decisão foi que estes teriam influência sobre todo o projeto, ao contrário das outras funcionalidades, desta forma foi possível implementar e testar as outras funcionalidades com a certeza de que qualquer erro que surgisse não era devido a erros na implementação dos VBO's.
+
+Dado isto considera-se que foi um trabalho bem conseguido e que se atingiu os objetivos propostos.
+
+
 \end{document}

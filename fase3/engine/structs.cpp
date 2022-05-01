@@ -2,6 +2,7 @@
 // Created by tiago on 24/04/22.
 //
 
+
 #include "structs.h"
 
 
@@ -99,23 +100,12 @@ void Curve::apply() {
 }
 
 
-
-
-Model::Model(std::vector<Point> p, std::vector<Transformation*> t) {
-        this->transformations = t;
-        this->verticeCount = p.size();
-        for(Point point : p){
-            vertexB.push_back(point.x);
-            vertexB.push_back(point.y);
-            vertexB.push_back(point.z);
-        }
+Model::Model(std::string model, std::vector<Transformation*> t) {
+    this->model = model;
+    this->transformations = t;
 }
 
-void Model::bind(){
-        glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
-        glBufferData(GL_ARRAY_BUFFER, vertexB.size() * sizeof(float), vertexB.data(), GL_STATIC_DRAW);
 
-    }
 void Model::draw(){
         glPushMatrix();
         for (Transformation* t : this->transformations) {
@@ -155,12 +145,6 @@ void normalize(float *a) {
     a[0] = a[0]/l;
     a[1] = a[1]/l;
     a[2] = a[2]/l;
-}
-
-float length(float *v) {
-    float res = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-    return res;
-
 }
 
 void multMatrixVector(float *m, float *v, float *res) {
