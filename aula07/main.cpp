@@ -38,8 +38,10 @@ float frames = 0, fps;
 unsigned int t, tw, th;
 unsigned char *imageData;
 
-std::vector<float> vertexB;
-GLuint buffer, verticeCount;
+std::vector<std::vector<float>> vertexA;
+GLuint *buffers, *verticeCount;
+int buffer_number = 0;
+// GLuint buffer, verticeCount;
 
 void changeSize(int w, int h) {
 	// Prevent a divide by zero, when window is too short
@@ -115,17 +117,18 @@ void drawTerrain() {
 	float offsetX = tw/2;
 	float offsetZ = th/2;
 
-	for (float z = 0; z < th - 1; z++) {
+	for (float z = 0; z < buffer_number; z++) {
+		vertexA.push_back(std::vector<float>());
 		// glBegin(GL_TRIANGLE_STRIP);
-		for (float x = 0; x < tw; x++) {
+		for (float x = 0; x < tw; x+=0.25) {
 			//glVertex3f(-offsetX + x, hf(x, z), -offsetZ + z);
-			vertexB.push_back(-offsetX + x);
-			vertexB.push_back(hf(x, z));
-			vertexB.push_back(-offsetZ + z);
+			vertexA[z].push_back(-offsetX + x);
+			vertexA[z].push_back(hf(x, z));
+			vertexA[z].push_back(-offsetZ + z);
 			// glVertex3f(-offsetX + x, hf(x, z+1), -offsetZ + z + 1);
-			vertexB.push_back(-offsetX + x);
-			vertexB.push_back(hf(x, z + 1));
-			vertexB.push_back(-offsetZ + z + 1);
+			vertexA[z].push_back(-offsetX + x);
+			vertexA[z].push_back(hf(x, z + 1));
+			vertexA[z].push_back(-offsetZ + z + 1);
 		}
 		// glEnd();
 	}
@@ -163,20 +166,6 @@ void drawAula5() {
 		arvore(x, z, color[i], y);
 	}
 
-	// FPS Counter
-	frames++;
-	time_passed = glutGet(GLUT_ELAPSED_TIME);
-	if (time_passed - timebase > 1000) {
-		fps = frames*1000.0/(time_passed - timebase);
-		timebase = time_passed;
-		frames = 0;
-	}
-
-	char fps_buffer[50];
-
-	sprintf(fps_buffer, "%d", (int) fps);
-
-	glutSetWindowTitle(fps_buffer);
 }
 
 void renderScene(void) {
@@ -192,9 +181,27 @@ void renderScene(void) {
 
 	// drawAula5();
 
-	glBindBuffer(GL_ARRAY_BUFFER,buffer);
-	glVertexPointer(3,GL_FLOAT,0,0);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, verticeCount);
+	for (int i = 0; i < buffer_number; i++) {
+		glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
+		glVertexPointer(3,GL_FLOAT,0,0);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, verticeCount[i]);
+	}
+
+	
+	// FPS Counter
+	frames++;
+	time_passed = glutGet(GLUT_ELAPSED_TIME);
+	if (time_passed - timebase > 1000) {
+		fps = frames*1000.0/(time_passed - timebase);
+		timebase = time_passed;
+		frames = 0;
+	}
+
+	char fps_buffer[50];
+
+	sprintf(fps_buffer, "%d", (int) fps);
+
+	glutSetWindowTitle(fps_buffer);
 
 	// End of frame
 	glutSwapBuffers();
@@ -300,14 +307,20 @@ void init() {
 	// 	Build the vertex arrays
 	glPolygonMode(GL_FRONT, GL_LINE);
 
+	buffer_number = th - 1;
+	buffers = (GLuint *) malloc(sizeof(GLuint) * buffer_number);
+	verticeCount = (GLuint *) malloc(sizeof(GLuint) * buffer_number);
+
 	drawTerrain();
 
-	verticeCount = vertexB.size() / 3;
-
-
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER,buffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexB.size() * sizeof(float), vertexB.data(), GL_STATIC_DRAW);
+	glGenBuffers(buffer_number, buffers);
+	for (int i = 0; i < buffer_number; i++) {
+		verticeCount[i] = vertexA[i].size() / 3;
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+		glBufferData(GL_ARRAY_BUFFER, vertexA[i].size() * sizeof(float), vertexA[i].data(), GL_STATIC_DRAW);
+	}
+	// glBindBuffer(GL_ARRAY_BUFFER,buffer);
+	// glBufferData(GL_ARRAY_BUFFER, vertexB.size() * sizeof(float), vertexB.data(), GL_STATIC_DRAW);
 
 	// 	OpenGL settings
 	glEnable(GL_DEPTH_TEST);
