@@ -22,19 +22,21 @@ class Author(models.Model):
         return self.id
 
 
+
 class Content(models.Model):
-    
-    question = models.ForeignKey('Question', models.DO_NOTHING, db_column='Question',related_name='contents')  # Field name made lowercase.
-    order = models.IntegerField(db_column='Order',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    question = models.ForeignKey('Question', models.DO_NOTHING, db_column='Question')  # Field name made lowercase.
+    order = models.IntegerField(db_column='Order')  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=1)  # Field name made lowercase.
-    media = models.TextField(db_column='Media')  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'Content'
         unique_together = (('question', 'order'),)
 
-    
+
+
+
 
 
 class History(models.Model):
