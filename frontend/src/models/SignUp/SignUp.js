@@ -37,24 +37,24 @@ export default function PlayerLogin({
         <div className="w-full h-[40px] bg-split-color2-white flex flex-row ">
           <div
             className={`w-1/2 flex justify-center items-center text-xl ${
-              isAuthor
+              !isAuthor
                 ? "bg-white rounded-tr-2xl "
                 : "bg-color2 rounded-br-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200 "
-            }`}
-            onClick={() => setIsAuthor(true)}
-          >
-            Author
-          </div>
-
-          <div
-            className={`w-1/2 flex justify-center items-center text-xl ${
-              isAuthor
-                ? "bg-color2 rounded-bl-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200"
-                : "bg-white rounded-tl-2xl"
             }`}
             onClick={() => setIsAuthor(false)}
           >
             Player
+          </div>
+
+          <div
+            className={`w-1/2 flex justify-center items-center text-xl ${
+              !isAuthor
+                ? "bg-color2 rounded-bl-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200"
+                : "bg-white rounded-tl-2xl"
+            }`}
+            onClick={() => setIsAuthor(true)}
+          >
+            Author
           </div>
         </div>
         <div className="w-full flex flex-row h-full">
@@ -147,7 +147,7 @@ export default function PlayerLogin({
                 name="confirmPassword"
                 value={confirmPassword}
                 placeholder="confirm password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
             {!isAuthor && (

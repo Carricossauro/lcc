@@ -62,7 +62,7 @@ export default function NavBar(props) {
           <div className="flex justify-center mx-3 mr-6">
             <button
               className="flex items-center justify-center w-24 h-9 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
-              onClick={props.setPopUp}
+              onClick={() => redirect("/Login")}
             >
               LOGIN
             </button>
@@ -88,7 +88,7 @@ export default function NavBar(props) {
           <div className="flex justify-center my-3">
             <button
               className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
-              onClick={() => redirect("/Author/Login")}
+              onClick={() => redirect("/SignUp")}
             >
               SIGN UP
             </button>
@@ -96,10 +96,7 @@ export default function NavBar(props) {
           <div className="flex justify-center my-3">
             <button
               className="flex items-center justify-center h-9 w-32 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
-              onClick={() => {
-                props.setPopUp();
-                changeExpanded();
-              }}
+              onClick={() => redirect("/Login")}
             >
               LOGIN
             </button>
