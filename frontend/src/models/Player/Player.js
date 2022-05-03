@@ -1,13 +1,13 @@
 import React from "react";
 
 import { useParams } from "react-router-dom";
-import PlayerLogin from "./PlayerLogin";
+import Main from "./Main";
 
 export default function Player({ setShowNavBar, size }) {
   const { playerPath } = useParams();
   switch (playerPath) {
-    case "Login":
-      setShowNavBar(false);
-      return <PlayerLogin size={size} />;
+    case "main":
+      setShowNavBar(true);
+      return <Main size={size} />;
   }
 }
