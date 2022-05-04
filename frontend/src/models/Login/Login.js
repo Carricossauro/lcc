@@ -12,6 +12,8 @@ export default function PlayerLogin({
   setShowNavBar,
   setIsAuthor,
   isAuthor,
+  setCookie,
+  cookies,
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +51,11 @@ export default function PlayerLogin({
           const validPassword = bcrypt.compareSync(password, data["password"]);
           if (validPassword) {
             // TODO
+            const hashedPassword = data["password"];
+            setCookie("username", username, { path: "/" });
+            setCookie("password", hashedPassword, {
+              path: "/",
+            });
             redirect(isAuthor ? "/Author/Main" : "/Player/Main");
           } else setError("Invalid Password");
         }

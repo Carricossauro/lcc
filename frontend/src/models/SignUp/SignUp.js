@@ -17,6 +17,8 @@ export default function PlayerLogin({
   setShowNavBar,
   setIsAuthor,
   isAuthor,
+  setCookie,
+  cookies,
 }) {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -28,6 +30,10 @@ export default function PlayerLogin({
 
   const [response, setResponse] = useState(undefined);
 
+  const redirect = (page) => {
+    window.location.href = page;
+  };
+
   const titleCase = (str) => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
   };
@@ -38,6 +44,9 @@ export default function PlayerLogin({
 
   function submitForm(e) {
     e.preventDefault();
+
+    const hashedPassword = bcrypt.hashSync(password);
+
     if (password != confirmPassword) {
       setError("Passwords do not match.");
     } else if (!validEmail.test(email)) {
@@ -49,7 +58,7 @@ export default function PlayerLogin({
         body: JSON.stringify({
           id: username,
           name: name,
-          password: bcrypt.hashSync(password),
+          password: hashedPassword,
           email: email,
           birthday: birthday,
         }),
@@ -85,6 +94,11 @@ export default function PlayerLogin({
             }
           } else {
             // TODO
+            setCookie("username", username, { path: "/" });
+            setCookie("password", hashedPassword, {
+              path: "/",
+            });
+            redirect(isAuthor ? "/Author/Main" : "/Player/Main");
           }
         });
     }

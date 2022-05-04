@@ -6,7 +6,7 @@ import Main from "./Main";
 export default function Player({ setShowNavBar, size }) {
   const { playerPath } = useParams();
   switch (playerPath) {
-    case "main":
+    case "Main":
       setShowNavBar(true);
       return <Main size={size} />;
   }
