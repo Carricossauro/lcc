@@ -6,17 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/carricossauro/Documents/LCC 3º ano/CG/aula09/main.cpp
+/home/carricossauro/Documents/LCC 3º ano/CG/aula10/main.cpp
+stdio.h
+-
 stdlib.h
 -
-stdio.h
+math.h
+-
+vector
+-
+IL/il.h
 -
 GLUT/glut.h
 -
 GL/glew.h
 -
 GL/glut.h
--
-math.h
 -
 

@@ -49,5 +49,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/class9.dir/DependInfo.cmake"
+  "CMakeFiles/class10.dir/DependInfo.cmake"
   )
