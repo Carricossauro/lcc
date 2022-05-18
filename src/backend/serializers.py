@@ -21,7 +21,7 @@ class Option(serializers.ModelSerializer):
 class Content(serializers.ModelSerializer):
     class Meta:
         model = models.Content
-        fields = ['question','order','type','media']
+        fields = ['id','question','order','type','media']
 
 
 class Question(serializers.ModelSerializer):

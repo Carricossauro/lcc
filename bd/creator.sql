@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `ComputationalMind`.`Content` (
   `Question` INT NOT NULL,
   `Order` INT NOT NULL,
   `Type` ENUM("V", "I", "A", "T") NOT NULL,
+  `Media` TEXT NOT NULL,
   PRIMARY KEY (`Id`),
   CONSTRAINT `fk_Content_1`
     FOREIGN KEY (`Question`)
