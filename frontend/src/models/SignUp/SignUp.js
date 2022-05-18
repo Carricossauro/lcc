@@ -51,6 +51,8 @@ export default function PlayerLogin({
       setError("Passwords do not match.");
     } else if (!validEmail.test(email)) {
       setError("Invalid email address :(");
+    } else if (password === "") {
+      setError("Password  may not be blank.");
     } else {
       const requestOptions = {
         method: "POST",
