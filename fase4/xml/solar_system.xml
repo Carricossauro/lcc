@@ -1,0 +1,486 @@
+<world> <!-- a world can have a camera, a set of lights, and a single group -->
+
+    <camera> 
+        <position x="300" y="300" z="300" />
+        <lookAt x="0" y="0" z="0" />
+        <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="4000" /> <!-- optional, use these values as default-->
+    </camera>
+
+    <group>
+        <group> <!-- Sun -->
+            <transform>
+                <rotate time="27" x="0" y="1" z="0"/>
+                <scale x="109" y="109" z="109" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        
+        <group> <!-- Mercury -->
+            <transform>
+                <!-- <translate x="168" y="0" z="0" /> -->
+                <translate time = "88" align="True" >
+                    <point x="118.7928" y="0" z="118.7928"/>
+                    <point x="0" y="0" z="168"/>
+                    <point x="-118.7928" y="0" z="118.7928"/>
+                    <point x="-168" y="0" z="0"/>
+                    <point x="-118.7928" y="0" z="-118.7928"/>
+                    <point x="0" y="0" z="-168"/>
+                    <point x="118.7928" y="0" z="-118.7928"/>
+                    <point x="168" y="0" z="0"/>
+                </translate>
+                <rotate time="176" x="0" y="1" z="0"/>
+                <scale x="0.4" y="0.4" z="0.4" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+
+        <group> <!-- Venus -->
+            <transform>
+                <!-- <translate x="217" y="0" z="0" /> -->
+                <translate time="224" align="True" >
+                    <point x="153.4407" y="0" z="153.4407"/>
+                    <point x="0" y="0" z="217"/>
+                    <point x="-153.4407" y="0" z="153.4407"/>
+                    <point x="-217" y="0" z="0"/>
+                    <point x="-153.4407" y="0" z="-153.4407"/>
+                    <point x="0" y="0" z="-217"/>
+                    <point x="153.4407" y="0" z="-153.4407"/>
+                    <point x="217" y="0" z="0"/>
+                </translate>
+                <rotate time="116" x="0" y="-1" z="0"/>
+                <scale x="0.9" y="0.9" z="0.9" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+
+        <group> <!-- Earth -->
+            <transform>
+                <!-- <translate x="258" y="0" z="0" /> -->
+                <translate time="365" align="True" >
+                    <point x="182.4318" y="0" z="182.4318"/>
+                    <point x="0" y="0" z="258"/>
+                    <point x="-182.4318" y="0" z="182.4318"/>
+                    <point x="-258" y="0" z="0"/>
+                    <point x="-182.4318" y="0" z="-182.4318"/>
+                    <point x="0" y="0" z="-258"/>
+                    <point x="182.4318" y="0" z="-182.4318"/>
+                    <point x="258" y="0" z="0"/>
+                </translate>
+            </transform>
+            <group>
+                <transform>
+                    <rotate time="1" x="0" y="1" z="0" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Moon -->
+                <transform>
+                    <!--translate x="0" y="0.03" z="1.38" /-->
+                    <translate time="28" align="True" >
+                        <point x="0.975798" y="0" z="0.975798"/>
+                        <point x="0" y="0" z="1.38"/>
+                        <point x="-0.975798" y="0" z="0.975798"/>
+                        <point x="-1.38" y="0" z="0"/>
+                        <point x="-0.975798" y="0" z="-0.975798"/>
+                        <point x="0" y="0" z="-1.38"/>
+                        <point x="0.975798" y="0" z="-0.975798"/>
+                        <point x="1.38" y="0" z="0"/>
+                    </translate>
+                    <rotate time= "28" x = "0" y = "1" z = "0" />
+                    <scale x="0.2725" y="0.2725" z="0.2725" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+        </group>
+        
+        <group> <!-- Mars -->
+            <transform>
+                <!--translate x="313" y="0" z="0" /-->
+                <translate time="686" align="True" >
+                    <point x="221.3223" y="0" z="221.3223"/>
+                    <point x="0" y="0" z="313"/>
+                    <point x="-221.3223" y="0" z="221.3223"/>
+                    <point x="-313" y="0" z="0"/>
+                    <point x="-221.3223" y="0" z="-221.3223"/>
+                    <point x="0" y="0" z="-313"/>
+                    <point x="221.3223" y="0" z="-221.3223"/>
+                    <point x="313" y="0" z="0"/>
+                </translate>
+                <rotate time="1" x="0" y="1" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        
+        <group> <!-- Jupiter -->
+            <transform>
+                <!--translate x="853" y="0" z="0" /-->
+                <translate time="4332" align="True" >
+                    <point x="603.1563" y="0" z="603.1563"/>
+                    <point x="0" y="0" z="853"/>
+                    <point x="-603.1563" y="0" z="603.1563"/>
+                    <point x="-853" y="0" z="0"/>
+                    <point x="-603.1563" y="0" z="-603.1563"/>
+                    <point x="0" y="0" z="-853"/>
+                    <point x="603.1563" y="0" z="-603.1563"/>
+                    <point x="853" y="0" z="0"/>
+                </translate>
+            </transform>
+            <group>
+                <transform>
+                    <rotate time="0.375" x="0" y="1" z="0" />
+                    <scale x="11.2" y="11.2" z="11.2" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Europa -->
+                <transform>
+                    <!--translate x="0" y="0.02" z="11.86" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="1295.75" align="True" >
+                        <point x="12.65709" y="0" z="12.65709"/>
+                        <point x="0" y="0" z="17.9"/>
+                        <point x="-12.65709" y="0" z="12.65709"/>
+                        <point x="-17.9" y="0" z="0"/>
+                        <point x="-12.65709" y="0" z="-12.65709"/>
+                        <point x="0" y="0" z="-17.9"/>
+                        <point x="12.65709" y="0" z="-12.65709"/>
+                        <point x="17.9" y="0" z="0"/>
+                    </translate>
+
+                    <scale x="0.24" y="0.24" z="0.24" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Io -->
+                <transform>
+                    <!--translate x="0" y="0.015" z="-11.59" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="646.05" align="True" >
+                        <point x="10.896411" y="0" z="10.896411"/>
+                        <point x="0" y="0" z="15.41"/>
+                        <point x="-10.896411" y="0" z="10.896411"/>
+                        <point x="-15.41" y="0" z="0"/>
+                        <point x="-10.896411" y="0" z="-10.896411"/>
+                        <point x="0" y="0" z="-15.41"/>
+                        <point x="10.896411" y="0" z="-10.896411"/>
+                        <point x="15.41" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.28" y="0.28" z="0.28" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Ganymede -->
+                <transform>
+                    <!--translate x="12.2" y="0.03" z="0" /-->
+                    <rotate angle= "10" x = "0" y = "0" z = "1" />
+                    <translate time="2609.75" align="True" >
+                        <point x="14.99052" y="0" z="14.99052"/>
+                        <point x="0" y="0" z="21.2"/>
+                        <point x="-14.99052" y="0" z="14.99052"/>
+                        <point x="-21.2" y="0" z="0"/>
+                        <point x="-14.99052" y="0" z="-14.99052"/>
+                        <point x="0" y="0" z="-21.2"/>
+                        <point x="14.99052" y="0" z="-14.99052"/>
+                        <point x="21.2" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.41" y="0.41" z="0.41" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Callisto -->
+            <transform>
+                <!--translate x="-12.2" y="0.06" z="0" /-->
+                <rotate angle= "10" x = "0" y = "0" z = "1" />
+                <translate time="6091.85" align="True" >
+                    <point x="21.234213" y="0" z="21.234213"/>
+                    <point x="0" y="0" z="30.03"/>
+                    <point x="-21.234213" y="0" z="21.234213"/>
+                    <point x="-30.03" y="0" z="0"/>
+                    <point x="-21.234213" y="0" z="-21.234213"/>
+                    <point x="0" y="0" z="-30.03"/>
+                    <point x="21.234213" y="0" z="-21.234213"/>
+                    <point x="30.03" y="0" z="0"/>
+                </translate>
+                <scale x="0.37" y="0.37" z="0.37" />
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        </group>
+        
+
+        <group> <!-- Saturn -->
+            <transform>
+                <!--translate x="1590" y="0" z="0" /-->
+                <translate time = "10759" align="True" >
+                    <point x="1124.289" y="0" z="1124.289"/>
+                    <point x="0" y="0" z="1590"/>
+                    <point x="-1124.289" y="0" z="1124.289"/>
+                    <point x="-1590" y="0" z="0"/>
+                    <point x="-1124.289" y="0" z="-1124.289"/>
+                    <point x="0" y="0" z="-1590"/>
+                    <point x="1124.289" y="0" z="-1124.289"/>
+                    <point x="1590" y="0" z="0"/>
+                </translate>
+            </transform>
+            <group>
+                <transform>
+                    <rotate angle= "22.73" x = "0" y = "0" z = "1" />
+                    <scale x="9.4" y="9.4" z="9.4" />
+                </transform>
+                <group> 
+                    <transform>
+                        <rotate time="0.4" x="0" y="1" z="0" />
+                    </transform>
+                    <models>
+                        <model file="sphere.3d" />
+                    </models>
+                </group>
+                <group > <!-- Ring -->
+                    <transform>
+                        <scale x="3" y="3" z="3"/>
+                    </transform>
+                    <models>
+                        <model file="torus.3d" />
+                    </models>
+                </group>
+            </group>
+            <group> <!-- Titan -->
+                <transform>
+                    <!--translate x="0" y="0.007" z="10.6" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "16" align="True" >
+                        <point x="7.91952" y="0" z="7.91952"/>
+                        <point x="0" y="0" z="11.2"/>
+                        <point x="-7.91952" y="0" z="7.91952"/>
+                        <point x="-11.2" y="0" z="0"/>
+                        <point x="-7.91952" y="0" z="-7.91952"/>
+                        <point x="0" y="0" z="-11.2"/>
+                        <point x="7.91952" y="0" z="-7.91952"/>
+                        <point x="11.2" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.404" y="0.404" z="0.404" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Rhea -->
+                <transform>
+                    <!--translate x="0" y="0.003" z="-9.9" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "4.5" align="True" >
+                        <point x="7.3729317" y="0" z="7.3729317"/>
+                        <point x="0" y="0" z="10.427"/>
+                        <point x="-7.3729317" y="0" z="7.3729317"/>
+                        <point x="-10.427" y="0" z="0"/>
+                        <point x="-7.3729317" y="0" z="-7.3729317"/>
+                        <point x="0" y="0" z="-10.427"/>
+                        <point x="7.3729317" y="0" z="-7.3729317"/>
+                        <point x="10.427" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.11" y="0.11" z="0.11" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Iapetus -->
+                <transform>
+                    <!--translate x="-12.83" y="0.94" z="0" /-->
+                    <rotate angle= "30" x = "0" y = "0" z = "1" />
+                    <translate time = "79" align="True" >
+                        <point x="9.517566" y="0" z="9.517566"/>
+                        <point x="0" y="0" z="13.46"/>
+                        <point x="-9.517566" y="0" z="9.517566"/>
+                        <point x="-13.46" y="0" z="0"/>
+                        <point x="-9.517566" y="0" z="-9.517566"/>
+                        <point x="0" y="0" z="-13.46"/>
+                        <point x="9.517566" y="0" z="-9.517566"/>
+                        <point x="13.46" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.11" y="0.11" z="0.11" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+        </group>
+        
+        
+        
+        <group> <!-- Uranus -->
+            
+            <transform>
+                <!--translate x="2878" y="0" z="0" /-->
+                <translate time = "30688" align="True" >
+                    <point x="2035.0338" y="0" z="2035.0338"/>
+                    <point x="0" y="0" z="2878"/>
+                    <point x="-2035.0338" y="0" z="2035.0338"/>
+                    <point x="-2878" y="0" z="0"/>
+                    <point x="-2035.0338" y="0" z="-2035.0338"/>
+                    <point x="0" y="0" z="-2878"/>
+                    <point x="2035.0338" y="0" z="-2035.0338"/>
+                    <point x="2878" y="0" z="0"/>
+                </translate>
+            </transform>
+                
+            <group>        
+                <transform>
+                    <rotate angle = "97.7" x = "0" y = "0" z = "1" />
+                    <rotate time="0.7" x="0" y="-1" z="0"/>
+                    <scale x="4" y="4" z="4" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Titania -->
+                <transform>
+                    <!--translate x="0" y="4.39" z="0" /-->
+                    <translate time = "8.706" align="True" >
+                        <point x="3.5355" y="0" z="3.5355"/>
+                        <point x="0" y="0" z="5"/>
+                        <point x="-3.5355" y="0" z="3.5355"/>
+                        <point x="-5" y="0" z="0"/>
+                        <point x="-3.5355" y="0" z="-3.5355"/>
+                        <point x="0" y="0" z="-5"/>
+                        <point x="3.5355" y="0" z="-3.5355"/>
+                        <point x="5" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.12" y="0.12" z="0.12" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Oberon -->
+                <transform>
+                    <!--translate x="0" y="-4.57" z="0" /-->
+                    <translate time = "13.46" align="True" >
+                        <point x="3.8890499999999997" y="0" z="3.8890499999999997"/>
+                        <point x="0" y="0" z="5.5"/>
+                        <point x="-3.8890499999999997" y="0" z="3.8890499999999997"/>
+                        <point x="-5.5" y="0" z="0"/>
+                        <point x="-3.8890499999999997" y="0" z="-3.8890499999999997"/>
+                        <point x="0" y="0" z="-5.5"/>
+                        <point x="3.8890499999999997" y="0" z="-3.8890499999999997"/>
+                        <point x="5.5" y="0" z="0"/>
+                    </translate>
+
+                    <scale x="0.115" y="0.115" z="0.115" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Umbriel -->
+                <transform>
+                    <!--translate x="0" y="0" z="4.26" /-->
+                    <translate time = "4.144" align="True" >
+                        <point x="3.1366956" y="0" z="3.1366956"/>
+                        <point x="0" y="0" z="4.436"/>
+                        <point x="-3.1366956" y="0" z="3.1366956"/>
+                        <point x="-4.436" y="0" z="0"/>
+                        <point x="-3.1366956" y="0" z="-3.1366956"/>
+                        <point x="0" y="0" z="-4.436"/>
+                        <point x="3.1366956" y="0" z="-3.1366956"/>
+                        <point x="4.436" y="0" z="0"/>
+                    </translate>
+                    <scale x="0.09" y="0.09" z="0.09" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+        </group>
+        
+        
+        
+        <group> <!-- Neptuno  -->
+            <transform>
+                <!--translate x="4549" y="0" z="0" /-->
+                <translate time = "60195" align="True" >
+                    <point x="3216.5979" y="0" z="3216.5979"/>
+                    <point x="0" y="0" z="4549"/>
+                    <point x="-3216.5979" y="0" z="3216.5979"/>
+                    <point x="-4549" y="0" z="0"/>
+                    <point x="-3216.5979" y="0" z="-3216.5979"/>
+                    <point x="0" y="0" z="-4549"/>
+                    <point x="3216.5979" y="0" z="-3216.5979"/>
+                    <point x="4549" y="0" z="0"/>
+                </translate>
+                <rotate time="0.7" x="0" y="1" z="0"/>
+            </transform>
+            <group>
+                <transform>
+                    <scale x="3.88" y="3.88" z="3.88" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Triton -->
+                <transform>
+                    <!--translate x="0" y="0.14" z="4.15" /-->
+                    <translate time = "2.35" align="True" >
+                        <point x="2.934465" y="0" z="2.934465"/>
+                        <point x="0" y="0" z="4.15"/>
+                        <point x="-2.934465" y="0" z="2.934465"/>
+                        <point x="-4.15" y="0" z="0"/>
+                        <point x="-2.934465" y="0" z="-2.934465"/>
+                        <point x="0" y="0" z="-4.15"/>
+                        <point x="2.934465" y="0" z="-2.934465"/>
+                        <point x="4.15" y="0" z="0"/>
+                    </translate>
+
+                    <scale x="0.21" y="0.21" z="0.21" />
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+        </group>
+
+        <group> <!-- Comet -->
+            <transform>
+                
+                <translate time = "100" align="True" >
+                    <point x = "0" y = "0" z = "400" />
+                    <point x = "400" y = "0" z = "0" />
+                    <point x = "0" y = "0" z = "-400" />
+                    <point x = "-400" y = "400" z = "0" />
+                </translate>
+                <scale x="5" y="5" z="5" />
+                <rotate angle="-90" x="1" y="0" z="0"/>
+            </transform>
+            <models>
+                <model file="bezier.3d" />
+            </models>
+        </group>
+        
+    </group>
+</world>
