@@ -1,13 +1,15 @@
 import React from "react";
 
 import { useParams } from "react-router-dom";
-import AuthorLogin from "./AuthorLogin";
+import Main from "./Main";
+import Edit from "./Edit";
 
 export default function Author({ setShowNavBar, size }) {
   const { authorPath } = useParams();
   switch (authorPath) {
-    case "Login":
-      setShowNavBar(false);
-      return <AuthorLogin size={size} />;
+    case "Edit":
+      return <Edit size={size} />;
+    default:
+      return <Main size={size} />;
   }
 }

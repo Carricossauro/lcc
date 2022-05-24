@@ -6,19 +6,19 @@ import {
   faLock,
   faAddressCard,
   faEnvelope,
-  faIceCream,
-  faIcicles,
-  faIdCard,
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 
 import image from "../../assets/imagem_conhecimento.jpg";
+import bcrypt from "bcryptjs";
 
 export default function PlayerLogin({
   size,
   setShowNavBar,
   setIsAuthor,
   isAuthor,
+  setCookie,
+  cookies,
 }) {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -26,6 +26,85 @@ export default function PlayerLogin({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [birthday, setBirthday] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const [response, setResponse] = useState(undefined);
+
+  const redirect = (page) => {
+    window.location.href = page;
+  };
+
+  const titleCase = (str) => {
+    return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
+  };
+
+  const validEmail = new RegExp(
+    "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
+  );
+
+  function submitForm(e) {
+    e.preventDefault();
+
+    const hashedPassword = bcrypt.hashSync(password);
+
+    if (password != confirmPassword) {
+      setError("Passwords do not match.");
+    } else if (!validEmail.test(email)) {
+      setError("Invalid email address :(");
+    } else if (password === "") {
+      setError("Password  may not be blank.");
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: username,
+          name: name,
+          password: hashedPassword,
+          email: email,
+          birthday: birthday,
+        }),
+      };
+      console.log(requestOptions["body"]);
+      let url = "";
+      if (isAuthor) url = "http://127.0.0.1:8000/api/authors/";
+      else url = "http://127.0.0.1:8000/api/players/";
+
+      setError("");
+      let isError = false;
+      fetch(url, requestOptions)
+        .then((res) => {
+          if (res["status"] <= 199 || res["status"] >= 300) {
+            isError = true;
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setResponse(data);
+          if (isError) {
+            const field = Object.keys(data)[0];
+            if (field === "birthday") {
+              setError("Birthday may not be blank.");
+            } else if (field == "id") {
+              if (data[field][0] === "player with this id already exists.")
+                setError("A player with this username already exists :´(");
+              else if (data[field][0] === "author with this id already exists.")
+                setError("An author with this username already exists :´(");
+              else setError(`Username may not be blank.`);
+            } else {
+              setError(`${titleCase(field)} may not be blank.`);
+            }
+          } else {
+            // TODO
+            setCookie("username", username, { path: "/" });
+            setCookie("password", hashedPassword, {
+              path: "/",
+            });
+            redirect(isAuthor ? "/Author/Main" : "/Player/Main");
+          }
+        });
+    }
+  }
 
   useEffect(() => {
     setShowNavBar(false);
@@ -41,7 +120,10 @@ export default function PlayerLogin({
                 ? "bg-white rounded-tr-2xl "
                 : "bg-color2 rounded-br-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200 "
             }`}
-            onClick={() => setIsAuthor(false)}
+            onClick={() => {
+              setError("");
+              setIsAuthor(false);
+            }}
           >
             Player
           </div>
@@ -52,7 +134,10 @@ export default function PlayerLogin({
                 ? "bg-color2 rounded-bl-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200"
                 : "bg-white rounded-tl-2xl"
             }`}
-            onClick={() => setIsAuthor(true)}
+            onClick={() => {
+              setError("");
+              setIsAuthor(true);
+            }}
           >
             Author
           </div>
@@ -133,7 +218,7 @@ export default function PlayerLogin({
             </div>
             <div
               className={`flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl ${
-                !isAuthor ? "mb-3" : "mb-5"
+                !isAuthor ? "mb-3" : error == "" ? "mb-5" : "mb-1"
               }`}
             >
               <FontAwesomeIcon
@@ -151,7 +236,11 @@ export default function PlayerLogin({
               ></input>
             </div>
             {!isAuthor && (
-              <div className="flex items-center px-3 h-12 w-96 bg-stone-200 rounded-3xl mb-5 text-neutral-500 ">
+              <div
+                className={`flex items-center px-3 h-12 w-96 bg-stone-200 rounded-3xl ${
+                  error == "" ? "mb-5" : "mb-1"
+                } text-neutral-500`}
+              >
                 <FontAwesomeIcon
                   icon={faCalendar}
                   className="text-2xl  text-neutral-500 ml-2.5"
@@ -167,7 +256,11 @@ export default function PlayerLogin({
                 ></input>
               </div>
             )}
-            <button className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg hover:text-white duration-500">
+            {error != "" && <div className="text-red-500">{error}</div>}
+            <button
+              className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg hover:text-white duration-500"
+              onClick={(e) => submitForm(e)}
+            >
               SIGN UP
             </button>
           </form>

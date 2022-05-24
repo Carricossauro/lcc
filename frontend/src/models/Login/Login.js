@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
+import bcrypt from "bcryptjs";
+
 import image from "../../assets/imagem_conhecimento.jpg";
 
 export default function PlayerLogin({
@@ -10,9 +12,14 @@ export default function PlayerLogin({
   setShowNavBar,
   setIsAuthor,
   isAuthor,
+  setCookie,
+  cookies,
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const [response, setResponse] = useState(undefined);
 
   useEffect(() => {
     setShowNavBar(false);
@@ -21,6 +28,39 @@ export default function PlayerLogin({
   const redirect = (page) => {
     window.location.href = page;
   };
+
+  function verifyLogin(e) {
+    e.preventDefault();
+    let url = "";
+    if (isAuthor) url = "http://127.0.0.1:8000/api/authors/";
+    else url = "http://127.0.0.1:8000/api/players/";
+    setError("");
+    fetch(`${url}${username}`)
+      .then((res) => {
+        console.log(res);
+        if (res["status"] <= 199 || res["status"] >= 300) {
+          setError("Invalid Username");
+          return undefined;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data != undefined) {
+          setResponse(data);
+          const validPassword = bcrypt.compareSync(password, data["password"]);
+          if (validPassword) {
+            // TODO
+            const hashedPassword = data["password"];
+            setCookie("username", username, { path: "/" });
+            setCookie("password", hashedPassword, {
+              path: "/",
+            });
+            redirect(isAuthor ? "/Author/Main" : "/Player/Main");
+          } else setError("Invalid Password");
+        }
+      });
+  }
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-t from-white to-color2">
@@ -32,7 +72,10 @@ export default function PlayerLogin({
                 ? "bg-white rounded-tr-2xl"
                 : "bg-color2 rounded-br-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200"
             }`}
-            onClick={() => setIsAuthor(false)}
+            onClick={() => {
+              setError("");
+              setIsAuthor(false);
+            }}
           >
             {" "}
             Player
@@ -43,7 +86,10 @@ export default function PlayerLogin({
                 ? "bg-color2 rounded-bl-2xl cursor-pointer text-slate-500 hover:text-slate-900 duration-200"
                 : "bg-white rounded-tl-2xl"
             }`}
-            onClick={() => setIsAuthor(true)}
+            onClick={() => {
+              setError("");
+              setIsAuthor(true);
+            }}
           >
             {" "}
             Author
@@ -78,7 +124,11 @@ export default function PlayerLogin({
                 onChange={(e) => setUsername(e.target.value)}
               ></input>
             </div>
-            <div className="flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl mb-5">
+            <div
+              className={`flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl ${
+                error != "" ? "mb-1" : "mb-5"
+              }`}
+            >
               <FontAwesomeIcon
                 icon={faLock}
                 className="text-2xl  text-neutral-500 ml-2.5"
@@ -93,7 +143,11 @@ export default function PlayerLogin({
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
-            <button className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg">
+            {error != "" && <div className="text-red-500">{error}</div>}
+            <button
+              className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg"
+              onClick={(e) => verifyLogin(e)}
+            >
               LOGIN
             </button>
             <div className="w-full text-center my-5">
