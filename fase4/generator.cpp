@@ -209,19 +209,25 @@ std::string generateSphere(float radius, int slices, int stacks){
 
             if (j != stacks-1) {
                 
+                buffer << x1 << ' ' << y1 << ' ' << z1 << "\n";
                 buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
                 
                 buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
                 
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
                 buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
             }
         
             if (j != 0) {
                 
                 buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
                 
                 buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
                 
+                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
                 buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
             }
 

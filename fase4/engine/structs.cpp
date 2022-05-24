@@ -99,10 +99,106 @@ void Curve::apply() {
         current_time = new_time;
 }
 
+LightPoint::LightPoint(float a, float b, float c, int i) {
+    this->pos[0] = a;
+    this->pos[1] = b;
+    this->pos[2] = c;
+    this->pos[3] = 1.0f;
+    this->index = getLight(i);
+}
 
-Model::Model(std::string model, std::vector<Transformation*> t) {
+void LightPoint::apply() {
+    glLightfv(this->index, GL_POSITION, this->pos);
+}
+
+LightDirectional::LightDirectional(float a, float b, float c, int i) {
+    this->dir[0] = a;
+    this->dir[1] = b;
+    this->dir[2] = c;
+    this->dir[3] = 0.0f;
+    this->index = getLight(i);
+}
+
+void LightDirectional::apply() {
+    glLightfv(this->index, GL_POSITION, this->dir);
+}
+
+LightSpotlight::LightSpotlight(float a, float b, float c, float da, float db, float dc, GLfloat ct, int i) {
+    this->pos[0] = a;
+    this->pos[1] = b;
+    this->pos[2] = c;
+    this->pos[3] = 1.0f;
+    this->dir[0] = da;
+    this->dir[1] = db;
+    this->dir[2] = dc;
+    this->dir[3] = 0.0f;
+    this->cutoff = ct;
+    this->index = getLight(i);
+}
+
+void LightSpotlight::apply() {
+    glLightfv(this->index, GL_POSITION, this->pos);
+    glLightfv(this->index, GL_SPOT_DIRECTION, this->dir);
+    glLightfv(this->index, GL_SPOT_CUTOFF, &(this->cutoff));
+}
+
+Diffuse::Diffuse(float a, float b, float c) {
+    this->rgb[0] = a;
+    this->rgb[1] = b;
+    this->rgb[2] = c;
+    this->rgb[3] = 1.0f;
+}
+
+void Diffuse::apply() {
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, this->rgb);
+}
+
+Ambient::Ambient(float a, float b, float c) {
+    this->rgb[0] = a;
+    this->rgb[1] = b;
+    this->rgb[2] = c;
+    this->rgb[3] = 1.0f;
+}
+
+void Ambient::apply() {
+    glMaterialfv(GL_FRONT, GL_AMBIENT, this->rgb);
+}
+
+Specular::Specular(float a, float b, float c) {
+    this->rgb[0] = a;
+    this->rgb[1] = b;
+    this->rgb[2] = c;
+    this->rgb[3] = 1.0f;
+}
+
+void Specular::apply() {
+    glMaterialfv(GL_FRONT, GL_SPECULAR, this->rgb);
+}
+
+Emissive::Emissive(float a, float b, float c) {
+    this->rgb[0] = a;
+    this->rgb[1] = b;
+    this->rgb[2] = c;
+    this->rgb[3] = 1.0f;
+}
+
+void Emissive::apply() {
+    glMaterialfv(GL_FRONT, GL_EMISSION, this->rgb);
+}
+
+Shininess::Shininess(float a) {
+    this->s = a;
+}
+
+void Shininess::apply() {
+    glMaterialf(GL_FRONT, GL_SHININESS, this->s);
+}
+
+
+Model::Model(std::string model, std::vector<Transformation*> t, std::vector<Color*> c) {
     this->model = model;
     this->transformations = t;
+    this->colors = c;
 }
 
 
@@ -111,12 +207,18 @@ void Model::draw(){
         for (Transformation* t : this->transformations) {
             t->apply();
         }
+        for (Color* c : this->colors) {
+            c->apply();
+        }
         glBindBuffer(GL_ARRAY_BUFFER, vertices);
         glVertexPointer(3, GL_FLOAT, 0, 0);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, normals);
+        glNormalPointer(GL_FLOAT, 0, 0);
+
         glDrawArrays(GL_TRIANGLES, 0, this->verticeCount);
         glPopMatrix();
 }
-
 
 
 void convertPoint(Point p, float* point) {
@@ -218,3 +320,18 @@ void renderCatmullRomCurve(std::vector<Point> control_points) {
     glEnd();
 }
 
+int getLight(int nLight) {
+    int CLight;
+    switch (nLight) {
+        case 0: CLight = GL_LIGHT0; break;
+        case 1: CLight = GL_LIGHT1; break;
+        case 2: CLight = GL_LIGHT2; break;
+        case 3: CLight = GL_LIGHT3; break;
+        case 4: CLight = GL_LIGHT4; break;
+        case 5: CLight = GL_LIGHT5; break;
+        case 6: CLight = GL_LIGHT6; break;
+        case 7: CLight = GL_LIGHT7; break;
+        default: exit(1);
+    }
+    return CLight;
+}

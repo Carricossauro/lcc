@@ -72,11 +72,82 @@ public:
 
 };
 
+class Light{
+public:
+    int index;
+    void virtual apply() = 0;
+};
+
+class LightPoint : public Light {
+    float pos[4];
+public:
+    int index;
+    LightPoint(float a, float b, float c, int i);
+    void apply();
+};
+
+class LightDirectional : public Light{
+    float dir[4];
+public:
+    int index;
+    LightDirectional(float a, float b, float c, int i);
+    void apply();
+};
+
+class LightSpotlight : public Light{
+    float pos[4], dir[4], cutoff;
+public:
+    int index;
+    LightSpotlight(float a, float b, float c, float da, float db, float dc, float ct, int i);
+    void apply();
+};
+
+class Color{
+public:
+    void virtual apply() = 0;
+};
+
+class Diffuse : public Color {
+    float rgb[4];
+public:
+    Diffuse(float a, float b, float c);
+    void apply();
+};
+
+class Ambient : public Color {
+    float rgb[4];
+public:
+    Ambient(float a, float b, float c);
+    void apply();
+};
+
+class Specular : public Color {
+    float rgb[4];
+public:
+    Specular(float a, float b, float c);
+    void apply();
+};
+
+class Emissive : public Color {
+    float rgb[4];
+public:
+    Emissive(float a, float b, float c);
+    void apply();
+};
+
+class Shininess : public Color {
+    float s;
+public:
+    Shininess(float a);
+    void apply();
+};
+
 struct Model{
     std::string model;
     std::vector<Transformation*> transformations;
-    GLuint vertices, verticeCount;
-    Model(std::string model, std::vector<Transformation*> t);
+    std::vector<Color*> colors;
+    GLuint vertices, verticeCount, normals;
+    Model(std::string model, std::vector<Transformation*> t, std::vector<Color*> c);
     void draw();
 
 };
@@ -99,5 +170,7 @@ void getCatmullRomPoint(float t, float *p0, float *p1, float *p2, float *p3, flo
 void getGlobalCatmullRomPoint(float gt, float *pos, float *deriv, std::vector<Point> p);
 
 void renderCatmullRomCurve(std::vector<Point> control_points);
+
+int getLight(int nLight);
 
 #endif //ENGINE_STRUCTS_H

@@ -18,7 +18,10 @@ std::string path_3d;
 std::string path_xml;
 std::vector<Model> models;
 std::map<std::string, std::vector<float>> modelPoints;
-std::map<std::string, GLuint> modelBuffer;
+std::map<std::string, std::vector<float>> modelNormals;
+std::map<std::string, GLuint> modelBufferPoints;
+std::map<std::string, GLuint> modelBufferNormals;
+std::vector<Light*> lights;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f, speed = 1.0f;
 float eyeX, eyeY, eyeZ, centerX = 0.0, centerY =0.0, centerZ=0.0, upX=0.0, upY=1.0, upZ = 0.0,fov=45.0f,near=1.0f,far=1000.0f,
@@ -58,25 +61,27 @@ void changeSize(int w, int h) {
 }
 
 
-std::vector<float> getPoints(std::string source) {
+void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals) {
     std::ifstream file_input(source) ;
-    float x,y,z;
-    std::vector<float> points;
-    while(file_input >> x >> y >> z) {
+    float x, y, z, nx, ny, nz;
+    while(file_input >> x >> y >> z >> nx >> ny >> nz) {
         points.push_back(x);
         points.push_back(y);
         points.push_back(z);
+
+        normals.push_back(nx);
+        normals.push_back(ny);
+        normals.push_back(nz);
     }
     file_input.close();
-    return points;
 }
 
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
     using namespace tinyxml2;
-    std::vector<Transformation*> backup = ts;
+    std::vector<Transformation*> backupTransformations = ts;
 
     while (group) {
-        ts = backup;
+        ts = backupTransformations;
         XMLElement *transformation = group->FirstChildElement("transform");
 
         if (transformation) {
@@ -146,10 +151,49 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
             for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
                 std::string model = m->Attribute("file");
                 if(!modelPoints.count(model)){
-                    std::vector<float> points = getPoints(path_3d + model);
+                    std::vector<float> points, normals;
+                    getPoints(path_3d + model, points, normals);
                     modelPoints[model] = points;
+                    modelNormals[model] = normals;
                 }
-                models.push_back(Model(model, ts));
+
+                std::vector<Color*> colors;
+                XMLElement* COLORS = m->FirstChildElement("color");
+                for (XMLElement *COLOR = COLORS->FirstChildElement(); COLOR; COLOR = COLORS->NextSiblingElement()) {
+                    std::string ColorName = std::string(COLOR->Name());
+
+                    if (ColorName == "diffuse") {
+                        float r = atof(COLOR->Attribute("R"));
+                        float rg = atof(COLOR->Attribute("G"));
+                        float rgb = atof(COLOR->Attribute("B"));
+
+                        colors.push_back(new Diffuse(r, rg, rgb));
+                    } else if (ColorName == "ambient") {
+                        float r = atof(COLOR->Attribute("R"));
+                        float rg = atof(COLOR->Attribute("G"));
+                        float rgb = atof(COLOR->Attribute("B"));
+
+                        colors.push_back(new Ambient(r, rg, rgb));
+                    } else if (ColorName == "specular") {
+                        float r = atof(COLOR->Attribute("R"));
+                        float rg = atof(COLOR->Attribute("G"));
+                        float rgb = atof(COLOR->Attribute("B"));
+
+                        colors.push_back(new Specular(r, rg, rgb));
+                    } else if (ColorName == "emissive") {
+                        float r = atof(COLOR->Attribute("R"));
+                        float rg = atof(COLOR->Attribute("G"));
+                        float rgb = atof(COLOR->Attribute("B"));
+
+                        colors.push_back(new Emissive(r, rg, rgb));
+                    } else if (ColorName == "shininess") {
+                        float value = atof(COLOR->Attribute("value"));
+
+                        colors.push_back(new Shininess(value));
+                    }
+                }
+
+                models.push_back(Model(model, ts, colors));
             }
         }
 
@@ -216,6 +260,41 @@ void readXML(std::string source) {
 
     std::vector<Transformation*> t;
     readGroup(group, t);
+
+    XMLElement* LIGHTS = doc.FirstChildElement("world")->FirstChildElement("lights");
+
+    int lightIndex = 0;
+    if (LIGHTS) {
+        for (XMLElement* LIGHT = LIGHTS->FirstChildElement("light"); LIGHT; LIGHT = LIGHTS->NextSiblingElement("light")) {
+            std::string lightType = LIGHT->Attribute("type");
+            if (lightType == "point") {
+                float x = atof(LIGHT->Attribute("posx"));
+                float y = atof(LIGHT->Attribute("posy"));
+                float z = atof(LIGHT->Attribute("posz"));
+
+                lights.push_back(new LightPoint(x, y, z, lightIndex));
+            } else if (lightType == "directional") {
+                float dx = atof(LIGHT->Attribute("dirx"));
+                float dy = atof(LIGHT->Attribute("diry"));
+                float dz = atof(LIGHT->Attribute("dirz"));
+
+                lights.push_back(new LightDirectional(dx, dy, dz, lightIndex));
+            } else if (lightType == "spotlight") {
+                float x = atof(LIGHT->Attribute("posx"));
+                float y = atof(LIGHT->Attribute("posy"));
+                float z = atof(LIGHT->Attribute("posz"));
+                float dx = atof(LIGHT->Attribute("dirx"));
+                float dy = atof(LIGHT->Attribute("diry"));
+                float dz = atof(LIGHT->Attribute("dirz"));
+                float cutoff = atof(LIGHT->Attribute("cutoff"));
+
+                lights.push_back(new LightSpotlight(x, y, z, dx, dy, dz, cutoff, lightIndex));
+            }
+            
+            lightIndex++;
+        }
+    }
+
 }
 
 void spherical2Cartesian() {
@@ -242,6 +321,12 @@ void drawModels(){
     glColor3f(1.0f, 1.0f, 1.0f);
     for (Model model : models){
         model.draw();
+    }
+}
+
+void lightsOn() {
+    for (Light* l: lights) {
+        l->apply();
     }
 }
 
@@ -276,10 +361,12 @@ void renderScene(void) {
               upX, upY, upZ);
 
     //glPolygonMode(GL_FRONT,GL_LINE);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT, GL_FILL);
 
     //drawAxis();
     drawModels();
+    lightsOn();
 
 
     // End of frame
@@ -401,6 +488,23 @@ int main(int argc, char **argv) {
     glutInitWindowSize(800,800);
     glutCreateWindow("Models");
 
+
+    float dark[4] = {0.2, 0.2, 0.2, 1.0};
+    float white[4] = {1.0, 1.0, 1.0, 1.0};
+    float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    glEnable(GL_LIGHTING);
+    for (Light* l: lights) {
+        glEnable(l->index);
+        
+        // light colors
+        glLightfv(l->index, GL_AMBIENT, dark);
+        glLightfv(l->index, GL_DIFFUSE, white);
+        glLightfv(l->index, GL_SPECULAR, white);
+
+        // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, black);
+    }
+
     // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
@@ -410,23 +514,30 @@ int main(int argc, char **argv) {
 
     // inicializar e armazenar nos vbos
     glEnableClientState(GL_VERTEX_ARRAY);
-    GLuint buffers[modelPoints.size()];
+    glEnableClientState(GL_NORMAL_ARRAY);
+    GLuint buffers[modelPoints.size() + modelNormals.size()];
 
-    glGenBuffers(modelPoints.size(),buffers);
+    glGenBuffers(modelPoints.size() + modelNormals.size(), buffers);
 
     int i = 0;
     for (std::pair<std::string, std::vector<float>> element : modelPoints) {
         std::string model = element.first;
         std::vector<float> points = element.second;
-        modelBuffer[model] = buffers[i];
-        glBindBuffer(GL_ARRAY_BUFFER, modelBuffer[model]);
+        std::vector<float> normals = modelNormals[element.first];
+        modelBufferPoints[model] = buffers[i];
+        modelBufferNormals[model] = buffers[i + modelPoints.size()];
+        glBindBuffer(GL_ARRAY_BUFFER, modelBufferPoints[model]);
         glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(float), points.data(), GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, modelBufferNormals[model]);
+        glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), normals.data(), GL_STATIC_DRAW);
         i++;
     }
 
 
     for(Model & group : models){
-        group.vertices = modelBuffer[group.model];
+        group.vertices = modelBufferPoints[group.model];
+        group.verticeCount = modelPoints[group.model].size();
     }
 
 
