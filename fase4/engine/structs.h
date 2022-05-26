@@ -81,7 +81,6 @@ public:
 class LightPoint : public Light {
     float pos[4];
 public:
-    int index;
     LightPoint(float a, float b, float c, int i);
     void apply();
 };
@@ -89,7 +88,6 @@ public:
 class LightDirectional : public Light{
     float dir[4];
 public:
-    int index;
     LightDirectional(float a, float b, float c, int i);
     void apply();
 };
@@ -97,7 +95,6 @@ public:
 class LightSpotlight : public Light{
     float pos[4], dir[4], cutoff;
 public:
-    int index;
     LightSpotlight(float a, float b, float c, float da, float db, float dc, float ct, int i);
     void apply();
 };

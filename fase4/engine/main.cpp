@@ -159,31 +159,31 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
                 std::vector<Color*> colors;
                 XMLElement* COLORS = m->FirstChildElement("color");
-                for (XMLElement *COLOR = COLORS->FirstChildElement(); COLOR; COLOR = COLORS->NextSiblingElement()) {
+                for (XMLElement *COLOR = COLORS->FirstChildElement(); COLOR; COLOR = COLOR->NextSiblingElement()) {
                     std::string ColorName = std::string(COLOR->Name());
 
                     if (ColorName == "diffuse") {
-                        float r = atof(COLOR->Attribute("R"));
-                        float rg = atof(COLOR->Attribute("G"));
-                        float rgb = atof(COLOR->Attribute("B"));
+                        float r = atof(COLOR->Attribute("R")) / 255;
+                        float rg = atof(COLOR->Attribute("G")) / 255;
+                        float rgb = atof(COLOR->Attribute("B")) / 255;
 
                         colors.push_back(new Diffuse(r, rg, rgb));
                     } else if (ColorName == "ambient") {
-                        float r = atof(COLOR->Attribute("R"));
-                        float rg = atof(COLOR->Attribute("G"));
-                        float rgb = atof(COLOR->Attribute("B"));
+                        float r = atof(COLOR->Attribute("R")) / 255;
+                        float rg = atof(COLOR->Attribute("G")) / 255;
+                        float rgb = atof(COLOR->Attribute("B")) / 255;
 
                         colors.push_back(new Ambient(r, rg, rgb));
                     } else if (ColorName == "specular") {
-                        float r = atof(COLOR->Attribute("R"));
-                        float rg = atof(COLOR->Attribute("G"));
-                        float rgb = atof(COLOR->Attribute("B"));
+                        float r = atof(COLOR->Attribute("R")) / 255;
+                        float rg = atof(COLOR->Attribute("G")) / 255;
+                        float rgb = atof(COLOR->Attribute("B")) / 255;
 
                         colors.push_back(new Specular(r, rg, rgb));
                     } else if (ColorName == "emissive") {
-                        float r = atof(COLOR->Attribute("R"));
-                        float rg = atof(COLOR->Attribute("G"));
-                        float rgb = atof(COLOR->Attribute("B"));
+                        float r = atof(COLOR->Attribute("R")) / 255;
+                        float rg = atof(COLOR->Attribute("G")) / 255;
+                        float rgb = atof(COLOR->Attribute("B")) / 255;
 
                         colors.push_back(new Emissive(r, rg, rgb));
                     } else if (ColorName == "shininess") {
@@ -360,14 +360,14 @@ void renderScene(void) {
               centerX, centerY, centerZ,
               upX, upY, upZ);
 
-    //glPolygonMode(GL_FRONT,GL_LINE);
+    // glPolygonMode(GL_FRONT,GL_LINE);
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glPolygonMode(GL_FRONT, GL_FILL);
+    // glPolygonMode(GL_FRONT, GL_FILL);
 
     //drawAxis();
-    drawModels();
     lightsOn();
 
+    drawModels();
 
     // End of frame
     glutSwapBuffers();
@@ -489,11 +489,13 @@ int main(int argc, char **argv) {
     glutCreateWindow("Models");
 
 
-    float dark[4] = {0.2, 0.2, 0.2, 1.0};
+    float dark[4] = {0.3, 0.3, 0.3, 1.0};
     float white[4] = {1.0, 1.0, 1.0, 1.0};
-    float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    // float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 
     glEnable(GL_LIGHTING);
+	glEnable(GL_RESCALE_NORMAL);
+
     for (Light* l: lights) {
         glEnable(l->index);
         
@@ -537,7 +539,9 @@ int main(int argc, char **argv) {
 
     for(Model & group : models){
         group.vertices = modelBufferPoints[group.model];
+        group.normals = modelBufferNormals[group.model];
         group.verticeCount = modelPoints[group.model].size();
+
     }
 
 

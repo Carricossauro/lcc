@@ -39,6 +39,7 @@ std::string generatePlane(float length, int divisions ){
     float unit = length / divisions;
     float offset = length / 2;
     float x1, x2, z1, z2;
+    float n[3] = {0, 1, 0};
 
     for (int i = 0; i < divisions; i++) {
         for (int j = 0; j < divisions; j++) {
@@ -48,17 +49,23 @@ std::string generatePlane(float length, int divisions ){
             z2 = (j+1) * unit - offset;
 
             buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
 
             buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
             
             buffer << x2 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
 
             
             buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
             
             buffer << x1 << ' ' << 0 << ' ' << z2 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
             
             buffer << x2 << ' ' << 0 << ' ' <<z2 << '\n';
+            buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
         }
     }
 

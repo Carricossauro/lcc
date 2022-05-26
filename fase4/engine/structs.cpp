@@ -210,6 +210,7 @@ void Model::draw(){
         for (Color* c : this->colors) {
             c->apply();
         }
+        
         glBindBuffer(GL_ARRAY_BUFFER, vertices);
         glVertexPointer(3, GL_FLOAT, 0, 0);
         

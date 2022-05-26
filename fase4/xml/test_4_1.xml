@@ -11,7 +11,7 @@
 	</lights>
 	<group> 
   		<models> 
-			<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
+			<model file="box_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 				<color>
                     <diffuse R="200" G="200" B="000" />
                     <ambient R="50" G="50" B="00" />
