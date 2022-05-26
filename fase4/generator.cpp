@@ -24,7 +24,12 @@ struct Point{
 };
 
 
-
+void normalize(float *a) {
+    float l = sqrt(a[0]*a[0] + a[1] * a[1] + a[2] * a[2]);
+    a[0] = a[0]/l;
+    a[1] = a[1]/l;
+    a[2] = a[2]/l;
+}
 
 std::string generatePlane(float length, int divisions ){
 
@@ -190,6 +195,7 @@ std::string generateSphere(float radius, int slices, int stacks){
     std::stringstream buffer;
     
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, arch_alfa = 2*M_PI / slices, arch_beta = M_PI / stacks;
+    float n[3];
     
     for (int i = 0; i < slices; i++) {
         for (int j = 0; j < stacks; j++) {
@@ -210,25 +216,49 @@ std::string generateSphere(float radius, int slices, int stacks){
             if (j != stacks-1) {
                 
                 buffer << x1 << ' ' << y1 << ' ' << z1 << "\n";
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                n[0] = x1;
+                n[1] = y1;
+                n[2] = z1;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
                 
                 buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
-                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                n[0] = x2;
+                n[1] = y2;
+                n[2] = z2;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
                 
                 buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                n[0] = x3;
+                n[1] = y2;
+                n[2] = z3;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
             }
         
             if (j != 0) {
                 
                 buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-                buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+                n[0] = x1;
+                n[1] = y1;
+                n[2] = z1;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
                 
                 buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                n[0] = x3;
+                n[1] = y2;
+                n[2] = z3;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
                 
                 buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
-                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+                n[0] = x4;
+                n[1] = y1;
+                n[2] = z4;
+                normalize(n);
+                buffer << n[0] << ' ' << n[1] << ' ' << n[2] << '\n';
             }
 
 
