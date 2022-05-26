@@ -82,6 +82,13 @@ std::string generateBox(float length, int divisions){
     float offset = length / 2;
     float x1, x2, y1, y2, z1, z2;
 
+    float up[3]     = {0,1,0};
+    float down[3]   = {0,-1,0};
+    float left[3]   = {-1,0,0};
+    float right[3]  = {1,0,0};
+    float front[3]  = {0,0,1};
+    float back[3]   = {0,0,-1};
+
     for (int i = 0; i < divisions; i++) {
         for (int j = 0; j < divisions; j++) {
             x1 = i * unit - offset;
@@ -90,31 +97,43 @@ std::string generateBox(float length, int divisions){
             z2 = (j+1) * unit - offset;
 
             buffer << x1 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
 
             
             buffer << x1 << ' ' << offset << ' ' << z1 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
             
             buffer << x1 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z2 << '\n';
+            buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
 
             
             buffer << x2 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
             
             buffer << x1 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
             
             buffer << x2 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
 
             
             buffer << x1 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
             
             buffer << x1 << ' ' << -offset << ' ' << z1 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
             
             buffer << x2 << ' ' << -offset << ' ' << z2 << '\n';
+            buffer << down[0] << ' ' << down[1] << ' ' << down[2] << '\n';
         }
     }
 
@@ -127,31 +146,43 @@ std::string generateBox(float length, int divisions){
 
             
             buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
             
             buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
             
             buffer << x2 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
 
             
             buffer << x1 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
             
             buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
             
             buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
 
             
             buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
             
             buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
             
             buffer << x2 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
 
             
             buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
             
             buffer << x1 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
             
             buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
         }
     }
 
@@ -164,31 +195,43 @@ std::string generateBox(float length, int divisions){
 
             
             buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
             
             buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
             
             buffer << offset << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
 
             
             buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
             
             buffer << offset << ' ' << y2 << ' ' << z1 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
             
             buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
 
             
             buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
             
             buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
             
             buffer << -offset << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
 
             
             buffer << -offset << ' ' << y2 << ' ' << z1 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
             
             buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
             
             buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
         }
     }
 
