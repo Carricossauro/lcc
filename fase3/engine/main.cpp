@@ -391,7 +391,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "solar_system.xml");
+        readXML(path_xml + "test_3_2.xml");
 
 
     // init GLUT and the window
@@ -427,6 +427,7 @@ int main(int argc, char **argv) {
 
     for(Model & group : models){
         group.vertices = modelBuffer[group.model];
+        group.verticeCount = modelPoints[group.model].size();
     }
 
 

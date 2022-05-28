@@ -360,8 +360,8 @@ void renderScene(void) {
               centerX, centerY, centerZ,
               upX, upY, upZ);
 
-    // glPolygonMode(GL_FRONT,GL_LINE);
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT,GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // glPolygonMode(GL_FRONT, GL_FILL);
 
     //drawAxis();
@@ -478,7 +478,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "solar_system.xml");
+        readXML(path_xml + "test.xml");
 
 
     // init GLUT and the window
@@ -551,6 +551,7 @@ int main(int argc, char **argv) {
     //  OpenGL settings
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
+
 
     printInfo();
     // enter GLUT's main cycle

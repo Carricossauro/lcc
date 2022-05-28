@@ -31,6 +31,13 @@ void normalize(float *a) {
     a[2] = a[2]/l;
 }
 
+void cross(float *a, float *b, float *res) {
+
+    res[0] = a[1]*b[2] - a[2]*b[1];
+    res[1] = a[2]*b[0] - a[0]*b[2];
+    res[2] = a[0]*b[1] - a[1]*b[0];
+}
+
 std::string generatePlane(float length, int divisions ){
 
 
@@ -95,6 +102,8 @@ std::string generateBox(float length, int divisions){
             z1 = j * unit - offset;
             x2 = (i+1) * unit - offset;
             z2 = (j+1) * unit - offset;
+
+
 
             buffer << x1 << ' ' << offset << ' ' << z1 << '\n';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << '\n';
@@ -521,42 +530,178 @@ float B(float U, float V, float m[4][4]){
 
 }
 
+float Du(float U, float V, float m[4][4]){
+
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = powf(V,3);
+    v[1] = powf(V,2);
+    v[2] = V;
+    v[3] = 1;
+
+    multMatrixVector(m,v,aux);
+
+    r = 3*powf(U,2)*aux[0] + 2*U*aux[1] + aux[2];
+
+
+
+    return r;
+
+}
+
+float Dv(float U, float V, float m[4][4]){
+
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = 3*powf(V,2);
+    v[1] = V*2;
+    v[2] = 1;
+    v[3] = 0;
+
+    multMatrixVector(m,v,aux);
+
+    r = powf(U,3)*aux[0] + powf(U,2)*aux[1] + U*aux[2] + aux[3];
+
+
+
+    return r;
+
+}
+
 std::string generateSurface(float mx[4][4], float my[4][4], float mz[4][4], int tesselation){
     std::stringstream buffer;
     float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    float p1u[3], p1v[3], p1n[3], p2u[3], p2v[3], p2n[3], p3u[3], p3v[3], p3n[3], p4u[3], p4v[3], p4n[3];
     float tesselation_level = 1.0/tesselation;
 
     for(float i=0; i<1; i+=tesselation_level){
         for(float j=0; j<1; j+=tesselation_level){
             x1 = B(i,j,mx);
+            p1u[0] = Du(i,j,mx);
+            p1v[0] = Dv(i,j,mx);
+
             x2 = B(i+tesselation_level,j,mx);
+            p2u[0] = Du(i+tesselation_level,j,mx);
+            p2v[0] = Dv(i+tesselation_level,j,mx);
+
             x3 = B(i+tesselation_level,j+tesselation_level,mx);
+            p3u[0] = Du(i+tesselation_level,j+tesselation_level,mx);
+            p3v[0] = Dv(i+tesselation_level,j+tesselation_level,mx);
+
             x4 = B(i,j+tesselation_level,mx);
+            p4u[0] = Du(i,j+tesselation_level,mx);
+            p4v[0] = Dv(i,j+tesselation_level,mx);
 
             y1 = B(i,j,my);
+            p1u[1] = Du(i,j,my);
+            p1v[1] = Dv(i,j,my);
+
             y2 = B(i+tesselation_level,j,my);
+            p2u[1] = Du(i+tesselation_level,j,my);
+            p2v[1] = Dv(i+tesselation_level,j,my);
+
+
             y3 = B(i+tesselation_level,j+tesselation_level,my);
+            p3u[1] = Du(i+tesselation_level,j+tesselation_level,my);
+            p3v[1] = Dv(i+tesselation_level,j+tesselation_level,my);
+            
             y4 = B(i,j+tesselation_level,my);
+            p4u[1] = Du(i,j+tesselation_level,my);
+            p4v[1] = Dv(i,j+tesselation_level,my);
 
             z1 = B(i,j,mz);
+            p1u[2] = Du(i,j,mz);
+            p1v[2] = Dv(i,j,mz);
+
             z2 = B(i+tesselation_level,j,mz);
+            p2u[2] = Du(i+tesselation_level,j,mz);
+            p2v[2] = Dv(i+tesselation_level,j,mz);
+
             z3 = B(i+tesselation_level,j+tesselation_level,mz);
+            p3u[2] = Du(i+tesselation_level,j+tesselation_level,mz);
+            p3v[2] = Dv(i+tesselation_level,j+tesselation_level,mz);
+
             z4 = B(i,j+tesselation_level,mz);
+            p4u[2] = Du(i,j+tesselation_level,mz);
+            p4v[2] = Dv(i,j+tesselation_level,mz);
 
-            
+
+            cross(p1u,p1v,p1n);
+            cross(p2u,p2v,p2n);
+            cross(p3u,p3v,p3n);
+            cross(p4u,p4v,p4n);
+
+            normalize(p1n);
+            normalize(p2n);
+            normalize(p3n);
+            normalize(p4n);
+
+            //p1n[0] = 1;
+            //p1n[1] = 1;
+            //p1n[2] = 1;
+            //p2n[0] = 1;
+            //p2n[1] = 1;
+            //p2n[2] = 1;
+            //p3n[0] = 1;
+            //p3n[1] = 1;
+            //p3n[2] = 1;
+            //p4n[0] = 1;
+            //p4n[1] = 1;
+            //p4n[2] = 1;
+
+
             buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
-            
+
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+
+
             buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
 
-            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
-            
-            
-            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+
 
             buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
 
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+
             
+            
+            buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
+
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+
             buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
+
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+
+            
+            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+
+            
+            
+
+            
+
+
+            
+
+            
+            
+            
+
+
+            
+
+            
+
+            
+            
                         
 
         }
