@@ -256,6 +256,7 @@ void readXML(std::string source) {
     alpha = asin((eyeX-centerX)/(radius*cos(beta)));
 
 
+
     XMLElement* group = doc.FirstChildElement("world")->FirstChildElement("group");
 
     std::vector<Transformation*> t;
@@ -265,7 +266,7 @@ void readXML(std::string source) {
 
     int lightIndex = 0;
     if (LIGHTS) {
-        for (XMLElement* LIGHT = LIGHTS->FirstChildElement("light"); LIGHT; LIGHT = LIGHTS->NextSiblingElement("light")) {
+        for (XMLElement* LIGHT = LIGHTS->FirstChildElement("light"); LIGHT; LIGHT = LIGHT->NextSiblingElement("light")) {
             std::string lightType = LIGHT->Attribute("type");
             if (lightType == "point") {
                 float x = atof(LIGHT->Attribute("posx"));
@@ -274,21 +275,21 @@ void readXML(std::string source) {
 
                 lights.push_back(new LightPoint(x, y, z, lightIndex));
             } else if (lightType == "directional") {
-                float dx = atof(LIGHT->Attribute("dirx"));
-                float dy = atof(LIGHT->Attribute("diry"));
-                float dz = atof(LIGHT->Attribute("dirz"));
+                float dirx = atof(LIGHT->Attribute("dirx"));
+                float diry = atof(LIGHT->Attribute("diry"));
+                float dirz = atof(LIGHT->Attribute("dirz"));
 
-                lights.push_back(new LightDirectional(dx, dy, dz, lightIndex));
-            } else if (lightType == "spotlight") {
+                lights.push_back(new LightDirectional(dirx, diry, dirz, lightIndex));
+            } else if (lightType == "spot") {
                 float x = atof(LIGHT->Attribute("posx"));
                 float y = atof(LIGHT->Attribute("posy"));
                 float z = atof(LIGHT->Attribute("posz"));
-                float dx = atof(LIGHT->Attribute("dirx"));
-                float dy = atof(LIGHT->Attribute("diry"));
-                float dz = atof(LIGHT->Attribute("dirz"));
+                float dirx = atof(LIGHT->Attribute("dirx"));
+                float diry = atof(LIGHT->Attribute("diry"));
+                float dirz = atof(LIGHT->Attribute("dirz"));
                 float cutoff = atof(LIGHT->Attribute("cutoff"));
 
-                lights.push_back(new LightSpotlight(x, y, z, dx, dy, dz, cutoff, lightIndex));
+                lights.push_back(new LightSpotlight(x, y, z, dirx, diry, dirz, cutoff, lightIndex));
             }
             
             lightIndex++;
@@ -478,7 +479,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test.xml");
+        readXML(path_xml + "test_4_6.xml");
 
 
     // init GLUT and the window
