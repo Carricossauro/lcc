@@ -82,7 +82,7 @@
 				<translate x = "2.5" y = "1.0" z = "-2.5" />
 			</transform>
 			<models> 
-				<model file="torus_nt.3d" > <!-- generator 2 3 box_nt.3d -->
+				<model file="box_nt.3d" > <!-- generator 2 3 box_nt.3d -->
 					<color>
 						<diffuse R="00" G="87" B="184" />
 						<ambient R="0" G="8" B="18" />

@@ -564,40 +564,40 @@ std::string generateTorus(float R, float r, int slices, int stacks) {
     for (int i = 0; i < stacks; i++) {
         for (int j = 0; j < slices; j++) {
             x1 = (R + r * cos(arch_alpha * i)) * cos(arch_beta * j);
-            p1n[0] = cos(arch_alpha * i) * cos(arch_beta * j);
+            p1n[0] = r*cos(arch_alpha * i) * cos(arch_beta * j);
 
             x2 = (R + r * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
-            p2n[0] = cos(arch_alpha * (i+1)) * cos(arch_beta * j);
+            p2n[0] = r*cos(arch_alpha * (i+1)) * cos(arch_beta * j);
 
             x3 = (R + r * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
-            p3n[0] = cos(arch_alpha * (i+1)) * cos(arch_beta * (j+1));
+            p3n[0] = r*cos(arch_alpha * (i+1)) * cos(arch_beta * (j+1));
 
             x4 = (R + r * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
-            p4n[0] = cos(arch_alpha * i) * cos(arch_beta * (j+1));
+            p4n[0] = r*cos(arch_alpha * i) * cos(arch_beta * (j+1));
 
             y1 = r * sin(arch_alpha * i);
-            p1n[1] = sin(arch_alpha * i);
+            p1n[1] = r*sin(arch_alpha * i);
 
             y2 = r * sin(arch_alpha * (i+1));
-            p2n[1] = sin(arch_alpha * (i+1));
+            p2n[1] = r*sin(arch_alpha * (i+1));
 
             y3 = r * sin(arch_alpha * (i+1));
-            p3n[1] = sin(arch_alpha * (i+1));
+            p3n[1] = r*sin(arch_alpha * (i+1));
 
             y4 = r * sin(arch_alpha * i);
-            p4n[1] = sin(arch_alpha * i);
+            p4n[1] = r*sin(arch_alpha * i);
 
             z1 = (R + r * cos(arch_alpha * i)) * sin(arch_beta * j);
-            p1n[2] = cos(arch_alpha * i) * sin(arch_beta * j);
+            p1n[2] = r*cos(arch_alpha * i) * sin(arch_beta * j);
 
             z2 = (R + r * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
-            p2n[2] = cos(arch_alpha * (i+1)) * sin(arch_beta * j);
+            p2n[2] = r*cos(arch_alpha * (i+1)) * sin(arch_beta * j);
 
             z3 = (R + r * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
-            p3n[2] = cos(arch_alpha * (i+1)) * sin(arch_beta * (j+1));
+            p3n[2] = r*cos(arch_alpha * (i+1)) * sin(arch_beta * (j+1));
 
             z4 = (R + r * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
-            p4n[2] = cos(arch_alpha * i) * sin(arch_beta * (j+1));
+            p4n[2] = r*cos(arch_alpha * i) * sin(arch_beta * (j+1));
 
             normalize(p1n);
             normalize(p2n);

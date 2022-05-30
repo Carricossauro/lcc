@@ -479,7 +479,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_4_6.xml");
+        readXML(path_xml + "test.xml");
 
 
     // init GLUT and the window
