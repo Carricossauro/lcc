@@ -123,9 +123,7 @@ GLuint loadTexture(std::string texture_name) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-    std::cout << "mipmap antes" << std::endl;
     glGenerateMipmap(GL_TEXTURE_2D);
-    std::cout << "mipmap depois" << std::endl;
 
     return texture_id;
 }
@@ -223,37 +221,39 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
 
                 std::vector<Color*> colors;
                 XMLElement* COLORS = m->FirstChildElement("color");
-                for (XMLElement *COLOR = COLORS->FirstChildElement(); COLOR; COLOR = COLOR->NextSiblingElement()) {
-                    std::string ColorName = std::string(COLOR->Name());
+                if (COLORS) {
+                    for (XMLElement *COLOR = COLORS->FirstChildElement(); COLOR; COLOR = COLOR->NextSiblingElement()) {
+                        std::string ColorName = std::string(COLOR->Name());
 
-                    if (ColorName == "diffuse") {
-                        float r = atof(COLOR->Attribute("R")) / 255;
-                        float rg = atof(COLOR->Attribute("G")) / 255;
-                        float rgb = atof(COLOR->Attribute("B")) / 255;
+                        if (ColorName == "diffuse") {
+                            float r = atof(COLOR->Attribute("R")) / 255;
+                            float rg = atof(COLOR->Attribute("G")) / 255;
+                            float rgb = atof(COLOR->Attribute("B")) / 255;
 
-                        colors.push_back(new Diffuse(r, rg, rgb));
-                    } else if (ColorName == "ambient") {
-                        float r = atof(COLOR->Attribute("R")) / 255;
-                        float rg = atof(COLOR->Attribute("G")) / 255;
-                        float rgb = atof(COLOR->Attribute("B")) / 255;
+                            colors.push_back(new Diffuse(r, rg, rgb));
+                        } else if (ColorName == "ambient") {
+                            float r = atof(COLOR->Attribute("R")) / 255;
+                            float rg = atof(COLOR->Attribute("G")) / 255;
+                            float rgb = atof(COLOR->Attribute("B")) / 255;
 
-                        colors.push_back(new Ambient(r, rg, rgb));
-                    } else if (ColorName == "specular") {
-                        float r = atof(COLOR->Attribute("R")) / 255;
-                        float rg = atof(COLOR->Attribute("G")) / 255;
-                        float rgb = atof(COLOR->Attribute("B")) / 255;
+                            colors.push_back(new Ambient(r, rg, rgb));
+                        } else if (ColorName == "specular") {
+                            float r = atof(COLOR->Attribute("R")) / 255;
+                            float rg = atof(COLOR->Attribute("G")) / 255;
+                            float rgb = atof(COLOR->Attribute("B")) / 255;
 
-                        colors.push_back(new Specular(r, rg, rgb));
-                    } else if (ColorName == "emissive") {
-                        float r = atof(COLOR->Attribute("R")) / 255;
-                        float rg = atof(COLOR->Attribute("G")) / 255;
-                        float rgb = atof(COLOR->Attribute("B")) / 255;
+                            colors.push_back(new Specular(r, rg, rgb));
+                        } else if (ColorName == "emissive") {
+                            float r = atof(COLOR->Attribute("R")) / 255;
+                            float rg = atof(COLOR->Attribute("G")) / 255;
+                            float rgb = atof(COLOR->Attribute("B")) / 255;
 
-                        colors.push_back(new Emissive(r, rg, rgb));
-                    } else if (ColorName == "shininess") {
-                        float value = atof(COLOR->Attribute("value"));
+                            colors.push_back(new Emissive(r, rg, rgb));
+                        } else if (ColorName == "shininess") {
+                            float value = atof(COLOR->Attribute("value"));
 
-                        colors.push_back(new Shininess(value));
+                            colors.push_back(new Shininess(value));
+                        }
                     }
                 }
 
