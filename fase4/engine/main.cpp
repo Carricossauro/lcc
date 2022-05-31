@@ -67,7 +67,11 @@ void changeSize(int w, int h) {
 
 
 void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals, std::vector<float> &textures, bool has_texture) {
-    std::ifstream file_input(source) ;
+    std::ifstream file_input(source);
+    if (!file_input) {
+        printf("Error - Model file does not exist: %s\n", source.data());
+        exit(1);
+    }
     float x, y, z, nx, ny, nz, tx, ty;
 
     if (has_texture) {
@@ -271,7 +275,10 @@ void readXML(std::string source) {
     using namespace tinyxml2;
 
     XMLDocument doc;
-    doc.LoadFile(source.data());
+    if (doc.LoadFile(source.data())) {
+        printf("Error - Xml file does not exist: %s\n", source.data());
+        exit(1);
+    }
 
     XMLElement *camera = doc.FirstChildElement("world")->FirstChildElement("camera");
     XMLElement *position = camera->FirstChildElement("position");
