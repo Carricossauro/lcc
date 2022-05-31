@@ -195,8 +195,9 @@ void Shininess::apply() {
 }
 
 
-Model::Model(std::string model, std::vector<Transformation*> t, std::vector<Color*> c) {
+Model::Model(std::string model, std::vector<Transformation*> t, std::vector<Color*> c, GLuint texture) {
     this->model = model;
+    this->texture = texture;
     this->transformations = t;
     this->colors = c;
 }
@@ -210,14 +211,23 @@ void Model::draw(){
         for (Color* c : this->colors) {
             c->apply();
         }
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, vertices);
         glVertexPointer(3, GL_FLOAT, 0, 0);
         
         glBindBuffer(GL_ARRAY_BUFFER, normals);
         glNormalPointer(GL_FLOAT, 0, 0);
+        
+        if (this->texture != -1) {
+            glBindTexture(GL_TEXTURE_2D, this->texture);
+
+            glBindBuffer(GL_ARRAY_BUFFER, textures);
+            glTexCoordPointer(2, GL_FLOAT, 0, 0);
+        }
 
         glDrawArrays(GL_TRIANGLES, 0, this->verticeCount);
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
         glPopMatrix();
 }
 

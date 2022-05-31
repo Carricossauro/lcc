@@ -141,10 +141,11 @@ public:
 
 struct Model{
     std::string model;
+    GLuint texture;
     std::vector<Transformation*> transformations;
     std::vector<Color*> colors;
-    GLuint vertices, verticeCount, normals;
-    Model(std::string model, std::vector<Transformation*> t, std::vector<Color*> c);
+    GLuint vertices, verticeCount, normals, textures;
+    Model(std::string model, std::vector<Transformation*> t, std::vector<Color*>, GLuint texture);
     void draw();
 
 };

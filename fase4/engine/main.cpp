@@ -1,3 +1,5 @@
+#include <IL/il.h>
+
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
@@ -15,12 +17,15 @@
 
 
 std::string path_3d;
+std::string path_textures;
 std::string path_xml;
 std::vector<Model> models;
 std::map<std::string, std::vector<float>> modelPoints;
 std::map<std::string, std::vector<float>> modelNormals;
+std::map<std::string, std::vector<float>> modelTextures;
 std::map<std::string, GLuint> modelBufferPoints;
 std::map<std::string, GLuint> modelBufferNormals;
+std::map<std::string, GLuint> modelBufferTextures;
 std::vector<Light*> lights;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f, speed = 1.0f;
@@ -61,19 +66,68 @@ void changeSize(int w, int h) {
 }
 
 
-void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals) {
+void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals, std::vector<float> &textures, bool has_texture) {
     std::ifstream file_input(source) ;
-    float x, y, z, nx, ny, nz;
-    while(file_input >> x >> y >> z >> nx >> ny >> nz) {
-        points.push_back(x);
-        points.push_back(y);
-        points.push_back(z);
+    float x, y, z, nx, ny, nz, tx, ty;
 
-        normals.push_back(nx);
-        normals.push_back(ny);
-        normals.push_back(nz);
+    if (has_texture) {
+        while(file_input >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
+            points.push_back(x);
+            points.push_back(y);
+            points.push_back(z);
+
+            normals.push_back(nx);
+            normals.push_back(ny);
+            normals.push_back(nz);
+
+            textures.push_back(tx);
+            textures.push_back(ty);
+        }
+    } else {
+        while(file_input >> x >> y >> z >> nx >> ny >> nz) {
+            points.push_back(x);
+            points.push_back(y);
+            points.push_back(z);
+
+            normals.push_back(nx);
+            normals.push_back(ny);
+            normals.push_back(nz);
+        }
     }
     file_input.close();
+}
+
+GLuint loadTexture(std::string texture_name) {
+    GLuint texture_id;
+    std::string texture_path = path_textures + texture_name; 
+    unsigned int t, tw, th;
+    unsigned char *texData;
+    ilGenImages(1, &t);
+    ilBindImage(t);
+    if (!ilLoadImage((ILstring)texture_path.c_str())) {
+        printf("Error - Texture file not found: %s\n", texture_path.data());
+        exit(1);
+    }
+    tw = ilGetInteger(IL_IMAGE_WIDTH);
+    th = ilGetInteger(IL_IMAGE_HEIGHT);
+    ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+    texData = ilGetData();
+
+    glGenTextures(1, &texture_id);
+
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+    std::cout << "mipmap antes" << std::endl;
+    glGenerateMipmap(GL_TEXTURE_2D);
+    std::cout << "mipmap depois" << std::endl;
+
+    return texture_id;
 }
 
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
@@ -150,11 +204,21 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
         if (MODELS) {
             for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
                 std::string model = m->Attribute("file");
+                std::string texture_name = "";
+                GLuint texture_id = -1;
                 if(!modelPoints.count(model)){
-                    std::vector<float> points, normals;
-                    getPoints(path_3d + model, points, normals);
+                    std::vector<float> points, normals, textures;
+                    bool has_texture = false;
+                    XMLElement *texture = m->FirstChildElement("texture");
+                    if (texture) {
+                        has_texture = true;
+                        texture_name = texture->Attribute("file");
+                        texture_id = loadTexture(texture_name);
+                    }
+                    getPoints(path_3d + model, points, normals, textures, has_texture);
                     modelPoints[model] = points;
                     modelNormals[model] = normals;
+                    if (has_texture) modelTextures[model] = textures;
                 }
 
                 std::vector<Color*> colors;
@@ -193,7 +257,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
                     }
                 }
 
-                models.push_back(Model(model, ts, colors));
+                models.push_back(Model(model, ts, colors, texture_id));
             }
         }
 
@@ -363,9 +427,9 @@ void renderScene(void) {
 
     //glPolygonMode(GL_FRONT,GL_LINE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    // glPolygonMode(GL_FRONT, GL_FILL);
+    //glPolygonMode(GL_FRONT, GL_FILL);
 
-    //drawAxis();
+    drawAxis();
     lightsOn();
 
     drawModels();
@@ -472,14 +536,10 @@ void processKeys(unsigned char c, int xx, int yy) {
 int main(int argc, char **argv) {
     path_3d = "../../3d/";
     path_xml = "../../xml/";
+    path_textures = "../../textures/";
 
 
     spherical2Cartesian();
-
-    if(argc == 2)
-        readXML(path_xml + argv[1]);
-    else
-        readXML(path_xml + "test.xml");
 
 
     // init GLUT and the window
@@ -496,6 +556,21 @@ int main(int argc, char **argv) {
 
     glEnable(GL_LIGHTING);
 	glEnable(GL_RESCALE_NORMAL);
+    glEnable(GL_TEXTURE_2D);
+
+    // Required callback registry
+    glutDisplayFunc(renderScene);
+    glutReshapeFunc(changeSize);
+    glutIdleFunc(renderScene);
+
+    glewInit();
+
+    ilInit();
+
+    if(argc == 2)
+        readXML(path_xml + argv[1]);
+    else
+        readXML(path_xml + "test.xml");
 
     for (Light* l: lights) {
         glEnable(l->index);
@@ -508,32 +583,31 @@ int main(int argc, char **argv) {
         // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, black);
     }
 
-    // Required callback registry
-    glutDisplayFunc(renderScene);
-    glutReshapeFunc(changeSize);
-    glutIdleFunc(renderScene);
-
-    glewInit();
-
     // inicializar e armazenar nos vbos
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
-    GLuint buffers[modelPoints.size() + modelNormals.size()];
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLuint buffers[modelPoints.size() + modelNormals.size() + modelTextures.size()];
 
-    glGenBuffers(modelPoints.size() + modelNormals.size(), buffers);
+    glGenBuffers(modelPoints.size() + modelNormals.size() + modelTextures.size(), buffers);
 
     int i = 0;
     for (std::pair<std::string, std::vector<float>> element : modelPoints) {
         std::string model = element.first;
         std::vector<float> points = element.second;
-        std::vector<float> normals = modelNormals[element.first];
+        std::vector<float> normals = modelNormals[model];
+        std::vector<float> textures = modelTextures[model];
         modelBufferPoints[model] = buffers[i];
         modelBufferNormals[model] = buffers[i + modelPoints.size()];
+        modelBufferTextures[model] = buffers[i + modelPoints.size() + modelTextures.size()];
         glBindBuffer(GL_ARRAY_BUFFER, modelBufferPoints[model]);
         glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(float), points.data(), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, modelBufferNormals[model]);
         glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), normals.data(), GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, modelBufferTextures[model]);
+        glBufferData(GL_ARRAY_BUFFER, textures.size() * sizeof(float), textures.data(), GL_STATIC_DRAW);
         i++;
     }
 
@@ -541,8 +615,8 @@ int main(int argc, char **argv) {
     for(Model & group : models){
         group.vertices = modelBufferPoints[group.model];
         group.normals = modelBufferNormals[group.model];
+        group.textures = modelBufferTextures[group.model];
         group.verticeCount = modelPoints[group.model].size();
-
     }
 
 
