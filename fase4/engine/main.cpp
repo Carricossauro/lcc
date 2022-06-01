@@ -26,6 +26,7 @@ std::map<std::string, std::vector<float>> modelTextures;
 std::map<std::string, GLuint> modelBufferPoints;
 std::map<std::string, GLuint> modelBufferNormals;
 std::map<std::string, GLuint> modelBufferTextures;
+std::map<std::string, GLuint> textureTextureId;
 std::vector<Light*> lights;
 
 float alpha = 0.0f, beta = 0.0f, radius = 5.0f, radius_diff = 1.0f, speed = 1.0f;
@@ -66,7 +67,7 @@ void changeSize(int w, int h) {
 }
 
 
-void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals, std::vector<float> &textures, bool has_texture) {
+void getPoints(std::string source, std::vector<float> &points, std::vector<float> &normals, std::vector<float> &textures) {
     std::ifstream file_input(source);
     if (!file_input) {
         printf("Error - Model file does not exist: %s\n", source.data());
@@ -74,7 +75,7 @@ void getPoints(std::string source, std::vector<float> &points, std::vector<float
     }
     float x, y, z, nx, ny, nz, tx, ty;
 
-    if (has_texture) {
+    if (1) {
         while(file_input >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
             points.push_back(x);
             points.push_back(y);
@@ -210,17 +211,22 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
                 GLuint texture_id = -1;
                 if(!modelPoints.count(model)){
                     std::vector<float> points, normals, textures;
-                    bool has_texture = false;
-                    XMLElement *texture = m->FirstChildElement("texture");
-                    if (texture) {
-                        has_texture = true;
-                        texture_name = texture->Attribute("file");
-                        texture_id = loadTexture(texture_name);
-                    }
-                    getPoints(path_3d + model, points, normals, textures, has_texture);
+
+                    getPoints(path_3d + model, points, normals, textures);
                     modelPoints[model] = points;
                     modelNormals[model] = normals;
-                    if (has_texture) modelTextures[model] = textures;
+                    modelTextures[model] = textures;
+                }
+
+                XMLElement *texture = m->FirstChildElement("texture");
+                if (texture) {
+                    texture_name = texture->Attribute("file");
+                    if(!textureTextureId.count(texture_name)){
+                        texture_id = loadTexture(texture_name);
+                        textureTextureId[texture_name] = texture_id;
+                    }
+                    else
+                        texture_id = textureTextureId[texture_name];
                 }
 
                 std::vector<Color*> colors;
@@ -436,7 +442,7 @@ void renderScene(void) {
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //glPolygonMode(GL_FRONT, GL_FILL);
 
-    drawAxis();
+    //drawAxis();
     lightsOn();
 
     drawModels();
@@ -578,7 +584,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test_text.xml");
+        readXML(path_xml + "test_light.xml");
 
     for (Light* l: lights) {
         glEnable(l->index);

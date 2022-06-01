@@ -402,7 +402,7 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, h1, h2, r1, r2, ny;
     float p1n[3], p2n[3], p3n[3], p4n[3];
 
-
+    float var = (2 * radius * M_PI) / slices;
 
     for (int i = 0; i < slices; i++) {
         x1 = radius * sin(arch_alfa * i);
@@ -410,18 +410,26 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
         z1 = radius * cos(arch_alfa * i);
         z2 = radius * cos(arch_alfa * (i+1));
 
-        
-        buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
 
-        buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
-        
-        buffer << 0 << ' ' << 0 << ' ' << 0 << '\n';
-        
-        buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
+        buffer << x1 << ' ' << 0 << ' ' << z1 << ' ';
 
-        buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
+        buffer << 0 << ' ' << -1 << ' ' << 0 << ' ';
 
-        buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
+        buffer << 0.5 + sin(arch_alfa * i) << ' ' << 0.5 + cos(arch_alfa * i) << '\n';
+
+
+        buffer << 0 << ' ' << 0 << ' ' << 0 << ' ';
+        
+        buffer << 0 << ' ' << -1 << ' ' << 0 << ' ';
+
+        buffer << (float) 0.5 << ' ' << (float) 0.5  << '\n';
+        
+        
+        buffer << x2 << ' ' << 0 << ' ' << z2 << ' ';
+
+        buffer << 0 << ' ' << -1 << ' ' << 0 << ' ';
+
+        buffer << 0.5 + sin(arch_alfa * (i+1)) << ' ' << 0.5 + cos(arch_alfa * (i+1)) << '\n';
     }
 
     ny = sin(atan(radius/height));
@@ -477,31 +485,49 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
             normalize(p3n);
             normalize(p4n);
 
-            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << z1 << ' ';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
 
-            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << (float) j/slices << ' ' << (float) i/stacks << '\n';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
 
-            buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << z2 << ' ';
 
-            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
+
+
+
+            buffer << x4 << ' ' << y2 << ' ' << z4 << ' ';
+
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+            buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
+
 
             if (i != stacks - 1) {
                 
-                buffer << x4 << ' ' << y2 << ' ' << z4 << '\n';
+                buffer << x4 << ' ' << y2 << ' ' << z4 << ' ';
 
-                buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+                buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+                buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
+
                 
-                buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+                buffer << x2 << ' ' << y1 << ' ' << z2 << ' ';
 
-                buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+                buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+                buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
+
                 
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << ' ';
 
-                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+
+                buffer << (float) (j+1)/slices << ' ' << (float) (i+1)/stacks << '\n';
             }            
 
         }
@@ -528,28 +554,44 @@ std::string generateCylinder(float radius, float height, int slices, int stacks)
 
         buffer << x1 << ' ' << 0 << ' ' << z1 << '\n';
 
-        buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
-        
-        buffer << 0 << ' ' << 0 << ' ' << 0 << '\n';
+        buffer << 0 << ' ' << -1 << ' ' << 0 << ' ';
 
-        buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
+        buffer << 0.5 + sin(arch_alfa * i) << ' ' << 0.5 + cos(arch_alfa * i) << ' ';
+
+        
+        buffer << 0 << ' ' << 0 << ' ' << 0 << ' ';
+
+        buffer << 0 << ' ' << -1 << ' ' << 0 << ' ';
+
+        buffer << (float) 0.5 << ' ' << (float) 0.5  << '\n';
+
         
         buffer << x2 << ' ' << 0 << ' ' << z2 << '\n';
 
         buffer << 0 << ' ' << -1 << ' ' << 0 << '\n';
 
+        buffer << 0.5 + sin(arch_alfa * (i+1)) << ' ' << 0.5 + cos(arch_alfa * (i+1)) << '\n';
+
         
         buffer << 0 << ' ' << height << ' ' << 0 << '\n';
 
         buffer << 0 << ' ' << 1 << ' ' << 0 << '\n';
+
+        buffer << (float) 0.5 << ' ' << (float) 0.5  << '\n';
+
     
         buffer << x1 << ' ' << height << ' ' << z1 << '\n';
 
         buffer << 0 << ' ' << 1 << ' ' << 0 << '\n';
+
+        buffer << 0.5 + sin(arch_alfa * i) << ' ' << 0.5 + cos(arch_alfa * i) << ' ';
+
         
         buffer << x2 << ' ' << height << ' ' << z2 << '\n';
 
         buffer << 0 << ' ' << 1 << ' ' << 0 << '\n';
+
+        buffer << 0.5 + sin(arch_alfa * (i+1)) << ' ' << 0.5 + cos(arch_alfa * (i+1)) << '\n';
     }
 
 
@@ -574,31 +616,47 @@ std::string generateCylinder(float radius, float height, int slices, int stacks)
             p2n[1] = 0;
 
 
-            
-            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << z1 << ' ';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
-            
-            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
-            
-            buffer << x1 << ' ' << y2 << ' ' << z1 << '\n';
-
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << (float) i/slices << ' ' << (float) j/stacks << '\n';
 
             
-            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << z2 << ' ';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) (i+1)/slices << ' ' << (float) j/stacks << '\n';
+
             
-            buffer << x1 << ' ' << y2 << ' ' << z1 << '\n';
+            buffer << x1 << ' ' << y2 << ' ' << z1 << ' ';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+            buffer << (float) i/slices << ' ' << (float) (j+1)/stacks << '\n';
+
             
-            buffer << x2 << ' ' << y1 << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) (i+1)/slices << ' ' << (float) (j+1)/stacks << '\n';
+
+            
+            buffer << x1 << ' ' << y2 << ' ' << z1 << ' ';
+
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+            buffer << (float) i/slices << ' ' << (float) (j+1)/stacks << '\n';
+
+
+            
+            buffer << x2 << ' ' << y1 << ' ' << z2 << ' ';
+
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) (i+1)/slices << ' ' << (float) j/stacks << '\n';
         }
 
     }
