@@ -343,32 +343,44 @@ std::string generateSphere(float radius, int slices, int stacks){
 
             if (j != stacks-1) {
                 
-                buffer << x1 << ' ' << y1 << ' ' << z1 << "\n";
+                buffer << x1 << ' ' << y1 << ' ' << z1 << ' ';
                 
-                buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+                buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+                buffer << (float) i/slices << ' ' << (float) j/stacks << '\n';
                 
-                buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+                buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
                 
-                buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+                buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+                buffer << (float) i/slices << ' ' << (float) (j+1)/stacks << '\n';
                 
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << ' ';
                 
-                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+
+                buffer << (float) (i+1)/slices << ' ' << (float) (j+1)/stacks << '\n';
             }
         
             if (j != 0) {
                 
                 buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
                 
-                buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+                buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+                buffer << (float) i/slices << ' ' << (float) j/stacks << '\n';
                 
-                buffer << x3 << ' ' << y2 << ' ' << z3 << '\n';
+                buffer << x3 << ' ' << y2 << ' ' << z3 << ' ';
                 
-                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+                buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+
+                buffer << (float) (i+1)/slices << ' ' << (float) (j+1)/stacks << '\n';
                 
-                buffer << x4 << ' ' << y1 << ' ' << z4 << '\n';
+                buffer << x4 << ' ' << y1 << ' ' << z4 << ' ';
                 
-                buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+                buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+                buffer << (float) (i+1)/slices << ' ' << (float) j/stacks << '\n';
             }
 
 
@@ -649,28 +661,44 @@ std::string generateTorus(float R, float r, int slices, int stacks) {
 
             buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+            buffer << (float) j/slices << ' ' << (float) i/stacks << '\n';
             
-            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
-
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
-        
-            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
-
-            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
-
             
-            buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
         
-            buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
-
-            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
             
             buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
 
-            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+            buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
+
+
+            buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
+
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
+
+        
+            buffer << x3 << ' ' << y3 << ' ' << z3 << ' ';
+
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+
+            buffer << (float) (j+1)/slices << ' ' << (float) (i+1)/stacks << '\n';
+            
+           
+            buffer << x4 << ' ' << y4 << ' ' << z4 << ' ';
+
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+            buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
 
         }
     }
@@ -834,32 +862,45 @@ std::string generateSurface(float mx[4][4], float my[4][4], float mz[4][4], int 
 
             buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+            buffer << j << ' ' << i << '\n';
 
 
             buffer << x2 << ' ' << y2 << ' ' << z2 << '\n';
 
-            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << '\n';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+
+            buffer << j << ' ' << i+tesselation_level << '\n';
 
 
             buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
 
-            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+
+            buffer << j+tesselation_level << ' ' << i+tesselation_level << '\n';
 
             
             
-            buffer << x3 << ' ' << y3 << ' ' << z3 << '\n';
+            buffer << x3 << ' ' << y3 << ' ' << z3 << ' ';
 
-            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << '\n';
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
 
-            buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
-
-            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << '\n';
+            buffer << j+tesselation_level << ' ' << i+tesselation_level << '\n';
 
             
-            buffer << x1 << ' ' << y1 << ' ' << z1 << '\n';
+            buffer << x4 << ' ' << y4 << ' ' << z4 << ' ';
 
-            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << '\n';
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+
+            buffer << j+tesselation_level << ' ' << i << '\n';
+
+            
+            buffer << x1 << ' ' << y1 << ' ' << z1 << ' ';
+
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+
+            buffer << j << ' ' << i << '\n';
 
                         
 

@@ -546,6 +546,7 @@ int main(int argc, char **argv) {
     path_textures = "../../textures/";
 
 
+
     spherical2Cartesian();
 
 
@@ -577,7 +578,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "test.xml");
+        readXML(path_xml + "test_text.xml");
 
     for (Light* l: lights) {
         glEnable(l->index);
