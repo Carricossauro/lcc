@@ -70,7 +70,7 @@ Curve::Curve(std::vector<Point> points, bool align, float time) {
 }
 void Curve::apply() {
         float pos[3], deriv[3];
-        renderCatmullRomCurve(this->control_points);
+        //renderCatmullRomCurve(this->control_points);
 
         getGlobalCatmullRomPoint(t, pos, deriv, control_points);
 
@@ -202,6 +202,8 @@ Model::Model(std::string model, std::vector<Transformation*> t, std::vector<Colo
     this->colors = c;
 }
 
+Model::Model() {}
+
 
 void Model::draw(){
         glPushMatrix();
@@ -226,6 +228,9 @@ void Model::draw(){
         }
 
         glDrawArrays(GL_TRIANGLES, 0, this->verticeCount);
+
+        float clear[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+        glMaterialfv(GL_FRONT, GL_EMISSION, clear);
         
         glBindTexture(GL_TEXTURE_2D, 0);
         glPopMatrix();

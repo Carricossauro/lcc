@@ -20,6 +20,8 @@ std::string path_3d;
 std::string path_textures;
 std::string path_xml;
 std::vector<Model> models;
+Model background;
+bool has_background = false;
 std::map<std::string, std::vector<float>> modelPoints;
 std::map<std::string, std::vector<float>> modelNormals;
 std::map<std::string, std::vector<float>> modelTextures;
@@ -48,6 +50,7 @@ void changeSize(int w, int h) {
     if(h == 0)
         h = 1;
 
+
     // compute window's aspect ratio
     float ratio = w * 1.0 / h;
 
@@ -64,6 +67,129 @@ void changeSize(int w, int h) {
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
+}
+
+GLuint loadTexture(std::string texture_name) {
+    GLuint texture_id;
+    std::string texture_path = path_textures + texture_name; 
+    unsigned int t, tw, th;
+    unsigned char *texData;
+    ilGenImages(1, &t);
+    ilBindImage(t);
+    if (!ilLoadImage((ILstring)texture_path.c_str())) {
+        printf("Error - Texture file not found: %s\n", texture_path.data());
+        exit(1);
+    }
+    tw = ilGetInteger(IL_IMAGE_WIDTH);
+    th = ilGetInteger(IL_IMAGE_HEIGHT);
+    ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+    texData = ilGetData();
+
+    glGenTextures(1, &texture_id);
+
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    return texture_id;
+}
+
+void createBackground(std::string texture) {
+    std::vector<float> backgroundPoints;
+    std::vector<float> backgroundNormals;
+    std::vector<float> backgroundTexture;
+
+    float x1, x2;
+    float y1, y2;
+    float z1, z2;
+    float n[3] = {0.0, 0.0, 1.0}; 
+
+    x1 = -far/2.0f;
+    x2 = far/2.0f;
+    y1 = -far/2.0f;
+    y2 = far/2.0f;
+    z1 = -far/2.0f;
+    z2 = far/2.0f;
+
+    backgroundPoints.push_back(x1);
+    backgroundPoints.push_back(y1);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(0);
+    backgroundTexture.push_back(0);
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y1);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1);
+    backgroundTexture.push_back(0);
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1);
+    backgroundTexture.push_back(1);
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1);
+    backgroundTexture.push_back(1);
+
+    backgroundPoints.push_back(x1);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(0);
+    backgroundTexture.push_back(1);
+
+    backgroundPoints.push_back(x1);
+    backgroundPoints.push_back(y1);
+    backgroundPoints.push_back(z1);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(0);
+    backgroundTexture.push_back(0);
+
+    modelPoints["background"] = backgroundPoints;
+    modelNormals["background"] = backgroundNormals;
+    modelTextures["background"] = backgroundTexture;
+
+    background.model = "background";
+    background.texture = loadTexture(texture);
+    textureTextureId["background"] = background.texture;
 }
 
 
@@ -100,37 +226,6 @@ void getPoints(std::string source, std::vector<float> &points, std::vector<float
         }
     }
     file_input.close();
-}
-
-GLuint loadTexture(std::string texture_name) {
-    GLuint texture_id;
-    std::string texture_path = path_textures + texture_name; 
-    unsigned int t, tw, th;
-    unsigned char *texData;
-    ilGenImages(1, &t);
-    ilBindImage(t);
-    if (!ilLoadImage((ILstring)texture_path.c_str())) {
-        printf("Error - Texture file not found: %s\n", texture_path.data());
-        exit(1);
-    }
-    tw = ilGetInteger(IL_IMAGE_WIDTH);
-    th = ilGetInteger(IL_IMAGE_HEIGHT);
-    ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-    texData = ilGetData();
-
-    glGenTextures(1, &texture_id);
-
-    glBindTexture(GL_TEXTURE_2D, texture_id);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    return texture_id;
 }
 
 void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
@@ -332,6 +427,14 @@ void readXML(std::string source) {
     beta = asin((eyeY-centerY )/radius);
     alpha = asin((eyeX-centerX)/(radius*cos(beta)));
 
+    XMLElement *BACKGROUND = doc.FirstChildElement("world")->FirstChildElement("background");
+    if (BACKGROUND) {
+        has_background = true;
+
+        std::string backgroundtexture = BACKGROUND->Attribute("file");
+        createBackground(backgroundtexture);
+    }
+
 
 
     XMLElement* group = doc.FirstChildElement("world")->FirstChildElement("group");
@@ -434,6 +537,8 @@ void renderScene(void) {
 
     // set the camera
     glLoadIdentity();
+    
+    if (has_background) background.draw();
     gluLookAt(eyeX, eyeY, eyeZ,
               centerX, centerY, centerZ,
               upX, upY, upZ);
@@ -601,6 +706,7 @@ int main(int argc, char **argv) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
     GLuint buffers[modelPoints.size() + modelNormals.size() + modelTextures.size()];
 
     glGenBuffers(modelPoints.size() + modelNormals.size() + modelTextures.size(), buffers);
@@ -631,6 +737,13 @@ int main(int argc, char **argv) {
         group.normals = modelBufferNormals[group.model];
         group.textures = modelBufferTextures[group.model];
         group.verticeCount = modelPoints[group.model].size();
+    }
+
+    if (has_background) {
+        background.vertices = modelBufferPoints[background.model];
+        background.normals = modelBufferNormals[background.model];
+        background.textures = modelBufferTextures[background.model];
+        background.verticeCount = modelPoints[background.model].size();
     }
 
 

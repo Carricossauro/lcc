@@ -145,6 +145,7 @@ struct Model{
     std::vector<Transformation*> transformations;
     std::vector<Color*> colors;
     GLuint vertices, verticeCount, normals, textures;
+    Model();
     Model(std::string model, std::vector<Transformation*> t, std::vector<Color*>, GLuint texture);
     void draw();
 
