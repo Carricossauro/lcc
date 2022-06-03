@@ -71,7 +71,6 @@ Curve::Curve(std::vector<Point> points, bool align, float time) {
 void Curve::apply() {
         float pos[3], deriv[3];
         //renderCatmullRomCurve(this->control_points);
-
         getGlobalCatmullRomPoint(t, pos, deriv, control_points);
 
         glTranslatef(pos[0], pos[1], pos[2]);
@@ -325,6 +324,8 @@ void getGlobalCatmullRomPoint(float gt, float *pos, float *deriv, std::vector<Po
 
 void renderCatmullRomCurve(std::vector<Point> control_points) {
     // draw curve using line segments with GL_LINE_LOOP
+    glDisable(GL_LIGHTING);
+
     float pos[3], deriv[3];
     float LINE_SEGMENTS = 100;
 
@@ -334,6 +335,7 @@ void renderCatmullRomCurve(std::vector<Point> control_points) {
         glVertex3f(pos[0], pos[1], pos[2]);
     }
     glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 int getLight(int nLight) {

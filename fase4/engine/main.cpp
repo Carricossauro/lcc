@@ -204,30 +204,18 @@ void getPoints(std::string source, std::vector<float> &points, std::vector<float
         exit(1);
     }
     float x, y, z, nx, ny, nz, tx, ty;
+    while(file_input >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
 
-    if (1) {
-        while(file_input >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
-            points.push_back(x);
-            points.push_back(y);
-            points.push_back(z);
+        points.push_back(x);
+        points.push_back(y);
+        points.push_back(z);
 
-            normals.push_back(nx);
-            normals.push_back(ny);
-            normals.push_back(nz);
+        normals.push_back(nx);
+        normals.push_back(ny);
+        normals.push_back(nz);
 
-            textures.push_back(tx);
-            textures.push_back(ty);
-        }
-    } else {
-        while(file_input >> x >> y >> z >> nx >> ny >> nz) {
-            points.push_back(x);
-            points.push_back(y);
-            points.push_back(z);
-
-            normals.push_back(nx);
-            normals.push_back(ny);
-            normals.push_back(nz);
-        }
+        textures.push_back(tx);
+        textures.push_back(ty);
     }
     file_input.close();
 }
@@ -558,7 +546,7 @@ void drawBackground(){
 
 
 void drawAxis(){
-
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     glColor3f(1.0,0.0,0.0);
     glVertex3f(centerX-far,0,0);
@@ -574,6 +562,7 @@ void drawAxis(){
 
     glEnd();
     glColor3f(1.0,1.0,1.0);
+    glEnable(GL_LIGHTING);
 }
 
 void renderScene(void) {

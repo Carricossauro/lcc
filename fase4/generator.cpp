@@ -415,7 +415,6 @@ std::string generateCone(float radius, float height, int slices, int stacks ){
     float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, h1, h2, r1, r2, ny;
     float p1n[3], p2n[3], p3n[3], p4n[3];
 
-    float var = (2 * radius * M_PI) / slices;
 
     for (int i = 0; i < slices; i++) {
         x1 = radius * sin(arch_alfa * i);
@@ -616,10 +615,10 @@ std::string generateCylinder(float radius, float height, int slices, int stacks)
         p2n[0] = sin(arch_alfa * (i+1));
 
         z1 = radius * cos(arch_alfa * i);
-        p1n[2] = radius * cos(arch_alfa * i);
+        p1n[2] = cos(arch_alfa * i);
 
         z2 = radius * cos(arch_alfa * (i+1));
-        p2n[2] = radius * cos(arch_alfa * (i+1));
+        p2n[2] = cos(arch_alfa * (i+1));
 
         for (int j = 0; j < stacks; j++){
             y1 = (j * stack_size);
