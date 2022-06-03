@@ -11,7 +11,7 @@
 	</lights>
 	<group> 
   		<models> 
-			<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+			<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 				<color>
                     <diffuse R="200" G="200" B="200" />
                     <ambient R="200" G="200" B="200" />
@@ -29,7 +29,7 @@
 				<scale x="0.15" y="0.15" z="0.15" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
                     	<diffuse R="0" G="0" B="0" />
                     	<ambient R="0" G="0" B="0" />
@@ -46,7 +46,7 @@
 				<scale x="0.15" y="0.15" z="0.15" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
                     	<diffuse R="0" G="0" B="0" />
                     	<ambient R="0" G="0" B="0" />
@@ -63,7 +63,7 @@
 				<scale x="0.15" y="0.15" z="0.15" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
                     	<diffuse R="0" G="0" B="0" />
                     	<ambient R="0" G="0" B="0" />
@@ -86,7 +86,7 @@
 				<scale x="0.5" y="0.5" z="0.5" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
         	            <diffuse R="200" G="200" B="200" />
         	            <ambient R="200" G="200" B="200" />
@@ -104,7 +104,7 @@
 				<scale x="0.15" y="0.15" z="0.15" />
 			</transform> 
   			<models> 
-				<model file="cone_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="cone_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
         	            <diffuse R="204" G="102" B="0" />
         	            <ambient R="204" G="102" B="0" />
@@ -121,7 +121,7 @@
 				<scale x="0.1" y="0.1" z="0.1" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
         	            <diffuse R="0" G="0" B="0" />
         	            <ambient R="0" G="0" B="0" />
@@ -138,7 +138,7 @@
 				<scale x="0.1" y="0.1" z="0.1" />
 			</transform> 
   			<models> 
-				<model file="sphere_tex.3d" > <!-- generator box 2 3 box_nt.3d -->
+				<model file="sphere_nt.3d" > <!-- generator box 2 3 box_nt.3d -->
 					<color>
         	            <diffuse R="0" G="0" B="0" />
         	            <ambient R="0" G="0" B="0" />

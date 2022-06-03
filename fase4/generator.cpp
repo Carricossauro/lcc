@@ -120,50 +120,50 @@ std::string generateBox(float length, int divisions){
 
             buffer << x1 << ' ' << offset << ' ' << z1 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx1 << ' ' << tz1 << '\n';//
+            buffer << tx1 << ' ' << tz1 << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z2 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx2 << ' ' << tz2 << '\n';//
+            buffer << tx2 << ' ' << tz2 << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z1 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx2 << ' ' << tz1 << '\n';//
+            buffer << tx2 << ' ' << tz1 << '\n';
 
             
             buffer << x1 << ' ' << offset << ' ' << z1 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx1 << ' ' << tz1 << '\n';//
+            buffer << tx1 << ' ' << tz1 << '\n';
             
             buffer << x1 << ' ' << offset << ' ' << z2 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx1 << ' ' << tz2 << '\n';//
+            buffer << tx1 << ' ' << tz2 << '\n';
             
             buffer << x2 << ' ' << offset << ' ' << z2 << ' ';
             buffer << up[0] << ' ' << up[1] << ' ' << up[2] << ' ';
-            buffer << tx2 << ' ' << tz2 << '\n';//
+            buffer << tx2 << ' ' << tz2 << '\n';
 
             
             buffer << x2 << ' ' << -offset << ' ' << z2 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
-            buffer << tx2 << ' ' << tz2 << '\n';//
+            buffer << tx2 << ' ' << tz2 << '\n';
             
             buffer << x1 << ' ' << -offset << ' ' << z1 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
-            buffer << tx1 << ' ' << tz1 << '\n';//
+            buffer << tx1 << ' ' << tz1 << '\n';
             
             buffer << x2 << ' ' << -offset << ' ' << z1 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
-            buffer << tx2 << ' ' << tz1 << '\n';//
+            buffer << tx2 << ' ' << tz1 << '\n';
 
             
             buffer << x1 << ' ' << -offset << ' ' << z2 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
-            buffer << tx1 << ' ' << tz2 << '\n';//
+            buffer << tx1 << ' ' << tz2 << '\n';
             
             buffer << x1 << ' ' << -offset << ' ' << z1 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
-            buffer << tx1 << ' ' << tz1 << '\n';//
+            buffer << tx1 << ' ' << tz1 << '\n';
             
             buffer << x2 << ' ' << -offset << ' ' << z2 << ' ';
             buffer << down[0] << ' ' << down[1] << ' ' << down[2] << ' ';
@@ -180,58 +180,58 @@ std::string generateBox(float length, int divisions){
             y2 = (j+1) * unit - offset;
             tx1 = i*tex_step;
             tx2 = (i+1)*tex_step;
-            tz2 = j*tex_step;
-            tz1 = (j+1)*tex_step;
+            tz1 = j*tex_step;
+            tz2 = (j+1)*tex_step;
             
-            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
 
-            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << x2 << ' ' << y1 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx2 << ' ' << tz1 << '\n';
 
             
-            buffer << x1 << ' ' << y2 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x1 << ' ' << y2 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx1 << ' ' << tz2 << '\n';
 
-            buffer << x1 << ' ' << y1 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << x2 << ' ' << y2 << ' ' << offset << '\n';
-            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << offset << ' ';
+            buffer << front[0] << ' ' << front[1] << ' ' << front[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
 
             
-            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
             
-            buffer << x2 << ' ' << y1 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x2 << ' ' << y1 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx2 << ' ' << tz1 << '\n';
 
             
-            buffer << x1 << ' ' << y1 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x1 << ' ' << y1 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << x1 << ' ' << y2 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x1 << ' ' << y2 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx1 << ' ' << tz2 << '\n';
             
-            buffer << x2 << ' ' << y2 << ' ' << -offset << '\n';
-            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << '\n';
+            buffer << x2 << ' ' << y2 << ' ' << -offset << ' ';
+            buffer << back[0] << ' ' << back[1] << ' ' << back[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
         }
     }
@@ -249,55 +249,55 @@ std::string generateBox(float length, int divisions){
             tz2 = (j+1)*tex_step;
 
             
-            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z1 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
             
-            buffer << offset << ' ' << y1 << ' ' << z2 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z2 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx2 << ' ' << tz1 << '\n';
 
             
-            buffer << offset << ' ' << y1 << ' ' << z1 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y1 << ' ' << z1 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
 
-            buffer << offset << ' ' << y2 << ' ' << z1 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z1 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx1 << ' ' << tz2 << '\n';
             
-            buffer << offset << ' ' << y2 << ' ' << z2 << '\n';
-            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << '\n';
+            buffer << offset << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << right[0] << ' ' << right[1] << ' ' << right[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
 
             
-            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
             
-            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z1 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << -offset << ' ' << y1 << ' ' << z2 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z2 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx2 << ' ' << tz1 << '\n';
 
             
-            buffer << -offset << ' ' << y2 << ' ' << z1 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z1 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx1 << ' ' << tz2 << '\n';
             
-            buffer << -offset << ' ' << y1 << ' ' << z1 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y1 << ' ' << z1 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx1 << ' ' << tz1 << '\n';
             
-            buffer << -offset << ' ' << y2 << ' ' << z2 << '\n';
-            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << '\n';
+            buffer << -offset << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << left[0] << ' ' << left[1] << ' ' << left[2] << ' ';
             buffer << tx2 << ' ' << tz2 << '\n';
         }
     }
@@ -734,42 +734,42 @@ std::string generateTorus(float R, float r, int slices, int stacks) {
 
             buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
 
-            buffer << (float) j/slices << ' ' << (float) i/stacks << '\n';
+            buffer << (float)  i/stacks << ' ' << (float) j/slices << '\n';
             
             
             buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
 
             buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
 
-            buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
+            buffer << (float)  (i+1)/stacks << ' ' << (float) j/slices << '\n';
         
             
             buffer << x4 << ' ' << y4 << ' ' << z4 << '\n';
 
             buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
 
-            buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
+            buffer << (float) i/stacks << ' ' << (float) (j+1)/slices  << '\n';
 
 
             buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
 
             buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
 
-            buffer << (float) j/slices << ' ' << (float) (i+1)/stacks << '\n';
+            buffer << (float) (i+1)/stacks << ' ' << (float) j/slices  << '\n';
 
         
             buffer << x3 << ' ' << y3 << ' ' << z3 << ' ';
 
             buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
 
-            buffer << (float) (j+1)/slices << ' ' << (float) (i+1)/stacks << '\n';
+            buffer << (float) (i+1)/stacks << ' ' << (float) (j+1)/slices << '\n';
             
            
             buffer << x4 << ' ' << y4 << ' ' << z4 << ' ';
 
             buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
 
-            buffer << (float) (j+1)/slices << ' ' << (float) i/stacks << '\n';
+            buffer << (float) i/stacks << ' ' << (float) (j+1)/slices  << '\n';
 
         }
     }

@@ -10,6 +10,7 @@
     <lights>
 		<light type="point" posx="0" posy="0" posz="0" />
     </lights>
+    <background file="stars.jpg"/>
 
     <group>
         <group> <!-- Sun -->
@@ -18,7 +19,7 @@
                 <scale x="109" y="109" z="109" />
             </transform>
             <models>
-                <model file="sphere_tex.3d" >
+                <model file="sphere_nt.3d" >
                     <texture file="sun.jpg" />
                     <color>
                         <emissive R="255" G="255" B="255"/>
@@ -44,7 +45,7 @@
                 <scale x="0.4" y="0.4" z="0.4" />
             </transform>
             <models>
-                <model file="sphere_tex.3d" >
+                <model file="sphere_nt.3d" >
                     <texture file="mercury.jpg"/>
                 </model>
             </models>
@@ -67,7 +68,7 @@
                 <scale x="0.9" y="0.9" z="0.9" />
             </transform>
             <models>
-                <model file="sphere_tex.3d" >
+                <model file="sphere_nt.3d" >
                     <texture file="venus.jpg"/>
                 </model>
             </models>
@@ -92,8 +93,8 @@
                     <rotate time="1" x="0" y="1" z="0" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="earth2.jpg"/>
                     </model>
                 </models>
             </group>
@@ -114,8 +115,8 @@
                     <scale x="0.2725" y="0.2725" z="0.2725" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="moon.jpg"/>
                     </model>
                 </models>
             </group>
@@ -138,7 +139,7 @@
                 <scale x="0.5" y="0.5" z="0.5" />
             </transform>
             <models>
-                <model file="sphere_tex.3d" >
+                <model file="sphere_nt.3d" >
                     <texture file="mars.jpg"/>
                 </model>
             </models>
@@ -164,8 +165,8 @@
                     <scale x="11.2" y="11.2" z="11.2" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="jupiter.jpg"/>
                     </model>
                 </models>
             </group>
@@ -187,8 +188,8 @@
                     <scale x="0.24" y="0.24" z="0.24" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="ceres.jpg"/>
                     </model>
                 </models>
             </group>
@@ -209,8 +210,8 @@
                     <scale x="0.28" y="0.28" z="0.28" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="haumea.jpg"/>
                     </model>
                 </models>
             </group>
@@ -231,8 +232,8 @@
                     <scale x="0.41" y="0.41" z="0.41" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="eris.jpg"/>
                     </model>
                 </models>
             </group>
@@ -253,8 +254,8 @@
                 <scale x="0.37" y="0.37" z="0.37" />
             </transform>
             <models>
-                <model file="sphere_tex.3d" >
-                    <texture file="mercury.jpg"/>
+                <model file="sphere_nt.3d" >
+                    <texture file="makemake.jpg"/>
                 </model>
             </models>
         </group>
@@ -285,8 +286,8 @@
                         <rotate time="0.4" x="0" y="1" z="0" />
                     </transform>
                     <models>
-                        <model file="sphere_tex.3d" >
-                            <texture file="mercury.jpg"/>
+                        <model file="sphere_nt.3d" >
+                            <texture file="saturn.jpg"/>
                         </model>
                     </models>
                 </group>
@@ -295,8 +296,8 @@
                         <scale x="3" y="3" z="3"/>
                     </transform>
                     <models>
-                        <model file="torus_tex.3d" >
-                            <texture file="mercury.jpg"/>
+                        <model file="ring_nt.3d" >
+                            <texture file="ring.png"/>
                         </model>
                     </models>
                 </group>
@@ -318,8 +319,8 @@
                     <scale x="0.404" y="0.404" z="0.404" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="eris.jpg"/>
                     </model>
                 </models>
             </group>
@@ -340,8 +341,8 @@
                     <scale x="0.11" y="0.11" z="0.11" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="makemake.jpg"/>
                     </model>
                 </models>
             </group>
@@ -362,8 +363,8 @@
                     <scale x="0.11" y="0.11" z="0.11" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="ceres.jpg"/>
                     </model>
                 </models>
             </group>
@@ -394,8 +395,8 @@
                     <scale x="4" y="4" z="4" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="uranus.jpg"/>
                     </model>
                 </models>
             </group>
@@ -415,8 +416,8 @@
                     <scale x="0.12" y="0.12" z="0.12" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="haumea.jpg"/>
                     </model>
                 </models>
             </group>
@@ -437,8 +438,8 @@
                     <scale x="0.115" y="0.115" z="0.115" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="makemake.jpg"/>
                     </model>
                 </models>
             </group>
@@ -458,8 +459,8 @@
                     <scale x="0.09" y="0.09" z="0.09" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="eris.jpg"/>
                     </model>
                 </models>
             </group>
@@ -487,8 +488,8 @@
                     <scale x="3.88" y="3.88" z="3.88" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="neptune.jpg"/>
                     </model>
                 </models>
             </group>
@@ -509,8 +510,8 @@
                     <scale x="0.21" y="0.21" z="0.21" />
                 </transform>
                 <models>
-                    <model file="sphere_tex.3d" >
-                        <texture file="mercury.jpg"/>
+                    <model file="sphere_nt.3d" >
+                        <texture file="ceres.jpg"/>
                     </model>
                 </models>
             </group>
@@ -529,8 +530,8 @@
                 <rotate angle="-90" x="1" y="0" z="0"/>
             </transform>
             <models>
-                <model file="bezier_tex.3d" >
-                    <texture file="mercury.jpg"/>
+                <model file="bezier_nt.3d" >
+                    <texture file="ring.png"/>
                 </model>
             </models>
         </group>

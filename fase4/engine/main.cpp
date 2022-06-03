@@ -107,81 +107,85 @@ void createBackground(std::string texture) {
 
     float x1, x2;
     float y1, y2;
-    float z1, z2;
-    float n[3] = {0.0, 0.0, 1.0}; 
+    float z;
+    float n[3] = {0.0, 0.0, 1.0};
+    float width = glutGet(GLUT_SCREEN_WIDTH);
+    float height = glutGet(GLUT_SCREEN_HEIGHT);
 
-    x1 = -far/2.0f;
-    x2 = far/2.0f;
-    y1 = -far/2.0f;
-    y2 = far/2.0f;
-    z1 = -far/2.0f;
-    z2 = far/2.0f;
+    x1 = -0.5;
+    x2 = 0.5;
+    y1 = -0.5;
+    y2 = 0.5;
+    z = 0;
 
-    backgroundPoints.push_back(x1);
-    backgroundPoints.push_back(y1);
-    backgroundPoints.push_back(z1);
-
-    backgroundNormals.push_back(n[0]);
-    backgroundNormals.push_back(n[1]);
-    backgroundNormals.push_back(n[2]);
-
-    backgroundTexture.push_back(0);
-    backgroundTexture.push_back(0);
-
-    backgroundPoints.push_back(x2);
-    backgroundPoints.push_back(y1);
-    backgroundPoints.push_back(z1);
-
-    backgroundNormals.push_back(n[0]);
-    backgroundNormals.push_back(n[1]);
-    backgroundNormals.push_back(n[2]);
-
-    backgroundTexture.push_back(1);
-    backgroundTexture.push_back(0);
-
-    backgroundPoints.push_back(x2);
-    backgroundPoints.push_back(y2);
-    backgroundPoints.push_back(z1);
-
-    backgroundNormals.push_back(n[0]);
-    backgroundNormals.push_back(n[1]);
-    backgroundNormals.push_back(n[2]);
-
-    backgroundTexture.push_back(1);
-    backgroundTexture.push_back(1);
-
-    backgroundPoints.push_back(x2);
-    backgroundPoints.push_back(y2);
-    backgroundPoints.push_back(z1);
-
-    backgroundNormals.push_back(n[0]);
-    backgroundNormals.push_back(n[1]);
-    backgroundNormals.push_back(n[2]);
-
-    backgroundTexture.push_back(1);
-    backgroundTexture.push_back(1);
-
-    backgroundPoints.push_back(x1);
-    backgroundPoints.push_back(y2);
-    backgroundPoints.push_back(z1);
-
-    backgroundNormals.push_back(n[0]);
-    backgroundNormals.push_back(n[1]);
-    backgroundNormals.push_back(n[2]);
-
-    backgroundTexture.push_back(0);
-    backgroundTexture.push_back(1);
 
     backgroundPoints.push_back(x1);
     backgroundPoints.push_back(y1);
-    backgroundPoints.push_back(z1);
+    backgroundPoints.push_back(z);
 
     backgroundNormals.push_back(n[0]);
     backgroundNormals.push_back(n[1]);
     backgroundNormals.push_back(n[2]);
 
-    backgroundTexture.push_back(0);
-    backgroundTexture.push_back(0);
+    backgroundTexture.push_back(0.0);
+    backgroundTexture.push_back(1.0);
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y1);
+    backgroundPoints.push_back(z);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1.0);
+    backgroundTexture.push_back(1.0);
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1.0);
+    backgroundTexture.push_back(0.0);
+
+
+
+    backgroundPoints.push_back(x2);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(1.0);
+    backgroundTexture.push_back(0.0);
+
+    backgroundPoints.push_back(x1);
+    backgroundPoints.push_back(y2);
+    backgroundPoints.push_back(z);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(0.0);
+    backgroundTexture.push_back(0.0);
+
+    backgroundPoints.push_back(x1);
+    backgroundPoints.push_back(y1);
+    backgroundPoints.push_back(z);
+
+    backgroundNormals.push_back(n[0]);
+    backgroundNormals.push_back(n[1]);
+    backgroundNormals.push_back(n[2]);
+
+    backgroundTexture.push_back(0.0);
+    backgroundTexture.push_back(1.0);
 
     modelPoints["background"] = backgroundPoints;
     modelNormals["background"] = backgroundNormals;
@@ -511,6 +515,47 @@ void lightsOn() {
     }
 }
 
+void drawBackground(){
+    if (!has_background)
+        return;
+    float dist = far -100;
+
+    glPushMatrix();
+    glTranslatef(0,0,-dist);
+    glScalef(dist,dist,dist);
+    background.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-dist/2,0,-dist/2);
+    glRotatef(90,0,1,0);
+    glScalef(dist,dist,dist);
+    background.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(dist/2,0,-dist/2);
+    glRotatef(-90,0,1,0);
+    glScalef(dist,dist,dist);
+    background.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0,dist/2,-dist/2);
+    glRotatef(90,1,0,0);
+    glScalef(dist,dist,dist);
+    background.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0,-dist/2,-dist/2);
+    glRotatef(-90,1,0,0);
+    glScalef(dist,dist,dist);
+    background.draw();
+    glPopMatrix();
+
+}
+
 
 void drawAxis(){
 
@@ -537,8 +582,8 @@ void renderScene(void) {
 
     // set the camera
     glLoadIdentity();
-    
-    if (has_background) background.draw();
+
+    drawBackground();
     gluLookAt(eyeX, eyeY, eyeZ,
               centerX, centerY, centerZ,
               upX, upY, upZ);
@@ -689,7 +734,7 @@ int main(int argc, char **argv) {
     if(argc == 2)
         readXML(path_xml + argv[1]);
     else
-        readXML(path_xml + "snowman.xml");
+        readXML(path_xml + "solar_system.xml");
 
     for (Light* l: lights) {
         glEnable(l->index);
@@ -752,7 +797,7 @@ int main(int argc, char **argv) {
 
     //  OpenGL settings
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 
 
     printInfo();
