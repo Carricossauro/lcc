@@ -294,7 +294,7 @@ void readGroup(tinyxml2::XMLElement *group, std::vector<Transformation*> ts) {
         if (MODELS) {
             for(XMLElement *m = MODELS->FirstChildElement("model"); m; m = m->NextSiblingElement()) {
                 std::string model = m->Attribute("file");
-                std::string texture_name = "";
+                std::string texture_name;
                 GLuint texture_id = -1;
                 if(!modelPoints.count(model)){
                     std::vector<float> points, normals, textures;
@@ -703,10 +703,6 @@ int main(int argc, char **argv) {
     glutCreateWindow("Models");
 
 
-    float dark[4] = {0.3, 0.3, 0.3, 1.0};
-    float white[4] = {1.0, 1.0, 1.0, 1.0};
-    // float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-
     glEnable(GL_LIGHTING);
 	glEnable(GL_RESCALE_NORMAL);
     glEnable(GL_TEXTURE_2D);
@@ -724,6 +720,10 @@ int main(int argc, char **argv) {
         readXML(path_xml + argv[1]);
     else
         readXML(path_xml + "solar_system.xml");
+
+    float dark[4] = {0.3, 0.3, 0.3, 1.0};
+    float white[4] = {1.0, 1.0, 1.0, 1.0};
+    // float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 
     for (Light* l: lights) {
         glEnable(l->index);
