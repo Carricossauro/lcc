@@ -93,16 +93,16 @@ Nesta quarta etapa foi proposto:
         
     \item \textbf{Iluminação}
         \begin{description}
-        \item Alteração do \textit{engine} para aplicar a iluminação definida no ficheiro de configuração xml. 
+        \item Alteração do \textit{engine} para aplicar a iluminação definida no ficheiro de configuração \textit{xml}. 
         \end{description}
     \item \textbf{Texturas}
         \begin{description}
-        \item Alteração do \textit{engine} para aplicar as texturas definidas no ficheiro de configuração xml. 
+        \item Alteração do \textit{engine} para aplicar as texturas definidas no ficheiro de configuração \textit{xml}. 
         \end{description}
 
     \item \textbf{Sistema solar com iluminação e texturas}
     \begin{description}
-    \item Alteração do ficheiro de configuração XML de modo a gerar um modelo do sistema solar com iluminação e texturas.
+    \item Alteração do ficheiro de configuração \textit{xml} de modo a gerar um modelo do sistema solar com iluminação e texturas.
     \end{description}
 
 \end{itemize}
@@ -114,7 +114,7 @@ Nesta quarta etapa foi proposto:
 \subsection{Plano}
 As normais do plano são (0,1,0) para todos os seus pontos.\\
 
-As coordenadas de textura do plano são calculadas de acordo com a variação de $x$ e $z$ nos dois ciclos de geração dos vértices. Por exemplo, se o plano tiver $d$ divisões, as coordenadas do vértice $(x,0,z)$ serão associadas ás coordenadas de textura $(x/d ,y/d)$.
+As coordenadas de textura do plano são calculadas de acordo com a variação de $x$ e $z$ nos dois ciclos de geração dos vértices.Ou seja, se o plano tiver $d$ divisões, as coordenadas do vértice $(x,0,z)$ serão associadas ás coordenadas de textura $(x/d ,y/d)$.
 
 \subsection{Cubo}
 As normais do cubo são as seguintes:
@@ -140,7 +140,7 @@ As normais, $n$, da esfera são calculadas com as coordenadas polares dos vérti
 
 Sendo que, o $\beta$ varia entre $-90 \text{\textdegree} $ e $90 \text{\textdegree}$ e o $\alpha$ varia entre $0 \text{\textdegree}$ e $360 \text{\textdegree}$.
 
-As coordenadas de textura da esfera são calculadas utilizando as variáveis de iteração $(i, j)$ nos dois ciclos de cálculo dos valores dos vértices de cada triângulo da esfera. Por exemplo, se $i$ iterar pelas \textbf{slices} e $j$ iterar pelas \textbf{stacks}, as coordenadas de textura do vértice $P$ serão constituídas pelos seguintes pontos:
+As coordenadas de textura da esfera são calculadas utilizando as variáveis de iteração $(i, j)$ nos dois ciclos de cálculo dos valores dos vértices de cada triângulo da esfera. Por exemplo, se $i$ iterar pelas \textit{slices} e $j$ iterar pelas \textit{stacks}, as coordenadas de textura do vértice $P$ serão constituídas pelos seguintes pontos:
 \begin{itemize}
     \item $x = raio*cos(90 \text{\textdegree} - \beta'*j)*sin(\alpha'*i)$
     \item $y = raio*sin(90 \text{\textdegree} - \beta'*j)$
@@ -151,7 +151,7 @@ Com $\alpha' =  360 \text{\textdegree}/slices$ e $\beta' =  180 \text{\textdegre
 As coordenadas de texturas de $P$ serão $(i/slices, j/stacks)$. 
 
 \subsection{Cone}
-Para o cone, o cálculo das normais e coordenadas de textura foi dividido em base e corpo.
+Para o cone, à semelhança do que acontece com o calculo dos vértices de cada triângulo, o processo de cálculo das normais e coordenadas de textura foi dividido em base e corpo.
 
 Para a base as normais são $(0,-1,0)$ para todos os seus pontos. Para as coordenadas de textura, o ponto central tem as coordenadas $(0.5,0.5)$ e os restantes são calculados com os valores das coordenadas de cada vértice sem o uso do valor do raio da seguinte forma:
 \begin{itemize}
@@ -161,7 +161,7 @@ Para a base as normais são $(0,-1,0)$ para todos os seus pontos. Para as coorde
 \end{itemize}
 Com $\alpha$  a variar entre $0 \text{\textdegree}$ e $360 \text{\textdegree}$.
 
-Para o corpo do cone, se se considerar \texbf{i} como a variável que itera pelo número de \texbf{stacks} e $j$ como a variável que itera pelo número de \texbf{slices} e que cada ponto $P$ tem as seguintes coordenadas:
+Para o corpo do cone, se se considerar $i$ como a variável que itera pelo número de \textit{stacks} e $j$ como a variável que itera pelo número de \textit{slices} e que cada ponto $P$ tem as seguintes coordenadas:
 \begin{itemize}
     \item $x = r*sin(\alpha*j)$
     \item $y = i*stack\_size$
@@ -186,16 +186,16 @@ As coordenadas de textura de $P$ são $(j/slices, i/stacks)$
 
 O cálculo das normais e coordenadas de textura do cilindro foi divido em base, topo e corpo.
 
-Para a a base e topo utilizou-se a mesma estratégia da base do cone, com as devidas adaptações no topo para as normais.
+Para a a base e topo utilizou-se a mesma estratégia da base do cone, com as devidas adaptações no topo, pois esta face encontra-se virada para direção oposta.
 
-Para o corpo do cilindro, para cada ponto, os valores das normais de x e z são calculados com a mesma estratégia do corpo do cone e o valor de y é sempre 0.
+Para o corpo do cilindro, para cada ponto, os valores das normais em $x$ e $z% são calculados com a mesma estratégia do corpo do cone e o valor de $y$ é sempre 0.
 
-O calculo das coordenadas de textura no corpo do cilindro é feito com a mesma estratégia do corpo do cone.
+O cálculo das coordenadas de textura no corpo do cilindro é feito com a mesma estratégia do corpo do cone.
 
 
 \subsection{Torus}
 
-Seja \texbf{P} um ponto do torus com em que as suas coordenadas são calculadas da seguinte forma:
+Seja $P$ um ponto do torus em que as suas coordenadas são calculadas da seguinte forma:
 
 \begin{itemize}
     \item $x = (R + r*cos(\alpha*i))*cos(\beta*j)$
@@ -204,8 +204,8 @@ Seja \texbf{P} um ponto do torus com em que as suas coordenadas são calculadas 
 \end{itemize}
 Com:
 \begin{itemize}
-    \item $\texbf{i}\  a\ variável\ que\ itera\ pelo\ número\ de\ stacks$
-    \item $\texbf{j}\  a\ variável\ que\ itera\ pelo\ número\ de\ slices$
+    \item $i$  a variável que itera pelo número de \textit{stacks}
+    \item $j$  a variável que itera pelo número de \textit{slices}
     \item $\alpha = 360 \text{\textdegree}/stacks$
     \item $\beta = 360 \text{\textdegree}/slices$
     \item $R = (raio+espessura)/2$
@@ -221,7 +221,7 @@ As normais de $P$ têm os valores $(x,y,z)$, com:
 As coordenadas de textura de $P$ são $(i/stacks, j/slices)$
 
 \subsection{Bezier}
-Relembrando que para o processo de calculo dos pontos necessários à construção de cada superfície foi utilizada a seguinte fórmula:
+Relembrando que para o processo de cálculo dos pontos necessários à construção de cada superfície foi utilizada a seguinte fórmula:
 \par
 Seja a matriz de Bezier \emph{M =}
 \begin{bmatrix}
@@ -268,9 +268,9 @@ Por exemplo com:
 \par
 \emph{a = B(0,0) b = B(1/T,0) c = B(1/T,1/T) d = B(0,1/T)}
 \par
-Pode-se construir os triângulos \emph{a,b,d} e \emph{b,c,d}.
+Podem-se construir os triângulos \emph{a,b,d} e \emph{b,c,d}.
 
-Para calcular as normais de um ponto calculamos: 
+Para calcular as normais de um ponto calcula-se: 
 
 \emph{$u'=$}
 \begin{bmatrix}
@@ -312,37 +312,38 @@ Para calcular as normais de um ponto calculamos:
 \end{bmatrix}
 \par
 
-Cada normal de cada componente de \texbf{P} será obtida fazendo $u'\times v'/||u'\times v'||$.
+Cada normal de cada componente de $P$ é obtida fazendo $u'\times v'/||u'\times v'||$.
 
-As coordenadas de textura de \texbf{P} serão simplesmente (v,u).
+As coordenadas de textura de $P$ são simplesmente (v,u).
 \newpage
 
 \section{Iluminação}
 
-Para a iluminação da cena foram criadas duas classes abstracts. A classe Light e a classe Color.
+Para a iluminação da cena criou-se duas classes \textit{abstracts}. A classe \textit{Light} e a classe \textit{Color}.
 
-A classe Light é estendida pelas classes:
+A classe \textit{Light} é estendida pelas classes:
 
 \begin{itemize}
-    \item LightPoint
-    \item LightDirectional
-    \item LightSpotlight 
+    \item \textit{LightPoint}
+    \item \textit{LightDirectional}
+    \item \textit{LightSpotlight} 
 \end{itemize}
 \newline
-A classe Color é estendida pelas classes:
+
+A classe Color é \textit{estendida} pelas classes:
 
 \begin{itemize}
-    \item Diffuse
-    \item Ambient
-    \item Specular
-    \item Emissive
-    \item Shininess
+    \item \textit{Diffuse}
+    \item \textit{Ambient}
+    \item \textit{Specular}
+    \item \textit{Emissive}
+    \item \textit{Shininess}
 \end{itemize}
 
-Na leitura do ficheiro xml, caso este possua informação de iluminação, serão criadas instâncias da classe Light, de acordo com o tipo de luz, que são armazenados num vetor. Na função renderScence este vetor vai ser percorrido e cada uma das "luzes" armazenadas será aplicada. 
-Cada model possui agora também um vetor de Color onde serão armazenados as propriedades de iluminação dos seus materiais e a informação do VBO onde estão armazenados as normais de cada ponto. No momento em que os models são desenhados, o vetor de Color é percorrido e as propriedades dos materiais são aplicadas.
+Na leitura do ficheiro \textit{xml}, caso este possua informação de iluminação, controi-se instâncias da classe \textit{Light}, de acordo com o tipo de luz, e armazena-se estas num vetor. Na função \textit{renderScence} este vetor vai é percorrido e cada uma das "luzes" armazenadas será aplicada. 
+Cada \textit{model} possui agora também um vetor de \textit{Color} onde se aramazena as propriedades de iluminação dos seus materiais e a informação do \textit{VBO} onde estão guardadas as normais de cada ponto. No momento em que os \textit{models} são desenhados, o vetor de \textit{Color} é percorrido e as propriedades dos materiais são aplicadas.
 \par
-Nesta fase, tal como na anterior fui criado um mapa de primitiva para vetor de normais e um mapa de primitiva para VBO das normais, de forma a que cada para cada primitiva apenas sejam lidas as normais uma vez e apenas exista um VBO para as suas normais. 
+Nesta fase, tal como na anterior criou-se um \textit{map} de primitivas para vetor de normais e um \textit{map} de primitivas para \textit{VBO} das normais, de forma a que para cada primitiva as suas normais apenas sejam lidas as normais uma vez e apenas exista um \textit{VBO} onde estas ficam guardadas. 
 \subsection{Demonstração}
 
 \begin{figure}[H]
@@ -404,10 +405,10 @@ Nesta fase, tal como na anterior fui criado um mapa de primitiva para vetor de n
 
 \newpage
 \section{Texturas}
-Para as texturas, foi adicionado para cada model uma variavel a indicar qual o VBO com as coordenadas de textura e outra com a informação gerada pela função glGenTextures.
+Para as texturas, foi adicionou-se para cada \textit{model} uma variável a indicar qual o \textit{VBO} com as coordenadas de textura e outra com a informação gerada pela função \textit{glGenTextures}.
 
-O engine vai analisar o ficheiro de configuração de xml e caso os modelos possuam texturas as suas coordenadas são lidas e armazenadas num vetor de coordenadas de textura e cada textura é carregada e a sua informação é armazenada junto do modelo respetivo.
-Tal como nas coordenadas de posição e na iluminação, aqui também será utilizado um mapa de primitiva para vetor de coordenadas de textura e um mapa de apontador de textura para textura. Assim, cada textura é lida apenas uma vez e cada primitiva apenas vai possuir um VBO com as suas coordenadas de textura.
+O \textit{engine} analisa o ficheiro de configuração de \textit{xml} e caso os modelos possuam texturas as suas coordenadas são lidas e armazenadas num vetor de coordenadas de textura, cada textura é carregada e a sua informação é armazenada junto do \textit{model} respetivo.
+Tal como nas coordenadas de posição e na iluminação, aqui também se utiliza um \textit{map} de primitivas para o vetor de coordenadas de textura e um mapa de apontadores de textura para a textura. Assim, cada textura é lida apenas uma vez e cada primitiva apenas vai possuir um \textit{VBO} com as suas coordenadas de textura.
 
 \subsection{Demonstração}
 
@@ -433,8 +434,8 @@ Tal como nas coordenadas de posição e na iluminação, aqui também será util
 \newpage
 \section{Sistema solar com iluminação e texturas}
 
-Para iluminar o sistema solar foi colocado um ponto de luz no (0,0,0) e o sol foi definido como um objeto emissivo.
-Foram colocadas texturas a todos os objetos do sistema solar.
+Para iluminar o sistema solar colocou-se um ponto de luz no ponto (0,0,0) e definiu-se o sol como um objeto emissivo.
+Colocou-se texturas a todos os objetos do sistema solar.
 
 \subsection{Demonstração}
 \vspace{1cm}
@@ -472,8 +473,8 @@ Foram colocadas texturas a todos os objetos do sistema solar.
 
 \newpage
 \section{Extras}
-Como extra, alteramos o nosso engine por forma a colocar uma textura de fundo.
-Para tal, é desenhado um cubo invertido antes de colocar a câmara. O xml passa também a ter o campo \textit{background} onde é definida a textura de fundo da cena.
+Como extra, alterou-se o \textit{engine} por forma a colocar uma textura de fundo.
+Para tal, é desenhado um cubo invertido antes de colocar a câmara. O \textit{xml} passa também a ter o campo \textit{background} onde se define a textura de fundo da cena.
 
 \subsection{Demonstração}
 
@@ -501,7 +502,10 @@ Para tal, é desenhado um cubo invertido antes de colocar a câmara. O xml passa
 
 \newpage
 \chapter{Conclusão}
-Por escrever...
+Esta fase do projeto foi a que requereu mais alterações tanto no \texbf{engine} como no \texbf{generator}, no entanto, devido ás decisões tomadas nas fases anteriores que tornaram os dois programas escaláveis, essas alterações tornaram-se simples de fazer. 
 
+A principal dificuldade foi encontrar as estratégias certas para o cálculo das normais e coordenadas de textura das primitivas.
+
+O grupo considera que todos os objetivos propostos foram atingidos.
 
 \end{document}
