@@ -1,6 +1,6 @@
 -module(server).
 -import(files, [readAccounts/0, writeAccounts/1]).
--export([start/1, f/2]).
+-export([start/1, ca/2, auth/3]).
 
 start(Port) -> register(?MODULE, spawn(fun()-> server(Port) end)).
 
@@ -10,7 +10,7 @@ start(Port) -> register(?MODULE, spawn(fun()-> server(Port) end)).
 server(Port) ->
     ResTCP = gen_tcp:listen(Port, [binary, {packet, line}, {reuseaddr, true}]),
     case ResTCP of
-        {error, _Reason} -> io:fwrite("Error - Can't create tcp socket\n");
+        {error, Reason} -> io:fwrite("Error - Can't create tcp socket\n"), Reason;
         {ok, LSock} ->
             spawn(fun() -> acceptor(LSock) end),
             serverLoop(files:readAccounts())
@@ -43,14 +43,14 @@ createAccount(Users, User, Password, From) ->
     NewUsers.
 
 auth(Users, U, P) ->
-    {{Password, _Score}, _Map} = maps:get(U, Users),
+    {Password, _Map} = maps:find(U, Users),
     case Password of
-        badkey -> false;
-        badmap -> false;
-        _Password -> Password == P
+       badkey -> false;
+       badmap -> false;
+       _Password -> Password == P
     end.
 
-f(A, B) -> ?MODULE ! {createAccount, A, B, self()}.
+ca(A, B) -> ?MODULE ! {createAccount, A, B, self()}, receive done -> ok end.
 
 % -----------------------------------
 % Acceptor and client start here
@@ -60,8 +60,8 @@ acceptor(LSock) ->
     ResTCP = gen_tcp:accept(LSock),
     spawn(fun() -> acceptor(LSock) end),
     case ResTCP of
-        {error, _Reason} -> ResTCP;
+        {error, Reason} -> io:fwrite("Error - Can't connect to tcp.\n"), Reason;
         {ok, Sock} -> client(Sock)
     end.
 
-client(Sock) -> ok.
+client(_Sock) -> client_undefined.
