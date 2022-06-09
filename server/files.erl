@@ -20,7 +20,7 @@ parseList([], Users) -> Users;
 parseList([H|T], Users) ->
     [User, UserInfo] = string:split(H, "."),
     [Password, Score] = string:split(UserInfo, "."),
-    NewUsers = maps:put(binary_to_list(User), {binary_to_list(Password), binary_to_integer(Score)}, Users),
+    NewUsers = maps:put(binary_to_list(User), {binary_to_list(Password), binary_to_integer(Score), false}, Users),
     if
         T == [] -> NewUsers;
         true -> parseList(string:split(T, "\n"), NewUsers)
@@ -28,7 +28,7 @@ parseList([H|T], Users) ->
 
 writeAccounts(Users) -> file:write_file("users.txt", parse(maps:to_list(Users))).
 
-parseUser({User, {Password, Score}}) ->
+parseUser({User, {Password, Score, _LoggedIn}}) ->
     string:join([User, Password, integer_to_list(Score)], ".").
 
 parse(L) ->
