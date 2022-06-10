@@ -1,7 +1,7 @@
 -module(server).
 -import(files, [readAccounts/0, writeAccounts/1]).
 -import(accounts, [createAccount/4, removeAccount/4, login/4, logout/4, auth/3]).
--export([start/1, ca/2, ra/2, li/2, lo/2, jo/2]).
+-export([start/1, ca/2, ra/2, li/2, lo/2, jo/2, on/0]).
 
 start(Port) -> register(?MODULE, spawn(fun()-> server(Port) end)).
 
@@ -50,6 +50,9 @@ serverLoop(Users, Party, Ongoing) ->
         {start, _From} ->
             NewParty = spawn(fun() -> party([]) end),
             serverLoop(Users, NewParty, Ongoing + 1);
+        {online, From} ->
+            From ! [Username || {Username, {_Password, _Score, LoggedIn}} <- maps:to_list(Users), LoggedIn],
+            serverLoop(Users, Party, Ongoing);
         {gameover} ->
             gameover_undefined
     end.
@@ -90,7 +93,8 @@ ca(A, B) -> ?MODULE ! {createAccount, A, B, self()}, receive Res -> Res end.
 ra(A, B) -> ?MODULE ! {removeAccount, A, B, self()}, receive Res -> Res end.
 li(A, B) -> ?MODULE ! {login, A, B, self()}, receive Res -> Res end.
 lo(A, B) -> ?MODULE ! {logout, A, B, self()}, receive Res -> Res end.
-jo(A, B) -> ?MODULE ! {join, A, B, self()}.
+jo(A, B) -> ?MODULE ! {join, A, B, self()}, receive Res -> Res end.
+on(    ) -> ?MODULE ! {online, self()}, receive Map -> Map end.
 
 % -----------------------------------
 % Acceptor and client start here

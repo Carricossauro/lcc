@@ -72,6 +72,6 @@ logout(Users, U, P, From) ->
 auth(Users, U, P) ->
     case maps:find(U, Users) of
         {ok, {Password, Score, LoggedIn}} ->
-            Password == P;
+            (Password == P) and LoggedIn;
         _ -> false
     end.
