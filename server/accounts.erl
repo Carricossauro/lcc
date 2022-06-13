@@ -46,9 +46,15 @@ removeAccount(Users, User, Password, From) ->
 login(Users, U, P, From) ->
     case maps:find(U, Users) of
        {ok, {Password, Score, LoggedIn}} ->
-           From ! done,
-           maps:update(U, {Password, Score, Password == P}, Users);
-       _ ->
+            if
+                Password == P ->
+                    From ! done,
+                    maps:update(U, {Password, Score, true}, Users);
+                true ->
+                    From ! invalid_password,
+                    Users
+            end;
+        _ ->
            From ! invalid_account,
            Users
     end.
