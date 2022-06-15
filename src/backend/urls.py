@@ -1,6 +1,9 @@
 from django.urls import path
 from backend import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home),
@@ -15,3 +18,5 @@ urlpatterns = [
     path('history/question/<int:question>',views.historyQuestion),
 
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
