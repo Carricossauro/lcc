@@ -1,5 +1,7 @@
 # Projeto PC
 
+# Falta colocar os cristais
+
 ## Sintaxe
 
 ### Login
@@ -41,3 +43,21 @@
 
     server -> client
     "username score|username score|...|username score"
+
+### Online
+
+    client -> server
+    "online#"
+
+    server -> client
+    "username username ... username"
+
+## Game
+
+### mvklsdlfm
+
+    server -> client
+    "username color posx posy mass|username color posx posy mass|...|username color posx posy mass"
+
+    client -> server
+    "mouse#username x y"

@@ -83,10 +83,66 @@ party(Queue) ->
             end;
         {leave, U, From} ->
             From ! ok,
-            party([{Pid, User} || {Pid, User} <- Queue, User /= U])
+            party([{User, Pid} || {User, Pid} <- Queue, User /= U])
     end.
 
-game(_Players) -> io:fwrite("Starting game.\n").
+game(Players) ->
+    io:fwrite("Starting game.\n"),
+    ?MODULE ! {start, self()},
+    NewPlayers = initGame(Players, []),
+    gameTimer(NewPlayers).
+
+initGame([], UsedPositions) -> #{};
+initGame([{Player, From}| Players], UsedPositions) ->
+    case rand:uniform(3) of
+        1 -> Color = red;
+        2 -> Color = green;
+        3 -> Color = blue
+    end,
+    X = rand:uniform(20),
+    Y = rand:uniform(20),
+    case lists:member({X, Y}, UsedPositions) of
+        false ->
+            Pos = {X, Y},
+            PlayerMap = initGame(Players, [Pos | UsedPositions]),
+            maps:put(Player, {From, Color, Pos, 1, 1}, PlayerMap);
+        true ->
+            initGame([{Player, From} | Players], UsedPositions)
+    end.
+
+gameTimer(Players) ->
+    Self = self(),
+    spawn(fun() -> receive after 100 -> Self ! timeout end end),
+    NewPlayers = handleGame(Players),
+    Info = parseGame(maps:to_list(NewPlayers), []),
+    [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
+    gameLoop(Players).
+
+gameLoop(Players) ->
+    receive
+        timeout ->
+            gameTimer(Players);
+        {Info, From} ->
+            NewPlayers = handle(Players, Info),
+            gameLoop(NewPlayers)
+    end.
+
+% errado -> altera posiçao em vez de calcular direçao/nova posiçao
+handle(Players, {Username, X, Y}) -> 
+    Res = maps:get(Username, Players),
+    case Res of
+        {badmap, _} -> Players;
+        {badkey, _} -> Players;
+        {_Username, {From, Color, _X, _Y, Mass, Speed}} -> maps:update(Player, {From, Color, X, Y, Mass, Speed}, Players)
+    end.
+
+% falta calcular colisoes e etc.
+handleGame(Players) -> undefined.
+
+parseGame([], List) -> string:join(List, "|");
+parseGame([{Player, {From, Color, {X, Y}, Mass, Speed}} | Tail], List) ->
+    InfoPlayer = string:join([Player, atom_to_list(Color), integer_to_list(X), integer_to_list(Y), integer_to_list(Mass), integer_to_list(Speed)], " "),
+    parseGame(Tail, [InfoPlayer | List]).
 
 % -----------------------------------
 % Test functions for server
@@ -94,10 +150,10 @@ game(_Players) -> io:fwrite("Starting game.\n").
 
 ca(A, B) -> ?MODULE ! {create_account, A, B, self()}, receive Res -> Res end.
 ra(A, B) -> ?MODULE ! {remove_account, A, B, self()}, receive Res -> Res end.
-li(A, B) -> ?MODULE ! {login, A, B, self()}, receive Res -> Res end.
-lo(A, B) -> ?MODULE ! {logout, A, B, self()}, receive Res -> Res end.
-jo(A, B) -> ?MODULE ! {join, A, B, self()}, receive Res -> Res end.
-on(    ) -> ?MODULE ! {online, self()}, receive Map -> Map end.
+li(A, B) -> ?MODULE ! {login, A, B, self()},          receive Res -> Res end.
+lo(A, B) -> ?MODULE ! {logout, A, B, self()},         receive Res -> Res end.
+jo(A, B) -> ?MODULE ! {join, A, B, self()},           receive Res -> Res end.
+on(    ) -> ?MODULE ! {online, self()},               receive Map -> Map end.
 
 % -----------------------------------
 % Acceptor and client start here
@@ -159,6 +215,14 @@ handleClientInput(String, Sock) ->
                 Users -> 
                     UserList = [string:join([Username, integer_to_list(Score)], " ") || {Username, Score} <- Users],
                     Res = string:join(UserList, "|"),
+                    io:format("~p~n", [Res]),
+                    gen_tcp:send(Sock, string:join([Res, "\n"], ""))
+            end;
+        ["online", _] ->
+            ?MODULE ! {online, self()},
+            receive
+                Users ->
+                    Res = string:join(Users, " "),
                     io:format("~p~n", [Res]),
                     gen_tcp:send(Sock, string:join([Res, "\n"], ""))
             end

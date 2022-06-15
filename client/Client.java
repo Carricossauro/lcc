@@ -29,10 +29,6 @@ class Tuple<A, B> {
         this.second = snd;
     }
 
-    public Tuple<A, B> clone() {
-        return new Tuple<>(first, second);
-    }
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(first);
@@ -159,6 +155,20 @@ class TCP {
 
         return players;
     }
+
+    public Set<String> online() throws IOException {
+        sb.append("online#");
+        this.send(sb.toString());
+        sb.setLength(0);
+
+        String response = this.receive();
+        String[] playerStrings = response.split(" ");
+        Set<String> users = new TreeSet<>();
+
+        for (String user : playerStrings) users.add(user);
+
+        return users;
+    }
 }
 
 class Mouse {
@@ -166,7 +176,7 @@ class Mouse {
     private boolean pressed = false;
 
     public synchronized Tuple<Float, Float> getPos() {
-        return pos.clone();
+        return pos;
     }
 
     public synchronized void setPos(Float x, Float y) {
@@ -195,7 +205,10 @@ class Client {
             TCP tcp = new TCP(args[0], Integer.parseInt(args[1]));
             Mouse mouse = new Mouse();
 
-            print(mouse.toString());
+            Set<String> users = tcp.online();
+            for (String user : users) {
+                print(user);
+            }
             
         } catch (Exception e) {
             print(e.getMessage());
