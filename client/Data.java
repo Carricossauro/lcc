@@ -18,5 +18,5 @@ public class Data {
 
     public String username="";
     public String password="";
-    public Set leaderboard;
+    public Set<Tuple<String, Integer>> leaderboard;
 }

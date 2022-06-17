@@ -66,6 +66,24 @@ public class TCP {
                 throw new InvalidPassword("Invalid password.");
         }
     }
+    public void join(String username, String password) throws IOException, InvalidAccount, FullServer {
+        sb.append("join#");
+        sb.append(username);
+        sb.append(" ");
+        sb.append(password);
+        this.send(sb.toString()); // login#username password
+        sb.setLength(0);
+
+        String response = this.receive();
+        switch (response) {
+            case "done":
+                break;
+            case "invalid_auth":
+                throw new InvalidAccount("Invalid account.");
+            case "full_server":
+                throw new FullServer("Full server.");
+        }
+    }
 
     public void create_account(String username, String password) throws IOException, InvalidPassword, UserExists {
         sb.append("create_account#");
@@ -76,7 +94,9 @@ public class TCP {
         sb.setLength(0);
 
         String response = this.receive();
+
         switch (response) {
+
             case "done":
                 break;
             case "user_exists":

@@ -1,15 +1,19 @@
 import processing.core.PApplet;
 
+import java.util.Set;
+
 enum State {
     MENU,
     LOGGED_IN,
     LOGOUT,
     DELETE,
-    PLAY,
     USERNAME,
     PASSWORD,
     CREATE_USERNAME,
-    CREATE_PASSWORD
+    CREATE_PASSWORD,
+    JOIN,
+    PLAY,
+    LEADERBOARD
 }
 
 public class Screen extends PApplet implements Runnable{
@@ -32,6 +36,7 @@ public class Screen extends PApplet implements Runnable{
 
     public void draw(){
         clear();
+        System.out.println(state);
         switch (state) {
             case MENU:
                 starterMenu();
@@ -47,16 +52,36 @@ public class Screen extends PApplet implements Runnable{
             case CREATE_PASSWORD:
                 createAccount();
                 break;
-            case DELETE:
             case LOGOUT:
+            case DELETE:
                 handleTCPState(State.MENU);
                 break;
+            case JOIN:
+                handleTCPState(State.PLAY);
+                break;
             case PLAY:
-                board();
+                handleTCPState(State.LEADERBOARD);
+                break;
+            case LEADERBOARD:
+                leaderboard();
                 break;
         }
     }
+
+    void leaderboard() {
+        background(255, 255, 255);
+        Set<Tuple<String, Integer>> lb = data.leaderboard;
+        StringBuilder sb = new StringBuilder();
+        sb.append("*** Leaderboard ***\n\n");
+        for (Tuple<String, Integer> t : lb) {
+            sb.append(t.second).append(" ").append(t.first).append("\n\n");
+        }
+        fill(0,0,0);
+        text(sb.toString(), Wscreen/16, Hscreen/16);
+    }
+
     void board(){
+        background(0,0,0);
         fill(255,0,0,255);
         ellipse(mouseX, mouseY, 20, 20);
     }
@@ -79,7 +104,7 @@ public class Screen extends PApplet implements Runnable{
 
     void loggedInMenu() {
         background(255, 255, 255);
-        button("Play", Wscreen/4, Hscreen/16, State.PLAY);
+        button("Play", Wscreen/4, Hscreen/16, State.JOIN);
         button("Delete account", Wscreen/4, Hscreen/4, State.DELETE);
         button("Logout", Wscreen/4, Hscreen/16*3 + Hscreen/4, State.LOGOUT);
     }
@@ -100,6 +125,7 @@ public class Screen extends PApplet implements Runnable{
         try {
             data.lock.lock();
             data.option = state;
+
             data.waitPostman.signal();
             while (data.response == Response.NOTHING) data.waitScreen.await();
 

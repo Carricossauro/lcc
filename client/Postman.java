@@ -18,8 +18,6 @@ public class Postman implements Runnable{
         while (true) {
             try {
                 data.lock.lock();
-                String username = data.username;
-                String password = data.password;
                 data.waitPostman.await();
 
                 switch(data.option) {
@@ -36,20 +34,30 @@ public class Postman implements Runnable{
                         data.response = Response.DONE;
                         break;
                     case DELETE:
-                        tcp.remove_account(username, password);
+                        tcp.remove_account(data.username, data.password);
                         data.username = "";
                         data.password = "";
                         data.response = Response.DONE;
+                        break;
                     case LOGOUT:
-                        tcp.logout(username,password);
+                        tcp.logout(data.username, data.password);
                         data.username = "";
                         data.password = "";
+                        data.response = Response.DONE;
+                        break;
+                    case JOIN:
+                        data.leaderboard = tcp.leaderboard();
+                        data.response = Response.DONE;
+                        break;
+                    case PLAY:
+                        tcp.join(data.username, data.password);
+                        data.response = Response.DONE;
                         break;
                 }
                 data.waitScreen.signal();
             } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
-            } catch (InvalidPassword | InvalidAccount | UserExists e) {
+            } catch (InvalidPassword | InvalidAccount | UserExists | FullServer e) {
                 data.response = Response.ERROR;
                 data.username = "";
                 data.password = "";

@@ -22,10 +22,6 @@ public class Client {
 
             new Thread(new Postman(tcp,mouse,board, data)).start();
 
-            /*Set<String> users = tcp.online();
-            for (String user : users) {
-                print(user);
-            }*/
             
         } catch (Exception e) {
             print(e.getMessage());
