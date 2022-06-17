@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Postman implements Runnable{
 
     private TCP tcp;
@@ -13,7 +15,21 @@ public class Postman implements Runnable{
     }
 
     public void run(){
+        while (1) {
+            try {
+                data.lock.lock();
+                data.waitPostman.await();
+                System.out.println(data.username);
+                System.out.println(data.password);
 
+                tcp.login(data.username, data.password);
 
+                data.waitScreen.signal();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } finally {
+                data.lock.unlock();
+            }
+        }
     }
 }

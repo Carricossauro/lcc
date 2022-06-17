@@ -13,14 +13,14 @@ public class Client {
                 System.exit(1);
             }
 
-            //TCP tcp = new TCP(args[0], Integer.parseInt(args[1]));
+            TCP tcp = new TCP(args[0], Integer.parseInt(args[1]));
             Mouse mouse = new Mouse();
             Board board = new Board();
             Data data = new Data();
 
             new Thread(new Screen(mouse, board, data)).start();
 
-            //new Thread(new Postman(tcp,mouse,board)).start();
+            new Thread(new Postman(tcp,mouse,board, data)).start();
 
             /*Set<String> users = tcp.online();
             for (String user : users) {
