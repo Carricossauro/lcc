@@ -47,6 +47,10 @@ public class Screen extends PApplet implements Runnable{
             case CREATE_PASSWORD:
                 createAccount();
                 break;
+            case DELETE:
+            case LOGOUT:
+                handleTCPState(State.MENU);
+                break;
             case PLAY:
                 board();
                 break;
@@ -92,6 +96,26 @@ public class Screen extends PApplet implements Runnable{
         button(data.password, Wscreen/4, Hscreen/4, State.CREATE_PASSWORD);
     }
 
+    void handleTCPState(State nextState) {
+        try {
+            data.lock.lock();
+            data.option = state;
+            data.waitPostman.signal();
+            while (data.response == Response.NOTHING) data.waitScreen.await();
+
+            if (data.response == Response.DONE) {
+                state = nextState;
+            } else {
+                state = State.MENU;
+            }
+            data.response = Response.NOTHING;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            data.lock.unlock();
+        }
+    }
+
     boolean overRect(int x, int y, int width, int height)  {
         return mouseX >= x && mouseX <= x + width &&
                 mouseY >= y && mouseY <= y + height;
@@ -132,22 +156,7 @@ public class Screen extends PApplet implements Runnable{
 
     boolean handleEnter(State nextState) {
         if (key == ENTER) {
-            data.option = state;
-            try {
-                data.lock.lock();
-                data.waitPostman.signal();
-                data.waitScreen.await();
-
-                if (data.response == Response.DONE) {
-                    state = nextState;
-                } else {
-                    state = State.MENU;
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } finally {
-                data.lock.unlock();
-            }
+            handleTCPState(nextState);
             return true;
         }
         return false;
