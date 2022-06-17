@@ -52,12 +52,28 @@
     server -> client
     "username username ... username"
 
-## Game
-
-### mvklsdlfm
-
-    server -> client
-    "username color posx posy mass|username color posx posy mass|...|username color posx posy mass"
+### Join
 
     client -> server
-    "mouse#username x y"
+    "join#username password"
+
+    server -> client
+    "done" | "full_server" | "invalid_auth"
+
+## Game
+
+### Mouse
+
+    server -> client
+    "username color posx posy mass speed|username color posx posy mass speed|...|username color posx posy mass speed"
+
+    client -> server
+    "mouse#x y"
+
+### Leave
+
+    client -> server
+    "leave"
+
+    server -> client
+    "ok"
