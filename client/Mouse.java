@@ -1,6 +1,6 @@
 public class Mouse {
     private Tuple<Float, Float> pos = new Tuple<Float, Float>(0.0f,0.0f);
-    private boolean pressed = false;
+    public boolean pressed = false;
 
     public synchronized Tuple<Float, Float> getPos() {
         return pos;

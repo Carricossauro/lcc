@@ -1,18 +1,22 @@
 import java.util.Set;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+enum Response {
+    NOTHING,
+    DONE,
+    ERROR
+}
 public class Data {
-    Lock lock = new ReentrantLock();
-    private int option;
-    public int turn;
-    public boolean state;
+    public Lock lock = new ReentrantLock();
+    public Condition waitPostman = lock.newCondition();
+    public Condition waitScreen = lock.newCondition();
+    public State option;
 
-    private String name;
-    private String password;
-    private Set leaderboard;
+    public Response response = Response.NOTHING;
 
-
-
-
+    public String username="";
+    public String password="";
+    public Set leaderboard;
 }
