@@ -53,6 +53,7 @@ public class Postman implements Runnable{
                     case PLAY:
                         tcp.join(data.username, data.password);
                         data.response = Response.DONE;
+                        data.option = State.LEADERBOARD;
 
                         new Thread(()->{
                             try {
@@ -72,6 +73,7 @@ public class Postman implements Runnable{
                         }
                         else{
                             board.setBoard(data.username, response);
+                            tcp.mouse(mouse.getPos());
                             data.response = Response.DONE;
                         }
                         break;

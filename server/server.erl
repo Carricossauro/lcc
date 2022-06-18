@@ -122,7 +122,7 @@ initGame([{Player, From}| Players], UsedPositions) ->
         false ->
             Pos = {X, Y},
             PlayerMap = initGame(Players, [Pos | UsedPositions]),
-            maps:put(Player, {From, Color, Pos, 1, 1}, PlayerMap);
+            maps:put(Player, {From, Color, Pos, 1, 2}, PlayerMap);
         true ->
             initGame([{Player, From} | Players], UsedPositions)
     end.

@@ -3,11 +3,6 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 import java.util.List;
 
-enum Color {
-    RED,
-    GREEN,
-    BLUE
-}
 
 public class Board {
     public Piece me;
@@ -32,13 +27,13 @@ public class Board {
                 this.me = piece;
             else
                 this.pieces.add(piece);
-            for(Piece p : this.pieces){
-                p.x -= me.x;
-                p.y -= me.y;
-            }
-            me.x = 0;
-            me.y = 0;
         }
+        for(Piece p : this.pieces){
+            p.x -= me.x;
+            p.y -= me.y;
+        }
+        me.x = 0;
+        me.y = 0;
     }
 
     public synchronized Tuple<Piece,List<Piece>> getBoard() {

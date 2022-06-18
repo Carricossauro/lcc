@@ -143,7 +143,12 @@ public class TCP {
         return players;
     }
 
-
+    public void mouse(Tuple<Float, Float> pos) {
+        sb.append("mouse#");
+        sb.append(pos.toString());
+        this.send(sb.toString());
+        sb.setLength(0);
+    }
 
     public Set<String> online() throws IOException {
         sb.append("online#");
