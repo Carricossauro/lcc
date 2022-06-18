@@ -79,6 +79,10 @@ public class Postman implements Runnable{
                             data.response = Response.DONE;
                         }
                         break;
+                    case LEAVE:
+                        tcp.send("leave#");
+                        data.response = Response.DONE;
+                        break;
 
                 }
                 data.waitScreen.signal();

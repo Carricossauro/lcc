@@ -1,5 +1,7 @@
 import processing.core.PApplet;
 
+
+
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +17,8 @@ enum State {
     JOIN,
     PLAY,
     LEADERBOARD,
-    GAME
+    GAME,
+    LEAVE
 }
 
 public class Screen extends PApplet implements Runnable{
@@ -37,7 +40,6 @@ public class Screen extends PApplet implements Runnable{
     }
 
     public void draw(){
-        //if(state != State.GAME)
         clear();
         switch (state) {
             case MENU:
@@ -75,7 +77,7 @@ public class Screen extends PApplet implements Runnable{
     }
 
     void button(String text, int x, int y, State buttonState) {
-        fill(255,255, 255);
+        fill(240,240, 240);
         rect(x, y, Wscreen/2, Hscreen/8, 15);
         fill(0,0,0);
         text(text, x + Wscreen/4 - text.length()*4, y + Hscreen/16);
@@ -98,6 +100,8 @@ public class Screen extends PApplet implements Runnable{
                     data.username = data.username.substring(0, data.username.length() - 1);
                 else if (key >= 'a' && key <= 'z')
                     data.username += key;
+                else if(key==TAB)
+                    state = State.MENU;
                 break;
             case PASSWORD:
                 if (key == ENTER)
@@ -106,6 +110,8 @@ public class Screen extends PApplet implements Runnable{
                     data.password = data.password.substring(0, data.password.length() - 1);
                 else if (key >= 'a' && key <= 'z')
                     data.password += key;
+                else if(key==TAB)
+                    state = State.MENU;
                 break;
             case CREATE_USERNAME:
                 if (key == ENTER)
@@ -114,6 +120,8 @@ public class Screen extends PApplet implements Runnable{
                     data.username = data.username.substring(0, data.username.length() - 1);
                 else if (key >= 'a' && key <= 'z')
                     data.username += key;
+                else if(key==TAB)
+                    state = State.MENU;
                 break;
             case CREATE_PASSWORD:
                 if (key == ENTER)
@@ -122,7 +130,16 @@ public class Screen extends PApplet implements Runnable{
                     data.password = data.password.substring(0, data.password.length() - 1);
                 else if (key >= 'a' && key <= 'z')
                     data.password += key;
+                else if(key==TAB)
+                    state = State.MENU;
                 break;
+            case LEADERBOARD:
+                if(key==TAB) {
+                    state = State.LEAVE;
+                    handleTCPState(State.LOGGED_IN);
+                }
+                break;
+
         }
     }
 
@@ -151,15 +168,20 @@ public class Screen extends PApplet implements Runnable{
     }
 
     void leaderboard() {
-        background(255, 255, 255);
+        background(255, 255, 153);
         Set<Tuple<String, Integer>> lb = data.leaderboard;
-        StringBuilder sb = new StringBuilder();
-        sb.append("*** Leaderboard ***\n\n");
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+
         for (Tuple<String, Integer> t : lb) {
-            sb.append(t.second).append(" ").append(t.first).append("\n\n");
+            sb1.append(t.first).append("\n\n");
+            sb2.append(t.second).append("\n\n");
         }
         fill(0,0,0);
-        text(sb.toString(), Wscreen/16, Hscreen/16);
+        String title = "*** Leaderboard ***";
+        text(title, Wscreen/2 - title.length()*3, Hscreen/16);
+        text(sb1.toString(), Wscreen/4, Hscreen/8);
+        text(sb2.toString(), 3*Wscreen/4, Hscreen/8);
         state = data.option;
 
     }
@@ -167,26 +189,26 @@ public class Screen extends PApplet implements Runnable{
 
 
     void starterMenu(){
-        background(255, 255, 255);
+        background(255, 153, 153);
         button("Login", Wscreen/4, Hscreen/16, State.USERNAME);
         button("Register", Wscreen/4, Hscreen/4, State.CREATE_USERNAME);
     }
 
     void loggedInMenu() {
-        background(255, 255, 255);
+        background(153, 204, 255);
         button("Play", Wscreen/4, Hscreen/16, State.JOIN);
         button("Delete account", Wscreen/4, Hscreen/4, State.DELETE);
         button("Logout", Wscreen/4, Hscreen/16*3 + Hscreen/4, State.LOGOUT);
     }
 
     void login() {
-        background(255, 255, 255);
+        background(153, 255, 204);
         button(data.username, Wscreen/4, Hscreen/16, State.USERNAME);
         button(data.password, Wscreen/4, Hscreen/4, State.PASSWORD);
     }
 
     void createAccount() {
-        background(255, 255, 255);
+        background(153, 255, 204);
         button(data.username, Wscreen/4, Hscreen/16, State.CREATE_USERNAME);
         button(data.password, Wscreen/4, Hscreen/4, State.CREATE_PASSWORD);
     }
