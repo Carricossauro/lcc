@@ -201,13 +201,26 @@ public class Screen extends PApplet implements Runnable{
         fill(pieces.first.r,pieces.first.g,pieces.first.b,255);
         circle(400,400,20+pieces.first.mass);
         for(Piece p: pieces.second){
-            fill(p.r, p.g,p.b,255);
-            circle(400+p.x,400+p.y,20+p.mass);
+            if (p.isPlayer) {
+                fill(p.r, p.g,p.b,255);
+                circle(400+p.x,400+p.y,20+p.mass);
+            } else drawCrystal(p);
         }
         mouse.setPos(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f);
     }
 
-
+    void drawCrystal(Piece p) {
+        float x1 = 400 + p.x + p.mass;
+        float y1 = 400 + p.y;
+        float x2 = 400 + p.x - p.mass;
+        float y2 = 400 + p.y;
+        float x3 = 400 + p.x;
+        float y3 = 400 + p.y - p.mass;
+        float x4 = 400 + p.x;
+        float y4 = 400 + p.y + p.mass;
+        fill(p.r, p.g, p.b, 255);
+        quad(x1, y1, x3, y3, x2, y2, x4, y4);
+    }
 
 
     @Override

@@ -1,6 +1,7 @@
 -module(server).
 -import(files, [readAccounts/0, writeAccounts/1]).
 -import(accounts, [createAccount/4, removeAccount/4, login/4, logout/4, auth/3]).
+-import(geometry, [insideCircle/2]).
 -export([start/1, start/0, ca/2, ra/2, li/2, lo/2, jo/2, on/0, parseGame/2]).
 
 start(Port) -> register(?MODULE, spawn(fun()-> server(Port) end)).
@@ -107,7 +108,7 @@ game(Players) ->
     ?MODULE ! {start, self()},
     [From ! {start, self()}|| {_User, From} <- Players],
     NewPlayers = initGame(Players, []),
-    gameTimer(NewPlayers).
+    gameTimer(NewPlayers, []).
 
 initGame([], _UsedPositions) -> #{};
 initGame([{Player, From}| Players], UsedPositions) ->
@@ -116,46 +117,73 @@ initGame([{Player, From}| Players], UsedPositions) ->
         2 -> Color = green;
         3 -> Color = blue
     end,
-    X = float(rand:uniform(20)),
-    Y = float(rand:uniform(20)),
+    X = float(rand:uniform(400)),
+    Y = float(rand:uniform(400)),
     case lists:member({X, Y}, UsedPositions) of
         false ->
             Pos = {X, Y},
             PlayerMap = initGame(Players, [Pos | UsedPositions]),
-            maps:put(Player, {From, Color, Pos, 1, 2}, PlayerMap);
+            maps:put(Player, {From, Color, Pos, 1, 5}, PlayerMap);
         true ->
             initGame([{Player, From} | Players], UsedPositions)
     end.
 
-gameTimer(Players) ->
-    Self = self(),
-    spawn(fun() -> receive after 100 -> Self ! timeout end end),
-    NewPlayers = Players, % TODO -> handleGame(Players),
-    Info = parseGame(maps:to_list(NewPlayers), []),
-    [io:format("~p ~f ~f~n", [Player, X, Y]) || {Player, {_From, _Color, {X, Y}, _Mass, _Speed}} <- maps:to_list(Players)],
-    [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
-    gameLoop(Players).
+generateCrystals(Crystals, Players) ->
+    Number = rand:uniform(100),
+    if
+        Number == 42 ->
+            generateCrystals(Players) ++ Crystals;
+        true ->
+            Crystals
+    end.
 
-gameLoop(Players) ->
+generateCrystals([]) -> [];
+generateCrystals([{_Player, {_From, _Color, {Px, Py}, _Mass, _Speed}} | T]) ->
+    X = rand:uniform(800) - 400,
+    Y = rand:uniform(800) - 400,
+    case rand:uniform(3) of
+        1 -> Color = red;
+        2 -> Color = green;
+        3 -> Color = blue
+    end,
+    [{X + Px, Y + Py, Color} | generateCrystals(T)].
+
+gameTimer(Players, Crystals) ->
+    Self = self(),
+    spawn(fun() -> receive after 40 -> Self ! timeout end end), % tickrate
+    NewPlayers = Players, % TODO -> handleGame(Players),
+    NewCrystals = generateCrystals(Crystals, maps:to_list(Players)),
+    PlayerInfo = parseGame(maps:to_list(NewPlayers), []),
+    case NewCrystals of
+        [] -> Info = string:concat(PlayerInfo, "\n");
+        _ ->
+            CrystalInfo = parseCrystals(NewCrystals, []),
+            Info = string:join([PlayerInfo, CrystalInfo], "|")
+    end,
+    % [io:format("~p ~f ~f~n", [Player, X, Y]) || {Player, {_From, _Color, {X, Y}, _Mass, _Speed}} <- maps:to_list(Players)],
+    [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
+    gameLoop(Players, NewCrystals).
+
+gameLoop(Players, Crystals) ->
     receive
         timeout ->
-            gameTimer(Players);
+            gameTimer(Players, Crystals);
         {leave, Username, From} ->
-            handleRemovePlayer(Players, Username),
+            handleRemovePlayer(Players, Username, Crystals),
             From ! leave_done;
         {Info, _From} ->
             NewPlayers = handle(Players, Info),
-            gameLoop(NewPlayers)
+            gameLoop(NewPlayers, Crystals)
     end.
 
 % TODO -> From ! defeat antes de chamar esta funçao com colisoes
-handleRemovePlayer(Players, Username) ->
+handleRemovePlayer(Players, Username, Crystals) ->
     NewPlayers = maps:remove(Username, Players),
     case maps:to_list(NewPlayers) of
         [{LastPlayer, {From, _Color, {_X, _Y}, _Mass, _Speed}}] ->
             ?MODULE ! {gameover, LastPlayer},
             From ! winner;
-        _ -> gameLoop(NewPlayers)
+        _ -> gameLoop(NewPlayers, Crystals)
     end.
 
 normalize(X, Y) ->
@@ -177,12 +205,29 @@ handle(Players, {Username, MouseX, MouseY}) ->
     end.
 
 % TODO falta calcular colisoes e etc.
-handleGame(_Players) -> undefined.
+handleGame(Players) -> undeinfed.
 
-parseGame([], List) -> string:concat(string:join(List, "|"), "\n");
+findColisions([]) -> [];
+findColisions([H|T]) -> findColisions(H, T) ++ findColisions(T).
+
+findColisions(C, []) -> [];
+findColisions(C, [H | T]) ->
+    {CPlayer, {_From, _Color, CPos, CMass, _Speed}} = C,
+    {HPlayer, {_From, _Color, HPos, HMass, _Speed}} = H,
+    case geometry:insideCircle({CPos, CMass}, {HPos, HMass}) of
+        true -> [{CPlayer, HPlayer} | findColisions(C, T)];
+        _ -> findColisions(C, T)
+    end.
+
+parseGame([], List) -> string:join(List, "|");
 parseGame([{Player, {_From, Color, {X, Y}, Mass, Speed}} | Tail], List) ->
-    InfoPlayer = string:join([Player, atom_to_list(Color), float_to_list(X), float_to_list(Y), integer_to_list(Mass), integer_to_list(Speed)], " "),
+    InfoPlayer = string:join([Player, atom_to_list(Color), float_to_list(X), float_to_list(Y), integer_to_list(Mass)], " "),
     parseGame(Tail, [InfoPlayer | List]).
+
+parseCrystals([], List) -> string:concat(string:join(List, "|"), "\n");
+parseCrystals([{X, Y, Color} | Tail], List) ->
+    InfoCrystal = string:join(["<>", atom_to_list(Color), float_to_list(X), float_to_list(Y), "10"], " "),
+    parseCrystals(Tail, [InfoCrystal | List]).
 
 % -----------------------------------
 % Test functions for server
