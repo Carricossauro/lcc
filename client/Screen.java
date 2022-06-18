@@ -204,7 +204,7 @@ public class Screen extends PApplet implements Runnable{
             fill(p.r, p.g,p.b,255);
             circle(400+p.x,400+p.y,20+p.mass);
         }
-        mouse.setPos(mouseX, mouseY);
+        mouse.setPos(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f);
     }
 
 

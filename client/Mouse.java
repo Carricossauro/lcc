@@ -6,9 +6,9 @@ public class Mouse {
         return pos;
     }
 
-    public synchronized void setPos(int x, int y) {
-        pos.first = (float) x;
-        pos.second = (float) y;
+    public synchronized void setPos(float x, float y) {
+        pos.first = x;
+        pos.second = y;
     }
 
     public synchronized String toString() {
