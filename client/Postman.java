@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 
 public class Postman implements Runnable{
 
@@ -52,7 +53,29 @@ public class Postman implements Runnable{
                     case PLAY:
                         tcp.join(data.username, data.password);
                         data.response = Response.DONE;
+
+                        new Thread(()->{
+                            try {
+                                String response = tcp.receive();
+                                if(response.equals("start"))
+                                    data.option = State.GAME;
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
                         break;
+                    case GAME:
+                        String response = tcp.receive();
+                        if(response == null || response.equals("winner")){
+                            data.option = State.LOGGED_IN;
+                            data.response = Response.SWITCH;
+                        }
+                        else{
+                            board.setBoard(data.username, response);
+                            data.response = Response.DONE;
+                        }
+                        break;
+
                 }
                 data.waitScreen.signal();
             } catch (InterruptedException | IOException e) {
@@ -65,6 +88,8 @@ public class Postman implements Runnable{
             } finally {
                 data.lock.unlock();
             }
+
         }
+
     }
 }

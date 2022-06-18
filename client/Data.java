@@ -6,7 +6,8 @@ import java.util.concurrent.locks.ReentrantLock;
 enum Response {
     NOTHING,
     DONE,
-    ERROR
+    ERROR,
+    SWITCH,
 }
 public class Data {
     public Lock lock = new ReentrantLock();
