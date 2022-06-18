@@ -58,7 +58,8 @@ serverLoop(Users, Party, Ongoing) ->
         {leaderboard, From} ->
             From ! [{Username, Score} || {Username, {_Password, Score, _LoggedIn}} <- maps:to_list(Users)],
             serverLoop(Users, Party, Ongoing);
-        {gameover, Winner} ->
+        {gameover, Winner, From} ->
+            From ! winner,
             io:format("Game Over. Winner: ~p ~n", [Winner]),
             Res = maps:get(Winner, Users),
             case Res of
@@ -160,7 +161,7 @@ gameTimer(Players, Crystals) ->
             CrystalInfo = parseCrystals(NewCrystals, []),
             Info = string:join([PlayerInfo, CrystalInfo], "|")
     end,
-    % [io:format("~p ~f ~f~n", [Player, X, Y]) || {Player, {_From, _Color, {X, Y}, _Mass, _Speed}} <- maps:to_list(Players)],
+    [io:format("~p ~w~n", [Player, Mass]) || {Player, {_From, _Color, {_X, _Y}, Mass, _Speed}} <- maps:to_list(Players)],
     [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
     gameLoop(NewPlayers, NewCrystals).
 
@@ -176,14 +177,25 @@ gameLoop(Players, Crystals) ->
             gameLoop(NewPlayers, Crystals)
     end.
 
-% TODO -> From ! defeat antes de chamar esta funçao com colisoes
 handleRemovePlayer(Players, Username, Crystals) ->
     NewPlayers = maps:remove(Username, Players),
     case maps:to_list(NewPlayers) of
         [{LastPlayer, {From, _Color, {_X, _Y}, _Mass, _Speed}}] ->
-            ?MODULE ! {gameover, LastPlayer},
-            From ! winner;
-        _ -> gameLoop(NewPlayers, Crystals)
+            ?MODULE ! {gameover, LastPlayer, From};
+        _ ->
+            {NewPlayers, Crystals}
+    end.
+
+% TODO -> From ! defeat antes de chamar remove player com colisoes
+removePlayer(Username, Players, From) ->
+    From ! defeat,
+    NewPlayers = maps:remove(Username, Players),
+    case maps:to_list(NewPlayers) of
+        [{LastPlayer, {FromW, _Color, {_X, _Y}, _Mass, _Speed}}] ->
+            ?MODULE ! {gameover, LastPlayer, FromW},
+            exit(kill);
+        _ ->
+            NewPlayers
     end.
 
 normalize(X, Y) ->
@@ -204,13 +216,12 @@ handle(Players, {Username, MouseX, MouseY}) ->
             maps:update(Username, {From, Color, {X, Y}, Mass, Speed}, Players)
     end.
 
-% TODO falta calcular colisoes e etc.
 handleGame(Players, Crystals) ->
     CrystalCollisions = findCrystalCollisions(Crystals, maps:to_list(Players)),
-    {NewPlayers, NewCrystals} = handleCrystalCollisions(CrystalCollisions, Players, Crystals),
-    {FinalPlayers, FinalCrystals} = handlePlayerCollisions(NewPlayers, NewCrystals),
+    PlayerCollisions  = findColisions(maps:to_list(Players)),
+    {NewPlayers, FinalCrystals} = handleCrystalCollisions(CrystalCollisions, Players, Crystals),
+    FinalPlayers = handlePlayerCollisions(PlayerCollisions, NewPlayers),
     {FinalPlayers, FinalCrystals}.
-
 
 handleCrystalCollisions([], Players, Crystals) -> {Players, Crystals};
 handleCrystalCollisions([{Player, X, Y, Color} | T], Players, Crystals) ->
@@ -218,7 +229,61 @@ handleCrystalCollisions([{Player, X, Y, Color} | T], Players, Crystals) ->
     {From, _PColor, Pos, Mass, Speed} = maps:get(Player, NewPlayers),
     {maps:update(Player, {From, Color, Pos, Mass+1, Speed}, NewPlayers), [{CX, CY, CColor} || {CX, CY, CColor} <- NewCrystals, not ((CX == X) and (CY == Y))]}.
 
-handlePlayerCollisions(Players, Crystals) -> {Players, Crystals}.
+handlePlayerCollisions([], Players) -> Players;
+handlePlayerCollisions([{P1, P2} | T], Players) ->
+    {_From1, Color1, Pos1, Mass1, _Speed1} = maps:get(P1, Players),
+    {_From2, Color2, Pos2, Mass2, _Speed2} = maps:get(P2, Players),
+    if
+        (Color1 == red) and (Color2 == green) ->
+            PW = P1,
+            PL = P2,
+            D = 1;
+        (Color1 == green) and (Color2 == red) ->
+            PW = P2,
+            PL = P1,
+            D = 1;
+        (Color1 == green) and (Color2 == blue) ->
+            PW = P1,
+            PL = P2,
+            D = 1;
+        (Color1 == blue) and (Color2 == green) ->
+            PW = P2,
+            PL = P1,
+            D = 1;
+        (Color1 == blue) and (Color2 == red) ->
+            PW = P1,
+            PL = P2,
+            D = 1;
+        (Color1 == red) and (Color2 == blue) ->
+            PW = P2,
+            PL = P1,
+            D = 1;
+        true ->
+            if
+                (Mass1 > Mass2) ->
+                    PW = P1,
+                    PL = P2,
+                    D = 1;
+                (Mass2 > Mass1) ->
+                    PW = P2,
+                    PL = P1,
+                    D = 1;
+                true ->
+                    PW = P1,
+                    PL = P2,
+                    D = 0
+            end
+    end,
+    {FromW, ColorW, {XW, YW}, MassW, SpeedW} = maps:get(PW, Players),
+    {FromL, ColorL, {XL, YL}, MassL, SpeedL} = maps:get(PL, Players),
+    {DirX, DirY} = normalize(XW-XL, YW-YL),
+    Speed = lists:max([MassW, MassL]) + 1,
+    NewPlayers = maps:update(PW, {FromW, ColorW, {XW+DirX*Speed, YW+DirY*Speed}, MassW+D, SpeedW}, Players),
+    if
+        MassL - D < 10 -> FinalPlayers = removePlayer(PL, NewPlayers, FromL);
+        true -> FinalPlayers = maps:update(PL, {FromL, ColorL, {XL-DirX*Speed, YL-DirY*Speed}, MassL-D, SpeedL}, NewPlayers)
+    end,
+    handlePlayerCollisions(T, FinalPlayers).
 
 findCrystalCollisions([], Players) -> [];
 findCrystalCollisions([H | T], Players) -> findCrystalCollisionsAux(H, Players) ++ findCrystalCollisions(T, Players).
@@ -238,8 +303,8 @@ findColisions([H|T]) -> findColisions(H, T) ++ findColisions(T).
 
 findColisions(_P, []) -> [];
 findColisions(P, [H | T]) ->
-    {CPlayer, {_From, _Color, CPos, CMass, _Speed}} = P,
-    {HPlayer, {_From, _Color, HPos, HMass, _Speed}} = H,
+    {CPlayer, {_CFrom, _CColor, CPos, CMass, _CSpeed}} = P,
+    {HPlayer, {_HFrom, _HColor, HPos, HMass, _HSpeed}} = H,
     case geometry:insideCircle({CPos, CMass}, {HPos, HMass}) of
         true -> [{CPlayer, HPlayer} | findColisions(P, T)];
         _ -> findColisions(P, T)
