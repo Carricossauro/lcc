@@ -199,11 +199,11 @@ public class Screen extends PApplet implements Runnable{
             return;
         background(0,0,0);
         fill(pieces.first.r,pieces.first.g,pieces.first.b,255);
-        circle(400,400,20+pieces.first.mass);
+        circle(400,400,pieces.first.mass);
         for(Piece p: pieces.second){
             if (p.isPlayer) {
                 fill(p.r, p.g,p.b,255);
-                circle(400+p.x,400+p.y,20+p.mass);
+                circle(400+p.x,400+p.y, p.mass);
             } else drawCrystal(p);
         }
         mouse.setPos(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f);
@@ -229,57 +229,6 @@ public class Screen extends PApplet implements Runnable{
         Screen screen = new Screen(this.mouse, this.board, this.data);
         PApplet.runSketch(processingArgs, screen);
     }
-
-
-
-    /*public void keyPressed() {
-        switch (state) {
-            case USERNAME:
-                if (handleEnter(State.LOGGED_IN)) return;
-                if (key == BACKSPACE) {
-                    if (data.username.length() != 0)
-                        data.username = data.username.substring(0, data.username.length() - 1);
-                } else if (key >= 'a' && key <= 'z') data.username += key;
-                break;
-            case PASSWORD:
-                if (handleEnter(State.LOGGED_IN))  return;
-                if (key == BACKSPACE) {
-                    if (data.username.length() != 0)
-                        data.password = data.password.substring(0, data.password.length() - 1);
-                } else if (key >= 'a' && key <= 'z') data.password += key;
-                break;
-            case CREATE_USERNAME:
-                if (handleEnter(State.MENU)) return;
-                if (key == BACKSPACE) {
-                    if (data.username.length() != 0)
-                        data.username = data.username.substring(0, data.username.length() - 1);
-                } else if (key >= 'a' && key <= 'z') data.username += key;
-                break;
-            case CREATE_PASSWORD:
-                if (handleEnter(State.MENU))  return;
-                if (key == BACKSPACE) {
-                    if (data.username.length() != 0)
-                        data.password = data.password.substring(0, data.password.length() - 1);
-                } else if (key >= 'a' && key <= 'z') data.password += key;
-                break;
-        }
-    }*/
-
-    /*boolean handleEnter(State nextState) {
-        if (key == ENTER) {
-            handleTCPState(nextState);
-            return true;
-        }
-        return false;
-    }*/
-
-
-
-
-
-
-
-
 
 }
 

@@ -123,7 +123,7 @@ initGame([{Player, From}| Players], UsedPositions) ->
         false ->
             Pos = {X, Y},
             PlayerMap = initGame(Players, [Pos | UsedPositions]),
-            maps:put(Player, {From, Color, Pos, 1, 5}, PlayerMap);
+            maps:put(Player, {From, Color, Pos, 30, 5}, PlayerMap);
         true ->
             initGame([{Player, From} | Players], UsedPositions)
     end.
@@ -151,8 +151,8 @@ generateCrystals([{_Player, {_From, _Color, {Px, Py}, _Mass, _Speed}} | T]) ->
 gameTimer(Players, Crystals) ->
     Self = self(),
     spawn(fun() -> receive after 40 -> Self ! timeout end end), % tickrate
-    NewPlayers = Players, % TODO -> handleGame(Players),
-    NewCrystals = generateCrystals(Crystals, maps:to_list(Players)),
+    {NewPlayers, TempCrystals} = handleGame(Players, Crystals),
+    NewCrystals = generateCrystals(TempCrystals, maps:to_list(Players)),
     PlayerInfo = parseGame(maps:to_list(NewPlayers), []),
     case NewCrystals of
         [] -> Info = string:concat(PlayerInfo, "\n");
@@ -162,7 +162,7 @@ gameTimer(Players, Crystals) ->
     end,
     % [io:format("~p ~f ~f~n", [Player, X, Y]) || {Player, {_From, _Color, {X, Y}, _Mass, _Speed}} <- maps:to_list(Players)],
     [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
-    gameLoop(Players, NewCrystals).
+    gameLoop(NewPlayers, NewCrystals).
 
 gameLoop(Players, Crystals) ->
     receive
@@ -205,18 +205,44 @@ handle(Players, {Username, MouseX, MouseY}) ->
     end.
 
 % TODO falta calcular colisoes e etc.
-handleGame(Players) -> undeinfed.
+handleGame(Players, Crystals) ->
+    CrystalCollisions = findCrystalCollisions(Crystals, maps:to_list(Players)),
+    {NewPlayers, NewCrystals} = handleCrystalCollisions(CrystalCollisions, Players, Crystals),
+    {FinalPlayers, FinalCrystals} = handlePlayerCollisions(NewPlayers, NewCrystals),
+    {FinalPlayers, FinalCrystals}.
+
+
+handleCrystalCollisions([], Players, Crystals) -> {Players, Crystals};
+handleCrystalCollisions([{Player, X, Y, Color} | T], Players, Crystals) ->
+    {NewPlayers, NewCrystals} = handleCrystalCollisions(T, Players, Crystals),
+    {From, _PColor, Pos, Mass, Speed} = maps:get(Player, NewPlayers),
+    {maps:update(Player, {From, Color, Pos, Mass+1, Speed}, NewPlayers), [{CX, CY, CColor} || {CX, CY, CColor} <- NewCrystals, not ((CX == X) and (CY == Y))]}.
+
+handlePlayerCollisions(Players, Crystals) -> {Players, Crystals}.
+
+findCrystalCollisions([], Players) -> [];
+findCrystalCollisions([H | T], Players) -> findCrystalCollisionsAux(H, Players) ++ findCrystalCollisions(T, Players).
+
+findCrystalCollisionsAux(C, []) -> [];
+findCrystalCollisionsAux(C, [H | T]) ->
+    {CX, CY, CColor} = C,
+    {Player, {_From, _Color, HPos, HMass, _Speed}} = H,
+    case geometry:crystalInsideCircle({{CX, CY}, 10}, {HPos, HMass}) of
+        true -> [{Player, CX, CY, CColor} | findCrystalCollisionsAux(C, T)];
+        _ -> findCrystalCollisionsAux(C, T)
+    end.
+
 
 findColisions([]) -> [];
 findColisions([H|T]) -> findColisions(H, T) ++ findColisions(T).
 
-findColisions(C, []) -> [];
-findColisions(C, [H | T]) ->
-    {CPlayer, {_From, _Color, CPos, CMass, _Speed}} = C,
+findColisions(_P, []) -> [];
+findColisions(P, [H | T]) ->
+    {CPlayer, {_From, _Color, CPos, CMass, _Speed}} = P,
     {HPlayer, {_From, _Color, HPos, HMass, _Speed}} = H,
     case geometry:insideCircle({CPos, CMass}, {HPos, HMass}) of
-        true -> [{CPlayer, HPlayer} | findColisions(C, T)];
-        _ -> findColisions(C, T)
+        true -> [{CPlayer, HPlayer} | findColisions(P, T)];
+        _ -> findColisions(P, T)
     end.
 
 parseGame([], List) -> string:join(List, "|");
