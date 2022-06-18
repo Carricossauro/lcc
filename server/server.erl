@@ -286,6 +286,7 @@ clientGame(Sock, Party, Username) ->
             client(Sock);
         {tcp, _, Data} ->
             [DataString, _] = string:split(binary_to_list(Data), "#"),
+            io:format("-> ~p~n", [DataString]),
             case DataString of
                 "leave" -> Party ! {leave, Username, self()};
                 _ -> io:fwrite("Failed to leave game.\n")

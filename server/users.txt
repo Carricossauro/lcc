@@ -1,8 +1,9 @@
 bruno.wicked.0
+carrico.sauro.2
 carrico1.sauro.0
 carrico2.sauro.0
 ewc.few.0
 intela.deiint.0
-l.l.37
-t.t.9
+l.l.38
+t.t.16
 teste.teste.0
