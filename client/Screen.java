@@ -237,8 +237,10 @@ public class Screen extends PApplet implements Runnable{
         if(pieces.first == null)
             return;
         background(0,0,0);
-        fill(pieces.first.r,pieces.first.g,pieces.first.b,255);
+        fill(255, 255, 255);
         circle(400,400,pieces.first.mass);
+        fill(pieces.first.r,pieces.first.g,pieces.first.b,255);
+        circle(400,400,pieces.first.mass-5);
         for(Piece p: pieces.second){
             if (p.isPlayer) {
                 fill(p.r, p.g,p.b,255);

@@ -74,7 +74,7 @@ serverLoop(Users, Party, Ongoing) ->
 
 % Queue -> List of players in party queue : [{user, pid}, ...]
 party(Queue) ->
-    Limit = 2,
+    Limit = 3,
     io:fwrite("Party users: "),
     [io:format("~p ", [User]) || {User, _Pid} <- Queue],
     io:fwrite("\n"),
@@ -87,9 +87,9 @@ party(Queue) ->
             case length(NewQueue) of
                 8 ->
                     game(NewQueue);
-                Limit -> % TODO -> 3 jogadores
+                Limit ->
                     Self = self(),
-                    spawn(fun() -> receive after 10000 -> Self ! timeout end end), % TODO -> 30seg
+                    spawn(fun() -> receive after 10000 -> Self ! timeout end end),
                     party(NewQueue);
                 _ ->
                     party(NewQueue)
