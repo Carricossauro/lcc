@@ -61,20 +61,20 @@ public class Screen extends PApplet implements Runnable{
                 break;
             case LOGOUT:
             case DELETE:
-                handleTCPState(State.MENU);
+                handleTCPState(State.MENU, State.MENU);
                 break;
             case JOIN:
-                handleTCPState(State.PLAY);
+                handleTCPState(State.PLAY, State.LOGGED_IN);
                 break;
             case PLAY:
-                handleTCPState(State.LEADERBOARD);
+                handleTCPState(State.LEADERBOARD, State.LOGGED_IN);
                 break;
             case LEADERBOARD:
                 leaderboard();
                 break;
             case GAME:
                 game();
-                handleTCPState(State.GAME);
+                handleTCPState(State.GAME, State.LOGGED_IN);
                 break;
         }
     }
@@ -98,7 +98,7 @@ public class Screen extends PApplet implements Runnable{
         switch (state) {
             case USERNAME:
                 if (key == ENTER)
-                    handleTCPState(State.LOGGED_IN);
+                    handleTCPState(State.LOGGED_IN, State.MENU);
                 else if (key == BACKSPACE && data.username.length() != 0)
                     data.username = data.username.substring(0, data.username.length() - 1);
                 else if (key >= 'a' && key <= 'z')
@@ -108,7 +108,7 @@ public class Screen extends PApplet implements Runnable{
                 break;
             case PASSWORD:
                 if (key == ENTER)
-                    handleTCPState(State.LOGGED_IN);
+                    handleTCPState(State.LOGGED_IN, State.MENU);
                 else if (key == BACKSPACE && data.username.length() != 0)
                     data.password = data.password.substring(0, data.password.length() - 1);
                 else if (key >= 'a' && key <= 'z')
@@ -118,7 +118,7 @@ public class Screen extends PApplet implements Runnable{
                 break;
             case CREATE_USERNAME:
                 if (key == ENTER)
-                    handleTCPState(State.MENU);
+                    handleTCPState(State.MENU, State.MENU);
                 else if (key == BACKSPACE && data.username.length() != 0)
                     data.username = data.username.substring(0, data.username.length() - 1);
                 else if (key >= 'a' && key <= 'z')
@@ -128,7 +128,7 @@ public class Screen extends PApplet implements Runnable{
                 break;
             case CREATE_PASSWORD:
                 if (key == ENTER)
-                    handleTCPState(State.MENU);
+                    handleTCPState(State.MENU, State.MENU);
                 else if (key == BACKSPACE && data.password.length() != 0)
                     data.password = data.password.substring(0, data.password.length() - 1);
                 else if (key >= 'a' && key <= 'z')
@@ -139,20 +139,20 @@ public class Screen extends PApplet implements Runnable{
             case LEADERBOARD:
                 if(key==TAB) {
                     state = State.LEAVE;
-                    handleTCPState(State.LOGGED_IN);
+                    handleTCPState(State.LOGGED_IN, State.MENU);
                 }
                 break;
             case GAME:
                 if(key==TAB) {
                     state = State.QUIT;
-                    handleTCPState(State.LOGGED_IN);
+                    handleTCPState(State.LOGGED_IN, State.MENU);
                 }
 
 
         }
     }
 
-    void handleTCPState(State nextState) {
+    void handleTCPState(State nextState, State errorState) {
         try {
             data.lock.lock();
             data.option = state;
@@ -167,7 +167,7 @@ public class Screen extends PApplet implements Runnable{
                 state = data.option;
             }
             else
-                state = State.MENU;
+                state = errorState;
             data.response = Response.NOTHING;
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
