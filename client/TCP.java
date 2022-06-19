@@ -154,6 +154,7 @@ public class TCP {
         sb.append("mouse#");
         sb.append(mouse);
         this.send(sb.toString());
+        System.out.println(sb.toString());
         sb.setLength(0);
     }
 
