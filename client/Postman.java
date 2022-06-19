@@ -75,12 +75,18 @@ public class Postman implements Runnable{
                             data.response = Response.SWITCH;
                         } else{
                             board.setBoard(data.username, response);
+                            //tcp.mouse(mouse.toString());
                             tcp.mouse(mouse.getPos());
                             data.response = Response.DONE;
                         }
                         break;
                     case LEAVE:
                         tcp.send("leave#");
+                        data.response = Response.DONE;
+                        break;
+                    case QUIT:
+                        tcp.send("leave#");
+                        tcp.receive();
                         data.response = Response.DONE;
                         break;
 

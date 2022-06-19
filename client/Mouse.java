@@ -11,11 +11,24 @@ public class Mouse {
         pos.second = y;
     }
 
+    public synchronized void setMouse(float x, float y, boolean isPressed) {
+        this.pos.first = x;
+        this.pos.second = y;
+        this.pressed = isPressed;
+
+    }
+
+
+
     public synchronized String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(pos.toString());
         sb.append(" ");
-        sb.append(pressed);
+        if(this.pressed)
+            sb.append(2);
+        else
+            sb.append(1);
+        this.pressed = false;
         return sb.toString();
     }
 }

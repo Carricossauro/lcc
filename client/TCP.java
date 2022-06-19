@@ -150,6 +150,13 @@ public class TCP {
         sb.setLength(0);
     }
 
+    public void mouse(String mouse) {
+        sb.append("mouse#");
+        sb.append(mouse);
+        this.send(sb.toString());
+        sb.setLength(0);
+    }
+
     public Set<String> online() throws IOException {
         sb.append("online#");
         this.send(sb.toString());

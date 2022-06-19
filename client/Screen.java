@@ -18,7 +18,10 @@ enum State {
     PLAY,
     LEADERBOARD,
     GAME,
-    LEAVE
+    LEAVE,
+    QUIT,
+    WINNER,
+    LOSER
 }
 
 public class Screen extends PApplet implements Runnable{
@@ -139,6 +142,12 @@ public class Screen extends PApplet implements Runnable{
                     handleTCPState(State.LOGGED_IN);
                 }
                 break;
+            case GAME:
+                if(key==TAB) {
+                    state = State.QUIT;
+                    handleTCPState(State.LOGGED_IN);
+                }
+
 
         }
     }
@@ -203,12 +212,20 @@ public class Screen extends PApplet implements Runnable{
 
     void login() {
         background(153, 255, 204);
+        String username = "Username";
+        String password = "Password";
+        text(username, Wscreen/2 - username.length()*4, Hscreen/32 + 4);
+        text(password, Wscreen/2 - username.length()*4, 7*Hscreen/32 + 4);
         button(data.username, Wscreen/4, Hscreen/16, State.USERNAME);
         button(data.password, Wscreen/4, Hscreen/4, State.PASSWORD);
     }
 
     void createAccount() {
         background(153, 255, 204);
+        String username = "Username";
+        String password = "Password";
+        text(username, Wscreen/2 - username.length()*4, Hscreen/32 + 4);
+        text(password, Wscreen/2 - username.length()*4, 7*Hscreen/32 + 4);
         button(data.username, Wscreen/4, Hscreen/16, State.CREATE_USERNAME);
         button(data.password, Wscreen/4, Hscreen/4, State.CREATE_PASSWORD);
     }
@@ -228,7 +245,7 @@ public class Screen extends PApplet implements Runnable{
                 circle(400+p.x,400+p.y, p.mass);
             } else drawCrystal(p);
         }
-        mouse.setPos(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f);
+        mouse.setMouse(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f,mousePressed);
     }
 
     void drawCrystal(Piece p) {
