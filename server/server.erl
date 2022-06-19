@@ -238,8 +238,8 @@ handleCrystalCollisions([{Player, X, Y, Color} | T], Players, Crystals) ->
 
 handlePlayerCollisions([], Players) -> Players;
 handlePlayerCollisions([{P1, P2} | T], Players) ->
-    {_From1, Color1, Pos1, Mass1, _Speed1} = maps:get(P1, Players),
-    {_From2, Color2, Pos2, Mass2, _Speed2} = maps:get(P2, Players),
+    {_From1, Color1, _Pos1, Mass1, _Speed1} = maps:get(P1, Players),
+    {_From2, Color2, _Pos2, Mass2, _Speed2} = maps:get(P2, Players),
     if
         (Color1 == red) and (Color2 == green) ->
             PW = P1,
@@ -292,10 +292,10 @@ handlePlayerCollisions([{P1, P2} | T], Players) ->
     end,
     handlePlayerCollisions(T, FinalPlayers).
 
-findCrystalCollisions([], Players) -> [];
+findCrystalCollisions([], _Players) -> [];
 findCrystalCollisions([H | T], Players) -> findCrystalCollisionsAux(H, Players) ++ findCrystalCollisions(T, Players).
 
-findCrystalCollisionsAux(C, []) -> [];
+findCrystalCollisionsAux(_C, []) -> [];
 findCrystalCollisionsAux(C, [H | T]) ->
     {CX, CY, CColor} = C,
     {Player, {_From, _Color, HPos, HMass, _Speed}} = H,
@@ -318,7 +318,7 @@ findColisions(P, [H | T]) ->
     end.
 
 parseGame([], List) -> string:join(List, "|");
-parseGame([{Player, {_From, Color, {X, Y}, Mass, Speed}} | Tail], List) ->
+parseGame([{Player, {_From, Color, {X, Y}, Mass, _Speed}} | Tail], List) ->
     InfoPlayer = string:join([Player, atom_to_list(Color), float_to_list(X), float_to_list(Y), integer_to_list(Mass)], " "),
     parseGame(Tail, [InfoPlayer | List]).
 

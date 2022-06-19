@@ -45,7 +45,7 @@ removeAccount(Users, User, Password, From) ->
 
 login(Users, U, P, From) ->
     case maps:find(U, Users) of
-       {ok, {Password, Score, LoggedIn}} ->
+       {ok, {Password, Score, _LoggedIn}} ->
             if
                 Password == P ->
                     From ! done,
@@ -61,7 +61,7 @@ login(Users, U, P, From) ->
 
 logout(Users, U, P, From) ->
     case maps:find(U, Users) of
-        {ok, {Password, Score, LoggedIn}} ->
+        {ok, {Password, Score, _LoggedIn}} ->
             if
                 Password == P ->
                     From ! done,
@@ -77,7 +77,7 @@ logout(Users, U, P, From) ->
 
 auth(Users, U, P) ->
     case maps:find(U, Users) of
-        {ok, {Password, Score, LoggedIn}} ->
+        {ok, {Password, _Score, LoggedIn}} ->
             (Password == P) and LoggedIn;
         _ -> false
     end.
