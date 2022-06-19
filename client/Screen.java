@@ -236,7 +236,7 @@ public class Screen extends PApplet implements Runnable{
         Tuple<Piece,List<Piece>> pieces = board.getBoard();
         if(pieces.first == null)
             return;
-        background(0,0,0);
+        background(51);
         fill(255, 255, 255);
         circle(400,400,pieces.first.mass);
         fill(pieces.first.r,pieces.first.g,pieces.first.b,255);

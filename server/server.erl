@@ -56,7 +56,8 @@ serverLoop(Users, Party, Ongoing) ->
             From ! [Username || {Username, {_Password, _Score, LoggedIn}} <- maps:to_list(Users), LoggedIn],
             serverLoop(Users, Party, Ongoing);
         {leaderboard, From} ->
-            From ! [{Username, Score} || {Username, {_Password, Score, _LoggedIn}} <- maps:to_list(Users)],
+            UserList = [{Username, Score} || {Username, {_Password, Score, _LoggedIn}} <- maps:to_list(Users)],
+            From ! UserList,
             serverLoop(Users, Party, Ongoing);
         {gameover, Winner, From} ->
             From ! winner,
@@ -75,9 +76,9 @@ serverLoop(Users, Party, Ongoing) ->
 % Queue -> List of players in party queue : [{user, pid}, ...]
 party(Queue) ->
     Limit = 3,
-    io:fwrite("Party users: "),
-    [io:format("~p ", [User]) || {User, _Pid} <- Queue],
-    io:fwrite("\n"),
+    % io:fwrite("Party users: "),
+    % [io:format("~p ", [User]) || {User, _Pid} <- Queue],
+    % io:fwrite("\n"),
     receive
         timeout ->
             game(Queue);
@@ -161,8 +162,7 @@ gameTimer(Players, Crystals) ->
             CrystalInfo = parseCrystals(NewCrystals, []),
             Info = string:join([PlayerInfo, CrystalInfo], "|")
     end,
-    [io:format("~p ~w~n", [Player, Mass]) || {Player, {_From, _Color, {_X, _Y}, Mass, _Speed}} <- maps:to_list(Players)],
-    [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(Players)],
+    [From ! Info || {_Player, {From, _Color, _Pos, _Mass, _Speed}} <- maps:to_list(NewPlayers)],
     gameLoop(NewPlayers, NewCrystals).
 
 gameLoop(Players, Crystals) ->
@@ -397,8 +397,9 @@ handleClientInput(String, Sock) ->
             receive
                 Users -> 
                     UserList = [string:join([Username, integer_to_list(Score)], " ") || {Username, Score} <- Users],
+                    % [io:format("~p ", [A]) || A <- Users],
                     Res = string:join(UserList, "|"),
-                    io:format("~p~n", [Res]),
+                    io:format("~w ~p~n", [length(UserList), Res]),
                     gen_tcp:send(Sock, string:join([Res, "\n"], ""))
             end;
         ["online", _] ->
@@ -415,13 +416,10 @@ handleClientInput(String, Sock) ->
             receive
                 {done, Party} ->
                     gen_tcp:send(Sock, "done\n"),
-                    io:fwrite("join done"),
                     clientGame(Sock, Party, Username);
                 full_server ->
-                    io:fwrite("join full server"),
                     gen_tcp:send(Sock, "full_server\n");
                 invalid_auth ->
-                    io:fwrite("join invalid auth"),
                     gen_tcp:send(Sock, "invalid_auth\n")
             end;
         _ -> io:fwrite("Incorrect syntax in tcp request.\n")
@@ -434,7 +432,6 @@ clientGame(Sock, Party, Username) ->
             client(Sock);
         {tcp, _, Data} ->
             [DataString, _] = string:split(binary_to_list(Data), "#"),
-            io:format("-> ~p~n", [DataString]),
             case DataString of
                 "leave" -> Party ! {leave, Username, self()};
                 _ -> io:fwrite("Incorrect syntax in tcp request.\n")

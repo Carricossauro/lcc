@@ -67,7 +67,7 @@ public class Postman implements Runnable{
                         break;
                     case GAME:
                         String response = tcp.receive();
-                        if(response == null || response.equals("defeat")){
+                        if(response == null || response.equals("defeat")) {
                             data.option = State.LOGGED_IN;
                             data.response = Response.SWITCH;
                         } else if (response.equals("winner")) {
