@@ -245,7 +245,7 @@ public class Screen extends PApplet implements Runnable{
                 circle(400+p.x,400+p.y, p.mass);
             } else drawCrystal(p);
         }
-        mouse.setMouse(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f,mousePressed);
+        mouse.setMouse(mouseX - Wscreen/2.0f, mouseY - Hscreen/2.0f, mousePressed);
     }
 
     void drawCrystal(Piece p) {

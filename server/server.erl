@@ -170,10 +170,10 @@ gameLoop(Players, Crystals) ->
         timeout ->
             gameTimer(Players, Crystals);
         {leave, Username, From} ->
-            handleRemovePlayer(Players, Username, Crystals),
-            From ! leave_done;
+            From ! leave_done,
+            handleRemovePlayer(Players, Username, Crystals);
         {Info, _From} ->
-            NewPlayers = handle(Players, Info),
+            NewPlayers = handleInput(Players, Info),
             gameLoop(NewPlayers, Crystals)
     end.
 
@@ -183,10 +183,9 @@ handleRemovePlayer(Players, Username, Crystals) ->
         [{LastPlayer, {From, _Color, {_X, _Y}, _Mass, _Speed}}] ->
             ?MODULE ! {gameover, LastPlayer, From};
         _ ->
-            {NewPlayers, Crystals}
+            gameLoop(NewPlayers, Crystals)
     end.
 
-% TODO -> From ! defeat antes de chamar remove player com colisoes
 removePlayer(Username, Players, From) ->
     From ! defeat,
     NewPlayers = maps:remove(Username, Players),
@@ -205,15 +204,23 @@ normalize(X, Y) ->
         _ -> {X / Sqrt, Y / Sqrt}
     end.
 
-handle(Players, {Username, MouseX, MouseY}) -> 
+handleInput(Players, {Username, MouseX, MouseY, Boost}) -> 
     Res = maps:get(Username, Players),
     case Res of
         {badmap, _} -> Players;
         {badkey, _} -> Players;
         {From, Color, {OldX, OldY}, Mass, Speed} ->
+            if
+                Mass == 10 ->
+                    RealSpeed = Speed,
+                    RealMass = Mass;
+                true ->
+                    RealSpeed = Speed * Boost,
+                    RealMass = Mass + 1 - Boost
+            end,
             {DirX, DirY} = normalize(MouseX, MouseY),
-            {X, Y} = {OldX + DirX * Speed, OldY + DirY * Speed},
-            maps:update(Username, {From, Color, {X, Y}, Mass, Speed}, Players)
+            {X, Y} = {OldX + DirX * RealSpeed, OldY + DirY * RealSpeed},
+            maps:update(Username, {From, Color, {X, Y}, RealMass, Speed}, Players)
     end.
 
 handleGame(Players, Crystals) ->
@@ -425,7 +432,7 @@ clientGame(Sock, Party, Username) ->
             io:format("-> ~p~n", [DataString]),
             case DataString of
                 "leave" -> Party ! {leave, Username, self()};
-                _ -> io:fwrite("Failed to leave game.\n")
+                _ -> io:fwrite("Incorrect syntax in tcp request.\n")
             end,
             clientGame(Sock, Party, Username);
         {tcp_closed, _} ->
@@ -454,8 +461,8 @@ clientGameLoop(Sock, Party, Username) ->
             DataString = string:trim(binary_to_list(Data), trailing, "\n"),
             case string:split(DataString, "#") of
                 ["mouse", Info] ->
-                    [X, Y] = string:split(Info, " "),
-                    Party ! {{Username, list_to_float(X), list_to_float(Y)}, self()};
+                    [X, Y, Boost] = string:split(Info, " ", all),
+                    Party ! {{Username, list_to_float(X), list_to_float(Y), list_to_integer(Boost)}, self()};
                 ["leave", _] -> Party ! {leave, Username, self()}
             end,
             clientGameLoop(Sock, Party, Username);

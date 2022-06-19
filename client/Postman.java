@@ -75,8 +75,8 @@ public class Postman implements Runnable{
                             data.response = Response.SWITCH;
                         } else{
                             board.setBoard(data.username, response);
-                            //tcp.mouse(mouse.toString());
-                            tcp.mouse(mouse.getPos());
+                            tcp.mouse(mouse.toString());
+                            //tcp.mouse(mouse.getPos());
                             data.response = Response.DONE;
                         }
                         break;
