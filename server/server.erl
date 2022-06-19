@@ -415,9 +415,14 @@ handleClientInput(String, Sock) ->
             receive
                 {done, Party} ->
                     gen_tcp:send(Sock, "done\n"),
+                    io:fwrite("join done"),
                     clientGame(Sock, Party, Username);
-                full_server -> gen_tcp:send(Sock, "full_server\n");
-                invalid_auth -> gen_tcp:send(Sock, "invalid_auth\n")
+                full_server ->
+                    io:fwrite("join full server"),
+                    gen_tcp:send(Sock, "full_server\n");
+                invalid_auth ->
+                    io:fwrite("join invalid auth"),
+                    gen_tcp:send(Sock, "invalid_auth\n")
             end;
         _ -> io:fwrite("Incorrect syntax in tcp request.\n")
     end.
