@@ -129,7 +129,7 @@ public class TCP {
         sb.setLength(0);
 
         String response = this.receive();
-        if (response.equals("defeat") || response.equals("done")) response = this.receive(); // estupido
+        if (response.equals("done")) response = this.receive(); // estupido
         String[] playerStrings = response.split("\\|");
 
         Comparator<Tuple<String, Integer>> comp = (a1, a2) -> (!Objects.equals(a1.second, a2.second)) ? (a2.second - a1.second) : a1.first.compareTo(a2.first);
