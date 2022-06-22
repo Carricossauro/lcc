@@ -79,6 +79,10 @@
 \end{center}
   \end{minipage}
 
+\begin{abstract}  % resumo do documento
+Neste relatório explicar-se-á a abordagem utilizada para construir a plataforma ComputationalMind, utilizando todos os conhecimentos práticos desenvolvidos ao longo do curso.
+\end{abstract}
+
 \tableofcontents % insere Indice
 
 \chapter{Introdução}
@@ -280,7 +284,7 @@ A comunicação entre o \emph{Django} e a \emph{parte frontal} através da \emph
 \centering
 \includegraphics[width = 14cm,height = 10cm]{apiDjango.png}
 \caption{REST API}
-\label{fig:pagIni}
+\label{fig:pagDJang}
 \end{figure}
 
 \chapter{Front-End}
@@ -317,6 +321,19 @@ Na página inicial consideramos que o utilizador pode ser um \emph{Player} que a
     \label{fig:pagIni}
 \end{figure}
 
+\newpage
+
+\section{About Us}
+
+Nesta secção incorporamos informação sobre o propósito da página.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{aboutUs.png}
+    \caption{About Us}
+    \label{fig:abUs}
+\end{figure}
+
 \section{\emph{Login} / \emph{Sign Up}}
 Após a escolha de uma das opções disponibilizadas na página inicial os utilizadores seram redirecionados para a página de \emph{Login} / \emph{Sign Up}. 
 
@@ -335,12 +352,14 @@ A página de autentificação é igual para ambos os utilizadores, a única dife
     \label{fig:log&sigUp}%
 \end{figure}
 
+\newpage
+
 \section{Escolha de jogos para \emph{Player} ou \emph{Author}}
 Em seguida, ambos os utilizadores são redirecionados para uma página onde se lista todos os jogos que estão disponíveis para jogar.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 14cm,height = 10cm]{pagJog.png}
+    \includegraphics[width = 10cm]{pagJog.png}
     \caption{Página de Jogos}
     \label{fig:pagJog}
 \end{figure}
@@ -350,9 +369,20 @@ O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pel
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 14cm,height = 10cm]{menuAut.png}
+    \includegraphics[width = 10cm]{menuAut.png}
     \caption{Menu do \emph{Author}}
     \label{fig:menuAut}
+\end{figure}
+
+\newpage
+
+\section{Criação de novos Jogos}
+Nesta nova aba oferecemos todas as ferramentas suportadas pela página para que o \emph{Author} consiga criar novo conteúdo para a mesma.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{editAut.png}
+    \caption{Menu para Criação de Jogos pelo \emph{Author}}
+    \label{fig:editAut}
 \end{figure}
 
 \section{Página inicial (Com sessão iniciada)}
@@ -363,11 +393,17 @@ Demo da pagina, login, user, autor, apresentação das funcionalidades,...
 
 \chapter{Conclusão}
 
-No entanto, é necessário realçar que o projeto não se encontra totalmente finalizado, na medida em que algumas das funcionalidades planeadas acabaram por não ser implementadas na versão final. Desta forma, o projeto final é apenas uma “amostra” daquele que foi inicialmente idealizado estando presentes apenas as funcionalidades consideradas mais importantes.
+Conclui-se desta forma a apresentação do Projeto para o ano letivo 2021/2022.
+
+\section{Comentários}
+
+Temos de realçar que o projeto não se encontra totalmente finalizado, na medida em que algumas das funcionalidades planeadas acabaram por não ser implementadas na versão final. Desta forma, o projeto final é apenas uma “amostra” daquele que foi inicialmente idealizado estando presentes apenas as funcionalidades consideradas mais importantes.
 
 Posto isto, as dificuldades sentidas consistiram essencialmente no facto de se estar a usar uma nova linguagem de programação e ferramentas de desenvolvimento de software completamente novas, e com as quais não estávamos familiarizados.
 
 Desta forma, e apesar dos diversos obstáculos encontrados durante todo o processo, o grupo considera que concluiu o projeto com sucesso.
+
+\section{Trabalho Futuro}
 
 Como sugestão para trabalhos futuros, seria útil implementar todas as funcionalidades inicialmente planeadas e que não estão no produto final, além de ser também interessante desenvolver funcionalidades extra que tornassem a página \emph{web} mais apelativa para o utilizador.
 
