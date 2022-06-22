@@ -1,17 +1,28 @@
 import { useState } from "react";
-import { faPhotoFilm, faT } from "@fortawesome/free-solid-svg-icons";
+import { faPhotoFilm, faT, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EditMC from "./EditMC";
+import EditSA from "./EditSA";
+import EditTF from "./EditTF";
+
+// TODO - add delete button on content and options
 
 export default function Edit() {
   const [question, setQuestion] = useState({
     title: "",
+    author: "inespresa",
     type: "",
-    score: 0,
-    difficulty: "",
-    minage: 0,
+    score: 1,
+    difficulty: "Hard",
+    minage: 10,
+    maxage: 4,
     options: [],
     content: [],
   });
+
+  const redirect = (page) => {
+    window.location.href = page;
+  };
 
   const changeContent = (value, index) => {
     let newList = question.content;
@@ -25,7 +36,7 @@ export default function Edit() {
     e.preventDefault();
     let newList = question.content;
 
-    newList.push({ type: type, media: "" });
+    newList.push({ type: type, media: "", correct: 0 });
 
     setQuestion({ ...question, content: newList });
   };
@@ -33,7 +44,41 @@ export default function Edit() {
   const changeType = (e, type) => {
     e.preventDefault();
 
-    setQuestion({ ...question, type: type });
+    let newList = [];
+
+    if (type === "TF") newList = [{ answer: "True" }, { answer: "False" }];
+
+    setQuestion({ ...question, type: type, options: newList });
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    // TODO - verify that all field are correctly filled in
+    // TODO - errors (fetch)
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(question),
+    };
+
+    const url = "http://127.0.0.1:8000/api/questions/";
+
+    let isError = false;
+    fetch(url, requestOptions)
+      .then((res) => {
+        if (res["status"] <= 199 || res["status"] >= 300) {
+          isError = true;
+          console.log(res["status"]);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (!isError) {
+          redirect("/Author/Main");
+        }
+      });
   };
 
   return (
@@ -118,8 +163,24 @@ export default function Edit() {
             Short Answer
           </button>
         </div>
+        {question.type === "MC" && (
+          <EditMC setQuestion={setQuestion} question={question} />
+        )}
+        {question.type === "SA" && (
+          <EditSA
+            changeType={changeType}
+            question={question}
+            setQuestion={setQuestion}
+          />
+        )}
+        {question.type === "TF" && (
+          <EditTF setQuestion={setQuestion} question={question} />
+        )}
         <div className="w-[800px] flex justify-end mt-6">
-          <button className="flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3">
+          <button
+            className="flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
+            onClick={(e) => submit(e)}
+          >
             Submit
           </button>
         </div>
