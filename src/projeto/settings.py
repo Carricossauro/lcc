@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-zqwfxb#==4^rp83w0g&l4-gpto2cnuo4&n7&3@otu1ddz!n9^c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -96,8 +96,8 @@ DATABASES = {
         'NAME': 'ComputationalMind', # database name
         'USER': 'admin',
         'PASSWORD': 'Adm1nas-',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': os.environ.get("DB_HOST") or 'localhost',
+        'PORT': os.environ.get("DB_PORT") or '3306'
     }
 }
 
