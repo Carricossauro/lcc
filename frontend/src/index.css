@@ -4,18 +4,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500&display=swap");
 
 .titleFont {
-  font-family: "Mukta", sans-serif;
+    font-family: "Mukta", sans-serif;
 }
 
 body {
-  margin: 0;
-  font-family: "Mukta",
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: "Mukta", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.about-image {
+    background-image: url("assets/about.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
