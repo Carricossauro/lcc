@@ -15,7 +15,7 @@ class Author(models.Model):
     email = models.CharField(db_column='Email', max_length=75)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Author'
     
     def __str__(self):
@@ -32,7 +32,7 @@ class Content(models.Model):
     media = models.FileField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Content'
         unique_together = (('question', 'order'),)
 
@@ -50,7 +50,7 @@ class History(models.Model):
     answer = models.TextField(db_column='Answer')  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'History'
 
 
@@ -61,7 +61,7 @@ class Option(models.Model):
     correct = models.IntegerField(db_column='Correct')  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Option'
 
 
@@ -73,7 +73,7 @@ class Player(models.Model):
     email = models.CharField(db_column='Email', max_length=75)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Player'
 
 
@@ -88,7 +88,7 @@ class Question(models.Model):
     maxage = models.IntegerField(db_column='MaxAge')  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Question'
 
 

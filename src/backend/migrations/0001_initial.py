@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Author',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Content',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -172,7 +172,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'History',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -184,7 +184,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Option',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -198,7 +198,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Player',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -214,7 +214,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'Question',
-                'managed': False,
+                'managed': True,
             },
         ),
     ]
