@@ -32,8 +32,9 @@ export default function PlayerLogin({
     function verifyLogin(e) {
         e.preventDefault();
         let url = "";
-        if (isAuthor) url = "http://127.0.0.1:8000/api/authors/";
-        else url = "http://127.0.0.1:8000/api/players/";
+        if (isAuthor)
+            url = `http://${process.env.REACT_APP_API_URL}/api/authors`;
+        else url = `http://${process.env.REACT_APP_API_URL}/api/authors`;
         setError("");
         fetch(`${url}${username}`)
             .then((res) => {

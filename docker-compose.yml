@@ -36,7 +36,7 @@ services:
             context: ./frontend
             dockerfile: Dockerfile
             args:
-                - REACT_APP_API_URL=servidor_ip:50561
+                - REACT_APP_API_URL=localhost:50561
         ports:
             - 50560:80
         depends_on:
