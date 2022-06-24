@@ -21,7 +21,9 @@ class Option(serializers.ModelSerializer):
 class Content(serializers.ModelSerializer):
     class Meta:
         model = models.Content
-        fields = ['id','question','order','type','media']
+        fields = ['id','question','order','type','media', 'text']
+        extra_kwargs = {"media": {"required": False, "allow_null": True}}
+
 
 
 class Question(serializers.ModelSerializer):
@@ -30,6 +32,7 @@ class Question(serializers.ModelSerializer):
     class Meta:
         model = models.Question
         fields = ['id','author','title','type','score','dificulty','minage','maxage','options','contents']
+        
 
 
 

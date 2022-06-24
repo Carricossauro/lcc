@@ -98,19 +98,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Content',
-            fields=[
-                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
-                ('order', models.IntegerField(db_column='Order')),
-                ('type', models.CharField(db_column='Type', max_length=1)),
-                ('media', models.TextField(db_column='Media')),
-            ],
-            options={
-                'db_table': 'Content',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
             name='DjangoAdminLog',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -163,31 +150,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='History',
-            fields=[
-                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
-                ('date', models.DateTimeField(db_column='Date')),
-                ('correct', models.IntegerField(db_column='Correct')),
-                ('answer', models.TextField(db_column='Answer')),
-            ],
-            options={
-                'db_table': 'History',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Option',
-            fields=[
-                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
-                ('answer', models.TextField(db_column='Answer')),
-                ('correct', models.IntegerField(db_column='Correct')),
-            ],
-            options={
-                'db_table': 'Option',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
             name='Player',
             fields=[
                 ('id', models.CharField(db_column='Id', max_length=75, primary_key=True, serialize=False)),
@@ -211,9 +173,53 @@ class Migration(migrations.Migration):
                 ('dificulty', models.CharField(db_column='Dificulty', max_length=6)),
                 ('minage', models.IntegerField(db_column='MinAge')),
                 ('maxage', models.IntegerField(db_column='MaxAge')),
+                ('author', models.ForeignKey('Author', models.DO_NOTHING, db_column='Author'))
             ],
             options={
                 'db_table': 'Question',
+                'managed': True,
+            },
+        ),
+        migrations.CreateModel(
+            name='History',
+            fields=[
+                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
+                ('date', models.DateTimeField(db_column='Date')),
+                ('correct', models.IntegerField(db_column='Correct')),
+                ('answer', models.TextField(db_column='Answer')),
+                ('player', models.ForeignKey('Player', models.DO_NOTHING, db_column='Player')),
+                ('question', models.ForeignKey('Question', models.DO_NOTHING, db_column='Question'))
+            ],
+            options={
+                'db_table': 'History',
+                'managed': True,
+            },
+        ),
+        migrations.CreateModel(
+            name='Option',
+            fields=[
+                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
+                ('answer', models.TextField(db_column='Answer')),
+                ('correct', models.IntegerField(db_column='Correct')),
+                ('question', models.ForeignKey('Question', models.DO_NOTHING, db_column='Question'))
+            ],
+            options={
+                'db_table': 'Option',
+                'managed': True,
+            },
+        ),
+        migrations.CreateModel(
+            name='Content',
+            fields=[
+                ('id', models.AutoField(db_column='Id', primary_key=True, serialize=False)),
+                ('order', models.IntegerField(db_column='Order')),
+                ('type', models.CharField(db_column='Type', max_length=1)),
+                ('media', models.TextField(db_column='Media')),
+                ('question', models.ForeignKey('Question', models.DO_NOTHING, db_column='Question', blank=True)),
+                ('text', models.TextField(db_column='Text', default=""))
+            ],
+            options={
+                'db_table': 'Content',
                 'managed': True,
             },
         ),

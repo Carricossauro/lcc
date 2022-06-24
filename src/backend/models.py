@@ -29,7 +29,8 @@ class Content(models.Model):
     order = models.IntegerField(db_column='Order')  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=1)  # Field name made lowercase.
     #media = models.TextField(db_column='Media')  # Field name made lowercase.
-    media = models.FileField()
+    media = models.FileField(blank=True)
+    text = models.TextField(default="")
 
     class Meta:
         managed = True
