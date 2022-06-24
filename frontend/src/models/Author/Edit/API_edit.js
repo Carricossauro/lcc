@@ -16,7 +16,7 @@ export async function sendQuestion(question) {
 
     const response = await fetch(url, requestOptions);
 
-    if (response.status < 200 || response.status >= 300) return null;
+    if (!response.ok) return null;
     const data = await response.json();
     return data.id;
 }

@@ -82,29 +82,53 @@ export default function Edit() {
         // TODO - verify that all field are correctly filled in
         // TODO - errors (fetch)
 
-        const id = await sendQuestion(question);
-        if (id) {
-            // TODO - send contents and options
-            for (const option of question.options) {
-                let response = await sendOption(option, id);
-                if (!response) redirect("/Author/Main");
-                // TODO - remove question in case of error
-            }
-            for (var i = 0; i < question.content.length; i++) {
-                let response = await sendContentText(
-                    question.content[i],
-                    id,
-                    i
+        try {
+            const id = await sendQuestion(question);
+            if (id) {
+                // TODO - send contents and options
+                for (const option of question.options) {
+                    let response = await sendOption(option, id);
+                    if (!response)
+                        setError(
+                            "Unable to add question due to error in one of the options"
+                        );
+                    // TODO - remove question in case of error
+                }
+                for (var i = 0; i < question.content.length; i++) {
+                    let content = question.content[i];
+                    let response = null;
+                    switch (content.type) {
+                        case "T":
+                            response = await sendContentText(
+                                question.content[i],
+                                id,
+                                i
+                            );
+                            break;
+                    }
+                    if (!response)
+                        setError(
+                            "Unable to add question due to error in content"
+                        );
+                    // TODO - remove question in case of error
+                }
+            } else
+                setError(
+                    "Unable to add question due to error in its parameters"
                 );
-                if (!response) redirect("/Author/Main");
-                // TODO - remove question in case of error
-            }
+        } catch (e) {
+            setError("Unable to connect to the database");
         }
     }
 
     return (
         <>
             <form className="mt-28 flex items-center justify-center flex-col">
+                {error && (
+                    <div className="w-[750px] border text-red-700 mb-3 rounded-md bg-red-100 flex justify-center p-2">
+                        {error}
+                    </div>
+                )}
                 <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
                     <input
                         className="outline-0 ml-3 bg-inherit w-full"
