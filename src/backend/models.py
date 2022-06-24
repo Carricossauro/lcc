@@ -86,7 +86,6 @@ class Question(models.Model):
     score = models.IntegerField(db_column='Score')  # Field name made lowercase.
     dificulty = models.CharField(db_column='Dificulty', max_length=6)  # Field name made lowercase.
     minage = models.IntegerField(db_column='MinAge')  # Field name made lowercase.
-    maxage = models.IntegerField(db_column='MaxAge')  # Field name made lowercase.
 
     class Meta:
         managed = True

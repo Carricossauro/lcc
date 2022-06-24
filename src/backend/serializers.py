@@ -31,7 +31,7 @@ class Question(serializers.ModelSerializer):
     contents = Content(many=True, read_only=True)
     class Meta:
         model = models.Question
-        fields = ['id','author','title','type','score','dificulty','minage','maxage','options','contents']
+        fields = ['id','author','title','type','score','dificulty','minage','options','contents']
         
 
 

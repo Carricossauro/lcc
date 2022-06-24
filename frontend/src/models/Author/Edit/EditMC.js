@@ -7,7 +7,8 @@ export default function EditMC({ setQuestion, question }) {
         let newList = question.options;
 
         for (var i = 0; i < newList.length; i++)
-            if (i !== index) newList[i] = { ...newList[i], correct: 0 };
+            if (i !== index && value)
+                newList[i] = { ...newList[i], correct: 0 };
             else newList[i] = { answer: option, correct: value };
 
         setQuestion({ ...question, options: newList });

@@ -172,7 +172,6 @@ class Migration(migrations.Migration):
                 ('score', models.IntegerField(db_column='Score')),
                 ('dificulty', models.CharField(db_column='Dificulty', max_length=6)),
                 ('minage', models.IntegerField(db_column='MinAge')),
-                ('maxage', models.IntegerField(db_column='MaxAge')),
                 ('author', models.ForeignKey('Author', models.DO_NOTHING, db_column='Author'))
             ],
             options={

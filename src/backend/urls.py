@@ -16,7 +16,8 @@ urlpatterns = [
     path('history/',views.history),
     path('history/player/<str:player>',views.historyPlayer),
     path('history/question/<int:question>',views.historyQuestion),
-
+    path('option/', views.option),
+    path('content/', views.content),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

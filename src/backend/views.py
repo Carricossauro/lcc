@@ -136,7 +136,16 @@ def historyQuestion(request,question):
         r.pop('question')
     return Response(result)
 
+@api_view(http_method_names=['post'])
+def option(request):
+    serializer = serializers.Option(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=201)
 
-
-
-    
+@api_view(http_method_names=['post'])
+def content(request):
+    serializer = serializers.Content(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=201)
