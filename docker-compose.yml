@@ -9,7 +9,7 @@ services:
             - MYSQL_PASSWORD=Adm1nas-
             - MYSQL_USER=admin
             - MYSQL_DATABASE=ComputationalMind
-            - MYSQL_HOST=''
+            - MYSQL_HOST='db'
         ports:
             - 50566:3306
         volumes:
@@ -23,7 +23,6 @@ services:
         environment:
             - DB_HOST=db
             - DB_PORT=3306
-        command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - /code
         ports:
@@ -36,7 +35,7 @@ services:
             context: ./frontend
             dockerfile: Dockerfile
             args:
-                - REACT_APP_API_URL=localhost:50561
+                - REACT_APP_API_URL=https://computationalthinking4all.epl.di.uminho.pt:50561
         ports:
             - 50560:80
         depends_on:
