@@ -33,8 +33,8 @@ export default function PlayerLogin({
         e.preventDefault();
         let url = "";
         if (isAuthor)
-            url = `http://${process.env.REACT_APP_API_URL}/api/authors/`; //${process.env.REACT_APP_API_URL}
-        else url = `http://${process.env.REACT_APP_API_URL}/api/players/`;
+            url = `${process.env.REACT_APP_API_URL}/api/authors/`; //${process.env.REACT_APP_API_URL}
+        else url = `${process.env.REACT_APP_API_URL}/api/players/`;
         setError("");
         fetch(`${url}${username}`)
             .then((res) => {
