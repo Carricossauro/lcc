@@ -67,8 +67,9 @@ export default function PlayerLogin({
             };
             console.log(requestOptions["body"]);
             let url = "";
-            if (isAuthor) url = "http://127.0.0.1:8000/api/authors/";
-            else url = "http://127.0.0.1:8000/api/players/";
+            if (isAuthor)
+                url = `http://${process.env.REACT_APP_API_URL}/api/authors/`;
+            else url = `http://${process.env.REACT_APP_API_URL}/api/players/`;
 
             setError("");
             let isError = false;
