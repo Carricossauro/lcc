@@ -5,11 +5,12 @@ import Main from "./Main";
 import Edit from "./Edit/Edit";
 
 export default function Author({ setShowNavBar, size }) {
-  const { authorPath } = useParams();
-  switch (authorPath) {
-    case "Edit":
-      return <Edit size={size} />;
-    default:
-      return <Main size={size} />;
-  }
+    const { authorPath } = useParams();
+    console.log(useParams());
+    switch (authorPath) {
+        case "Edit":
+            return <Edit size={size} />;
+        default:
+            return <Main size={size} />;
+    }
 }
