@@ -1,4 +1,4 @@
-import { faPhotoFilm, faT, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function EditSA({ setQuestion, question }) {
