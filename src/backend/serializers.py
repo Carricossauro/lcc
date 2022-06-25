@@ -15,7 +15,10 @@ class User(serializers.ModelSerializer):
             instance.save()
             return instance
 
-
+class Login(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ["password", "type"]
  
 class Option(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +29,7 @@ class Option(serializers.ModelSerializer):
 class Content(serializers.ModelSerializer):
     class Meta:
         model = models.Content
-        fields = ['id','question','order','type',]
+        fields = ['id','question','order','type','text','media']
 
 
 class LoadQuestion(serializers.ModelSerializer):

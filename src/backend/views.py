@@ -130,7 +130,14 @@ def historyQuestion(request,question):
     result = serializer.data
     return Response(result)
 
-
-
-
     
+@api_view(http_method_names=['post'])
+def login(request):
+    data = request.data
+    user = get_object_or_404(models.User.objects.filter(username=data["username"], type=data["type"]))
+    if (user):
+        user = serializers.Login(instance=user)
+        user = user.data
+        if user['password'] == data["password"] and user["type"] == data["type"]:
+            return Response(status=201)
+    return Response(status=404)
