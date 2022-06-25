@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from backend import models
 from backend import serializers
 from datetime import datetime
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -14,44 +15,24 @@ def home(request):
 
 
 @api_view(http_method_names=['get','post'])
-def authors(request):
+def users(request):
     if request.method == 'GET':
-        authors = models.Author.objects.all()
-        serializer = serializers.Author(instance=authors,many=True)
+        users = models.User.objects.all()
+        serializer = serializers.User(instance=users,many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = serializers.Author(data=request.data)
+        serializer = serializers.User(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.validated_data, status=201)
 
 
 @api_view()
-def author(request,id):
-    author = get_object_or_404(models.Author.objects.filter(id=id))
-    serializer = serializers.Author(instance=author)
+def user(request,username):
+    user = get_object_or_404(models.User.objects.filter(username=username))
+    serializer = serializers.User(instance=user)
     return Response(serializer.data) 
-
-@api_view(http_method_names=['get','post'])
-def players(request):
-    if request.method == 'GET':
-        players = models.Player.objects.all()
-        serializer = serializers.Player(instance=players,many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = serializers.Player(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.validated_data, status=201)
-
-
-@api_view()
-def player(request,id):
-    player = get_object_or_404(models.Player.objects.filter(id=id))
-    serializer = serializers.Player(instance=player)
-    return Response(serializer.data)
 
 
 
@@ -60,43 +41,46 @@ def player(request,id):
 def questions(request):
     if request.method == 'GET':
         questions = models.Question.objects.all()
-        serializer = serializers.Question(instance=questions,many=True)
+        serializer = serializers.LoadQuestion(instance=questions,many=True)
         return Response(serializer.data)
+    
+    
     elif request.method == 'POST':
-        serializer = serializers.Question(data=request.data)
+        data = request.data
+        if 'author' in request.data:
+            author = models.User.objects.get(username=request.data['author'])
+            author = serializers.User(instance=author)
+            author = author.data
+            if author:
+                data.update({'author':author['id']})
+        serializer = serializers.SaveQuestion(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
+        
 
-
-def getOptions(question):
-    options = models.Option.objects.filter(question=question)
-    serializer = serializers.Option(instance=options,many=True)
-    return serializer.data
-
-def getContents(question):
-    contents = models.Content.objects.filter(question=question)
-    serializer = serializers.Content(instance=contents,many=True)
-    return serializer.data
 
 
 @api_view()
 def question(request,id):
     question = get_object_or_404(models.Question.objects.filter(id=id))
-    serializer = serializers.Question(instance=question)
+    serializer = serializers.LoadQuestion(instance=question)
     return Response(serializer.data)
+
+
+
 
 @api_view(http_method_names=['get','post'])
 def history(request):
     if request.method == 'GET':
         history = models.History.objects.all()
-        serializer = serializers.History(instance=history,many=True)
+        serializer = serializers.LoadHistory(instance=history,many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
         data = request.data
         if 'answer' in request.data and 'question' in request.data:
-            correct = models.Option.objects.get(question=request.data['question'],correct=1 )
+            correct = models.Option.objects.get(question=request.data['question'],correct=True )
             if correct:
                 correct = serializers.Option(instance=correct)
                 correct = correct.data
@@ -104,10 +88,18 @@ def history(request):
                     data.update({'correct':1})
                 else:
                     data.update({'correct':0})
+        if 'player' in request.data:
+            player = models.User.objects.get(username=request.data['player'])
+            player = serializers.User(instance=player)
+            player = player.data
+            if player:
+                data.update({'player':player['id']})
+
         if 'date' not in data:
             formatted_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             data.update({'date':str(formatted_date)})
-        serializer = serializers.History(data=data)
+        print(data)
+        serializer = serializers.SaveHistory(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
@@ -116,13 +108,17 @@ def history(request):
 
 @api_view()
 def historyPlayer(request,player):
-    if not models.Player.objects.filter(id=player):
+    player = models.User.objects.get(username=player)
+    if player:
+        player = serializers.User(instance=player)
+        player = player.data
+        player = player['id']
+    else:
         return Response(status=404)
     history = models.History.objects.filter(player=player)
-    serializer = serializers.History(instance=history,many=True)
+    serializer = serializers.LoadHistory(instance=history,many=True)
     result = serializer.data
-    for r in result:
-        r.pop('player')
+
     return Response(result)
 
 @api_view()
@@ -130,22 +126,11 @@ def historyQuestion(request,question):
     if not models.Question.objects.filter(id=question):
         return Response(status=404)
     history = models.History.objects.filter(question=question)
-    serializer = serializers.History(instance=history,many=True)
+    serializer = serializers.LoadHistory(instance=history,many=True)
     result = serializer.data
-    for r in result:
-        r.pop('question')
     return Response(result)
 
-@api_view(http_method_names=['post'])
-def option(request):
-    serializer = serializers.Option(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=201)
 
-@api_view(http_method_names=['post'])
-def content(request):
-    serializer = serializers.Content(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=201)
+
+
+    
