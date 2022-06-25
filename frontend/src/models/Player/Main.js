@@ -3,9 +3,31 @@ import { getQuestions } from "./API_main";
 
 export default function Main() {
     const [games, setGames] = useState([]);
+    const [filteredGames, setFilteredGames] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     const redirect = (page) => {
         window.location.href = page;
+    };
+
+    const changeSearchText = (e) => {
+        const text = e.target.value;
+        setSearchText(text);
+
+        const texts = text.split(" ");
+        let regs = [];
+        for (var t in texts) regs.push(new RegExp(`.*${texts[t]}.*`));
+
+        var newGames = [];
+        for (var game in games)
+            for (var i in regs)
+                if (
+                    regs[i].test(games[game].title) ||
+                    regs[i].test(games[game].author)
+                )
+                    newGames.push(games[game]);
+
+        setFilteredGames(newGames);
     };
 
     useEffect(() => {
@@ -13,6 +35,7 @@ export default function Main() {
             const data = await getQuestions();
 
             setGames(data);
+            setFilteredGames(data);
         }
         effect();
     }, []);
@@ -35,21 +58,11 @@ export default function Main() {
                                     type="text"
                                     className="block w-full py-1.5 pl-10 pr-4 leading-normal rounded-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 bg-gray-100  text-gray-400 aa-input"
                                     placeholder="Search"
+                                    value={searchText}
+                                    onChange={(e) => changeSearchText(e)}
                                 />
-                                <div className="absolute right-0 hidden h-auto px-2 py-1 mr-2 text-xs text-gray-400 border border-gray-300 rounded-2xl md:block">
-                                    +
-                                </div>
                             </div>
                         </div>
-                        {/* <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
-                          <a href="#" className="block relative">
-                            <img
-                              alt="profil"
-                              src="/images/person/1.jpg"
-                              className="mx-auto object-cover rounded-full h-10 w-10 "
-                            />
-                          </a>
-                        </div> */}
                     </div>
                 </div>
 
@@ -75,7 +88,7 @@ export default function Main() {
                             </tr>
                         </thead>
                         <tbody>
-                            {games.map((question, index) => {
+                            {filteredGames.map((question, index) => {
                                 return (
                                     <tr
                                         className={`border-gray-200 even:bg-gray-200 cursor-pointer`}
