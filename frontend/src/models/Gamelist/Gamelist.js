@@ -1,29 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { getQuestions } from "./API_main";
+import { getQuestions } from "./API_gamelist";
 
-const e = {
-    Title: "This is a title",
-    Author: "Alan Turing",
-    Difficulty: "Hard",
-    "Min-Age": 16,
-    Type: "SA",
-};
-
-const example = [e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e];
-
-export default function Main() {
-    let lightColor = true;
+export default function Gamelist({ author }) {
     const [games, setGames] = useState([]);
+    const [filteredGames, setFilteredGames] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     const redirect = (page) => {
         window.location.href = page;
+    };
+
+    const changeSearchText = (e) => {
+        const text = e.target.value;
+        setSearchText(text);
+
+        if (text) {
+            const texts = text.split(" ");
+            let regs = [];
+            for (var t in texts)
+                if (texts[t] !== "") regs.push(new RegExp(`.*${texts[t]}.*`));
+
+            var newGames = [];
+            for (var game in games) {
+                for (var i in regs) {
+                    if (
+                        regs[i].test(games[game].title) ||
+                        regs[i].test(games[game].author)
+                    ) {
+                        newGames.push(games[game]);
+                    }
+                }
+            }
+
+            setFilteredGames(newGames);
+        } else setFilteredGames(games);
     };
 
     useEffect(() => {
         async function effect() {
             const data = await getQuestions();
 
-            setGames(data);
+            if (author) {
+                let newData = [];
+                for (var game in data)
+                    if (data[game].author === author) newData.push(data[game]);
+                setGames(newData);
+                setFilteredGames(newData);
+            } else {
+                setGames(data);
+                setFilteredGames(data);
+            }
         }
         effect();
     }, []);
@@ -46,21 +72,11 @@ export default function Main() {
                                     type="text"
                                     className="block w-full py-1.5 pl-10 pr-4 leading-normal rounded-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 bg-gray-100  text-gray-400 aa-input"
                                     placeholder="Search"
+                                    value={searchText}
+                                    onChange={(e) => changeSearchText(e)}
                                 />
-                                <div className="absolute right-0 hidden h-auto px-2 py-1 mr-2 text-xs text-gray-400 border border-gray-300 rounded-2xl md:block">
-                                    +
-                                </div>
                             </div>
                         </div>
-                        {/* <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
-                          <a href="#" className="block relative">
-                            <img
-                              alt="profil"
-                              src="/images/person/1.jpg"
-                              className="mx-auto object-cover rounded-full h-10 w-10 "
-                            />
-                          </a>
-                        </div> */}
                     </div>
                 </div>
 
@@ -86,17 +102,18 @@ export default function Main() {
                             </tr>
                         </thead>
                         <tbody>
-                            {games.map((question, index) => {
+                            {filteredGames.map((question, index) => {
                                 return (
                                     <tr
                                         className={`border-gray-200 even:bg-gray-200 cursor-pointer`}
                                         id={index}
                                         key={index}
-                                        onClick={() =>
+                                        onClick={() => {
+                                            // TODO - verificar se é jogador ou autor
                                             redirect(
                                                 `/Player/Game/${question.id}`
-                                            )
-                                        }
+                                            );
+                                        }}
                                     >
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
                                             {question.title}

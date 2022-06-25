@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
-import LoginPopUp from "./models/LoginPopUp/LoginPopUp";
 import NavBar from "./models/NavBar/NavBar";
 import SignUp from "./models/SignUp/SignUp";
 import Login from "./models/Login/Login";
@@ -9,11 +9,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Player from "./models/Player/Player";
 import Author from "./models/Author/Author";
 import About from "./models/About/About";
+import Contact from "./models/Contact/Contact";
+import Landing from "./models/Landing/Landing";
 import { useCookies } from "react-cookie";
 
 const Index = () => {
     const [size, setSize] = useState(window.innerWidth);
-    const [loginPopUp, setLoginPopUp] = useState(false);
     const [showNavBar, setShowNavBar] = useState(true);
     const [isAuthor, setIsAuthor] = useState(false);
 
@@ -23,11 +24,6 @@ const Index = () => {
         setSize(window.innerWidth);
     };
 
-    const changePopUpState = () => {
-        setLoginPopUp((state) => {
-            return !state;
-        });
-    };
     useEffect(() => {
         window.addEventListener("resize", checkSize);
         return () => {
@@ -41,16 +37,29 @@ const Index = () => {
                 {showNavBar && (
                     <NavBar
                         size={size}
-                        setPopUp={changePopUpState}
                         setCookie={setCookie}
                         cookies={cookies}
                     />
                 )}
                 <Routes>
                     <Route
+                        path="/Player/Game/:gameid"
+                        element={
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={true}
+                            />
+                        }
+                    ></Route>
+                    <Route
                         path="/Player/:playerPath"
                         element={
-                            <Player setShowNavBar={setShowNavBar} size={size} />
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={false}
+                            />
                         }
                     ></Route>
                     <Route
@@ -85,17 +94,31 @@ const Index = () => {
                             />
                         }
                     ></Route>
+                    <Route
+                        path="/Player"
+                        element={
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={false}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="/Author"
+                        element={
+                            <Author setShowNavBar={setShowNavBar} size={size} />
+                        }
+                    ></Route>
                     <Route path="/About" element={<About />}></Route>
+                    <Route path="/Contact" element={<Contact />}></Route>
+                    <Route path="/" element={<Landing />}></Route>
                 </Routes>
             </Router>
         </div>
     );
 };
 
-ReactDOM.render(
-    <>
-        <Index />
-    </>,
-
-    document.getElementById("root")
-);
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Index />);
