@@ -105,3 +105,4 @@ websocket-client==1.2.1
 Werkzeug==2.0.3
 zipp==3.6.0
 djangorestframework-simplejwt==5.2.0
+PyJWT==1.7.1

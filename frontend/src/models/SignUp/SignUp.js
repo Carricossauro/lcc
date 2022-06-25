@@ -67,7 +67,7 @@ export default function PlayerLogin({
 
                 // TODO - deal with authentication
 
-                redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
+                redirect(`/${isAuthor ? "Author" : "Player"}/Login`);
             } catch (e) {
                 setError(e);
             }

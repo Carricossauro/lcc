@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
-// import bcrypt from "bcryptjs";
+import { cookie } from "react-cookie";
 
 import image from "../../assets/imagem_conhecimento.jpg";
 import { login } from "./API_login";
@@ -13,14 +13,12 @@ export default function PlayerLogin({
     setShowNavBar,
     setIsAuthor,
     isAuthor,
-    setCookie,
     cookies,
+    setCookie,
 }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
-    const [response, setResponse] = useState(undefined);
 
     useEffect(() => {
         setShowNavBar(false);
@@ -38,7 +36,8 @@ export default function PlayerLogin({
         try {
             const response = await login(username, password, isAuthor);
 
-            // TODO - deal with authentication
+            setCookie("access_token", response.access, { path: "/" });
+            setCookie("refresh_token", response.refresh, { path: "/" });
 
             redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
         } catch (e) {

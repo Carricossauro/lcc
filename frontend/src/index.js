@@ -11,14 +11,13 @@ import Author from "./models/Author/Author";
 import About from "./models/About/About";
 import Contact from "./models/Contact/Contact";
 import Landing from "./models/Landing/Landing";
-import { useCookies } from "react-cookie";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 const Index = () => {
     const [size, setSize] = useState(window.innerWidth);
     const [showNavBar, setShowNavBar] = useState(true);
     const [isAuthor, setIsAuthor] = useState(false);
-
-    const [cookies, setCookie] = useCookies(["user"]);
+    const [cookies, setCookie, removeCookie] = useCookies([]);
 
     const checkSize = () => {
         setSize(window.innerWidth);
@@ -34,13 +33,7 @@ const Index = () => {
     return (
         <div>
             <Router>
-                {showNavBar && (
-                    <NavBar
-                        size={size}
-                        setCookie={setCookie}
-                        cookies={cookies}
-                    />
-                )}
+                {showNavBar && <NavBar size={size} />}
                 <Routes>
                     <Route
                         path="/Player/Game/:gameid"
@@ -59,6 +52,8 @@ const Index = () => {
                                 setShowNavBar={setShowNavBar}
                                 size={size}
                                 game={false}
+                                cookies={cookies}
+                                setCookie={setCookie}
                             />
                         }
                     ></Route>
@@ -76,8 +71,8 @@ const Index = () => {
                                 size={size}
                                 setIsAuthor={setIsAuthor}
                                 isAuthor={isAuthor}
-                                setCookie={setCookie}
                                 cookies={cookies}
+                                setCookie={setCookie}
                             />
                         }
                     ></Route>
@@ -89,8 +84,6 @@ const Index = () => {
                                 size={size}
                                 setIsAuthor={setIsAuthor}
                                 isAuthor={isAuthor}
-                                setCookie={setCookie}
-                                cookies={cookies}
                             />
                         }
                     ></Route>
@@ -121,4 +114,10 @@ const Index = () => {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<Index />);
+root.render(
+    <>
+        <CookiesProvider>
+            <Index />
+        </CookiesProvider>
+    </>
+);
