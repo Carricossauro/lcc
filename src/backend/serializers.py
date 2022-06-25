@@ -1,4 +1,5 @@
 from numpy import insert
+from pyrsistent import field
 from rest_framework import serializers
 from backend import models
 
@@ -7,16 +8,9 @@ class User(serializers.ModelSerializer):
         model = models.User
         fields = ['id','username','name','password','birthday','email','type']
         extra_kwargs = {'password':{'write_only':True}}
-        def create(self,validated_data):
-            password = validated_data.pop('password',None)
-            instance = models.User.objects.create(**validated_data)
-            if password is not None:
-                instance.set_password(password)
-            instance.save()
-            return instance
 
 
- 
+
 class Option(serializers.ModelSerializer):
     class Meta:
         model = models.Option

@@ -6,78 +6,83 @@ from rest_framework.response import Response
 from backend import models
 from backend import serializers
 from datetime import datetime
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from backend import permissions
+
+from rest_framework.views import APIView
 
 # Create your views here.
 
-def home(request):
-    return HttpResponse('HOME')
 
-
-@api_view(http_method_names=['get','post'])
-def users(request):
-    if request.method == 'GET':
-        users = models.User.objects.all()
-        serializer = serializers.User(instance=users,many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
+class insertUsers(APIView):
+    def post(self, request):
         serializer = serializers.User(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.validated_data, status=201)
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
+        instance = serializer.validated_data
+        instance.pop('password')
+        return Response(instance, status=201)
 
 
-@api_view()
-def user(request,username):
-    user = get_object_or_404(models.User.objects.filter(username=username))
-    serializer = serializers.User(instance=user)
-    return Response(serializer.data) 
+class getUser(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, username):
+        user = get_object_or_404(models.User.objects.filter(username=username))
+        serializer = serializers.User(instance=user)
+        return Response(serializer.data)
 
 
 
-
-@api_view(http_method_names=['get','post'])
-def questions(request):
-    if request.method == 'GET':
+class getQuestions(APIView):
+    def get(self, request):
         questions = models.Question.objects.all()
         serializer = serializers.LoadQuestion(instance=questions,many=True)
+        self.check_object_permissions(request,serializer)
         return Response(serializer.data)
     
     
-    elif request.method == 'POST':
+class insertQuestion(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
         data = request.data
         if 'author' in request.data:
-            author = models.User.objects.get(username=request.data['author'])
+            author = get_object_or_404(models.User.objects.filter(username=data['author']))
             author = serializers.User(instance=author)
             author = author.data
-            if author:
-                data.update({'author':author['id']})
+            data.update({'author':author['id']})
         serializer = serializers.SaveQuestion(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
-        
 
 
 
-@api_view()
-def question(request,id):
-    question = get_object_or_404(models.Question.objects.filter(id=id))
-    serializer = serializers.LoadQuestion(instance=question)
-    return Response(serializer.data)
+class updateQuestion(APIView):
+    permission_classes = (permissions.QuestionIsOwner, IsAuthenticated)
+    def post(self, request, id):
+        question = get_object_or_404(models.Question.objects.filter(id=id))
+        serializer = serializers.LoadQuestion(instance=question)
+        self.check_object_permissions(request,serializer.data)
+        question.delete()
+        data = request.data
+        if 'author' in request.data:
+            author = get_object_or_404(models.User.objects.filter(username=data['author']))
+            author = serializers.User(instance=author)
+            author = author.data
+            data.update({'author':author['id']})
+        serializer = serializers.SaveQuestion(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=201)
 
 
 
-
-@api_view(http_method_names=['get','post'])
-def history(request):
-    if request.method == 'GET':
-        history = models.History.objects.all()
-        serializer = serializers.LoadHistory(instance=history,many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
+class insertHistory(APIView): 
+    permission_classes = (IsAuthenticated,permissions.IsPlayer) 
+    def post(self, request):
         data = request.data
         if 'answer' in request.data and 'question' in request.data:
             correct = models.Option.objects.get(question=request.data['question'],correct=True )
@@ -93,12 +98,13 @@ def history(request):
             player = serializers.User(instance=player)
             player = player.data
             if player:
+                self.check_object_permissions(request,data)
                 data.update({'player':player['id']})
 
         if 'date' not in data:
             formatted_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             data.update({'date':str(formatted_date)})
-        print(data)
+        
         serializer = serializers.SaveHistory(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -106,29 +112,36 @@ def history(request):
 
 
 
-@api_view()
-def historyPlayer(request,player):
-    player = models.User.objects.get(username=player)
-    if player:
-        player = serializers.User(instance=player)
-        player = player.data
-        player = player['id']
-    else:
-        return Response(status=404)
-    history = models.History.objects.filter(player=player)
-    serializer = serializers.LoadHistory(instance=history,many=True)
-    result = serializer.data
 
-    return Response(result)
+class historyPlayer(APIView):
+    permission_classes = (IsAuthenticated,) 
+    def get(self, request, player):
+        player = models.User.objects.get(username=player)
+        if player:
+            player = serializers.User(instance=player)
+            player = player.data
+            player = player['id']
+        else:
+            return Response(status=404)
+        history = models.History.objects.filter(player=player)
+        print(history)
+        serializer = serializers.LoadHistory(instance=history,many=True)
+        result = serializer.data
+        return Response(result)
 
-@api_view()
-def historyQuestion(request,question):
-    if not models.Question.objects.filter(id=question):
-        return Response(status=404)
-    history = models.History.objects.filter(question=question)
-    serializer = serializers.LoadHistory(instance=history,many=True)
-    result = serializer.data
-    return Response(result)
+
+class historyQuestion(APIView):
+    permission_classes = (IsAuthenticated,) 
+    def get(self, request, question):
+        if not models.Question.objects.filter(id=question):
+            return Response(status=404)
+        history = models.History.objects.filter(question=question)
+        serializer = serializers.LoadHistory(instance=history,many=True)
+        result = serializer.data
+        return Response(result)
+
+
+
 
 
 
