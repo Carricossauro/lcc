@@ -128,7 +128,7 @@ export default function PlayerLogin({
                             ></input>
                         </div>
                         {error != "" && (
-                            <div className="text-red-500">{error}</div>
+                            <div className="text-red-500 italic">{error}</div>
                         )}
                         <button
                             className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg"

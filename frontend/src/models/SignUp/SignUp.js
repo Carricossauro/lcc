@@ -28,8 +28,7 @@ export default function PlayerLogin({
     const [birthday, setBirthday] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
-
-    const [response, setResponse] = useState(undefined);
+    const [errorLocation, setErrorLocation] = useState(null);
 
     const redirect = (page) => {
         window.location.href = page;
@@ -43,10 +42,13 @@ export default function PlayerLogin({
         e.preventDefault();
 
         if (password != confirmPassword) {
+            setErrorLocation("password");
             setError("Passwords do not match.");
         } else if (!validEmail.test(email)) {
+            setErrorLocation("email");
             setError("Invalid email address :(");
         } else if (password === "") {
+            setErrorLocation("password");
             setError("Password  may not be blank.");
         } else {
             const user = {
@@ -58,9 +60,10 @@ export default function PlayerLogin({
                 type: isAuthor ? "A" : "P",
             };
             setError("");
+            setErrorLocation(null);
 
             try {
-                const response = await sendUser(user);
+                const response = await sendUser(user, setErrorLocation);
 
                 // TODO - deal with authentication
 
@@ -70,6 +73,8 @@ export default function PlayerLogin({
             }
         }
     }
+
+    console.log(errorLocation);
 
     useEffect(() => {
         setShowNavBar(false);
@@ -121,7 +126,13 @@ export default function PlayerLogin({
                         <div className="mb-8 text-3xl">
                             {isAuthor ? "Author" : "Player"} Sign Up
                         </div>
-                        <div className="flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl mb-3">
+                        <div
+                            className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl mb-3 ${
+                                errorLocation === "username"
+                                    ? "border-red-800"
+                                    : ""
+                            }`}
+                        >
                             <FontAwesomeIcon
                                 icon={faUser}
                                 className="text-2xl  text-neutral-500 ml-2.5"
@@ -136,7 +147,11 @@ export default function PlayerLogin({
                                 onChange={(e) => setUsername(e.target.value)}
                             ></input>
                         </div>
-                        <div className="flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl mb-3">
+                        <div
+                            className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl mb-3 ${
+                                errorLocation === "name" ? "border-red-800" : ""
+                            }`}
+                        >
                             <FontAwesomeIcon
                                 icon={faAddressCard}
                                 className="text-2xl  text-neutral-500 ml-2.5"
@@ -151,7 +166,13 @@ export default function PlayerLogin({
                                 onChange={(e) => setName(e.target.value)}
                             ></input>
                         </div>
-                        <div className="flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl mb-3">
+                        <div
+                            className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl mb-3 ${
+                                errorLocation === "email"
+                                    ? "border-red-800"
+                                    : ""
+                            }`}
+                        >
                             <FontAwesomeIcon
                                 icon={faEnvelope}
                                 className="text-2xl  text-neutral-500 ml-2.5"
@@ -166,7 +187,13 @@ export default function PlayerLogin({
                                 onChange={(e) => setEmail(e.target.value)}
                             ></input>
                         </div>
-                        <div className="flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl mb-3">
+                        <div
+                            className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl mb-3 ${
+                                errorLocation === "password"
+                                    ? "border-red-800"
+                                    : ""
+                            }`}
+                        >
                             <FontAwesomeIcon
                                 icon={faLock}
                                 className="text-2xl  text-neutral-500 ml-2.5"
@@ -182,12 +209,16 @@ export default function PlayerLogin({
                             ></input>
                         </div>
                         <div
-                            className={`flex items-center px-3 h-12 w-96 bg-stone-200  rounded-3xl ${
+                            className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl ${
                                 !isAuthor
                                     ? "mb-3"
                                     : error == ""
                                     ? "mb-5"
                                     : "mb-1"
+                            } ${
+                                errorLocation === "password"
+                                    ? "border-red-800"
+                                    : ""
                             }`}
                         >
                             <FontAwesomeIcon
@@ -208,8 +239,12 @@ export default function PlayerLogin({
                         </div>
                         {!isAuthor && (
                             <div
-                                className={`flex items-center px-3 h-12 w-96 bg-stone-200 rounded-3xl ${
+                                className={`flex items-center px-3 h-12 w-96 bg-stone-200 border rounded-3xl ${
                                     error == "" ? "mb-5" : "mb-1"
+                                } ${
+                                    errorLocation === "birthday"
+                                        ? "border-red-800"
+                                        : ""
                                 } text-neutral-500`}
                             >
                                 <FontAwesomeIcon
@@ -232,7 +267,7 @@ export default function PlayerLogin({
                             </div>
                         )}
                         {error != "" && (
-                            <div className="text-red-500">{error}</div>
+                            <div className="text-red-500 italic">{error}</div>
                         )}
                         <button
                             className="flex items-center justify-center h-12 w-96 rounded-3xl cursor-pointer bg-color1 text-lg hover:text-white duration-500"

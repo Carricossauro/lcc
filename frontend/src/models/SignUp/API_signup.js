@@ -2,7 +2,7 @@ const titleCase = (str) => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
 };
 
-export async function sendUser(user) {
+export async function sendUser(user, setErrorLocation) {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,13 +26,18 @@ export async function sendUser(user) {
     const checkList = ["username", "name", "email", "password", "birthday"];
     for (var check of checkList) {
         if (check in data) {
-            if (data[check][0] === "This field may not be blank.")
+            if (data[check][0] === "This field may not be blank.") {
+                setErrorLocation(check);
                 throw `${titleCase(check)} may not be blank.`;
+            }
             if (
                 data[check][0] ===
                 "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
-            )
+            ) {
+                setErrorLocation("birthday");
                 throw "Date is incorrect.";
+            }
+            setErrorLocation(check);
             throw data[check];
         }
     }

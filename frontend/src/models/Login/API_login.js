@@ -14,6 +14,8 @@ export async function login(username, password, isAuthor) {
     const response = await fetch(url, requestOptions);
 
     const data = await response.json();
-    if (response.ok) return data;
+
+    if (!response.ok) throw new Error();
+
     return data;
 }
