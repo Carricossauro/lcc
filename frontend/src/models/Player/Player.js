@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useParams } from "react-router-dom";
-import Main from "./Main";
+import Gamelist from "../Gamelist/Gamelist";
 import Game from "./Game/Game";
 
 export default function Player({ setShowNavBar, size, game }) {
@@ -17,7 +17,7 @@ export default function Player({ setShowNavBar, size, game }) {
         switch (playerPath) {
             case "Main":
                 setShowNavBar(true);
-                return <Main size={size} />;
+                return <Gamelist />;
             default:
                 redirect("/Player/Main");
                 break;

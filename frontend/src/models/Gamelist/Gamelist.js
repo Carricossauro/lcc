@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getQuestions } from "./API_main";
+import { getQuestions } from "./API_gamelist";
 
-export default function Main() {
+export default function Gamelist({ author }) {
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -14,28 +14,42 @@ export default function Main() {
         const text = e.target.value;
         setSearchText(text);
 
-        const texts = text.split(" ");
-        let regs = [];
-        for (var t in texts) regs.push(new RegExp(`.*${texts[t]}.*`));
+        if (text) {
+            const texts = text.split(" ");
+            let regs = [];
+            for (var t in texts)
+                if (texts[t] !== "") regs.push(new RegExp(`.*${texts[t]}.*`));
 
-        var newGames = [];
-        for (var game in games)
-            for (var i in regs)
-                if (
-                    regs[i].test(games[game].title) ||
-                    regs[i].test(games[game].author)
-                )
-                    newGames.push(games[game]);
+            var newGames = [];
+            for (var game in games) {
+                for (var i in regs) {
+                    if (
+                        regs[i].test(games[game].title) ||
+                        regs[i].test(games[game].author)
+                    ) {
+                        newGames.push(games[game]);
+                    }
+                }
+            }
 
-        setFilteredGames(newGames);
+            setFilteredGames(newGames);
+        } else setFilteredGames(games);
     };
 
     useEffect(() => {
         async function effect() {
             const data = await getQuestions();
 
-            setGames(data);
-            setFilteredGames(data);
+            if (author) {
+                let newData = [];
+                for (var game in data)
+                    if (data[game].author === author) newData.push(data[game]);
+                setGames(newData);
+                setFilteredGames(newData);
+            } else {
+                setGames(data);
+                setFilteredGames(data);
+            }
         }
         effect();
     }, []);
@@ -94,11 +108,12 @@ export default function Main() {
                                         className={`border-gray-200 even:bg-gray-200 cursor-pointer`}
                                         id={index}
                                         key={index}
-                                        onClick={() =>
+                                        onClick={() => {
+                                            // TODO - verificar se é jogador ou autor
                                             redirect(
                                                 `/Player/Game/${question.id}`
-                                            )
-                                        }
+                                            );
+                                        }}
                                     >
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
                                             {question.title}
