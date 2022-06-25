@@ -1,4 +1,5 @@
 
+from click import option
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
@@ -9,6 +10,7 @@ from datetime import datetime
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from backend import permissions
+import re
 
 from rest_framework.views import APIView
 
@@ -84,12 +86,20 @@ class insertHistory(APIView):
     permission_classes = (IsAuthenticated,permissions.IsPlayer) 
     def post(self, request):
         data = request.data
-        if 'answer' in request.data and 'question' in request.data:
-            correct = models.Option.objects.get(question=request.data['question'],correct=True )
-            if correct:
-                correct = serializers.Option(instance=correct)
-                correct = correct.data
-                if request.data['answer'] == correct['answer']:
+        if 'answer' in request.data and 'question' in request.data and 'question' in request.data:
+            option = models.Option.objects.get(question=request.data['question'],correct=True )
+            question = models.Question.objects.get(id=request.data['question'])
+            if option and question:
+                option = serializers.Option(instance=option)
+                question = serializers.LoadQuestion(instance=question)
+                option = option.data
+                question = question.data
+                answer = option['answer']
+                type = question['type']
+                
+                if type == 'SA' and bool(re.match(answer,request.data['answer'].strip())):
+                    data.update({'correct':1})
+                elif request.data['answer'] == answer:
                     data.update({'correct':1})
                 else:
                     data.update({'correct':0})
@@ -124,7 +134,6 @@ class historyPlayer(APIView):
         else:
             return Response(status=404)
         history = models.History.objects.filter(player=player)
-        print(history)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
         return Response(result)
@@ -142,15 +151,3 @@ class historyQuestion(APIView):
 
 
 
-
-    
-@api_view(http_method_names=['post'])
-def login(request):
-    data = request.data
-    user = get_object_or_404(models.User.objects.filter(username=data["username"], type=data["type"]))
-    if (user):
-        user = serializers.Login(instance=user)
-        user = user.data
-        if user['password'] == data["password"] and user["type"] == data["type"]:
-            return Response(status=201)
-    return Response(status=404)
