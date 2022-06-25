@@ -21,10 +21,6 @@ export default function Edit() {
     });
     const [error, setError] = useState(null);
 
-    const redirect = (page) => {
-        window.location.href = page;
-    };
-
     const changeContent = (value, index) => {
         let newList = question.content;
 

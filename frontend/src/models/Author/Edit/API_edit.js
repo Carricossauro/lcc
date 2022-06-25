@@ -36,7 +36,7 @@ export async function sendOption(option, id) {
 
     const response = await fetch(url, requestOptions);
 
-    if (response.status < 200 || response.status >= 300) return null;
+    if (!response.ok) return null;
     return await response.json();
 }
 
@@ -56,6 +56,6 @@ export async function sendContentText(content, id, index) {
 
     const response = await fetch(url, requestOptions);
 
-    if (response.status < 200 || response.status >= 300) return null;
+    if (!response.ok) return null;
     return await response.json();
 }
