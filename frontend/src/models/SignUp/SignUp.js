@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import image from "../../assets/imagem_conhecimento.jpg";
+import { sendUser } from "./API_signup";
 // import bcrypt from "bcryptjs";
 
 export default function PlayerLogin({
@@ -34,18 +35,12 @@ export default function PlayerLogin({
         window.location.href = page;
     };
 
-    const titleCase = (str) => {
-        return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-    };
-
     const validEmail = new RegExp(
         "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
     );
 
-    function submitForm(e) {
+    async function submitForm(e) {
         e.preventDefault();
-
-        const hashedPassword = password; //bcrypt.hashSync(password);
 
         if (password != confirmPassword) {
             setError("Passwords do not match.");
@@ -54,65 +49,25 @@ export default function PlayerLogin({
         } else if (password === "") {
             setError("Password  may not be blank.");
         } else {
-            const requestOptions = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: username,
-                    name: name,
-                    password: hashedPassword,
-                    email: email,
-                    birthday: birthday,
-                }),
+            const user = {
+                username: username,
+                name: name,
+                password: password,
+                email: email,
+                birthday: birthday,
+                type: isAuthor ? "A" : "P",
             };
-            console.log(requestOptions["body"]);
-            let url = "";
-            if (isAuthor) url = `${process.env.REACT_APP_API_URL}/api/authors/`;
-            else url = `${process.env.REACT_APP_API_URL}/api/players/`;
-
             setError("");
-            let isError = false;
-            fetch(url, requestOptions)
-                .then((res) => {
-                    if (res["status"] <= 199 || res["status"] >= 300) {
-                        isError = true;
-                    }
-                    return res.json();
-                })
-                .then((data) => {
-                    setResponse(data);
-                    if (isError) {
-                        const field = Object.keys(data)[0];
-                        if (field === "birthday") {
-                            setError("Birthday may not be blank.");
-                        } else if (field == "id") {
-                            if (
-                                data[field][0] ===
-                                "player with this id already exists."
-                            )
-                                setError(
-                                    "A player with this username already exists :´("
-                                );
-                            else if (
-                                data[field][0] ===
-                                "author with this id already exists."
-                            )
-                                setError(
-                                    "An author with this username already exists :´("
-                                );
-                            else setError(`Username may not be blank.`);
-                        } else {
-                            setError(`${titleCase(field)} may not be blank.`);
-                        }
-                    } else {
-                        // TODO - deal with authentication
-                        setCookie("username", username, { path: "/" });
-                        setCookie("password", hashedPassword, {
-                            path: "/",
-                        });
-                        redirect(isAuthor ? "/Author/Main" : "/Player/Main");
-                    }
-                });
+
+            try {
+                const response = await sendUser(user);
+
+                // TODO - deal with authentication
+
+                redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
+            } catch (e) {
+                setError(e);
+            }
         }
     }
 

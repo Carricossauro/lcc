@@ -48,9 +48,23 @@ const Index = () => {
                 )}
                 <Routes>
                     <Route
+                        path="/Player/Game/:gameid"
+                        element={
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={true}
+                            />
+                        }
+                    ></Route>
+                    <Route
                         path="/Player/:playerPath"
                         element={
-                            <Player setShowNavBar={setShowNavBar} size={size} />
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={false}
+                            />
                         }
                     ></Route>
                     <Route

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditMC from "./EditMC";
 import EditSA from "./EditSA";
 import EditTF from "./EditTF";
-import { sendContentText, sendOption, sendQuestion } from "./API_edit";
+import { sendQuestion } from "./API_edit";
 
 // TODO - add delete button on content and options
 
@@ -21,10 +21,10 @@ export default function Edit() {
     });
     const [error, setError] = useState(null);
 
-    const changeContent = (value, index) => {
+    const changeContentText = (value, index) => {
         let newList = question.content;
 
-        newList[index]["media"] = value;
+        newList[index]["text"] = value;
 
         return newList;
     };
@@ -33,7 +33,8 @@ export default function Edit() {
         e.preventDefault();
         let newList = question.content;
 
-        newList.push({ type: type, media: "" });
+        if (type == "T")
+            newList.push({ type: type, text: "", order: newList.length });
 
         setQuestion({ ...question, content: newList });
     };
@@ -46,6 +47,10 @@ export default function Edit() {
         if (type === "TF") newList = [{ answer: "True" }, { answer: "False" }];
 
         setQuestion({ ...question, type: type, options: newList });
+    };
+
+    const redirect = (page) => {
+        window.location.href = page;
     };
 
     const changeDifficulty = (e, diff) => {
@@ -75,45 +80,16 @@ export default function Edit() {
     async function submit(e) {
         e.preventDefault();
 
-        // TODO - verify that all field are correctly filled in
-        // TODO - errors (fetch)
-
         try {
-            const id = await sendQuestion(question);
-            if (id) {
-                // TODO - send contents and options
-                for (const option of question.options) {
-                    let response = await sendOption(option, id);
-                    if (!response)
-                        setError(
-                            "Unable to add question due to error in one of the options"
-                        );
-                    // TODO - remove question in case of error
-                }
-                for (var i = 0; i < question.content.length; i++) {
-                    let content = question.content[i];
-                    let response = null;
-                    switch (content.type) {
-                        case "T":
-                            response = await sendContentText(
-                                question.content[i],
-                                id,
-                                i
-                            );
-                            break;
-                    }
-                    if (!response)
-                        setError(
-                            "Unable to add question due to error in content"
-                        );
-                    // TODO - remove question in case of error
-                }
-            } else
+            const response = await sendQuestion(question);
+
+            if (response) redirect("/Author/Main");
+            else
                 setError(
-                    "Unable to add question due to error in its parameters"
+                    "Unable to add question. Check if every field is correctly filled in."
                 );
         } catch (e) {
-            setError("Unable to connect to the database");
+            setError("Unable to connect to database.");
         }
     }
 
@@ -202,12 +178,12 @@ export default function Edit() {
                                         type="text"
                                         id={`media${index}`}
                                         name="media"
-                                        value={question.content[index]["media"]}
+                                        value={question.content[index]["text"]}
                                         placeholder="Content"
                                         onChange={(e) =>
                                             setQuestion({
                                                 ...question,
-                                                content: changeContent(
+                                                content: changeContentText(
                                                     e.target.value,
                                                     index
                                                 ),

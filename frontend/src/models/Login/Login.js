@@ -6,6 +6,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 // import bcrypt from "bcryptjs";
 
 import image from "../../assets/imagem_conhecimento.jpg";
+import { login } from "./API_login";
 
 export default function PlayerLogin({
     size,
@@ -29,38 +30,20 @@ export default function PlayerLogin({
         window.location.href = page;
     };
 
-    function verifyLogin(e) {
+    async function verifyLogin(e) {
         e.preventDefault();
-        let url = "";
-        if (isAuthor)
-            url = `${process.env.REACT_APP_API_URL}/api/authors/`; //${process.env.REACT_APP_API_URL}
-        else url = `${process.env.REACT_APP_API_URL}/api/players/`;
+        const url = `${process.env.REACT_APP_API_URL}/api/users/`;
         setError("");
-        fetch(`${url}${username}`)
-            .then((res) => {
-                console.log(res);
-                if (res["status"] <= 199 || res["status"] >= 300) {
-                    setError("Invalid Username");
-                    return undefined;
-                }
-                return res.json();
-            })
-            .then((data) => {
-                console.log(data);
-                if (data != undefined) {
-                    setResponse(data);
-                    const validPassword = data["password"] === password; //bcrypt.compareSync(password, data["password"])
-                    if (validPassword) {
-                        // TODO
-                        const hashedPassword = data["password"];
-                        setCookie("username", username, { path: "/" });
-                        setCookie("password", hashedPassword, {
-                            path: "/",
-                        });
-                        redirect(isAuthor ? "/Author/Main" : "/Player/Main");
-                    } else setError("Invalid Password");
-                }
-            });
+
+        try {
+            const response = await login(username, password, isAuthor);
+
+            // TODO - deal with authentication
+
+            redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
+        } catch (e) {
+            setError("Invalid username or password.");
+        }
     }
 
     return (

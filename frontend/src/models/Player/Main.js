@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getQuestions } from "./API_main";
 
-const e = {
-    Title: "This is a title",
-    Author: "Alan Turing",
-    Difficulty: "Hard",
-    "Min-Age": 16,
-    Type: "SA",
-};
-
-const example = [e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e];
-
 export default function Main() {
-    let lightColor = true;
     const [games, setGames] = useState([]);
 
     const redirect = (page) => {
