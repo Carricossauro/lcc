@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
-import LoginPopUp from "./models/LoginPopUp/LoginPopUp";
 import NavBar from "./models/NavBar/NavBar";
 import SignUp from "./models/SignUp/SignUp";
 import Login from "./models/Login/Login";
@@ -13,7 +13,6 @@ import { useCookies } from "react-cookie";
 
 const Index = () => {
     const [size, setSize] = useState(window.innerWidth);
-    const [loginPopUp, setLoginPopUp] = useState(false);
     const [showNavBar, setShowNavBar] = useState(true);
     const [isAuthor, setIsAuthor] = useState(false);
 
@@ -23,11 +22,6 @@ const Index = () => {
         setSize(window.innerWidth);
     };
 
-    const changePopUpState = () => {
-        setLoginPopUp((state) => {
-            return !state;
-        });
-    };
     useEffect(() => {
         window.addEventListener("resize", checkSize);
         return () => {
@@ -41,7 +35,6 @@ const Index = () => {
                 {showNavBar && (
                     <NavBar
                         size={size}
-                        setPopUp={changePopUpState}
                         setCookie={setCookie}
                         cookies={cookies}
                     />
@@ -106,10 +99,14 @@ const Index = () => {
     );
 };
 
-ReactDOM.render(
-    <>
-        <Index />
-    </>,
+// ReactDOM.render(
+//     <>
+//         <Index />
+//     </>,
 
-    document.getElementById("root")
-);
+//     document.getElementById("root")
+// );
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Index />);
