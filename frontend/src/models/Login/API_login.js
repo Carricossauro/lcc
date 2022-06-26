@@ -11,11 +11,15 @@ export async function login(username, password, isAuthor) {
 
     const url = `${process.env.REACT_APP_API_URL}/api/login/`;
 
-    const response = await fetch(url, requestOptions);
+    try {
+        const response = await fetch(url, requestOptions);
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (!response.ok) throw new Error();
+        if (!response.ok) throw "wrong";
 
-    return data;
+        return data;
+    } catch (e) {
+        throw "backend";
+    }
 }

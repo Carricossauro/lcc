@@ -18,27 +18,32 @@ export async function sendUser(user, setErrorLocation) {
 
     const url = `${process.env.REACT_APP_API_URL}/api/users/`;
 
-    const response = await fetch(url, requestOptions);
+    try {
+        const response = await fetch(url, requestOptions);
 
-    const data = await response.json();
-    if (response.ok) return data;
+        const data = await response.json();
+        if (response.ok) return data;
 
-    const checkList = ["username", "name", "email", "password", "birthday"];
-    for (var check of checkList) {
-        if (check in data) {
-            if (data[check][0] === "This field may not be blank.") {
+        const checkList = ["username", "name", "email", "password", "birthday"];
+        for (var check of checkList) {
+            if (check in data) {
+                if (data[check][0] === "This field may not be blank.") {
+                    setErrorLocation(check);
+                    throw `${titleCase(check)} may not be blank.`;
+                }
+                if (
+                    data[check][0] ===
+                    "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+                ) {
+                    setErrorLocation("birthday");
+                    throw "Date is incorrect.";
+                }
                 setErrorLocation(check);
-                throw `${titleCase(check)} may not be blank.`;
+                throw data[check];
             }
-            if (
-                data[check][0] ===
-                "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
-            ) {
-                setErrorLocation("birthday");
-                throw "Date is incorrect.";
-            }
-            setErrorLocation(check);
-            throw data[check];
         }
+        throw "Unable to create account. Try again later";
+    } catch (e) {
+        throw "Unable to create account. Try again later";
     }
 }

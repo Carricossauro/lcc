@@ -56,7 +56,7 @@ export default function PlayerLogin({
                 name: name,
                 password: password,
                 email: email,
-                birthday: birthday,
+                birthday: isAuthor ? null : birthday,
                 type: isAuthor ? "A" : "P",
             };
             setError("");
@@ -65,16 +65,12 @@ export default function PlayerLogin({
             try {
                 const response = await sendUser(user, setErrorLocation);
 
-                // TODO - deal with authentication
-
-                redirect(`/${isAuthor ? "Author" : "Player"}/Login`);
+                redirect(`/Login`);
             } catch (e) {
                 setError(e);
             }
         }
     }
-
-    console.log(errorLocation);
 
     useEffect(() => {
         setShowNavBar(false);

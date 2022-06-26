@@ -44,11 +44,15 @@ export default function PlayerLogin({
 
             redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
         } catch (e) {
-            removeCookie("access_token");
-            removeCookie("refresh_token");
-            removeCookie("username");
-            removeCookie("is_author");
-            setError("Invalid username or password.");
+            if (e === "backend") {
+                setError("Unable to login right now. Try again later.");
+            } else {
+                removeCookie("access_token");
+                removeCookie("refresh_token");
+                removeCookie("username");
+                removeCookie("is_author");
+                setError("Invalid username or password.");
+            }
         }
     }
 
