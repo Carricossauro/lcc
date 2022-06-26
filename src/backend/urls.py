@@ -15,6 +15,7 @@ urlpatterns = [
     path('users/', views.insertUsers.as_view()),
     path('users/<str:username>', views.getUser.as_view()),
     path('questions/',views.getQuestions.as_view()),
+    path('questions/<int:id>',views.getQuestion.as_view()),
     path('questions/update/<int:id>',views.updateQuestion.as_view()),
     path('questions/insert/',views.insertQuestion.as_view()),
     path('history/',views.insertHistory.as_view()),

@@ -11,15 +11,22 @@ import About from "./models/About/About";
 import Contact from "./models/Contact/Contact";
 import Landing from "./models/Landing/Landing";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { verify_login } from "./API_index";
 
 const Index = () => {
     const [size, setSize] = useState(window.innerWidth);
     const [showNavBar, setShowNavBar] = useState(true);
     const [isAuthor, setIsAuthor] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies([]);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [name, setName] = useState("");
 
     const checkSize = () => {
         setSize(window.innerWidth);
+    };
+
+    const redirect = (page) => {
+        window.location.href = page;
     };
 
     useEffect(() => {
@@ -29,10 +36,30 @@ const Index = () => {
         };
     }, []);
 
+    useEffect(() => {
+        async function effect() {
+            const res = await verify_login(cookies, removeCookie, setLoggedIn);
+            if (res[0]) {
+                setIsAuthor(res[1].type === "A");
+                setName(res[1].name);
+            }
+        }
+        effect();
+    }, []);
+
     return (
         <div>
             <Router>
-                {showNavBar && <NavBar size={size} />}
+                {showNavBar && (
+                    <NavBar
+                        size={size}
+                        loggedIn={loggedIn}
+                        isAuthor={isAuthor}
+                        removeCookie={removeCookie}
+                        setLoggedIn={setLoggedIn}
+                        name={name}
+                    />
+                )}
                 <Routes>
                     <Route
                         path="/Player/Game/:gameid"
@@ -41,6 +68,9 @@ const Index = () => {
                                 setShowNavBar={setShowNavBar}
                                 size={size}
                                 game={true}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
                             />
                         }
                     ></Route>
@@ -60,7 +90,13 @@ const Index = () => {
                     <Route
                         path="/Author/:authorPath"
                         element={
-                            <Author setShowNavBar={setShowNavBar} size={size} />
+                            <Author
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
+                            />
                         }
                     ></Route>
                     <Route

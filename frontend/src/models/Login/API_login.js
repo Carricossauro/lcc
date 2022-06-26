@@ -1,3 +1,5 @@
+import { confirmType } from "../../API_index";
+
 export async function login(username, password, isAuthor) {
     const requestOptions = {
         method: "POST",
@@ -5,7 +7,6 @@ export async function login(username, password, isAuthor) {
         body: JSON.stringify({
             username: username,
             password: password,
-            type: isAuthor ? "A" : "P",
         }),
     };
 
@@ -18,8 +19,12 @@ export async function login(username, password, isAuthor) {
 
         if (!response.ok) throw "wrong";
 
+        const correctType = await confirmType(username, data.access, isAuthor);
+
+        if (!correctType) throw "type";
+
         return data;
     } catch (e) {
-        throw "backend";
+        throw e;
     }
 }

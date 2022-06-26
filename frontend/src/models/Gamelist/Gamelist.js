@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getQuestions } from "./API_gamelist";
+import { confirmType } from "../../API_index";
 
-export default function Gamelist({ author }) {
+export default function Gamelist({ author, cookies, removeCookies }) {
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -41,6 +42,17 @@ export default function Gamelist({ author }) {
             const data = await getQuestions();
 
             if (author) {
+                try {
+                    const token = cookies["access_token"];
+                    const username = cookies["username"];
+
+                    const response = await confirmType(username, token, true);
+
+                    if (!response) throw new Error();
+                } catch (e) {
+                    redirect("/");
+                }
+
                 let newData = [];
                 for (var game in data)
                     if (data[game].author === author) newData.push(data[game]);

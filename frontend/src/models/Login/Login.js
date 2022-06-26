@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
-import { cookie } from "react-cookie";
-
 import image from "../../assets/imagem_conhecimento.jpg";
 import { login } from "./API_login";
 
@@ -31,7 +29,6 @@ export default function PlayerLogin({
 
     async function verifyLogin(e) {
         e.preventDefault();
-        const url = `${process.env.REACT_APP_API_URL}/api/users/`;
         setError("");
 
         try {
@@ -40,19 +37,18 @@ export default function PlayerLogin({
             setCookie("access_token", response.access, { path: "/" });
             setCookie("refresh_token", response.refresh, { path: "/" });
             setCookie("username", username, { path: "/" });
-            setCookie("is_author", isAuthor, { path: "/" });
 
             redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
         } catch (e) {
-            if (e === "backend") {
-                setError("Unable to login right now. Try again later.");
-            } else {
-                removeCookie("access_token");
-                removeCookie("refresh_token");
-                removeCookie("username");
-                removeCookie("is_author");
-                setError("Invalid username or password.");
-            }
+            console.log(e);
+            removeCookie("access_token");
+            removeCookie("refresh_token");
+            removeCookie("username");
+            if (e === "type") {
+                setError(
+                    `This user is not ${isAuthor ? "an author" : "a player"}.`
+                );
+            } else setError("Invalid username or password.");
         }
     }
 

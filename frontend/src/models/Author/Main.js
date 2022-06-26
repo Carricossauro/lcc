@@ -12,7 +12,7 @@ export default function Main() {
             </button>
             <button
                 className="flex items-center justify-center h-14 w-56 rounded-3xl cursor-pointer bg-color1 text-2xl hover:text-white duration-500"
-                onClick={() => redirect("/Author/Edit")}
+                onClick={() => redirect("/Author/Create")}
             >
                 Create
             </button>

@@ -1,10 +1,16 @@
-export async function sendQuestion(question) {
+export async function sendQuestion(question, cookies) {
+    const token = cookies["access_token"];
+    const username = cookies["username"];
+
     const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
             title: question.title,
-            author: question.author,
+            author: username,
             type: question.type,
             score: question.score,
             dificulty: question.difficulty[0],
@@ -16,7 +22,7 @@ export async function sendQuestion(question) {
 
     console.log(requestOptions.body);
 
-    const url = `${process.env.REACT_APP_API_URL}/api/questions/`;
+    const url = `${process.env.REACT_APP_API_URL}/api/questions/insert/`;
 
     const response = await fetch(url, requestOptions);
 

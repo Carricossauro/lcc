@@ -13,15 +13,21 @@ export async function getGame(id) {
     return { response, data };
 }
 
-export async function sendAnswer(answer, question) {
+export async function sendAnswer(answer, question, cookies) {
+    const token = cookies["access_token"];
+    const username = cookies["username"];
+
     const url = `${process.env.REACT_APP_API_URL}/api/history/`;
 
     const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
             answer: answer,
-            player: "sauro",
+            player: username,
             question: question,
         }),
     };

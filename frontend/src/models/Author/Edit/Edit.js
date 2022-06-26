@@ -8,10 +8,9 @@ import { sendQuestion } from "./API_edit";
 
 // TODO - add delete button on content and options
 
-export default function Edit() {
+export default function Edit({ cookies }) {
     const [question, setQuestion] = useState({
         title: "",
-        author: "sauro",
         type: "",
         score: "0",
         difficulty: "",
@@ -81,7 +80,7 @@ export default function Edit() {
         e.preventDefault();
 
         try {
-            const response = await sendQuestion(question);
+            const response = await sendQuestion(question, cookies);
 
             if (response) redirect("/Author/Main");
             else

@@ -6,7 +6,7 @@ import GameSA from "./GameSA";
 
 import { getGame, sendAnswer } from "./API_game";
 
-export default function Game({ id }) {
+export default function Game({ id, cookies }) {
     const [question, setQuestion] = useState({
         id: -1,
         title: "Title",
@@ -37,7 +37,7 @@ export default function Game({ id }) {
     };
 
     async function submitAnswer() {
-        const response = await sendAnswer(answer, question.id);
+        const response = await sendAnswer(answer, question.id, cookies);
 
         if (response.correct) redirect("/Player/Correct");
         else redirect("/Player/Incorrect");
@@ -50,7 +50,6 @@ export default function Game({ id }) {
             if (response.ok) setQuestion(data);
             else redirect("/Player/Main/");
         }
-
         effect();
     }, []);
 

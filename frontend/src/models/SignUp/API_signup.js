@@ -42,8 +42,8 @@ export async function sendUser(user, setErrorLocation) {
                 throw data[check];
             }
         }
-        throw "Unable to create account. Try again later";
+        throw "Unable to create account. Try again later.";
     } catch (e) {
-        throw "Unable to create account. Try again later";
+        throw "Unable to create account. Try again later.";
     }
 }

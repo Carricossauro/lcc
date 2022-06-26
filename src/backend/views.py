@@ -45,6 +45,11 @@ class getQuestions(APIView):
         self.check_object_permissions(request,serializer)
         return Response(serializer.data)
     
+class getQuestion(APIView):
+    def get(self, request, id):
+        question = get_object_or_404(models.Question.objects.filter(id=id))
+        serializer = serializers.LoadQuestion(instance=question)
+        return Response(serializer.data)
     
 class insertQuestion(APIView):
     permission_classes = (IsAuthenticated,)
