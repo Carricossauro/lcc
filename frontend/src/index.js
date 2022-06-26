@@ -96,6 +96,36 @@ const Index = () => {
                                 cookies={cookies}
                                 setCookie={setCookie}
                                 removeCookie={removeCookie}
+                                edit={false}
+                                game={false}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="/Author/Edit/:authorPath"
+                        element={
+                            <Author
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
+                                edit={true}
+                                game={false}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="/Author/Game/:authorPath"
+                        element={
+                            <Author
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
+                                game={true}
+                                edit={false}
                             />
                         }
                     ></Route>

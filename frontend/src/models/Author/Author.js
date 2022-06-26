@@ -4,12 +4,15 @@ import Gamelist from "../Gamelist/Gamelist";
 import Main from "./Main";
 import Edit from "./Edit/Edit";
 import { confirmType } from "../../API_index";
+import Game from "./Game/Game";
 
 export default function Author({
     setShowNavBar,
     size,
     cookies,
     removeCookies,
+    game,
+    edit,
 }) {
     const redirect = (page) => {
         window.location.href = page;
@@ -37,23 +40,28 @@ export default function Author({
         effect();
     }, []);
 
-    switch (authorPath) {
-        case "Explore":
-            return <Gamelist />;
-        case "Mygames":
-            return (
-                <Gamelist
-                    author={username}
-                    cookies={cookies}
-                    removeCookies={removeCookies}
-                />
-            );
-        case "Create":
-            return <Edit size={size} cookies={cookies} />;
-        case "Main":
-            return <Main size={size} />;
-        default:
-            redirect("/Author/Main");
-            break;
-    }
+    if (edit) {
+        return <Edit size={size} cookies={cookies} id={authorPath} />;
+    } else if (game) {
+        return <Game id={authorPath} cookies={cookies} />;
+    } else
+        switch (authorPath) {
+            case "Explore":
+                return <Gamelist />;
+            case "Mygames":
+                return (
+                    <Gamelist
+                        author={username}
+                        cookies={cookies}
+                        removeCookies={removeCookies}
+                    />
+                );
+            case "Create":
+                return <Edit size={size} cookies={cookies} />;
+            case "Main":
+                return <Main size={size} />;
+            default:
+                redirect("/Author/Main");
+                break;
+        }
 }

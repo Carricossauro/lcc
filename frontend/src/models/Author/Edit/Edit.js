@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faPhotoFilm, faT, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditMC from "./EditMC";
 import EditSA from "./EditSA";
 import EditTF from "./EditTF";
-import { sendQuestion } from "./API_edit";
+import { getQuestion, sendQuestion } from "./API_edit";
 
 // TODO - add delete button on content and options
 
-export default function Edit({ cookies }) {
+export default function Edit({ cookies, id }) {
     const [question, setQuestion] = useState({
         title: "",
         type: "",
@@ -16,12 +16,12 @@ export default function Edit({ cookies }) {
         difficulty: "",
         minage: 10,
         options: [],
-        content: [],
+        contents: [],
     });
     const [error, setError] = useState(null);
 
     const changeContentText = (value, index) => {
-        let newList = question.content;
+        let newList = question.contents;
 
         newList[index]["text"] = value;
 
@@ -30,12 +30,12 @@ export default function Edit({ cookies }) {
 
     const newContent = (type, e) => {
         e.preventDefault();
-        let newList = question.content;
+        let newList = question.contents;
 
         if (type == "T")
             newList.push({ type: type, text: "", order: newList.length });
 
-        setQuestion({ ...question, content: newList });
+        setQuestion({ ...question, contents: newList });
     };
 
     const changeType = (e, type) => {
@@ -91,6 +91,21 @@ export default function Edit({ cookies }) {
             setError("Unable to connect to database.");
         }
     }
+
+    useEffect(() => {
+        async function effect() {
+            if (id) {
+                try {
+                    const data = await getQuestion(id, cookies);
+
+                    setQuestion(data);
+                } catch (e) {
+                    redirect("/");
+                }
+            }
+        }
+        effect();
+    }, []);
 
     return (
         <>
@@ -164,7 +179,7 @@ export default function Edit({ cookies }) {
                 </div>
 
                 <div className="flex text-3xl py-2">Content</div>
-                {question.content.map((media, index) => {
+                {question.contents.map((media, index) => {
                     switch (media["type"]) {
                         case "T":
                             return (
@@ -177,12 +192,12 @@ export default function Edit({ cookies }) {
                                         type="text"
                                         id={`media${index}`}
                                         name="media"
-                                        value={question.content[index]["text"]}
+                                        value={question.contents[index]["text"]}
                                         placeholder="Content"
                                         onChange={(e) =>
                                             setQuestion({
                                                 ...question,
-                                                content: changeContentText(
+                                                contents: changeContentText(
                                                     e.target.value,
                                                     index
                                                 ),

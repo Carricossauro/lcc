@@ -1,7 +1,12 @@
-export async function getQuestions() {
+export async function getQuestions(cookies) {
+    const token = cookies["access_token"];
+
     const requestOptions = {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
     };
 
     const url = `${process.env.REACT_APP_API_URL}/api/questions/`;

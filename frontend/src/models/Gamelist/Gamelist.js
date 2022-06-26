@@ -39,7 +39,7 @@ export default function Gamelist({ author, cookies, removeCookies }) {
 
     useEffect(() => {
         async function effect() {
-            const data = await getQuestions();
+            const data = await getQuestions(cookies);
 
             if (author) {
                 try {
@@ -121,9 +121,10 @@ export default function Gamelist({ author, cookies, removeCookies }) {
                                         id={index}
                                         key={index}
                                         onClick={() => {
-                                            // TODO - verificar se é jogador ou autor
                                             redirect(
-                                                `/Player/Game/${question.id}`
+                                                `/${
+                                                    author ? "Author" : "Player"
+                                                }/Game/${question.id}`
                                             );
                                         }}
                                     >
