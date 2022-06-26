@@ -1,13 +1,9 @@
 
-from click import option
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from rest_framework.decorators import api_view
+from django.shortcuts import  get_object_or_404
 from rest_framework.response import Response
 from backend import models
 from backend import serializers
 from datetime import datetime
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from backend import permissions
 import re
@@ -46,17 +42,33 @@ class profile(APIView):
 
 
 class getQuestions(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         questions = models.Question.objects.all()
-        serializer = serializers.LoadQuestion(instance=questions,many=True)
+        if request.user.type == 'A':
+            serializer = serializers.LoadQuestionForAuthor(instance=questions,many=True)
+        else:
+            serializer = serializers.LoadQuestionForPlayer(instance=questions,many=True)
+
         return Response(serializer.data,status=201)
     
 class getQuestion(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request, id):
         question = get_object_or_404(models.Question.objects.filter(id=id))
-        serializer = serializers.LoadQuestion(instance=question)
-        return Response(serializer.data)
+        if request.user.type == 'A':
+            serializer = serializers.LoadQuestionForAuthor(instance=question)
+        else:
+            serializer = serializers.LoadQuestionForPlayer(instance=question)
+        return Response(serializer.data,status=201)
+
+class getQuestionsAuthor(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        questions = models.Question.objects.filter(author=request.user.id)
+        serializer = serializers.LoadQuestionForAuthor(instance=questions,many=True)
+        return Response(serializer.data,status=201)
+
     
 class insertQuestion(APIView):
     permission_classes = (IsAuthenticated,permissions.IsAuthor,)
@@ -114,28 +126,22 @@ class insertHistory(APIView):
 
 
 
-class historyPlayer(APIView):
-    permission_classes = (IsAuthenticated,) 
-    def get(self, request, player):
-        player = models.User.objects.get(username=player)
-        if player:
-            player = serializers.User(instance=player)
-            player = player.data
-            player = player['id']
-        else:
-            return Response(status=404)
-        history = models.History.objects.filter(player=player)
+class historyUser(APIView):
+    permission_classes = (IsAuthenticated,permissions.IsPlayer) 
+    def get(self, request):
+        self.check_object_permissions(request,None)
+        history = models.History.objects.filter(player=request.user.id)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
         return Response(result, status=201)
 
 
 class historyQuestion(APIView):
-    permission_classes = (IsAuthenticated,) 
-    def get(self, request, question):
-        if not models.Question.objects.filter(id=question):
-            return Response(status=404)
-        history = models.History.objects.filter(question=question)
+    permission_classes = (IsAuthenticated,permissions.IsOwner,) 
+    def get(self, request, id):
+        question = get_object_or_404(models.Question.objects.filter(id=id))
+        self.check_object_permissions(request,question)
+        history = models.History.objects.filter(question=id)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
         return Response(result, status=201)

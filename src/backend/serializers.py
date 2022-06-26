@@ -1,7 +1,3 @@
-from pyexpat import model
-from secrets import choice
-from numpy import insert
-from pyrsistent import field
 from rest_framework import serializers
 from backend import models
 
@@ -13,18 +9,19 @@ class User(serializers.ModelSerializer):
 
 
 
-class SaveOption(serializers.ModelSerializer):
+class OptionForAuthor(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     class Meta:
         model = models.Option
         fields = ['id','answer','question','correct']
+        
 
-class LoadOption(serializers.ModelSerializer):
+class OptionForPlayer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     class Meta:
         model = models.Option
-        fields = ['id','answer','question']
-
+        fields = ['id','answer','question',]
+        
 
 class Content(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
@@ -33,9 +30,17 @@ class Content(serializers.ModelSerializer):
         fields = ['id','question','order','type','text','media']
 
 
-class LoadQuestion(serializers.ModelSerializer):
+class LoadQuestionForAuthor(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only= True)
-    options = LoadOption(many=True, read_only=True)
+    options = OptionForAuthor(many=True, read_only=True)
+    contents = Content(many=True, read_only=True)
+    class Meta:
+        model = models.Question
+        fields = ['id','author','title','type','score','dificulty','minage','options','contents',]
+
+class LoadQuestionForPlayer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only= True)
+    options = OptionForPlayer(many=True, read_only=True)
     contents = Content(many=True, read_only=True)
     class Meta:
         model = models.Question
@@ -43,7 +48,7 @@ class LoadQuestion(serializers.ModelSerializer):
 
 
 class SaveQuestion(serializers.ModelSerializer):
-    options = SaveOption(many=True)
+    options = OptionForAuthor(many=True)
     contents = Content(many=True)
     class Meta:
         model = models.Question
