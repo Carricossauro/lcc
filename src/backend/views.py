@@ -34,16 +34,23 @@ class getUser(APIView):
     def get(self, request, username):
         user = get_object_or_404(models.User.objects.filter(username=username))
         serializer = serializers.User(instance=user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=201)
+
+class profile(APIView):
+    permission_classes = (IsAuthenticated, )
+    def get(self,request):
+        user = get_object_or_404(models.User.objects.filter(username=request.user.username))
+        serializer = serializers.User(instance=user)
+        return Response(serializer.data, status=201)
 
 
 
 class getQuestions(APIView):
+    permission_classes = (IsAuthenticated, )
     def get(self, request):
         questions = models.Question.objects.all()
         serializer = serializers.LoadQuestion(instance=questions,many=True)
-        self.check_object_permissions(request,serializer)
-        return Response(serializer.data)
+        return Response(serializer.data,status=201)
     
 class getQuestion(APIView):
     def get(self, request, id):
@@ -52,14 +59,11 @@ class getQuestion(APIView):
         return Response(serializer.data)
     
 class insertQuestion(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,permissions.IsAuthor,)
     def post(self, request):
         data = request.data
-        if 'author' in request.data:
-            author = get_object_or_404(models.User.objects.filter(username=data['author']))
-            author = serializers.User(instance=author)
-            author = author.data
-            data.update({'author':author['id']})
+        self.check_object_permissions(request,None)
+        data.update({'author':request.user.id})
         serializer = serializers.SaveQuestion(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -68,19 +72,13 @@ class insertQuestion(APIView):
 
 
 class updateQuestion(APIView):
-    permission_classes = (permissions.QuestionIsOwner, IsAuthenticated)
-    def post(self, request, id):
+    permission_classes = (IsAuthenticated, permissions.IsOwner,)
+    def put(self, request, id):
         question = get_object_or_404(models.Question.objects.filter(id=id))
-        serializer = serializers.LoadQuestion(instance=question)
-        self.check_object_permissions(request,serializer.data)
-        question.delete()
+        self.check_object_permissions(request,question)
         data = request.data
-        if 'author' in request.data:
-            author = get_object_or_404(models.User.objects.filter(username=data['author']))
-            author = serializers.User(instance=author)
-            author = author.data
-            data.update({'author':author['id']})
-        serializer = serializers.SaveQuestion(data=data)
+        data.update({'author':request.user.id})
+        serializer = serializers.SaveQuestion(question,data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
@@ -90,36 +88,24 @@ class updateQuestion(APIView):
 class insertHistory(APIView): 
     permission_classes = (IsAuthenticated,permissions.IsPlayer) 
     def post(self, request):
+        self.check_object_permissions(request,None)
         data = request.data
-        if 'answer' in request.data and 'question' in request.data and 'question' in request.data:
-            option = models.Option.objects.get(question=request.data['question'],correct=True )
-            question = models.Question.objects.get(id=request.data['question'])
-            if option and question:
-                option = serializers.Option(instance=option)
-                question = serializers.LoadQuestion(instance=question)
-                option = option.data
-                question = question.data
-                answer = option['answer']
-                type = question['type']
-                
-                if type == 'SA' and bool(re.match(answer,request.data['answer'].strip())):
-                    data.update({'correct':1})
-                elif request.data['answer'] == answer:
-                    data.update({'correct':1})
-                else:
-                    data.update({'correct':0})
-        if 'player' in request.data:
-            player = models.User.objects.get(username=request.data['player'])
-            player = serializers.User(instance=player)
-            player = player.data
-            if player:
-                self.check_object_permissions(request,data)
-                data.update({'player':player['id']})
+        data.update({'correct':0})
+        data.update({'player':request.user.id})
+        formatted_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        data.update({'date':str(formatted_date)})
 
-        if 'date' not in data:
-            formatted_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            data.update({'date':str(formatted_date)})
-        
+        if 'answer' in request.data and 'question' in request.data:
+            option = get_object_or_404(models.Option.objects.filter(question=request.data['question'],correct=True))
+            question = get_object_or_404(models.Question.objects.filter(id=request.data['question']))
+            answer = option.answer
+            type = question.type
+            
+            if type == 'SA' and bool(re.match(answer,request.data['answer'].strip())):
+                data.update({'correct':1})
+            elif request.data['answer'] == answer:
+                data.update({'correct':1})
+         
         serializer = serializers.SaveHistory(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -141,7 +127,7 @@ class historyPlayer(APIView):
         history = models.History.objects.filter(player=player)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
-        return Response(result)
+        return Response(result, status=201)
 
 
 class historyQuestion(APIView):
@@ -152,7 +138,7 @@ class historyQuestion(APIView):
         history = models.History.objects.filter(question=question)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
-        return Response(result)
+        return Response(result, status=201)
 
 
 

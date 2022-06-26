@@ -32,6 +32,7 @@ class Question(models.Model):
     dificulty = models.CharField(max_length=20,choices=DIFICULTY)  # Field name made lowercase.
     minage = models.IntegerField()  # Field name made lowercase.
 
+
     class Meta:
         managed = True
         
