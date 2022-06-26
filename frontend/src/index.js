@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import NavBar from "./models/NavBar/NavBar";
@@ -54,6 +53,7 @@ const Index = () => {
                                 game={false}
                                 cookies={cookies}
                                 setCookie={setCookie}
+                                removeCookie={removeCookie}
                             />
                         }
                     ></Route>
@@ -73,6 +73,7 @@ const Index = () => {
                                 isAuthor={isAuthor}
                                 cookies={cookies}
                                 setCookie={setCookie}
+                                removeCookie={removeCookie}
                             />
                         }
                     ></Route>

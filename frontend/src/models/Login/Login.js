@@ -15,6 +15,7 @@ export default function PlayerLogin({
     isAuthor,
     cookies,
     setCookie,
+    removeCookie,
 }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -38,9 +39,15 @@ export default function PlayerLogin({
 
             setCookie("access_token", response.access, { path: "/" });
             setCookie("refresh_token", response.refresh, { path: "/" });
+            setCookie("username", username, { path: "/" });
+            setCookie("is_author", isAuthor, { path: "/" });
 
             redirect(`/${isAuthor ? "Author" : "Player"}/Main`);
         } catch (e) {
+            removeCookie("access_token");
+            removeCookie("refresh_token");
+            removeCookie("username");
+            removeCookie("is_author");
             setError("Invalid username or password.");
         }
     }
