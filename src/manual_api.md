@@ -284,9 +284,9 @@ errado - 401
 
 url: questions/update/<int:id>
 
-tipo: PUT
+tipo: POST
 
-função: aleterar uma questão
+função: alterar uma questão
 
 requisitos: Autenticação, Ser Proprietario
 
@@ -410,6 +410,23 @@ nota: 'options' e 'contents' são uma listas e o 'media' é opcional
 
 ---------------------------------------------------------
 
+url: questions/delete/<int:id>
+
+tipo: POST
+
+função: apagar uma questão
+
+requisitos: Autenticação, Ser o Autor
+
+
+correto - 201
+
+errado - 401 ou 403
+
+nota: 'options' e 'contents' são uma listas e o 'media' é opcional
+
+---------------------------------------------------------
+
 url: history/
 
 tipo: POST
@@ -451,7 +468,7 @@ tipo: GET
 
 função: obter o historico de respostas do utilizador autenticado
 
-requisitos: Autenticação
+requisitos: Autenticação e ser do tipo Player
 
 resposta:
 
@@ -544,7 +561,7 @@ errado - 401
 ---------------------------------------------------------
 
 
-url: login/refresh/'
+url: login/refresh/
 
 tipo: POST
 

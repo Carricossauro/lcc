@@ -126,7 +126,7 @@ class deleteQuestion(APIView):
         
         question.delete()
         
-        return Response(status=201)
+        return Response(status=200)
 
 class insertHistory(APIView): 
     permission_classes = (IsAuthenticated,permissions.IsPlayer) 
