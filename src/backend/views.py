@@ -96,7 +96,7 @@ class insertQuestion(APIView):
 
 class updateQuestion(APIView):
     permission_classes = (IsAuthenticated, permissions.IsOwner,)
-    def put(self, request, id):
+    def post(self, request, id):
         question = get_object_or_404(models.Question.objects.filter(id=id))
         self.check_object_permissions(request,question)
         data = request.data
@@ -106,7 +106,27 @@ class updateQuestion(APIView):
         serializer.save()
         return Response(serializer.data, status=201)
 
-
+class deleteQuestion(APIView):
+    permission_classes = (IsAuthenticated, permissions.IsOwner,)
+    def post(self, request, id):
+        question = get_object_or_404(models.Question.objects.filter(id=id))
+        self.check_object_permissions(request,question)
+        contents = models.Content.objects.filter(question=id)
+        options = models.Option.objects.filter(question=id)
+        histories = models.History.objects.filter(question=id)
+        
+        for content in contents:
+            content.delete()
+        
+        for option in options:
+            option.delete()
+        
+        for history in histories:
+            history.delete()
+        
+        question.delete()
+        
+        return Response(status=201)
 
 class insertHistory(APIView): 
     permission_classes = (IsAuthenticated,permissions.IsPlayer) 
