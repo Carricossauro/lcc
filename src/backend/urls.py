@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('profile/', views.profile.as_view()),
+    path('profile/password/', views.changePassword.as_view()),
     path('users/', views.insertUsers.as_view()),
     path('users/<str:username>', views.getUser.as_view()),
     path('questions/',views.getQuestions.as_view()),

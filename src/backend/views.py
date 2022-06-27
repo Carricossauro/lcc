@@ -12,6 +12,17 @@ from rest_framework.views import APIView
 
 # Create your views here.
 
+class changePassword(APIView):
+    permission_classes = (IsAuthenticated,permissions.IsCurrentPassword )
+    def post(self, request):
+        self.check_object_permissions(request,None)
+        new = request.data.get('new')
+        if not new:
+            new = request.user.username
+        request.user.set_password(new)
+        request.user.save()
+        return Response(status=200)
+
 
 class insertUsers(APIView):
     def post(self, request):
@@ -30,14 +41,14 @@ class getUser(APIView):
     def get(self, request, username):
         user = get_object_or_404(models.User.objects.filter(username=username))
         serializer = serializers.User(instance=user)
-        return Response(serializer.data, status=201)
+        return Response(serializer.data, status=200)
 
 class profile(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self,request):
         user = get_object_or_404(models.User.objects.filter(username=request.user.username))
         serializer = serializers.User(instance=user)
-        return Response(serializer.data, status=201)
+        return Response(serializer.data, status=200)
 
 
 
@@ -50,7 +61,7 @@ class getQuestions(APIView):
         else:
             serializer = serializers.LoadQuestionForPlayer(instance=questions,many=True)
 
-        return Response(serializer.data,status=201)
+        return Response(serializer.data,status=200)
     
 class getQuestion(APIView):
     permission_classes = (IsAuthenticated,)
@@ -60,14 +71,14 @@ class getQuestion(APIView):
             serializer = serializers.LoadQuestionForAuthor(instance=question)
         else:
             serializer = serializers.LoadQuestionForPlayer(instance=question)
-        return Response(serializer.data,status=201)
+        return Response(serializer.data,status=200)
 
 class getQuestionsAuthor(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         questions = models.Question.objects.filter(author=request.user.id)
         serializer = serializers.LoadQuestionForAuthor(instance=questions,many=True)
-        return Response(serializer.data,status=201)
+        return Response(serializer.data,status=200)
 
     
 class insertQuestion(APIView):
@@ -108,12 +119,12 @@ class insertHistory(APIView):
         data.update({'date':str(formatted_date)})
 
         if 'answer' in request.data and 'question' in request.data:
-            option = get_object_or_404(models.Option.objects.filter(question=request.data['question'],correct=True))
-            question = get_object_or_404(models.Question.objects.filter(id=request.data['question']))
+            option = get_object_or_404(models.Option.objects.filter(question=request.data.get('question'),correct=True))
+            question = get_object_or_404(models.Question.objects.filter(id=request.data.get('question')))
             answer = option.answer
             type = question.type
             
-            if type == 'SA' and bool(re.match(answer,request.data['answer'].strip())):
+            if type == 'SA' and bool(re.match(answer,request.data.get('answer').strip())):
                 data.update({'correct':1})
             elif request.data['answer'] == answer:
                 data.update({'correct':1})
@@ -133,7 +144,7 @@ class historyUser(APIView):
         history = models.History.objects.filter(player=request.user.id)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
-        return Response(result, status=201)
+        return Response(result, status=200)
 
 
 class historyQuestion(APIView):
@@ -144,7 +155,7 @@ class historyQuestion(APIView):
         history = models.History.objects.filter(question=id)
         serializer = serializers.LoadHistory(instance=history,many=True)
         result = serializer.data
-        return Response(result, status=201)
+        return Response(result, status=200)
 
 
 
