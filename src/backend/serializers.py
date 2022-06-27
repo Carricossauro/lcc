@@ -50,6 +50,7 @@ class LoadQuestionForPlayer(serializers.ModelSerializer):
 
 
 class SaveQuestion(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     options = OptionForAuthor(many=True)
     contents = Content(many=True)
     class Meta:
@@ -143,7 +144,6 @@ class SaveQuiz(serializers.ModelSerializer):
         for question in questions:
             contents = question.pop('contents')
             options = question.pop('options')
-            print(question)
             q = models.Question.objects.create(quiz=quiz, **question)    
             
             for content in contents:
@@ -162,7 +162,7 @@ class SaveQuiz(serializers.ModelSerializer):
             keep_contents = []
             keep_options = []
             if 'id' in question.keys() and models.Question.objects.filter(id=question['id']).exists:
-                q = models.Content.objects.get(id=question['id'])
+                q = models.Question.objects.get(id=question['id'])
                 q.title = question.get('title',q.title)
                 q.type = question.get('type',q.type)
                 q.score = question.get('score',q.score)
@@ -173,39 +173,36 @@ class SaveQuiz(serializers.ModelSerializer):
                 q = models.Question.objects.create(quiz=instance,**question)
                 keep_questions.append(q.id)
                 
-                for content in contents:
-                    if 'id' in content.keys():
-                        if models.Content.objects.filter(id=content['id']).exists:
-                            c = models.Content.objects.get(id=content['id'])
-                            c.order = content.get('order',c.order)
-                            c.type = content.get('type',c.type)
-                            c.text = content.get('text',c.text)
-                            c.media = content.get('media', c.media)
-                            c.save()
-                            keep_contents.append(c.id)
-                    else:
-                        c = models.Content.objects.create(question=q,**content)
+            for content in contents:
+                if 'id' in content.keys():
+                    if models.Content.objects.filter(id=content['id']).exists:
+                        c = models.Content.objects.get(id=content['id'])
+                        c.order = content.get('order',c.order)
+                        c.type = content.get('type',c.type)
+                        c.text = content.get('text',c.text)
+                        c.media = content.get('media', c.media)
+                        c.save()
                         keep_contents.append(c.id)
+                else:
+                    c = models.Content.objects.create(question=q,**content)
+                    keep_contents.append(c.id)
+            for content in models.Content.objects.filter(question=q.id):
+                if content.id not in keep_contents:
+                    content.delete()
+            for option in options:
+                if 'id' in option.keys() and models.Option.objects.filter(id=option['id']).exists:
+                    o = models.Option.objects.get(id=option['id'])
+                    o.answer = option.get('answer',o.answer)
+                    o.correct = option.get('correct',o.correct)
+                    o.save()
+                    keep_options.append(o.id)
+                else:
+                    o = models.Option.objects.create(question=q,**option)
+                    keep_options.append(o.id)
 
-                for content in models.Content.objects.filter(question=q.id):
-                    if content.id not in keep_contents:
-                        content.delete()
-
-                for option in options:
-                    if 'id' in option.keys():
-                        if models.Option.objects.filter(id=option['id']).exists:
-                            o = models.Option.objects.get(id=option['id'])
-                            o.answer = option.get('answer',o.answer)
-                            o.correct = option.get('correct',o.correct)
-                            o.save()
-                            keep_options.append(o.id)
-                    else:
-                        o = models.Option.objects.create(question=q,**option)
-                        keep_options.append(o.id)
-
-                for option in models.Option.objects.filter(question=q.id):
-                    if option.id not in keep_options:
-                        option.delete() 
+            for option in models.Option.objects.filter(question=q.id):
+                if option.id not in keep_options:
+                    option.delete() 
         for question in models.Question.objects.filter(quiz=instance.id):
             if question.id not in keep_questions:
                 question.delete()
