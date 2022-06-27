@@ -76,6 +76,131 @@ export default function NavBar(props) {
               CONTACT
             </button>
           </div>
+          {!props.loggedIn && (
+            <>
+              <div className="flex justify-center mx-3">
+                <button
+                  className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
+                  onClick={() => redirect("/SignUp")}
+                >
+                  REGISTER
+                </button>
+              </div>
+              <div className="flex justify-center mx-3 mr-6">
+                <button
+                  className="flex items-center justify-center w-24 h-9 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+                  onClick={() => redirect("/Login")}
+                >
+                  LOGIN
+                </button>
+              </div>
+            </>
+          )}
+          {props.loggedIn && (
+            <>
+              <div className="flex justify-center mx-3">
+                <button
+                  className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
+                  onClick={logout}
+                >
+                  LOGOUT
+                </button>
+              </div>
+              <div className="flex justify-center mx-3 mr-6">
+                <button
+                  className="flex items-center justify-center w-24 h-9 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+                  onClick={() => redirect(`/Profile`)}
+                >
+                  {initials(props.name)}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+      {props.size < 1024 && (
+        <div
+          className={`w-56 h-screen flex flex-col bg-color3 justify-start items-center absolute top-16 right-0 shadow-md duration-1000 ${
+            expanded ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex justify-center my-3">
+            <button
+              className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/About")}
+            >
+              ABOUT US
+            </button>
+          </div>
+          <div className="flex justify-center my-3">
+            <button
+              className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/Contact")}
+            >
+              CONTACT
+            </button>
+          </div>
+          {!props.loggedIn && (
+            <>
+              <div className="flex justify-center my-3">
+                <button
+                  className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+                  onClick={() => redirect("/SignUp")}
+                >
+                  REGISTER
+                </button>
+              </div>
+              <div className="flex justify-center my-3">
+                <button
+                  className="flex items-center justify-center h-9 w-32 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+                  onClick={() => redirect(`/Profile`)}
+                >
+                  LOGIN
+                </button>
+              </div>
+            </>
+          )}
+          {props.loggedIn && (
+            <>
+              <div className="flex justify-center my-3">
+                <button
+                  className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+                  onClick={logout}
+                >
+                  LOGOUT
+                </button>
+              </div>
+              <div className="flex justify-center my-3">
+                <button
+                  className="flex items-center justify-center h-9 w-32 bg-color1 rounded cursor-pointer hover:text-color4 hover:font-bold duration-1000"
+                  onClick={() => redirect("/Profile")}
+                >
+                  {initials(props.name)}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+      {/* 
+      {props.size >= 1024 && (
+        <div className="w-3/5 h-inherit flex flex-wrap justify-end items-center">
+          <div className="flex justify-center mx-3">
+            <button
+              className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/About")}
+            >
+              ABOUT US
+            </button>
+          </div>
+          <div className="flex justify-center mx-3">
+            <button
+              className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/Contact")}
+            >
+              CONTACT
+            </button>
+          </div>
           <div className="flex justify-center mx-3">
             <button
               className="flex items-center justify-center px-5 h-9 hover:bg-color1 rounded cursor-pointer duration-1000"
@@ -101,12 +226,18 @@ export default function NavBar(props) {
           }`}
         >
           <div className="flex justify-center my-3">
-            <button className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000">
+            <button
+              className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/About")}
+            >
               ABOUT US
             </button>
           </div>
           <div className="flex justify-center my-3">
-            <button className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000">
+            <button
+              className="flex items-center justify-center h-9 w-32 hover:bg-color1 rounded cursor-pointer duration-1000"
+              onClick={() => redirect("/Contact")}
+            >
               CONTACT
             </button>
           </div>
@@ -127,7 +258,7 @@ export default function NavBar(props) {
             </button>
           </div>
         </div>
-      )}
+      )}*/}
     </div>
   );
 }

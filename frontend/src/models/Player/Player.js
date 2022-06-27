@@ -42,7 +42,11 @@ export default function Player({
             case "Main":
                 setShowNavBar(true);
                 return (
-                    <Gamelist cookies={cookies} removeCookies={removeCookies} />
+                    <Gamelist
+                        cookies={cookies}
+                        removeCookies={removeCookies}
+                        authorRedirect={false}
+                    />
                 );
             default:
                 redirect("/Player/Main");

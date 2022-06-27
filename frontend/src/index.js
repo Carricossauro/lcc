@@ -25,10 +25,6 @@ const Index = () => {
         setSize(window.innerWidth);
     };
 
-    const redirect = (page) => {
-        window.location.href = page;
-    };
-
     useEffect(() => {
         window.addEventListener("resize", checkSize);
         return () => {
@@ -161,13 +157,24 @@ const Index = () => {
                                 setShowNavBar={setShowNavBar}
                                 size={size}
                                 game={false}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
                             />
                         }
                     ></Route>
                     <Route
                         path="/Author"
                         element={
-                            <Author setShowNavBar={setShowNavBar} size={size} />
+                            <Author
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
+                                edit={false}
+                                game={false}
+                            />
                         }
                     ></Route>
                     <Route path="/About" element={<About />}></Route>

@@ -45,10 +45,10 @@ export default function Game({ id, cookies }) {
 
     useEffect(() => {
         async function effect() {
-            const { response, data } = await getGame(id);
+            const { response, data } = await getGame(id, cookies);
 
             if (response.ok) setQuestion(data);
-            else redirect("/Player/Main/");
+            // else redirect("/Player/Main/");
         }
         effect();
     }, []);

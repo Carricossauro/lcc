@@ -78,9 +78,9 @@ export default function Contact() {
               id="email"
               type="email"
             />
-            <p class="text-gray-600 text-xs italic">
+            {/* <p class="text-gray-600 text-xs italic">
               Some tips - as long as needed
-            </p>
+            </p> */}
           </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -95,10 +95,10 @@ export default function Contact() {
               class=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none"
               id="message"
             ></textarea>
-            <p class="text-gray-600 text-xs italic">
+            {/* <p class="text-gray-600 text-xs italic">
               Re-size can be disabled by set by resize-none / resize-y /
               resize-x / resize
-            </p>
+            </p> */}
           </div>
         </div>
         <div class="md:flex md:items-center mb-10">
