@@ -14,7 +14,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
     
-
+class Quiz(models.Model):
+     author = models.ForeignKey(User, models.DO_NOTHING)  
 
 class Question(models.Model):
     DIFICULTY =(('E','Easy'),('M','Medium'),('H','Hard'))
@@ -24,8 +25,8 @@ class Question(models.Model):
     type = models.CharField(max_length=30, choices=TYPE)  
     score = models.IntegerField()  
     dificulty = models.CharField(max_length=20,choices=DIFICULTY)  
-    minage = models.IntegerField() 
-
+    minage = models.IntegerField()
+    quiz =  models.ForeignKey(Quiz, on_delete = models.CASCADE, related_name='questions', null=True)
 
     class Meta:
         managed = True
@@ -33,7 +34,7 @@ class Question(models.Model):
 
 
 class Option(models.Model):
-    question = models.ForeignKey(Question, models.DO_NOTHING,related_name='options',null=True) 
+    question = models.ForeignKey(Question, on_delete = models.CASCADE,related_name='options',null=True) 
     answer = models.TextField()  
     correct = models.BooleanField()  
 
@@ -56,7 +57,7 @@ class History(models.Model):
         
 class Content(models.Model):
     TYPE =(('T','Text'),('I','Image'))
-    question = models.ForeignKey(Question, models.DO_NOTHING,related_name='contents', null=True)  
+    question = models.ForeignKey(Question, on_delete = models.CASCADE,related_name='contents', null=True)  
     order = models.IntegerField() 
     type = models.CharField(max_length=10,choices=TYPE)  
     media = models.FileField(blank=True)
@@ -65,6 +66,9 @@ class Content(models.Model):
     class Meta:
         managed = True
         #unique_together = (('id', 'order'),)
+
+
+
         
 
 
