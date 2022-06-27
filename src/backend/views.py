@@ -143,10 +143,9 @@ class insertHistory(APIView):
             question = get_object_or_404(models.Question.objects.filter(id=request.data.get('question')))
             answer = option.answer
             type = question.type
-            
-            if type == 'SA' and bool(re.match(answer,request.data.get('answer').strip())):
+            if type == 'SA' and bool(re.match(answer,(request.data.get('answer')+'$').strip())):
                 data.update({'correct':1})
-            elif request.data['answer'] == answer:
+            elif request.data.get('answer') == answer:
                 data.update({'correct':1})
          
         serializer = serializers.SaveHistory(data=data)
