@@ -1,8 +1,4 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 export default function GameMC({ question }) {
-    console.log(question);
     return (
         <>
             {question.options.map((option, index) => {

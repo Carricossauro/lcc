@@ -52,8 +52,13 @@ export default function Game({ id, cookies }) {
     return (
         <>
             <div className="mt-28 flex items-center justify-center flex-col mb-16">
-                <div className="flex items-center justify-center px-3 h-12 w-[800px] mb-3 text-5xl">
-                    {question.title}
+                <div className="flex px-3 h-12 w-[800px] mb-3 text-5xl">
+                    <div className="w-1/2">{question.title}</div>
+                    <div className="w-full flex justify-end items-center">
+                        <div className="cursor-pointer rounded-3xl border-2 border-stone-200 text-stone-200 text-[30px] py-2 px-3">
+                            Edit
+                        </div>
+                    </div>
                 </div>
                 {question.contents.map((media, index) => {
                     switch (media["type"]) {
