@@ -1,4 +1,4 @@
-import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function EditMC({ setQuestion, question }) {
@@ -8,9 +8,17 @@ export default function EditMC({ setQuestion, question }) {
 
         for (var i = 0; i < newList.length; i++) {
             if (i !== index) {
-                if (value) newList[i] = { ...newList[i], correct: 0 };
+                if (value) newList[i] = { ...newList[i], correct: false };
             } else newList[i] = { answer: option, correct: value };
         }
+
+        setQuestion({ ...question, options: newList });
+    };
+
+    const removeOption = (e, index) => {
+        e.preventDefault();
+        let newList = question.options;
+        newList.splice(index, 1);
 
         setQuestion({ ...question, options: newList });
     };
@@ -33,7 +41,7 @@ export default function EditMC({ setQuestion, question }) {
                     >
                         <button
                             className={`border-2 border-stone-200 rounded-full h-[30px] w-[30px] mr-2 flex items-center justify-center ${
-                                media.correct === 1
+                                media.correct
                                     ? "bg-green-500 text-green-50 border-green-500"
                                     : "text-stone-400"
                             }`}
@@ -42,7 +50,7 @@ export default function EditMC({ setQuestion, question }) {
                                     e,
                                     media.answer,
                                     index,
-                                    (media.correct + 1) % 2
+                                    !media.correct
                                 )
                             }
                         >
@@ -67,6 +75,12 @@ export default function EditMC({ setQuestion, question }) {
                                     )
                                 }
                             ></input>
+                            <button onClick={(e) => removeOption(e, index)}>
+                                <FontAwesomeIcon
+                                    icon={faXmark}
+                                    className="text-stone-400 cursor-pointer"
+                                ></FontAwesomeIcon>
+                            </button>
                         </div>
                     </div>
                 );

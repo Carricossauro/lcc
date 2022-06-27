@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { faPhotoFilm, faT, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPhotoFilm, faT, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditMC from "./EditMC";
 import EditSA from "./EditSA";
@@ -13,7 +13,7 @@ export default function Edit({ cookies, id }) {
         title: "",
         type: "",
         score: "0",
-        difficulty: "",
+        dificulty: "",
         minage: 10,
         options: [],
         contents: [],
@@ -38,6 +38,15 @@ export default function Edit({ cookies, id }) {
         setQuestion({ ...question, contents: newList });
     };
 
+    const removeContent = (e, index) => {
+        e.preventDefault();
+
+        let newList = question.contents;
+        newList.splice(index, 1);
+
+        setQuestion({ ...question, contents: newList });
+    };
+
     const changeType = (e, type) => {
         e.preventDefault();
 
@@ -55,7 +64,7 @@ export default function Edit({ cookies, id }) {
     const changeDifficulty = (e, diff) => {
         e.preventDefault();
 
-        setQuestion({ ...question, difficulty: diff });
+        setQuestion({ ...question, dificulty: diff });
     };
 
     const changeMinage = (e) => {
@@ -80,7 +89,7 @@ export default function Edit({ cookies, id }) {
         e.preventDefault();
 
         try {
-            const response = await sendQuestion(question, cookies);
+            const response = await sendQuestion(question, cookies, id);
 
             if (response) redirect("/Author/Main");
             else
@@ -132,27 +141,25 @@ export default function Edit({ cookies, id }) {
                 <div className="w-[800px] flex flex-row justify-between items-center">
                     <button
                         className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.difficulty == "Easy" ? "bg-stone-200" : ""
+                            question.dificulty == "E" ? "bg-stone-200" : ""
                         }`}
-                        onClick={(e) => changeDifficulty(e, "Easy")}
+                        onClick={(e) => changeDifficulty(e, "E")}
                     >
                         Easy
                     </button>
                     <button
                         className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.difficulty == "Medium"
-                                ? "bg-stone-200"
-                                : ""
+                            question.dificulty == "M" ? "bg-stone-200" : ""
                         }`}
-                        onClick={(e) => changeDifficulty(e, "Medium")}
+                        onClick={(e) => changeDifficulty(e, "M")}
                     >
                         Medium
                     </button>
                     <button
                         className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.difficulty == "Hard" ? "bg-stone-200" : ""
+                            question.dificulty == "H" ? "bg-stone-200" : ""
                         }`}
-                        onClick={(e) => changeDifficulty(e, "Hard")}
+                        onClick={(e) => changeDifficulty(e, "H")}
                     >
                         Hard
                     </button>
@@ -204,6 +211,14 @@ export default function Edit({ cookies, id }) {
                                             })
                                         }
                                     ></textarea>
+                                    <button
+                                        onClick={(e) => removeContent(e, index)}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faXmark}
+                                            className="text-stone-400 cursor-pointer"
+                                        ></FontAwesomeIcon>
+                                    </button>
                                 </div>
                             );
                     }

@@ -6,6 +6,9 @@ import GameSA from "./GameSA";
 
 import { getGame } from "./API_game";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+
 export default function Game({ id, cookies }) {
     const [question, setQuestion] = useState({
         id: -1,
@@ -54,10 +57,17 @@ export default function Game({ id, cookies }) {
             <div className="mt-28 flex items-center justify-center flex-col mb-16">
                 <div className="flex px-3 h-12 w-[800px] mb-3 text-5xl">
                     <div className="w-1/2">{question.title}</div>
-                    <div className="w-full flex justify-end items-center">
-                        <div className="cursor-pointer rounded-3xl border-2 border-stone-200 text-stone-200 text-[30px] py-2 px-3">
-                            Edit
-                        </div>
+                    <div className="w-full flex justify-end items-center text-[20px]">
+                        <button
+                            className="flex flex-row justify-center items-center border-2 border-stone-200 py-2 px-4 rounded-3xl cursor-pointer hover:bg-stone-200 duration-500"
+                            onClick={() => redirect(`/Author/Edit/${id}`)}
+                        >
+                            <FontAwesomeIcon
+                                icon={faPencil}
+                                className="text-[15px] mr-1"
+                            ></FontAwesomeIcon>
+                            <div className="">Edit</div>
+                        </button>
                     </div>
                 </div>
                 {question.contents.map((media, index) => {
