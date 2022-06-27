@@ -38,7 +38,7 @@ export default function Game({ id, cookies }) {
     useEffect(() => {
         async function effect() {
             try {
-                const { response, data } = await getGame(id);
+                const { response, data } = await getGame(id, cookies);
 
                 if (response.ok) setQuestion(data);
                 else throw new Error();

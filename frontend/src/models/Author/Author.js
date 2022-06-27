@@ -47,13 +47,20 @@ export default function Author({
     } else
         switch (authorPath) {
             case "Explore":
-                return <Gamelist />;
+                return (
+                    <Gamelist
+                        cookies={cookies}
+                        removeCookies={removeCookies}
+                        authorRedirect={true}
+                    />
+                );
             case "Mygames":
                 return (
                     <Gamelist
                         author={username}
                         cookies={cookies}
                         removeCookies={removeCookies}
+                        authorRedirect={true}
                     />
                 );
             case "Create":

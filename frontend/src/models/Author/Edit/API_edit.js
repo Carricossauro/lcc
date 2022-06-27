@@ -10,7 +10,6 @@ export async function sendQuestion(question, cookies) {
         },
         body: JSON.stringify({
             title: question.title,
-            author: username,
             type: question.type,
             score: question.score,
             dificulty: question.difficulty[0],
@@ -21,6 +20,8 @@ export async function sendQuestion(question, cookies) {
     };
 
     const url = `${process.env.REACT_APP_API_URL}/api/questions/insert/`;
+
+    console.log(requestOptions);
 
     const response = await fetch(url, requestOptions);
 
