@@ -393,7 +393,7 @@ exemplo:
             {
                 "order": 1,
                 "type": "A",
-                "text": ""
+                "text": "",
                 "media":"optional"
             }
         ]

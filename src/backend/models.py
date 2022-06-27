@@ -55,7 +55,7 @@ class History(models.Model):
         
         
 class Content(models.Model):
-    TYPE =(('A','Audio'),('T','Text'),('V','Video'))
+    TYPE =(('T','Text'),('I','Image'))
     question = models.ForeignKey(Question, models.DO_NOTHING,related_name='contents', null=True)  
     order = models.IntegerField() 
     type = models.CharField(max_length=10,choices=TYPE)  
