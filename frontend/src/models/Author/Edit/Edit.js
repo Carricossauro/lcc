@@ -1,95 +1,157 @@
 import { useEffect, useState } from "react";
-import { faPhotoFilm, faT, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+    faPhotoFilm,
+    faT,
+    faXmark,
+    faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditMC from "./EditMC";
 import EditSA from "./EditSA";
 import EditTF from "./EditTF";
-import { getQuestion, sendQuestion } from "./API_edit";
+import { getQuiz, sendQuiz } from "./API_edit";
 
-// TODO - add delete button on content and options
+const empty_game = {
+    title: "",
+    type: "",
+    score: "0",
+    dificulty: "",
+    minage: 10,
+    options: [],
+    contents: [],
+};
+
+const starter = [empty_game];
 
 export default function Edit({ cookies, id }) {
-    const [question, setQuestion] = useState({
-        title: "",
-        type: "",
-        score: "0",
-        dificulty: "",
-        minage: 10,
-        options: [],
-        contents: [],
-    });
+    const [questions, setQuestions] = useState(starter);
     const [error, setError] = useState(null);
 
-    const changeContentText = (value, index) => {
-        let newList = question.contents;
+    const changeContentText = (e, value, questionIndex, contentIndex) => {
+        e.preventDefault();
+        let newQuestions = [...questions];
 
-        newList[index]["text"] = value;
+        newQuestions[questionIndex].contents[contentIndex]["text"] = value;
 
-        return newList;
+        setQuestions(newQuestions);
     };
 
-    const newContent = (type, e) => {
+    const newContent = (e, type, questionIndex) => {
         e.preventDefault();
-        let newList = question.contents;
 
-        if (type == "T")
-            newList.push({ type: type, text: "", order: newList.length });
+        let newQuestions = [...questions];
 
-        setQuestion({ ...question, contents: newList });
+        if (type === "T")
+            newQuestions[questionIndex].contents.push({
+                type: type,
+                text: "",
+                order: questions[questionIndex].contents.length,
+            });
+
+        setQuestions(newQuestions);
     };
 
-    const removeContent = (e, index) => {
+    const removeContent = (e, questionIndex, contentIndex) => {
         e.preventDefault();
 
-        let newList = question.contents;
-        newList.splice(index, 1);
+        let newQuestions = [...questions];
+        let newContents = questions[questionIndex].contents;
 
-        setQuestion({ ...question, contents: newList });
+        newContents.splice(contentIndex, 1);
+
+        newQuestions[questionIndex].contents = newContents;
+
+        setQuestions(newQuestions);
     };
 
-    const changeType = (e, type) => {
-        e.preventDefault();
+    const changeType = (e, type, questionIndex) => {
+        const newList =
+            type === "TF"
+                ? [
+                      { answer: "True", correct: false },
+                      { answer: "False", correct: false },
+                  ]
+                : [];
 
-        let newList = [];
+        let newQuestions = [...questions];
 
-        if (type === "TF") newList = [{ answer: "True" }, { answer: "False" }];
+        newQuestions[questionIndex].type = type;
+        newQuestions[questionIndex].options = newList;
 
-        setQuestion({ ...question, type: type, options: newList });
+        setQuestions(newQuestions);
     };
 
     const redirect = (page) => {
         window.location.href = page;
     };
 
-    const changeDifficulty = (e, diff) => {
+    const changeDifficulty = (e, dif, questionIndex) => {
         e.preventDefault();
 
-        setQuestion({ ...question, dificulty: diff });
+        let newQuestions = [...questions];
+
+        newQuestions[questionIndex].dificulty = dif;
+
+        setQuestions(newQuestions);
     };
 
-    const changeMinage = (e) => {
+    const changeMinage = (e, questionIndex) => {
         e.preventDefault();
         let result = e.target.value.replace(/\D/g, "");
         if (!result) {
             result = "0";
         }
-        setQuestion({ ...question, minage: parseInt(result) });
+
+        let newQuestions = [...questions];
+
+        newQuestions[questionIndex].minage = result;
+
+        setQuestions(newQuestions);
     };
 
-    const changeScore = (e) => {
+    const changeScore = (e, questionIndex) => {
         e.preventDefault();
         let result = e.target.value.replace(/\D/g, "");
         if (!result) {
             result = "0";
         }
-        setQuestion({ ...question, score: parseInt(result) });
+        let newQuestions = [...questions];
+
+        newQuestions[questionIndex].score = result;
+
+        setQuestions(newQuestions);
+    };
+
+    const changeTitle = (e, questionIndex) => {
+        e.preventDefault();
+
+        let newQuestions = [...questions];
+
+        newQuestions[questionIndex].title = e.target.value;
+
+        setQuestions(newQuestions);
+    };
+
+    const newQuestion = (e) => {
+        e.preventDefault();
+
+        setQuestions([...questions, { ...empty_game }]);
+    };
+
+    const removeQuestion = (e, questionIndex) => {
+        e.preventDefault();
+
+        let newQuestions = [...questions];
+        newQuestions.splice(questionIndex, 1);
+
+        setQuestions(newQuestions);
     };
 
     async function submit(e) {
         e.preventDefault();
 
         try {
-            const response = await sendQuestion(question, cookies, id);
+            const response = await sendQuiz([...questions], cookies, id);
 
             if (response) redirect("/Author/Main");
             else
@@ -105,9 +167,8 @@ export default function Edit({ cookies, id }) {
         async function effect() {
             if (id) {
                 try {
-                    const data = await getQuestion(id, cookies);
-
-                    setQuestion(data);
+                    const data = await getQuiz(id, cookies);
+                    setQuestions(data.questions);
                 } catch (e) {
                     redirect("/");
                 }
@@ -118,162 +179,251 @@ export default function Edit({ cookies, id }) {
 
     return (
         <>
-            <form className="mt-28 flex items-center justify-center flex-col">
+            <div className="mt-28 flex items-center justify-center flex-col mb-10">
                 {error && (
                     <div className="w-[750px] border text-red-700 mb-3 rounded-md bg-red-100 flex justify-center p-2">
                         {error}
                     </div>
                 )}
-                <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
-                    <input
-                        className="outline-0 ml-3 bg-inherit w-full"
-                        type="textarea"
-                        id="title"
-                        name="title"
-                        value={question.title}
-                        placeholder="title"
-                        onChange={(e) =>
-                            setQuestion({ ...question, title: e.target.value })
-                        }
-                    ></input>
-                </div>
-                <div className="flex text-3xl py-2">Difficulty</div>
-                <div className="w-[800px] flex flex-row justify-between items-center">
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.dificulty == "E" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeDifficulty(e, "E")}
-                    >
-                        Easy
-                    </button>
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.dificulty == "M" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeDifficulty(e, "M")}
-                    >
-                        Medium
-                    </button>
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.dificulty == "H" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeDifficulty(e, "H")}
-                    >
-                        Hard
-                    </button>
-                </div>
-                <div className="flex justify-around w-[800px]">
-                    <div className="flex flex-col justify-center items-center">
-                        <div className="flex text-3xl py-2">Minimum age</div>
-                        <input
-                            type="text"
-                            value={question.minage}
-                            className="flex items-center justify-center px-3 h-12 w-20 border-2 border-stone-200 rounded-3xl mb-3"
-                            onChange={(e) => changeMinage(e)}
-                        />
-                    </div>
-                    <div className="flex flex-col justify-center items-center">
-                        <div className="flex text-3xl py-2">Score</div>
-                        <input
-                            type="text"
-                            value={question.score}
-                            className="flex items-center justify-center px-3 h-12 w-20 border-2 border-stone-200 rounded-3xl mb-3"
-                            onChange={(e) => changeScore(e)}
-                        />
-                    </div>
-                </div>
-
-                <div className="flex text-3xl py-2">Content</div>
-                {question.contents.map((media, index) => {
-                    switch (media["type"]) {
-                        case "T":
-                            return (
-                                <div
-                                    className="flex items-center px-3 w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
-                                    key={index}
-                                >
-                                    <textarea
-                                        className="outline-0 ml-3 bg-inherit w-full pt-3"
-                                        type="text"
-                                        id={`media${index}`}
-                                        name="media"
-                                        value={question.contents[index]["text"]}
-                                        placeholder="Content"
-                                        onChange={(e) =>
-                                            setQuestion({
-                                                ...question,
-                                                contents: changeContentText(
-                                                    e.target.value,
-                                                    index
-                                                ),
-                                            })
-                                        }
-                                    ></textarea>
+                {questions.map((question, questionIndex) => {
+                    return (
+                        <>
+                            {questionIndex !== 0 && (
+                                <hr className="h bg-gray-900 w-[900px] mt-2 mb-5" />
+                            )}
+                            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                                <input
+                                    className="outline-0 ml-3 bg-inherit w-full"
+                                    type="textarea"
+                                    id="title"
+                                    name="title"
+                                    value={question.title}
+                                    placeholder="title"
+                                    onChange={(e) =>
+                                        changeTitle(e, questionIndex)
+                                    }
+                                ></input>
+                                {questionIndex !== 0 && (
                                     <button
-                                        onClick={(e) => removeContent(e, index)}
+                                        onClick={(e) =>
+                                            removeQuestion(e, questionIndex)
+                                        }
                                     >
                                         <FontAwesomeIcon
                                             icon={faXmark}
                                             className="text-stone-400 cursor-pointer"
                                         ></FontAwesomeIcon>
                                     </button>
+                                )}
+                            </div>
+                            <div className="flex text-3xl py-2">Difficulty</div>
+                            <div className="w-[800px] flex flex-row justify-between items-center">
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.dificulty == "E"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) =>
+                                        changeDifficulty(e, "E", questionIndex)
+                                    }
+                                >
+                                    Easy
+                                </button>
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.dificulty == "M"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) =>
+                                        changeDifficulty(e, "M", questionIndex)
+                                    }
+                                >
+                                    Medium
+                                </button>
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.dificulty == "H"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) =>
+                                        changeDifficulty(e, "H", questionIndex)
+                                    }
+                                >
+                                    Hard
+                                </button>
+                            </div>
+                            <div className="flex justify-around w-[800px]">
+                                <div className="flex flex-col justify-center items-center">
+                                    <div className="flex text-3xl py-2">
+                                        Minimum age
+                                    </div>
+                                    <input
+                                        type="text"
+                                        value={question.minage}
+                                        className="flex items-center justify-center px-3 h-12 w-20 border-2 border-stone-200 rounded-3xl mb-3"
+                                        onChange={(e) =>
+                                            changeMinage(e, questionIndex)
+                                        }
+                                    />
                                 </div>
-                            );
-                    }
+                                <div className="flex flex-col justify-center items-center">
+                                    <div className="flex text-3xl py-2">
+                                        Score
+                                    </div>
+                                    <input
+                                        type="text"
+                                        value={question.score}
+                                        className="flex items-center justify-center px-3 h-12 w-20 border-2 border-stone-200 rounded-3xl mb-3"
+                                        onChange={(e) =>
+                                            changeScore(e, questionIndex)
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex text-3xl py-2">Content</div>
+                            {question.contents.map((media, contentIndex) => {
+                                switch (media["type"]) {
+                                    case "T":
+                                        return (
+                                            <div
+                                                className="flex items-center px-3 w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
+                                                key={`q${questionIndex}c${contentIndex}`}
+                                            >
+                                                <textarea
+                                                    className="outline-0 ml-3 bg-inherit w-full pt-3"
+                                                    type="text"
+                                                    id={`q${questionIndex}c${contentIndex}`}
+                                                    name="media"
+                                                    value={media["text"]}
+                                                    placeholder="Content"
+                                                    onChange={(e) =>
+                                                        changeContentText(
+                                                            e,
+                                                            e.target.value,
+                                                            questionIndex,
+                                                            contentIndex
+                                                        )
+                                                    }
+                                                ></textarea>
+                                                <button
+                                                    onClick={(e) =>
+                                                        removeContent(
+                                                            e,
+                                                            questionIndex,
+                                                            contentIndex
+                                                        )
+                                                    }
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={faXmark}
+                                                        className="text-stone-400 cursor-pointer"
+                                                    ></FontAwesomeIcon>
+                                                </button>
+                                            </div>
+                                        );
+                                }
+                            })}
+                            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                                <button
+                                    className="ml-3 text-stone-400"
+                                    onClick={(e) =>
+                                        newContent(e, "T", questionIndex)
+                                    }
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faT}
+                                    ></FontAwesomeIcon>
+                                </button>
+                                <button
+                                    className="ml-3 text-stone-400"
+                                    onClick={(e) =>
+                                        newContent(e, "M", questionIndex)
+                                    }
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faPhotoFilm}
+                                    ></FontAwesomeIcon>
+                                </button>
+                            </div>
+                            <div className="flex text-3xl py-2">Type</div>
+                            <div className="w-[800px] flex flex-row justify-between items-center">
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.type === "MC"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) => {
+                                        changeType(e, "MC", questionIndex);
+                                    }}
+                                >
+                                    Multiple Choice
+                                </button>
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.type === "TF"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) =>
+                                        changeType(e, "TF", questionIndex)
+                                    }
+                                >
+                                    True/False
+                                </button>
+                                <button
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
+                                        question.type === "SA"
+                                            ? "bg-stone-200"
+                                            : ""
+                                    }`}
+                                    onClick={(e) =>
+                                        changeType(e, "SA", questionIndex)
+                                    }
+                                >
+                                    Short Answer
+                                </button>
+                            </div>
+                            {question.type === "MC" && (
+                                <EditMC
+                                    setQuestions={setQuestions}
+                                    questions={questions}
+                                    questionIndex={questionIndex}
+                                />
+                            )}
+                            {question.type === "SA" && (
+                                <EditSA
+                                    setQuestions={setQuestions}
+                                    questions={questions}
+                                    questionIndex={questionIndex}
+                                />
+                            )}
+                            {question.type === "TF" && (
+                                <EditTF
+                                    setQuestions={setQuestions}
+                                    questions={questions}
+                                    questionIndex={questionIndex}
+                                />
+                            )}
+                        </>
+                    );
                 })}
-                <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                <div className="w-[800px] flex justify-around mt-6">
                     <button
-                        className="ml-3 text-stone-400"
-                        onClick={(e) => newContent("T", e)}
+                        className="px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
+                        onClick={newQuestion}
                     >
-                        <FontAwesomeIcon icon={faT}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                            className="text-sm"
+                            icon={faPlus}
+                        ></FontAwesomeIcon>{" "}
+                        Add
                     </button>
-                    <button
-                        className="ml-3 text-stone-400"
-                        onClick={(e) => newContent("M", e)}
-                    >
-                        <FontAwesomeIcon icon={faPhotoFilm}></FontAwesomeIcon>
-                    </button>
-                </div>
-                <div className="flex text-3xl py-2">Type</div>
-                <div className="w-[800px] flex flex-row justify-between items-center">
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.type == "MC" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeType(e, "MC")}
-                    >
-                        Multiple Choice
-                    </button>
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.type == "TF" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeType(e, "TF")}
-                    >
-                        True/False
-                    </button>
-                    <button
-                        className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                            question.type == "SA" ? "bg-stone-200" : ""
-                        }`}
-                        onClick={(e) => changeType(e, "SA")}
-                    >
-                        Short Answer
-                    </button>
-                </div>
-                {question.type === "MC" && (
-                    <EditMC setQuestion={setQuestion} question={question} />
-                )}
-                {question.type === "SA" && (
-                    <EditSA setQuestion={setQuestion} question={question} />
-                )}
-                {question.type === "TF" && (
-                    <EditTF setQuestion={setQuestion} question={question} />
-                )}
-                <div className="w-[800px] flex justify-end mt-6">
+
                     <button
                         className="flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
                         onClick={(e) => submit(e)}
@@ -281,7 +431,7 @@ export default function Edit({ cookies, id }) {
                         Submit
                     </button>
                 </div>
-            </form>
+            </div>
         </>
     );
 }
