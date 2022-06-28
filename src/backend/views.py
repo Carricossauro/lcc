@@ -165,6 +165,8 @@ class updateQuiz(APIView):
         self.check_object_permissions(request,quiz)
         data = request.data
         data.update({'author':request.user.id})
+        for question in data.get('questions'):
+            question.update({'author': request.user.id})
         serializer = serializers.SaveQuiz(quiz,data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
