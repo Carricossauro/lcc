@@ -80,7 +80,10 @@
   \end{minipage}
 
 \begin{abstract}  % resumo do documento
-Neste relatório explicar-se-á a abordagem utilizada para construir a plataforma ComputationalMind, utilizando todos os conhecimentos práticos desenvolvidos ao longo do curso.
+
+Este relatório retrata todo o processo de desenvolvimento da plataforma \emph{“ComputationalMind”} e as diferentes decisões tomadas ao longo do mesmo. O objetivo deste projeto é criar um \emph{Website} educacional para uso em escolas e outras instituições de ensino e que possibilite ao público mais jovem aprender por meio de jogos de escolha múltipla, resposta curta e verdadeiro ou falso, o \emph{mindset} a adotar para ser um bom \emph{problem solver} e consequentemente um bom programador. A plataforma pode ser acedida por meio de um navegador \emph{web} no computador ou telemóvel.
+
+Palavras-Chave: Pensamento Computacional, \emph{web site}, aprendizagem.
 \end{abstract}
 
 \tableofcontents % insere Indice
@@ -88,18 +91,29 @@ Neste relatório explicar-se-á a abordagem utilizada para construir a plataform
 \chapter{Introdução}
 \pagenumbering{arabic}
 
-No âmbito da unidade curricular de Projeto da Licenciatura em Ciências da Computação, foi proposto o desenvolvimento de uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. A plataforma deve ter uma interface de \emph{back-office} (BO) para armazenar os problemas/desafios (nomeadamente o seu enunciado, opções de resposta, resposta certa, faixa etária, etc). 
-A interface de \emph{front-office} (FO) funciona em modo jogo para que os utilizadores possam responder aos desafios selecionados a partir do repositório criado no BO da plataforma. No modo jogo os utilizadores podem ter pontuações, prémios, ou outras formas de gamificação que os motivem e envolvam. \par
-O presente relatório acompanha o processo de desenvolvimento do projeto.
+Na unidade curricular Projeto da licenciatura de Ciências da Computação, foi-nos proposto o desenvolvimento de uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. Esta plataforma deve ser constituída por uma interface de \emph{back-office} (BO) e uma interface de \emph{front-office} (FO).
+
+Para ajudar na criação deste projeto, inspirámo-nos em websites já existentes com um propósito muito semelhante ao nosso, como, por exemplo, o \emph{Kahoot}\footnote{https://kahoot.it}, o \emph{Socrative}\footnote{https://socrative.com} e o \emph{Hypatiamat}\footnote{https://hypatiamat.com}.
+
+Para além disso, o nosso trabalho foi dividido em três etapas distintas:
+\begin{itemize}
+   \item A primeira etapa, consiste na caracterização do \emph{web site} a ser desenvolvida. Foi feita a apresentação do plano de desenvolvimento, bem como o estudo das medidas para a satisfação dos objetivos.
+   \item A segunda etapa, consiste em materializar as ideias obtidas na primeira fase, havendo assim, uma descrição detalhada do software que irá ser desenvolvido. Nesta etapa, é feito, também, um planeamento da base de dados a implementar.
+   \item A terceira e última etapa, a Implementação, consiste no desenvolvimento do software bem como a implementação das funcionalidades fundamentais, tendo em conta o planeamento das etapas anteriores. É nesta fase que se faz a validação da aplicação e se apresenta o produto final.
+\end{itemize}
 
 \chapter{Enunciado do Projeto}
 
-No âmbito do treino do Pensamento Computacional pretende-se criar uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. A plataforma deve ter
-uma interface de \emph{back-office} (BO) para armazenar os problemas/desafios (nomeadamente seu enunciado, opções de
-resposta, resposta certa, faixa etária, etc). Um exemplo do tipo de exercícios que se pretende pode ser consultado na \emph{página\ da\ web} do bebras\footnote{http://bebras.dcc.fc.up.pt/problems/2021/problemas\_09\_10.pdf}.
-A interface de \emph{front-office} (FO) funciona em modo jogo para que os utilizadores possam responder aos desafios
-selecionados a partir do repositório criado no BO da plataforma. No modo jogo os utilizadores podem ter pontuações,
-prémios, ou outras formas de gamificação que os motivem e envolvam.
+No âmbito do treino do Pensamento Computacional, pretende-se criar uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. 
+
+A plataforma deve ter uma interface de \emph{back-office} (BO) para armazenar os problemas/desafios (nomeadamente o seu enunciado, opções de resposta, resposta certa, faixa etária, etc) apresentados na \emph{página\ da\ web} do bebras\footnote{http://bebras.dcc.fc.up.pt/problems/2021/problemas\_09\_10.pdf}. Ou seja este conterá toda a informação necessária ao sistema, e é responsável pela gestão do \emph{site} e das suas funcionalidades. A interface de \emph{front-office} (FO) oferecerá a interação com utilizador para que no modo jogo este possa responder aos desafios selecionados a partir do repositório criado no BO da plataforma, que lhe atribuirá pontos, prémios, ou outras formas de recompensa por forma a motivá-lo e envolvê-lo mais.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 5cm]{diagBackFront.png}
+    \caption{Esquema do Sistema}
+    \label{fig:sis}
+\end{figure}
 
 \chapter{Concessão da Solução}
 
@@ -109,9 +123,9 @@ Antes de mais, o principal recurso utilizado foi a própria equipa de docentes q
 
 Inicialmente, com a escolha do tema foi necessário recolher uma série de artigos e questões com o intuito de nos familiarizar com os diferentes tipos de mídia que a plataforma teria de suportar e possibilitar a sua mesclação. 
 
-Após essa pesquisa, surgiu a necessidade de ser feita modelação da Base de Dados, junto com a esquemização da página através da criação de Mockups \footnote{https://www.figma.com}. Na nossa visão estes passos representam um pouco os pilares e ideias sobre os quais o nosso projeto acenta, daí terem tomado uma parte significativa do nosso tempo.
+Após essa pesquisa, surgiu a necessidade de ser feita modelação da Base de Dados, junto com a esquemização da página através da criação de Mockups \footnote{https://figma.com}. Na nossa visão estes passos representam um pouco os pilares e ideias sobre os quais o nosso projeto acenta, daí terem tomado uma parte significativa do nosso tempo.
 
-De seguida, foram selecionadas as \emph{frameworks} para criação tanto da \emph{parte de suporte} como da \emph{interface frontal}, sendo elas o \emph{Django} \footnote{https://www.djangoproject.com} e o \emph{Reactjs} \footnote{https://reactjs.org}, assim como o \emph{TailWindCSS} \footnote{https://tailwindcss.com}. Nesta fase damos uma posição de destaque à fase de teste e adptação com as ferramentas, que levaram a uma etapa de muitas correções dos eventuais erros e de ajustes por forma a que nos certificarmos que o produto final correspondia às nossas expetativas, e às do público-alvo.
+De seguida, foram selecionadas as \emph{frameworks} para criação tanto da \emph{parte de suporte}, como da \emph{interface frontal}, sendo elas o \emph{Django} \footnote{https://djangoproject.com} e o \emph{Reactjs} \footnote{https://reactjs.org} junto com o \emph{TailWindCSS} \footnote{https://tailwindcss.com}. Nesta parte damos uma posição de destaque à fase de teste e adaptação com as ferramentas em uso. Após esta familiarização seguiu-se a etapa das correções dos eventuais erros e de ajustes por forma a nos certificarmos que o produto final correspondia às nossas expetativas, e às do público-alvo.
 
 \chapter{Mockups}
 
@@ -123,14 +137,14 @@ Em última análise, percebemos que o \emph{mockup} de uma página deve ser cria
 
 \begin{figure}
      \centering
-     \begin{subfigure}[b]{0.4\textwidth}
+     \begin{subfigure}[h!]{0.4\textwidth}
          \centering
          \includegraphics[width=\textwidth]{MockHome.png}
          \caption{Página Principal}
          \label{fig:MockHome}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.4\textwidth}
+     \begin{subfigure}[h!]{0.4\textwidth}
          \centering
          \includegraphics[width=\textwidth]{MockLogin.png}
          \caption{Página de Login}
@@ -183,23 +197,19 @@ Em última análise, percebemos que o \emph{mockup} de uma página deve ser cria
          \caption{Jogo de Resposta Curta}
          \label{fig:MockUserGameSA}
      \end{subfigure}
-        %\caption{Mockups Realizados}
-        %\label{fig:Mockups}
 \end{figure}
 
 \begin{figure}
-    \begin{subfigure}[h!]{0.5\linewidth}
+    \begin{subfigure}[h]{0.5\linewidth}
         \includegraphics[width=\linewidth]{MockUserCongratulations.png}
         \caption{Resposta certa}
         \label{fig:MockUserCongratulations}
     \end{subfigure}
-    \begin{subfigure}[h!]{0.5\linewidth}
+    \begin{subfigure}[h]{0.5\linewidth}
         \includegraphics[width=\linewidth]{MockUserTryAgain.png}
         \caption{Resposta errada}
         \label{fig:MockUserTryAgain}
     \end{subfigure}
-        %\caption{Design dos Mockups}
-        %\label{fig:Mockups}
 \end{figure}
 
 \chapter{Base de Dados}
@@ -216,7 +226,7 @@ Um autor é identificado por um \textbf{código}, devendo ter também uma refer�
 Um jogador é identificado por um \textbf{código}, devendo ter também uma referência do seu \textbf{nome}, \textbf{data de aniversário}, \textbf{\emph{e-mail}} e \textbf{\emph{password}}
 
 \subsection{Question}
-Uma questão é identificado por um \textbf{código},devendo ter também uma referência ao \textbf{autor}, um um \textbf{título}, um identificador do \textbf{tipo} (resposta curta, escolha múltipla ou verdadeiro e falso), uma \textbf{classificação}, a \textbf{dificuldade} e a \textbf{idade mínima}.
+Uma questão é identificado por um \textbf{código}, devendo ter também uma referência ao \textbf{autor}, um um \textbf{título}, um identificador do \textbf{tipo} (resposta curta, escolha múltipla ou verdadeiro e falso), uma \textbf{classificação}, a \textbf{dificuldade} e a \textbf{idade mínima}.
 
 \subsection{Content}
 Um conteúdo é identificado por uma referência à \textbf{questão}, uma \textbf{ordem} pela qual as questões aparecem, o \textbf{tipo} do conteúdo e os \textbf{links/imagens/vídeos} associados. 
@@ -247,13 +257,56 @@ Um histórico é identificado por \textbf{código}, uma referência ao \textbf{j
 \end{tabular}
 \end{center}
 
-\section{Modelo Lógico}
+\section{Modelo lógico}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width = 14cm,height = 10cm]{EsqLog.png}
-\caption{Esquema Lógico}
+\caption{Esquema lógico}
 \label{fig:EsqLog}
+\end{figure}
+
+\section{Alterações}
+
+Por forma a acrescentar  mais funcionalidade e também devido as restrições no desenvolvimento do \emph{back-end}, foram realizadas algumas alterações no modelo inicial da Base de Dados.
+
+\subsection{User}
+As entidades \emph{Author} e \emph{Player} passam a ser a entidade \emph{User} que tem um atributo \emph{type} para fazer a distinção entre ambos.
+
+\subsection{Quiz}
+Um quiz é constituído por várias questões. É identificado através de um \textbf{código}, devendo ter ainda uma referência ao \textbf{autor} e um \textbf{título}.
+
+\subsection{Identificação e caracterização dos relacionamentos}
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+ \hline
+ \bf{Entidade} & \bf{Multiplicidade} & \bf{Relacionamento} & \bf{Multiplicidade} & \bf{Entidade} \\ 
+ \hline
+ Quiz & 1..N & tem & 1 & User \\ 
+ \hline
+ Question & 1..N & tem & 1 & User \\ 
+ \hline
+ Question & 1..N & tem & 1 & Quiz \\ 
+ \hline
+ Option & 1..N & tem & 1 & Question \\ 
+ \hline
+ History & 1..N & tem & 1 & Question \\ 
+ \hline
+ History & 1..N & tem & 1 & User \\ 
+ \hline
+ Content & 1..N & tem & 1 & Question \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Modelo lógico final}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 12cm,height = 8cm]{EsqLogFin.png}
+\caption{Esquema lógico final}
+\label{fig:EsqLogFini}
 \end{figure}
 
 \chapter{Back-end}
@@ -264,21 +317,22 @@ Para o desenvolvimento da  \emph{parte secundária} utilizou-se \emph{Django} e 
 
 \section{Django}
 
-\emph{Django} é uma \emph{framework} gratuito e de código aberto, com o intuito de facilitar e acelerar o desenvolvimento \emph{web}, escrito em Python, que utiliza o padrão \emph{model-template-view} (MTV) e o princípio \emph{don't repeat yourself} (DRY) através do aproveitamento máximo de código já feito. O \emph{web\ server}, pode ajudar os desenvolvedores a produzir de forma eficiente um FO ou BO rico em recursos, seguro e escalável.
+\emph{Django} é uma \emph{framework} gratuito e de código aberto, com o intuito de facilitar e acelerar o desenvolvimento \emph{web}, escrito em Python, que utiliza o padrão \emph{model-template-view} (MTV) e o princípio \emph{don't repeat yourself} (DRY) através do aproveitamento máximo de código já feito. O \emph{web\ server}, pode ajudar os \emph{developers} a produzir de forma eficiente um FO ou BO rico em recursos, seguro e escalável.
 
 O \emph{Django REST Framework} é um conjunto de ferramentas utilizado para construir \emph{APIs} (Interfaces de Programação de Aplicações) para \emph{Web}.
 
-Apesar do \emph{Django} permitir fazer tanto \emph{front-end} como \emph{back-end}, a utilização de uma \emph{REST API} permite desenvolver uma \emph{parte de suporte} mais genérico, e torna possível desenvolver uma \emph{parte frontal} para vários tipos de dispositivos no futuro. Ou seja, assim a aplicação torna-se mais escalável. 
+Apesar do \emph{Django} possibilitar o desenvolvimento do \emph{front-end} e \emph{back-end}, a utilização de uma \emph{REST API} permite criar uma \emph{parte de suporte} mais genérica, e torna possível construir uma \emph{parte frontal} para vários tipos de dispositivos no futuro. Desta forma a aplicação torna-se mais escalável. 
 
 \section{Objetivo}
 
 O \emph{back-end} do projeto tem como objetivo fazer a ligação entre a Base de Dados e a \emph{interface frontal}, tendo sido desenvolvido ainda uma \emph{REST API} que será "consumida" pela mesma.
 \newpage
 \section{Desenvolvimento}
+O processo de desenvolvimento começou pela construção da base de dados através do \emph{Django}, com base no esquema lógico definido. Para tal, foram construidos todos os modelos necessários para representar as várias entidades e os seus relacionamentos. A construção da base de dados foi feito com recurso à funcionalidade \emph{migrate} disponibilizada pelo \emph{Django}. O sistema de gestão de base de dados utilizado foi o \emph{MySQL}.
+Devido a algumas restrições imposta pelo \emph{Django}, foi necessário realizar algumas alterações no esquema lógico inicialmente definido.
 
-No processo de desenvolvimento utilizou-se a base de dados previamente implementada no \emph{MySQL Workbench} para se fazer a construção dessas mesmas entidades e relacionamentos no \emph{Django} com o intuito de possibilitar a comunicação entre ambos foi necessário alterações o esquema mais concretamente a eliminação das chaves primárias compostas.
-
-A comunicação entre o \emph{Django} e a \emph{parte frontal} através da \emph{REST API} é feita com o uso de ficheiros em formato \emph{JSON}. Para tal, o \emph{Django} possui funções especificas para serializar e desserializar os dados. O uso dá-se da seguinte forma, o \emph{front-end} faz uma pedido através da \emph{REST API}, de seguida este pedido é analisado pelo \emph{Django} e caso esteja correto os dados requeridos são copiados da base de dados, serializados e enviados em formato \emph{JSON} para a \emph{interface frontal}. A comunicação inversa também é possível mas os dados são desserializados e estando corretos, serão inseridos na base de dados.
+A principal função do \emph{Django} é servir de intermediário de comunicação entre a \emph{parte frontal} e a base de dados. Essa comunicação é realizada através da \emph{REST API} com o eviio de ficheiros em formato \emph{JSON}. Para tal, o \emph{Django} possui funções especificas para serializar os dados. O uso dá-se da seguinte forma, o \emph{front-end} faz uma pedido através da \emph{REST API}, de seguida este pedido é analisado pelo \emph{Django} e, caso esteja correto, os dados requeridos são copiados da base de dados, convertidos e enviados em formato \emph{JSON} para a \emph{interface frontal}. A comunicação inversa também é possível e processa-se de modo análogo.
+\newline\newline
 
 \begin{figure}[h]
 \centering
@@ -286,6 +340,976 @@ A comunicação entre o \emph{Django} e a \emph{parte frontal} através da \emph
 \caption{REST API}
 \label{fig:pagDJang}
 \end{figure}
+
+\newpage
+
+\section{Manual da API}
+
+\subsection{/api/profile/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter dados do \emph{user} que está autenticado.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+        "id": 9,
+        "username": "username",
+        "name": "name",
+        "birthday": null,
+        "email": "email@email.com",
+        "type": "A"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\subsection{/api/profile/password/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} alterar a \emph{password} do \emph{user} que está autenticado.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+   {
+        "current":"0123",
+        "new":"56789"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 403.
+
+\newpage
+
+\subsection{/api/users/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} alterar a \emph{password} do \emph{user} que está autenticado.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+   {
+        "username": "username",
+        "name": "name",
+        "password": "password",
+        "email": "email@email.com",
+        "birthday": null,
+        "type": "A"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 403.
+
+
+\subsection{/api/users/$<$str:username$>$}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter a informação do \emph{user} que esta autenticado e com \emph{usernanme} = $<$str:username$>$
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+   {
+        "id": 1,
+        "username": "username",
+        "name": "name",
+        "birthday": null,
+        "email": "email@email.com",
+        "type": "A"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 404.
+
+\newpage
+
+\subsection{/api/questions/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter todas as questões.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    [
+        {
+            "id": 1,
+            "author": "username",
+            "title": "Teste",
+            "type": "SA",
+            "score": 10,
+            "dificulty": "E",
+            "minage": 5,
+            "options": [
+                {
+                    "id": 1,
+                    "answer": "Ola Mundo",
+                    "question": 1,
+                    "correct": true
+                },
+                {
+                    "id": 2,
+                    "answer": "Mundo",
+                    "question": 1,
+                    "correct": false
+                }
+            ],
+            "contents": [
+                {
+                    "id": 1,
+                    "question": 1,
+                    "order": 1,
+                    "type": "T",
+                    "text": "Escreva Ola Mundo",
+                    "media": null
+                }
+            ],
+            "quiz": 1
+        }
+    ]
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\textbf{Nota:} Se o \emph{user} que faz o pedido for do tipo \emph{P} o campo \emph{correct} nas \emph{options} é removido.
+
+\newpage
+
+\subsection{/api/questions/$<$int:id$>$}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter a questão com \emph{id} = $<$int:id$>$.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+        "id": 1,
+        "author": "username",
+        "title": "Teste",
+        "type": "SA",
+        "score": 10,
+        "dificulty": "E",
+        "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola Mundo",
+                "question": 1,
+                "correct": true
+            },
+            {
+                "id": 2,
+                "answer": "Mundo",
+                "question": 1,
+                "correct": false
+            }
+        ],
+        "contents": [
+            {
+                "id": 1,
+                "question": 1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreve Ola Mundo",
+                "media": null
+            }
+        ],
+        "quiz": 1
+    }
+    
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\textbf{Nota:} Se o \emph{user} que faz o pedido for do tipo \emph{P} o campo \emph{correct} nas \emph{options} é removido.
+
+\newpage
+
+\subsection{/api/questions/user/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter todas as questões do autor autenticado.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+   [
+        {
+            "id": 1,
+            "author": "username",
+            "title": "Teste",
+            "type": "SA",
+            "score": 10,
+            "dificulty": "E",
+            "minage": 5,
+            "options": [
+                {
+                    "id": 1,
+                    "answer": "Ola Mundo",
+                    "question": 1,
+                    "correct": true
+                },
+                {
+                    "id": 2,
+                    "answer": "Mundo",
+                    "question": 1,
+                    "correct": false
+                }
+            ],
+            "contents": [
+                {
+                    "id": 1,
+                    "question": 1,
+                    "order": 1,
+                    "type": "T",
+                    "text": "Escreve Ola Mundo",
+                    "media": null
+                }
+            ],
+        }"quiz": 1
+    ]
+    
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\newpage
+
+\subsection{/api/questions/insert/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} inserir uma questão
+
+\textbf{requisitos:} autenticação e ser um \emph{user} do tipo \emph{author}
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+   {
+        "title": "title",
+        "type": "SA",
+        "score": 10,
+        "dificulty": "E",
+        "minage": 5,
+        "options": [
+            {
+                "answer": "Ola Mundo",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola Mundo"
+            }
+        ]
+    }
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+   {
+    	"id": 1,
+    	"author": 1,
+    	"title": "title",
+    	"type": "SA",
+    	"score": 10,
+    	"dificulty": "E",
+    	"minage": 5,
+    	"options": [
+    		{
+    			"id": 1,
+    			"answer": "Ola Mundo",
+    			"question": 1,
+    			"correct": true
+    		}
+    	],
+    	"contents": [
+    		{
+    			"id": 1,
+    			"question": 1,
+    			"order": 1,
+    			"type": "T",
+    			"text": "Escreva Ola Mundo",
+    			"media": null
+    		}
+    	],
+    	"quiz": null
+}
+\end{lstlisting}
+
+\textbf{status correto}: 201.
+
+\textbf{status errado}: 401 ou 403.
+
+\subsection{/api/questions/update/$<$int:id$>$}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} alterar a questão com \emph{id} = $<$int:id$>$
+
+\textbf{requisitos:} autenticação e ser o autor da questão.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+   {
+        "title": "title",
+        "type": "SA",
+        "score": 10,
+        "dificulty": "E",
+        "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "id":1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola"
+            }
+        ]
+    }
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+{
+        "id":
+        "title": "title",
+        "type": "SA",
+        "score": 10,
+        "dificulty": "E",
+        "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "id":1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola",
+                "media" null
+            }
+        ],
+        "quiz": null
+    }
+\end{lstlisting}
+
+\textbf{Status correto}: 200.
+
+\textbf{Status errado}: 403 ou 404.
+
+\textbf{nota:} os campos que não forem enviado serão mantidos. Só serão mantidas as \emph{options} e \text{questions} para as quais seja enviado o seu \emph{id}. Se não for enviado o \emph{id}, serão criadas novas instâncias. 
+
+\subsection{/api/questions/delete/$<$int:id$>$}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} apagar a questão com \emph{id} = $<$int:id$>$
+
+\textbf{requisitos:} autenticação e ser o autor da questão.
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 403 ou 404.
+
+
+\subsection{/api/quizzes/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter todos os quizzes.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    [{
+		"id": 1,
+		"questions": [
+			{
+                "id":
+                "title": "title",
+                "type": "SA",
+                "score": 10,
+                "dificulty": "E",
+                "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "id":1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola",
+                "media" null
+            }
+        ],
+        "quiz": 1
+        }], 
+	    "author": 1,
+	    "title": "quiz"
+    }]
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\textbf{Nota:} Se o \emph{user} que faz o pedido for do tipo \emph{P} o campo \emph{correct} nas \emph{options} de cada questão é removido.
+
+
+
+\subsection{/api/quizzes/$<$int:id$>$}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter o quiz com \emph{id} = $<$int:id$>$.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+		"id": 1,
+		"questions": [
+			{
+                "id":
+                "title": "title",
+                "type": "SA",
+                "score": 10,
+                "dificulty": "E",
+                "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "id":1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola",
+                "media" null
+            }
+        ],
+        "quiz": 1
+        }], 
+	    "author": 1,
+	    "title": "quiz"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401 ou 404.
+
+\textbf{Nota:} Se o \emph{user} que faz o pedido for do tipo \emph{P} o campo \emph{correct} nas \emph{options} de cada questão é removido.
+
+\subsection{/api/quizzes/user/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter todos os quizzes do autor autenticado.
+
+\textbf{requisitos:} autenticação.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    [{
+		"id": 1,
+		"questions": [
+			{
+                "id":
+                "title": "title",
+                "type": "SA",
+                "score": 10,
+                "dificulty": "E",
+                "minage": 5,
+        "options": [
+            {
+                "id": 1,
+                "answer": "Ola",
+                "correct": true
+            }
+        ],
+        "contents": [
+            {
+                "id":1,
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola",
+                "media" null
+            }
+        ],
+        "quiz": 1
+        }], 
+	    "author": 1,
+	    "title": "quiz"
+    }]
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\newpage
+
+\subsection{/api/quizzes/insert/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} inserir um quiz
+
+\textbf{requisitos:} autenticação e ser um \emph{user} do tipo \emph{author}
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+    {
+		"questions": [
+			{
+                "title": "title",
+                "type": "SA",
+                "score": 10,
+                "dificulty": "E",
+                "minage": 5,
+        "options": [
+            {
+                "answer": "Ola Mundo",
+                "correct": true
+            }
+    ],
+        "contents": [
+            {
+                "order": 1,
+                "type": "T",
+                "text": "Escreva Ola Mundo"
+            }
+        ]
+        }],
+        "title": "quiz"
+    }
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+{
+	"id": 1,
+	"questions": [
+		{
+			"id": 1,
+			"author": 1,
+			"title": "title",
+			"type": "SA",
+			"score": 10,
+			"dificulty": "E",
+			"minage": 5,
+			"options": [
+				{
+					"id": 1,
+					"answer": "Ola Mundo",
+					"question": 134,
+					"correct": true
+				}
+			],
+			"contents": [
+				{
+					"id": 1,
+					"question": 1,
+					"order": 1,
+					"type": "T",
+					"text": "Escreva Ola Mundo",
+					"media": null
+				}
+			],
+			"quiz": 1
+		}
+	],
+	"author": 1,
+	"title": "quiz"
+}
+\end{lstlisting}
+
+\textbf{status correto}: 201.
+
+\textbf{status errado}: 401 ou 403.
+
+
+\subsection{/api/quizzes/update/$<$int:id$>$}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} alterar o quiz com \emph{id} = $<$int:id$>$
+
+\textbf{requisitos:} autenticação e ser o autor do quiz.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+   {
+	"questions": [
+		{
+			"id":1,
+			"author": 1,
+			"title": "title",
+			"type": "SA",
+			"score": 10,
+			"dificulty": "E",
+			"minage": 5,
+			"options": [
+				{
+					"id":1,
+					"answer": "Ola",
+					"correct": true
+				}
+			],
+			"contents": [
+				{
+					"id":1,
+					"order": 1,
+					"type": "T",
+					"text": "Escreva Ola"
+					
+				}
+			]
+	
+		}
+	]
+}
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+{
+	"id": 1,
+	"questions": [
+		{
+			"id": 1,
+			"author": 1,
+			"title": "title",
+			"type": "SA",
+			"score": 10,
+			"dificulty": "E",
+			"minage": 5,
+			"options": [
+				{
+					"id": 223,
+					"answer": "Ola",
+					"question": 211,
+					"correct": true
+				}
+			],
+			"contents": [
+				{
+					"id": 1,
+					"question": 1,
+					"order": 1,
+					"type": "T",
+					"text": "Escreva Ola",
+					"media": null
+				}
+			],
+			"quiz": 1
+		}
+	],
+	"author": 1,
+	"title": "quiz"
+}
+\end{lstlisting}
+
+\textbf{Status correto}: 200.
+
+\textbf{Status errado}: 403 ou 404.
+
+\subsection{/api/quizzes/delete/$<$int:id$>$}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} apagar o quiz com \emph{id} = $<$int:id$>$
+
+\textbf{requisitos:} autenticação e ser o autor do quiz.
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 403 ou 404.
+
+\newpage
+
+\subsection{/api/history/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} inserir a resposta a uma questão.
+
+\textbf{requisitos:} autenticação e o \emph{user} ser do tipo \emph{Player}.
+
+\textbf{pedido:}
+\begin{lstlisting}[style = code]
+    {
+        "question": "1",
+        "answer": "Ola"
+    }
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+        "id": 1,
+        "player": 2,
+        "question": 1,
+        "date": "2022-06-27T01:09:23Z",
+        "correct": true,
+        "answer": "Ola"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 201.
+
+\textbf{status errado}: 401 ou 404.
+
+\newpage
+
+\subsection{/api/history/user/}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter o historio de respostas do utilizador que está autenticado.
+
+\textbf{requisitos:} autenticação e o \emph{user} ser do tipo \emph{Player}.
+
+\textbf{pedido:}
+\begin{lstlisting}[style = code]
+    {
+        "question": "1",
+        "answer": "ola"
+    }
+\end{lstlisting}
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    [
+        {
+            "id": 1,
+            "player": "2",
+            "question": 1,
+            "date": "2022-06-27T01:09:23Z",
+            "correct": true,
+            "answer": "Ola"
+        },
+        {
+            "id": 2,
+            "player": "2",
+            "question": 2,
+            "date": "2022-06-26T22:02:10Z",
+            "correct": true,
+            "answer": "mundo"
+        }
+]
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\newpage
+
+\subsection{/api/history/question/$<$int:id$>$}
+
+\textbf{tipo:} GET.
+
+\textbf{função:} obter o historio de respostas da questão com \emph{id} = $<$int:id$>$.
+
+\textbf{requisitos:} autenticação e ser o autor da questão.
+
+\textbf{resposta:}
+
+\begin{lstlisting}[style = code]
+    [
+        {
+            "id": 1,
+            "player": "2",
+            "question": 1,
+            "date": "2022-06-27T01:09:23Z",
+            "correct": true,
+            "answer": "Ola"
+        }
+]
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401 ou 404.
+
+\subsection{/api/login/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} autenticar um \emph{user}.
+
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+    {
+        "username": "username",
+        "password":"password"
+    }
+\end{lstlisting}
+
+\emph{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+        "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+        eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1NjM3
+        ODUzMiwiaWF0IjoxNjU2MjkyMTMyLCJqdGkiOiIyMjFjZjAz
+        YWUxODE0Nzc5ODI3NjNmOWMxOGYwYjY1MyIsInVzZXJfaWQiOjl9.
+        8Qlwm7xgbjZFEH0ndK7CiNS1P-D4FCoRnPb4jLf7-Io",
+    
+        "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+        eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2Mjk1Nz
+        MyLCJpYXQiOjE2NTYyOTIxMzIsImp0aSI6IjdlMTM3OTE5OWM1
+        OTQ3NWViODFmMGQ2Y2MyMWU1OTFkIiwidXNlcl9pZCI6OX0.
+        TDjrl61WosT_hMp1UMCOCI-iG3DZnU93QKuu3aIAVho"
+    }
+
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\newpage
+
+\subsection{/api/login/refresh/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} atualizar o \emph{token} quando expirado.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+    {
+        "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+        eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1NjM3O
+        TY4OSwiaWF0IjoxNjU2MjkzMjg5LCJqdGkiOiI2ZDcwMjQ5N2
+        VjYTE0ZmQ0YjQzMjM5YzMzNDQ5NjNiMiIsInVzZXJfaWQiOjl9.
+        0lB2EG0DjDjIiZt2OqBuUjy1Zw8c71uCOHf-UMTHY2I"  
+    }
+\end{lstlisting}
+
+\emph{resposta:}
+
+\begin{lstlisting}[style = code]
+    {
+        "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+        eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2Mjk3N
+        DQxLCJpYXQiOjE2NTYyOTMyODksImp0aSI6ImY1YjNhOWY2ZDY
+        zYzRjOWY4Yjc5ZWFkODRkNTJiMzEyIiwidXNlcl9pZCI6OX0.
+        SPNTGHdXwGwVod-1VZLSJvRIRo5mIECk6brbTqwOE34"
+    }
+\end{lstlisting}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\subsection{/api/login/verify/}
+
+\textbf{tipo:} POST.
+
+\textbf{função:} verificar se o \emph{token} é válido.
+
+\textbf{pedido:}
+
+\begin{lstlisting}[style = code]
+    {
+        "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+        eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2Mjk2
+        ODg5LCJpYXQiOjE2NTYyOTMyODksImp0aSI6Ijg1YzM3YWJi
+        OTZjNTQ0Y2U4M2M2ZmY5MzBiMTgwMTdjIiwidXNlcl9pZCI6OX0.
+        -C5f3KhAUgN_udTNjgQtTEIYqc80zFmafsjb19nHshc" 
+    }
+\end{lstlisting}
+
+\emph{resposta:}
+
+\textbf{status correto}: 200.
+
+\textbf{status errado}: 401.
+
+\newpage
 
 \chapter{Front-End}
 
@@ -312,7 +1336,7 @@ Ao longo deste semestre desenvolvemos a página do \emph{ComputationalMind} até
 
 \section{Página inicial (Sem sessão iniciada)}
 
-Na página inicial consideramos que o utilizador pode ser um \emph{Player} que apenas usufrui dos jogos disponibilizados na plataforma pelo \emph{Author} que é a entidade que criou o jogo.
+Na página inicial consideramos que o utilizador pode ser um \emph{Player} que apenas usufrui dos jogos disponibilizados na plataforma pelo \emph{Author} que é a entidade que criou o jogo.\newline\newline
 
 \begin{figure}[h]
     \centering
@@ -325,7 +1349,7 @@ Na página inicial consideramos que o utilizador pode ser um \emph{Player} que a
 
 \section{About Us}
 
-Nesta secção incorporamos informação sobre o propósito da página.
+Nesta secção incorporamos informação sobre o propósito da página.\newline
 
 \begin{figure}[h]
     \centering
@@ -334,12 +1358,23 @@ Nesta secção incorporamos informação sobre o propósito da página.
     \label{fig:abUs}
 \end{figure}
 
+\section{Contact}
+
+Aqui os utilizadores podem informar os \emph{developers} de possíveis \emph{bugs} que tenham encontrado ou sugerir novas funcionalidades que tornariam a plataforma mais apelativa ou comuda para quem a usa.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{contact.png}
+    \caption{Contact}
+    \label{fig:cont}
+\end{figure}
+
 \section{\emph{Login} / \emph{Sign Up}}
 Após a escolha de uma das opções disponibilizadas na página inicial os utilizadores seram redirecionados para a página de \emph{Login} / \emph{Sign Up}. 
 
 Nesta página é possível um utilizador autenticar-se ou efetuar o seu registo no site. 
 
-A página de autentificação é igual para ambos os utilizadores, a única diferença na página de \emph{Sign Up} do \emph{Player Sign Up} para a do \emph{Author Sign Up} é que na do \emph{Player} é relevante saber a idade para serem apresentados jogos mais adequados à sua faixa etária enquanto que na do \emph{Author} essa informação não é relevante. 
+A página de autentificação é igual para ambos os utilizadores, a única diferença na página de \emph{Sign Up} do \emph{Player Sign Up} para a do \emph{Author Sign Up} é que na do \emph{Player} é relevante saber a idade para serem apresentados jogos mais adequados à sua faixa etária enquanto que na do \emph{Author} essa informação não é relevante.\newline\newline
 
 \begin{figure}[h]%
     \centering
@@ -352,10 +1387,8 @@ A página de autentificação é igual para ambos os utilizadores, a única dife
     \label{fig:log&sigUp}%
 \end{figure}
 
-\newpage
-
 \section{Escolha de jogos para \emph{Player} ou \emph{Author}}
-Em seguida, ambos os utilizadores são redirecionados para uma página onde se lista todos os jogos que estão disponíveis para jogar.
+Em seguida, ambos os utilizadores são redirecionados para uma página onde se lista todos os jogos que estão disponíveis para jogar.\newline\newline
 
 \begin{figure}[h]
     \centering
@@ -364,8 +1397,10 @@ Em seguida, ambos os utilizadores são redirecionados para uma página onde se l
     \label{fig:pagJog}
 \end{figure}
 
+\newpage
+
 \section{Menu do \emph{Author}}
-O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pelo facto de existir uma secção chamada \emph{Creat New Game} onde poderá criar os diferentes tipos de jogos referido nos capítulos anteriores.
+O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pelo facto de existir uma secção chamada \emph{Creat New Game} onde poderá criar os diferentes tipos de jogos referido nos capítulos anteriores.\newline\newline
 
 \begin{figure}[h]
     \centering
@@ -374,10 +1409,9 @@ O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pel
     \label{fig:menuAut}
 \end{figure}
 
-\newpage
-
 \section{Criação de novos Jogos}
-Nesta nova aba oferecemos todas as ferramentas suportadas pela página para que o \emph{Author} consiga criar novo conteúdo para a mesma.
+Nesta nova aba oferecemos todas as ferramentas suportadas pela página para que o \emph{Author} consiga criar novo conteúdo para a mesma.\newline\newline
+
 \begin{figure}[h]
     \centering
     \includegraphics[width = 10cm]{editAut.png}
@@ -385,15 +1419,23 @@ Nesta nova aba oferecemos todas as ferramentas suportadas pela página para que 
     \label{fig:editAut}
 \end{figure}
 
-\section{Página inicial (Com sessão iniciada)}
+\newpage
 
-Quando um utilizador se regista ou autenticação, é redirecionado para a página principal da aplicação. Aqui é possível ver todas as opções de países e categorias disponíveis, bem como selecioná-los de forma a filtrar as notícias. Além disto, consegue-se ver as trending news, e pode-se aceder a outras páginas da aplicação.
+\section{Página de Jogo}
+Aqui o \emph{Player} pode fazer a seleção ou escrever a resposta que pensa ser correta mediante a pergunta enunciada acima.
 
-Demo da pagina, login, user, autor, apresentação das funcionalidades,...
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{jogJogo.png}
+    \caption{Página do Jogo}
+    \label{fig:jogJogo}
+\end{figure}
 
 \chapter{Conclusão}
 
-Conclui-se desta forma a apresentação do Projeto para o ano letivo 2021/2022.
+Durante a realização deste trabalho constatamos que a parte fundamental para que um \emph{web site} seja implementado de forma coerente, robusta e segura assenta em algo mais que um simples \emph{design} atrativo e \emph{display} de conteúdos, existe todo um fluxo e uma rede de comunicação que se dá por trás de cada clique ou cada palavra digitada e enviada, obtendo-se uma ação causa efeito.
+
+Dito isto, consideramos que, apesar de termos dado a devida atenção aos diferentes detalhes, existem ainda alguns melhoramentos que podem ser aplicados ao projeto final, que enunciamos abaixo nas secções de comentários e trabalho futuro.
 
 \section{Comentários}
 
@@ -401,7 +1443,7 @@ Temos de realçar que o projeto não se encontra totalmente finalizado, na medid
 
 Posto isto, as dificuldades sentidas consistiram essencialmente no facto de se estar a usar uma nova linguagem de programação e ferramentas de desenvolvimento de software completamente novas, e com as quais não estávamos familiarizados.
 
-Desta forma, e apesar dos diversos obstáculos encontrados durante todo o processo, o grupo considera que concluiu o projeto com sucesso.
+--Desta forma, e apesar dos diversos obstáculos encontrados durante todo o processo, o grupo considera que concluiu o projeto com sucesso. -- Maybe not
 
 \section{Trabalho Futuro}
 
@@ -409,5 +1451,23 @@ Como sugestão para trabalhos futuros, seria útil implementar todas as funciona
 
 \appendix
 \chapter{Exemplos}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 15cm]{jog1.png}
+    \label{fig:jog1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{jog2.png}
+    \label{fig:jog2}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{jog3.png}
+    \label{fig:jog3}
+\end{figure}
 
 \end{document}
