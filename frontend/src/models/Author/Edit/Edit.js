@@ -11,17 +11,17 @@ import EditSA from "./EditSA";
 import EditTF from "./EditTF";
 import { getQuiz, sendQuiz } from "./API_edit";
 
-const empty_game = {
-    title: "a",
-    type: "",
-    score: "0",
-    dificulty: "",
-    minage: 10,
-    options: [],
-    contents: [],
-};
-
-const starter = [empty_game];
+const starter = [
+    {
+        title: "a",
+        type: "",
+        score: "0",
+        dificulty: "",
+        minage: 10,
+        options: [],
+        contents: [],
+    },
+];
 
 export default function Edit({ cookies, id }) {
     const [questions, setQuestions] = useState(starter);
@@ -132,7 +132,18 @@ export default function Edit({ cookies, id }) {
     const newQuestion = (e) => {
         e.preventDefault();
 
-        setQuestions([...questions, { ...empty_game }]);
+        setQuestions([
+            ...questions,
+            {
+                title: "a",
+                type: "",
+                score: "0",
+                dificulty: "",
+                minage: 10,
+                options: [],
+                contents: [],
+            },
+        ]);
     };
 
     const removeQuestion = (e, questionIndex) => {
@@ -166,6 +177,7 @@ export default function Edit({ cookies, id }) {
                 try {
                     const data = await getQuiz(id, cookies);
                     setQuestions(data.questions);
+                    setTitle(data.title);
                 } catch (e) {
                     redirect("/");
                 }

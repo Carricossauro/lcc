@@ -19,6 +19,7 @@ export default function Gamelist({
     const changeSearchText = (e) => {
         const text = e.target.value;
         setSearchText(text);
+        console.log(games);
 
         if (text) {
             const texts = text.split(" ");
@@ -113,9 +114,6 @@ export default function Gamelist({
                                 <th className="px-4 py-4 text-left bg-blue-900 text-white text-sm font-medium text-center">
                                     Minimum Age
                                 </th>
-                                <th className="px-4 py-4 text-left bg-blue-900 text-white text-sm font-medium text-center rounded-tr-lg">
-                                    Type
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,9 +144,6 @@ export default function Gamelist({
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
                                             MINAGE
-                                        </td>
-                                        <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            TYPE
                                         </td>
                                     </tr>
                                 );
