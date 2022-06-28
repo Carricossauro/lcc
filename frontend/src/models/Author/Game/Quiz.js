@@ -21,7 +21,7 @@ export default function Quiz({ id, cookies }) {
             }
         }
         effect();
-    });
+    }, []);
 
     return (
         <div className="mt-28 flex items-center justify-center flex-col">

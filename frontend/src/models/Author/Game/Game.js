@@ -4,16 +4,7 @@ import GameTF from "./GameTF";
 import GameMC from "./GameMC";
 import GameSA from "./GameSA";
 
-import { getGame } from "./API_game";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-
-export default function Game({ id, cookies, question }) {
-    const redirect = (page) => {
-        window.location.href = page;
-    };
-
+export default function Game({ question }) {
     return (
         <>
             <div className="">

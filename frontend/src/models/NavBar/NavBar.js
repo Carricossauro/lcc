@@ -22,8 +22,8 @@ export default function NavBar(props) {
     };
 
     const logout = () => {
-        cleanup(props.removeCookie, props.setLoggedIn);
         redirect("/");
+        cleanup(props.removeCookie, props.setLoggedIn);
     };
 
     const redirectMain = () => {

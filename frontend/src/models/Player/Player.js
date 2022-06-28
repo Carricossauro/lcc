@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Gamelist from "../Gamelist/Gamelist";
 import Game from "./Game/Game";
 import { confirmType } from "../../API_index";
+import Quiz from "./Game/Quiz";
 
 export default function Player({
     setShowNavBar,
@@ -36,7 +37,7 @@ export default function Player({
     }, []);
 
     if (game) {
-        return <Game id={gameid} cookies={cookies} />;
+        return <Quiz id={gameid} cookies={cookies} />;
     } else {
         switch (playerPath) {
             case "Main":

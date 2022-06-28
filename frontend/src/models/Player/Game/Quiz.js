@@ -1,0 +1,68 @@
+import { useEffect, useState } from "react";
+import Game from "./Game";
+import { getQuiz, sendAnswer } from "./API_game";
+
+export default function Quiz({ id, cookies }) {
+    const [quiz, setQuiz] = useState(null);
+    const [answers, setAnswers] = useState({});
+
+    const redirect = (page) => {
+        window.location.href = page;
+    };
+
+    async function submit(e) {
+        try {
+            for (var questionIndex in quiz.questions) {
+                await sendAnswer(
+                    answers[questionIndex],
+                    quiz.questions[questionIndex].id,
+                    cookies
+                );
+            }
+
+            redirect(`/Player/Game/Stats/${id}`);
+        } catch (e) {
+            // redirect("/");
+        }
+    }
+
+    useEffect(() => {
+        async function effect() {
+            try {
+                const data = await getQuiz(id, cookies);
+
+                setQuiz(data);
+            } catch (e) {
+                redirect("/");
+            }
+        }
+        effect();
+    }, []);
+
+    return (
+        <div className="mt-28 flex items-center justify-center flex-col">
+            <div className="w-[800px] flex flex-row mb-6">
+                {quiz && <h2 className="text-5xl w-2/3">{quiz.title}</h2>}
+            </div>
+            {quiz &&
+                quiz.questions.map((question, index) => {
+                    return (
+                        <Game
+                            question={question}
+                            answers={answers}
+                            setAnswers={setAnswers}
+                            questionIndex={index}
+                        />
+                    );
+                })}
+            <div className="w-[800px] flex justify-end mt-6">
+                <button
+                    className="flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
+                    onClick={submit}
+                >
+                    Submit
+                </button>
+            </div>
+        </div>
+    );
+}

@@ -192,14 +192,19 @@ class insertHistory(APIView):
         data.update({'date':str(formatted_date)})
 
         if 'answer' in request.data and 'question' in request.data:
-            option = get_object_or_404(models.Option.objects.filter(question=request.data.get('question'),correct=True))
+            options = models.Option.objects.filter(question=request.data.get('question'),correct=True)
             question = get_object_or_404(models.Question.objects.filter(id=request.data.get('question')))
-            answer = option.answer
-            type = question.type
-            if type == 'SA' and bool(re.match(answer+'$',request.data.get('answer').strip())):
-                data.update({'correct':1})
-            elif request.data.get('answer') == answer:
-                data.update({'correct':1})
+            if not options:
+                return Response(status=404)
+            for option in options:
+                answer = option.answer
+                type = question.type
+                if type == 'SA' and bool(re.match(answer+'$',request.data.get('answer').strip())):
+                    data.update({'correct':1})
+                    break
+                elif request.data.get('answer') == answer:
+                    data.update({'correct':1})
+                    break
          
         serializer = serializers.SaveHistory(data=data)
         serializer.is_valid(raise_exception=True)
