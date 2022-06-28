@@ -154,6 +154,7 @@ class SaveQuiz(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         questions = validated_data.pop('questions')
+        instance.title = validated_data.get('title',instance.title)
         instance.save()
         keep_questions = []
         for question in questions:
