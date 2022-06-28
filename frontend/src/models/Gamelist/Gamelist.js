@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getQuestions } from "./API_gamelist";
+import { getQuestions, getQuizzes } from "./API_gamelist";
 import { confirmType } from "../../API_index";
 
 export default function Gamelist({
@@ -19,6 +19,7 @@ export default function Gamelist({
     const changeSearchText = (e) => {
         const text = e.target.value;
         setSearchText(text);
+        console.log(games);
 
         if (text) {
             const texts = text.split(" ");
@@ -44,7 +45,7 @@ export default function Gamelist({
 
     useEffect(() => {
         async function effect() {
-            const data = await getQuestions(cookies);
+            const data = await getQuizzes(cookies);
 
             if (author) {
                 try {
@@ -113,13 +114,10 @@ export default function Gamelist({
                                 <th className="px-4 py-4 text-left bg-blue-900 text-white text-sm font-medium text-center">
                                     Minimum Age
                                 </th>
-                                <th className="px-4 py-4 text-left bg-blue-900 text-white text-sm font-medium text-center rounded-tr-lg">
-                                    Type
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredGames.map((question, index) => {
+                            {filteredGames.map((quiz, index) => {
                                 return (
                                     <tr
                                         className={`border-gray-200 even:bg-gray-200 cursor-pointer`}
@@ -131,24 +129,21 @@ export default function Gamelist({
                                                     authorRedirect
                                                         ? "Author"
                                                         : "Player"
-                                                }/Game/${question.id}`
+                                                }/Game/${quiz.id}`
                                             );
                                         }}
                                     >
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.title}
+                                            {quiz.title}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.author}
+                                            {quiz.author}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.dificulty}
+                                            DIFFICULTY
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.minage}
-                                        </td>
-                                        <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.type}
+                                            MINAGE
                                         </td>
                                     </tr>
                                 );

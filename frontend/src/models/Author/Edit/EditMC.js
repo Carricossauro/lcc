@@ -1,43 +1,53 @@
 import { faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function EditMC({ setQuestion, question }) {
-    const changeOption = (e, option, index, value) => {
+export default function EditMC({ setQuestions, questions, questionIndex }) {
+    const changeOption = (e, option, optionIndex, value) => {
         e.preventDefault();
-        let newList = question.options;
+        let newList = questions[questionIndex].options;
 
         for (var i = 0; i < newList.length; i++) {
-            if (i !== index) {
+            if (i !== optionIndex) {
                 if (value) newList[i] = { ...newList[i], correct: false };
             } else newList[i] = { answer: option, correct: value };
         }
 
-        setQuestion({ ...question, options: newList });
+        let newQuestions = [...questions];
+
+        newQuestions[questionIndex].options = newList;
+        setQuestions(newQuestions);
     };
 
-    const removeOption = (e, index) => {
+    const removeOption = (e, optionIndex) => {
         e.preventDefault();
-        let newList = question.options;
-        newList.splice(index, 1);
 
-        setQuestion({ ...question, options: newList });
+        let newList = questions[questionIndex].options;
+        newList.splice(optionIndex, 1);
+
+        let newQuestions = [...questions];
+        newQuestions[questionIndex].options = newList;
+
+        setQuestions(newQuestions);
     };
 
     const newOption = (e) => {
         e.preventDefault();
-        let newList = question.options;
+        let newList = questions[questionIndex].options;
 
-        newList.push({ answer: "", correct: 0 });
+        newList.push({ answer: "", correct: false });
 
-        setQuestion({ ...question, options: newList });
+        let newQuestions = [...questions];
+        newQuestions[questionIndex].options = newList;
+
+        setQuestions(newQuestions);
     };
     return (
         <>
-            {question.options.map((media, index) => {
+            {questions[questionIndex].options.map((media, optionIndex) => {
                 return (
                     <div
                         className="w-[800px] flex-row flex items-center pl-3 mb-3"
-                        key={index}
+                        key={`q${questionIndex}o${optionIndex}`}
                     >
                         <button
                             className={`border-2 border-stone-200 rounded-full h-[30px] w-[30px] mr-2 flex items-center justify-center ${
@@ -49,7 +59,7 @@ export default function EditMC({ setQuestion, question }) {
                                 changeOption(
                                     e,
                                     media.answer,
-                                    index,
+                                    optionIndex,
                                     !media.correct
                                 )
                             }
@@ -70,12 +80,14 @@ export default function EditMC({ setQuestion, question }) {
                                     changeOption(
                                         e,
                                         e.target.value,
-                                        index,
+                                        optionIndex,
                                         media.correct
                                     )
                                 }
                             ></input>
-                            <button onClick={(e) => removeOption(e, index)}>
+                            <button
+                                onClick={(e) => removeOption(e, optionIndex)}
+                            >
                                 <FontAwesomeIcon
                                     icon={faXmark}
                                     className="text-stone-400 cursor-pointer"
@@ -85,18 +97,18 @@ export default function EditMC({ setQuestion, question }) {
                     </div>
                 );
             })}
-            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
-                <button
-                    className="ml-3 text-stone-400"
-                    onClick={(e) => newOption(e)}
-                >
+            <button
+                className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3"
+                onClick={(e) => newOption(e)}
+            >
+                <div className="ml-3 text-stone-400">
                     <FontAwesomeIcon
                         className="text-sm"
                         icon={faPlus}
                     ></FontAwesomeIcon>{" "}
                     Add
-                </button>
-            </div>
+                </div>
+            </button>
         </>
     );
 }

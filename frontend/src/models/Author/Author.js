@@ -5,6 +5,7 @@ import Main from "./Main";
 import Edit from "./Edit/Edit";
 import { confirmType } from "../../API_index";
 import Game from "./Game/Game";
+import Quiz from "./Game/Quiz";
 
 export default function Author({
     setShowNavBar,
@@ -43,7 +44,7 @@ export default function Author({
     if (edit) {
         return <Edit size={size} cookies={cookies} id={authorPath} />;
     } else if (game) {
-        return <Game id={authorPath} cookies={cookies} />;
+        return <Quiz id={authorPath} cookies={cookies} />;
     } else
         switch (authorPath) {
             case "Explore":
