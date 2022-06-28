@@ -12,7 +12,7 @@ import EditTF from "./EditTF";
 import { getQuiz, sendQuiz } from "./API_edit";
 
 const empty_game = {
-    title: "",
+    title: "a",
     type: "",
     score: "0",
     dificulty: "",
@@ -25,6 +25,7 @@ const starter = [empty_game];
 
 export default function Edit({ cookies, id }) {
     const [questions, setQuestions] = useState(starter);
+    const [title, setTitle] = useState("");
     const [error, setError] = useState(null);
 
     const changeContentText = (e, value, questionIndex, contentIndex) => {
@@ -122,14 +123,10 @@ export default function Edit({ cookies, id }) {
         setQuestions(newQuestions);
     };
 
-    const changeTitle = (e, questionIndex) => {
+    const changeTitle = (e) => {
         e.preventDefault();
 
-        let newQuestions = [...questions];
-
-        newQuestions[questionIndex].title = e.target.value;
-
-        setQuestions(newQuestions);
+        setTitle(e.target.value);
     };
 
     const newQuestion = (e) => {
@@ -151,7 +148,7 @@ export default function Edit({ cookies, id }) {
         e.preventDefault();
 
         try {
-            const response = await sendQuiz([...questions], cookies, id);
+            const response = await sendQuiz([...questions], cookies, id, title);
 
             if (response) redirect("/Author/Main");
             else
@@ -185,37 +182,35 @@ export default function Edit({ cookies, id }) {
                         {error}
                     </div>
                 )}
+                <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                    <input
+                        className="outline-0 ml-3 bg-inherit w-full"
+                        type="textarea"
+                        id="title"
+                        name="title"
+                        value={questions.title}
+                        placeholder="title"
+                        onChange={changeTitle}
+                    ></input>
+                </div>
                 {questions.map((question, questionIndex) => {
                     return (
                         <>
                             {questionIndex !== 0 && (
                                 <hr className="h bg-gray-900 w-[900px] mt-2 mb-5" />
                             )}
-                            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
-                                <input
-                                    className="outline-0 ml-3 bg-inherit w-full"
-                                    type="textarea"
-                                    id="title"
-                                    name="title"
-                                    value={question.title}
-                                    placeholder="title"
-                                    onChange={(e) =>
-                                        changeTitle(e, questionIndex)
+                            {questionIndex !== 0 && (
+                                <button
+                                    onClick={(e) =>
+                                        removeQuestion(e, questionIndex)
                                     }
-                                ></input>
-                                {questionIndex !== 0 && (
-                                    <button
-                                        onClick={(e) =>
-                                            removeQuestion(e, questionIndex)
-                                        }
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faXmark}
-                                            className="text-stone-400 cursor-pointer"
-                                        ></FontAwesomeIcon>
-                                    </button>
-                                )}
-                            </div>
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faXmark}
+                                        className="text-stone-400 cursor-pointer"
+                                    ></FontAwesomeIcon>
+                                </button>
+                            )}
                             <div className="flex text-3xl py-2">Difficulty</div>
                             <div className="w-[800px] flex flex-row justify-between items-center">
                                 <button

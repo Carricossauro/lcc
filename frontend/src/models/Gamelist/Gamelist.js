@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getQuestions } from "./API_gamelist";
+import { getQuestions, getQuizzes } from "./API_gamelist";
 import { confirmType } from "../../API_index";
 
 export default function Gamelist({
@@ -44,7 +44,7 @@ export default function Gamelist({
 
     useEffect(() => {
         async function effect() {
-            const data = await getQuestions(cookies);
+            const data = await getQuizzes(cookies);
 
             if (author) {
                 try {
@@ -119,7 +119,7 @@ export default function Gamelist({
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredGames.map((question, index) => {
+                            {filteredGames.map((quiz, index) => {
                                 return (
                                     <tr
                                         className={`border-gray-200 even:bg-gray-200 cursor-pointer`}
@@ -131,24 +131,24 @@ export default function Gamelist({
                                                     authorRedirect
                                                         ? "Author"
                                                         : "Player"
-                                                }/Game/${question.id}`
+                                                }/Game/${quiz.id}`
                                             );
                                         }}
                                     >
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.title}
+                                            {quiz.title}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.author}
+                                            {quiz.author}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.dificulty}
+                                            DIFFICULTY
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.minage}
+                                            MINAGE
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            {question.type}
+                                            TYPE
                                         </td>
                                     </tr>
                                 );

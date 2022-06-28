@@ -30,7 +30,7 @@ export async function verify_login(cookies, removeCookie, setLoggedIn) {
             };
 
             const user_response = await fetch(user_url, user_requestOptions);
-            if (!user_response) throw "user";
+            if (!user_response.ok) throw "user";
 
             const data = await user_response.json();
 

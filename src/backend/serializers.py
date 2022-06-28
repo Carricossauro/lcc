@@ -136,7 +136,7 @@ class SaveQuiz(serializers.ModelSerializer):
     questions = SaveQuestion(many=True)
     class Meta:
         model = models.Quiz
-        fields=['id','questions', 'author']
+        fields=['id','questions', 'author', 'title']
 
     def create(self, validated_data):
         questions = validated_data.pop('questions')
@@ -209,13 +209,15 @@ class SaveQuiz(serializers.ModelSerializer):
         return instance
 
 class LoadQuizForAuthor(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only= True)
     questions = LoadQuestionForAuthor(many=True)
     class Meta:
         model = models.Quiz
-        fields=['id','questions', 'author']
+        fields=['id','questions', 'author', 'title']
 
 class LoadQuizForPlayer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only= True)
     questions = LoadQuestionForPlayer(many=True)
     class Meta:
         model = models.Quiz
-        fields=['id','questions', 'author']
+        fields=['id','questions', 'author', 'title']

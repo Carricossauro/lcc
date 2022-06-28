@@ -15,7 +15,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     
 class Quiz(models.Model):
-     author = models.ForeignKey(User, models.DO_NOTHING)  
+    author = models.ForeignKey(User, models.DO_NOTHING)
+    title = models.CharField(max_length=45)
 
 class Question(models.Model):
     DIFICULTY =(('E','Easy'),('M','Medium'),('H','Hard'))

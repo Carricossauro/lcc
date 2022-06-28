@@ -1,4 +1,4 @@
-export async function sendQuiz(questions, cookies, newQuestion) {
+export async function sendQuiz(questions, cookies, newQuestion, title) {
     const token = cookies["access_token"];
 
     for (var questionIndex in questions) {
@@ -25,7 +25,7 @@ export async function sendQuiz(questions, cookies, newQuestion) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ questions: questions }),
+        body: JSON.stringify({ questions: questions, title: title }),
     };
 
     let url = "";

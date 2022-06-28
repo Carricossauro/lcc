@@ -1,4 +1,4 @@
-export async function getQuestions(cookies) {
+export async function getQuizzes(cookies) {
     const token = cookies["access_token"];
 
     const requestOptions = {
@@ -9,7 +9,7 @@ export async function getQuestions(cookies) {
         },
     };
 
-    const url = `${process.env.REACT_APP_API_URL}/api/questions/`;
+    const url = `${process.env.REACT_APP_API_URL}/api/quizzes/`;
 
     const response = await fetch(url, requestOptions);
 
