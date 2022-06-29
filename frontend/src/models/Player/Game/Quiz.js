@@ -10,19 +10,34 @@ export default function Quiz({ id, cookies }) {
         window.location.href = page;
     };
 
+    const totalScore = () => {
+        let total = 0;
+
+        for (var questionIndex in quiz.questions)
+            total += quiz.questions[questionIndex].score;
+
+        return total;
+    };
+
     async function submit(e) {
         try {
+            let correct = 0;
             for (var questionIndex in quiz.questions) {
-                await sendAnswer(
-                    answers[questionIndex],
-                    quiz.questions[questionIndex].id,
-                    cookies
-                );
+                if (answers[questionIndex]) {
+                    const data = await sendAnswer(
+                        answers[questionIndex],
+                        quiz.questions[questionIndex].id,
+                        cookies
+                    );
+
+                    if (data.correct)
+                        correct += quiz.questions[questionIndex].score;
+                }
             }
 
-            redirect(`/Player/Game/Stats/${id}`);
+            redirect(`/Player/Game/Stats/${id}-${correct}-${totalScore()}`);
         } catch (e) {
-            // redirect("/");
+            redirect("/");
         }
     }
 
@@ -52,6 +67,7 @@ export default function Quiz({ id, cookies }) {
                             answers={answers}
                             setAnswers={setAnswers}
                             questionIndex={index}
+                            key={`q${index}`}
                         />
                     );
                 })}

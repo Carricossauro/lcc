@@ -36,8 +36,6 @@ export async function sendAnswer(answer, question, cookies) {
         }),
     };
 
-    console.log(requestOptions.body);
-
     const response = await fetch(url, requestOptions);
 
     const data = await response.json();

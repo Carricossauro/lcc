@@ -15,8 +15,6 @@ export default function GameMC({
         setAnswers(newAnswers);
     };
 
-    console.log(answers);
-
     return (
         <>
             {question.options.map((option, optionIndex) => {
