@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Gamelist from "../Gamelist/Gamelist";
-import Game from "./Game/Game";
 import { confirmType } from "../../API_index";
 import Quiz from "./Game/Quiz";
+import Stats from "./Stats";
 
 export default function Player({
     setShowNavBar,
@@ -11,6 +11,7 @@ export default function Player({
     game,
     cookies,
     removeCookies,
+    stats,
 }) {
     const redirect = (page) => {
         window.location.href = page;
@@ -36,7 +37,10 @@ export default function Player({
         effect();
     }, []);
 
-    if (game) {
+    if (stats) {
+        const results = playerPath.split("-");
+        return <Stats results={results} cookies={cookies} />;
+    } else if (game) {
         return <Quiz id={gameid} cookies={cookies} />;
     } else {
         switch (playerPath) {

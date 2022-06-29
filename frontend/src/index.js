@@ -64,6 +64,7 @@ const Index = () => {
                                 setShowNavBar={setShowNavBar}
                                 size={size}
                                 game={true}
+                                stats={false}
                                 cookies={cookies}
                                 setCookie={setCookie}
                                 removeCookie={removeCookie}
@@ -71,12 +72,27 @@ const Index = () => {
                         }
                     ></Route>
                     <Route
+                        path="/Player/Game/Stats/:playerPath"
+                        element={
+                            <Player
+                                setShowNavBar={setShowNavBar}
+                                size={size}
+                                game={false}
+                                stats={true}
+                                cookies={cookies}
+                                setCookie={setCookie}
+                                removeCookie={removeCookie}
+                            />
+                        }
+                    />
+                    <Route
                         path="/Player/:playerPath"
                         element={
                             <Player
                                 setShowNavBar={setShowNavBar}
                                 size={size}
                                 game={false}
+                                stats={false}
                                 cookies={cookies}
                                 setCookie={setCookie}
                                 removeCookie={removeCookie}
