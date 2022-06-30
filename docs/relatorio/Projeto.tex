@@ -81,9 +81,15 @@
 
 \begin{abstract}  % resumo do documento
 
-Este relatório retrata todo o processo de desenvolvimento da plataforma \emph{“ComputationalMind”} e as diferentes decisões tomadas ao longo do mesmo. O objetivo deste projeto é criar um \emph{Website} educacional para uso em escolas e outras instituições de ensino e que possibilite ao público mais jovem aprender por meio de jogos de escolha múltipla, resposta curta e verdadeiro ou falso, o \emph{mindset} a adotar para ser um bom \emph{problem solver} e consequentemente um bom programador. A plataforma pode ser acedida por meio de um navegador \emph{web} no computador ou telemóvel.
+Este relatório retrata todo o processo de desenvolvimento da plataforma \emph{“ComputationalMind”} e as diferentes decisões tomadas ao longo do mesmo. O objetivo deste projeto é criar um \emph{Website} educacional para uso em escolas e outras instituições de ensino, que possibilite ao público mais jovem aprender por meio de jogos de escolha múltipla, resposta curta e verdadeiro ou falso, o \emph{mindset} a adotar para ser um excelente \emph{problem solver} e, consequentemente, um excelente programador.
+O desenvolvimento começou pelo desenho do modelo lógico da base de dados e validação da mesma junto dos proponentes. Para tal foram  utilizadas as ferramentas \emph{draw.io} e \emph{MySQL WorkBench}. A implementação física da base de dados foi realizado através da \emph{framework Django} e o sistema de gestão de bases de dados escolhido foi o \emph{MySQL}.
+O \emph{back-office} foi construido em \emph{Django} com recurso à ferramenta \emph{Django rest framework} que possibilita o desenvolvimento de \emph{Web APIs}. O
+\emph{front-office} foi feito com \emph{ReactJS} e \emph{tailwindcss} sendo que o seu processo de construção começou com o desenho de \emph{mockups} no \emph{figma.com}.
+O fluxo dos dados inseridos pelo utilizador é feita do \emph{front-office} para o \emph{back-office} pela \emph{rest API} através de ficheiros \emph{Json}. Os dados enviado pelo \emph{ReactJS} são recebido pelo \emph{Django}, validados e caso estejam no formato correcto, são inseridos na base de dados. O fluxo de dados da BD para o utilizador é realizada de modo análogo.
+A plataforma pode ser acedida por meio de um navegador \emph{web} no computador ou telemóvel.\newline\newline
 
-Palavras-Chave: Pensamento Computacional, \emph{web site}, aprendizagem.
+\textbf{Palavras-Chave:} Pensamento Computacional, \emph{web site}, aprendizagem,  \emph{back-office}, \emph{front-office}, \emph{back-end}, \emph{front-end} \emph{Rest framework}, \emph{Django}, \emph{ReactJS}, \emph{Base de dados}.
+
 \end{abstract}
 
 \tableofcontents % insere Indice
@@ -91,14 +97,14 @@ Palavras-Chave: Pensamento Computacional, \emph{web site}, aprendizagem.
 \chapter{Introdução}
 \pagenumbering{arabic}
 
-Na unidade curricular Projeto da licenciatura de Ciências da Computação, foi-nos proposto o desenvolvimento de uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. Esta plataforma deve ser constituída por uma interface de \emph{back-office} (BO) e uma interface de \emph{front-office} (FO).
+Na unidade curricular Projeto da licenciatura de Ciências da Computação, foi-nos proposto o desenvolvimento de uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder aos mesmos. Esta plataforma deve ser constituída por uma interface de \emph{back-office} (BO) e uma interface de \emph{front-office} (FO).
 
-Para ajudar na criação deste projeto, inspirámo-nos em websites já existentes com um propósito muito semelhante ao nosso, como, por exemplo, o \emph{Kahoot}\footnote{https://kahoot.it}, o \emph{Socrative}\footnote{https://socrative.com} e o \emph{Hypatiamat}\footnote{https://hypatiamat.com}.
+Para auxiliar na criação deste projeto, inspirámo-nos em websites já existentes com um propósito muito semelhante ao nosso, como, por exemplo, o \emph{Kahoot}\footnote{https://kahoot.it}, o \emph{Socrative}\footnote{https://socrative.com} e o \emph{Hypatiamat}\footnote{https://hypatiamat.com}.
 
-Para além disso, o nosso trabalho foi dividido em três etapas distintas:
+Relativamente à estrutura do nosso trabalho, este foi dividido em três etapas distintas:
 \begin{itemize}
-   \item A primeira etapa, consiste na caracterização do \emph{web site} a ser desenvolvida. Foi feita a apresentação do plano de desenvolvimento, bem como o estudo das medidas para a satisfação dos objetivos.
-   \item A segunda etapa, consiste em materializar as ideias obtidas na primeira fase, havendo assim, uma descrição detalhada do software que irá ser desenvolvido. Nesta etapa, é feito, também, um planeamento da base de dados a implementar.
+   \item A primeira etapa, consiste na caracterização do \emph{web site} a ser desenvolvida, onde é feita a apresentação do plano de desenvolvimento, bem como o estudo das medidas para a satisfação dos objetivos.
+   \item A segunda etapa, consiste em materializar as ideias obtidas na primeira fase, existindo assim, uma descrição detalhada do software que irá ser desenvolvido. Nesta etapa faz-se, também, um planeamento da base de dados a implementar.
    \item A terceira e última etapa, a Implementação, consiste no desenvolvimento do software bem como a implementação das funcionalidades fundamentais, tendo em conta o planeamento das etapas anteriores. É nesta fase que se faz a validação da aplicação e se apresenta o produto final.
 \end{itemize}
 
@@ -106,7 +112,7 @@ Para além disso, o nosso trabalho foi dividido em três etapas distintas:
 
 No âmbito do treino do Pensamento Computacional, pretende-se criar uma plataforma que permita inserir problemas/desafios para que os utilizadores possam, em modo jogo, responder a esses desafios. 
 
-A plataforma deve ter uma interface de \emph{back-office} (BO) para armazenar os problemas/desafios (nomeadamente o seu enunciado, opções de resposta, resposta certa, faixa etária, etc) apresentados na \emph{página\ da\ web} do bebras\footnote{http://bebras.dcc.fc.up.pt/problems/2021/problemas\_09\_10.pdf}. Ou seja este conterá toda a informação necessária ao sistema, e é responsável pela gestão do \emph{site} e das suas funcionalidades. A interface de \emph{front-office} (FO) oferecerá a interação com utilizador para que no modo jogo este possa responder aos desafios selecionados a partir do repositório criado no BO da plataforma, que lhe atribuirá pontos, prémios, ou outras formas de recompensa por forma a motivá-lo e envolvê-lo mais.
+A plataforma deve ter uma interface de \emph{back-office} (BO) para armazenar os problemas/desafios (nomeadamente o seu enunciado, opções de resposta, resposta certa, faixa etária, etc) apresentados na \emph{página\ da\ web} do bebras\footnote{http://bebras.dcc.fc.up.pt/problems/2021/problemas\_09\_10.pdf}. Esta conterá toda a informação necessária ao sistema, e é responsável pela gestão do \emph{site} e das suas funcionalidades. A interface de \emph{front-office} (FO) oferecerá a interação ao utilizador para que, no modo jogo este possa responder aos desafios selecionados a partir do repositório criado no BO da plataforma, que lhe atribuirá pontos, prémios, ou outras formas de recompensa por forma a motivá-lo e envolvê-lo mais.
 
 \begin{figure}[h]
     \centering
@@ -119,21 +125,21 @@ A plataforma deve ter uma interface de \emph{back-office} (BO) para armazenar os
 
 Para a elaboração de todo o projeto foi necessário recorrer a diversos recursos que ajudassem na realização do mesmo.
 
-Antes de mais, o principal recurso utilizado foi a própria equipa de docentes que foi responsável por esclarecer e ajudar na tomada de decisões ao longo de todas as fases do projeto.
+Antes de mais, o principal recurso utilizado foi a equipa de docentes que nos esclareceu e ajudou na tomada de decisões ao longo de todas as fases do projeto.
 
 Inicialmente, com a escolha do tema foi necessário recolher uma série de artigos e questões com o intuito de nos familiarizar com os diferentes tipos de mídia que a plataforma teria de suportar e possibilitar a sua mesclação. 
 
-Após essa pesquisa, surgiu a necessidade de ser feita modelação da Base de Dados, junto com a esquemização da página através da criação de Mockups \footnote{https://figma.com}. Na nossa visão estes passos representam um pouco os pilares e ideias sobre os quais o nosso projeto acenta, daí terem tomado uma parte significativa do nosso tempo.
+Após essa pesquisa, surgiu a necessidade de ser feita a modelação da Base de Dados, junto com a esquematização da página através da criação de Mockups \footnote{https://figma.com}. Na nossa visão estes passos representam um pouco os pilares e ideias sobre os quais o nosso projeto acenta, daí terem tomado uma parte significativa do nosso tempo.
 
-De seguida, foram selecionadas as \emph{frameworks} para criação tanto da \emph{parte de suporte}, como da \emph{interface frontal}, sendo elas o \emph{Django} \footnote{https://djangoproject.com} e o \emph{Reactjs} \footnote{https://reactjs.org} junto com o \emph{TailWindCSS} \footnote{https://tailwindcss.com}. Nesta parte damos uma posição de destaque à fase de teste e adaptação com as ferramentas em uso. Após esta familiarização seguiu-se a etapa das correções dos eventuais erros e de ajustes por forma a nos certificarmos que o produto final correspondia às nossas expetativas, e às do público-alvo.
+De seguida, foram selecionadas as \emph{frameworks} para criação tanto da \emph{parte de suporte}, como da \emph{interface frontal}, sendo elas o \emph{Django} \footnote{https://djangoproject.com} e o \emph{Reactjs} \footnote{https://reactjs.org} junto com o \emph{TailWindCSS} \footnote{https://tailwindcss.com}. Nesta parte, destaca-se a fase de teste e de adaptação com as ferramentas em uso. Após esta familiarização, seguiu-se a etapa das correções dos eventuais erros e de ajustes por forma a nos certificarmos que o produto final correspondia às nossas expetativas e às do público-alvo.
 
 \chapter{Mockups}
 
-Durante o processo de criação do site foi-nos proposto a criação de uma maquete (\emph{mockup}), que serviria como uma espécie de rascunho visual da forma como a \emph{página\ da\ web} poderia ser apresentada, permitindo-nos testar como os vários elementos visuais funcionam em conjunto.
+Durante o processo de criação do site propuseram-nos a criação de uma maquete (\emph{mockup}), que serviria como uma protótipo visual da forma como a \emph{página\ da\ web} poderia ser apresentada, permitindo-nos testar como os vários elementos visuais funcionam em conjunto.
 
 Como o \emph{mockup} é um design estático, este não tem as funcionalidades oferecidas por um site vivo, por exemplo, não abrirá um \emph{pop-up} quando se clica no botão \emph{Login}, entre outros elementos. Fizemo-lo com o intuito de apresentar muitos dos elementos finais, da maneira como queríamos o \emph{design}, mas como em todas as maquetes algumas ideias foram modificas e eliminadas, devido a sugestões propostas pelos docentes da UC e para facilitar o processo de implementação.
 
-Em última análise, percebemos que o \emph{mockup} de uma página deve ser criado para um propósito específico em mente. Que ofereceu à equipa a chance de ver como o objetivo podia ser alcançado, para que pudesse ser trazido à vida por meio da utilização de padrões de marca e criatividade visual. Sendo que aparece no ponto médio do processo de \emph{web\ design}.
+Em última análise, percebemos que o \emph{mockup}, aparece no ponto intermédio do processo de criação de \emph{web\ design}. A maquete de uma página deve ser criada com um propósito específico em mente, e esta possibilitou-nos visualizar como poderíamos alcançar o objetivo final. Nomeadamente, como poderíamos concretizá-la através da utilização de padrões de marca e criatividade visual. 
 
 \begin{figure}
      \centering
@@ -220,19 +226,19 @@ Este será um processo trabalhoso, mas que trará grandes frutos no futuro, uma 
 \section{Identificação e caracterização das entidades}
 
 \subsection{Author}
-Um autor é identificado por um \textbf{código}, devendo ter também uma referência do seu \textbf{nome}, \textbf{\emph{e-mail}} e \textbf{\emph{password}}.
+Um autor é identificado por um \textbf{código}, devendo ter também uma referência do seu \textbf{nome}, do \textbf{\emph{e-mail}} e da \textbf{\emph{password}}.
 
 \subsection{Player}
-Um jogador é identificado por um \textbf{código}, devendo ter também uma referência do seu \textbf{nome}, \textbf{data de aniversário}, \textbf{\emph{e-mail}} e \textbf{\emph{password}}
+Um jogador é identificado por um \textbf{código}, devendo ter também uma referência do seu \textbf{nome}, da \textbf{data de aniversário}, do \textbf{\emph{e-mail}} e da \textbf{\emph{password}}.
 
 \subsection{Question}
-Uma questão é identificado por um \textbf{código}, devendo ter também uma referência ao \textbf{autor}, um um \textbf{título}, um identificador do \textbf{tipo} (resposta curta, escolha múltipla ou verdadeiro e falso), uma \textbf{classificação}, a \textbf{dificuldade} e a \textbf{idade mínima}.
+Uma questão é identificado por um \textbf{código}, devendo ter também uma referência ao \textbf{autor}, um \textbf{título}, um identificador do \textbf{tipo} (resposta curta, escolha múltipla ou verdadeiro e falso), uma \textbf{classificação}, a \textbf{dificuldade} e a \textbf{idade mínima}.
 
 \subsection{Content}
 Um conteúdo é identificado por uma referência à \textbf{questão}, uma \textbf{ordem} pela qual as questões aparecem, o \textbf{tipo} do conteúdo e os \textbf{links/imagens/vídeos} associados. 
 
 \subsection{Option}
-Uma opção é identificado por um \textbf{código}, uma referência à \textbf{questão}, a \textbf{resposta} para serem feitas as verificações e a \textbf{opção correta}.
+Uma opção é identificada por um \textbf{código}, uma referência à \textbf{questão}, a \textbf{resposta} para serem feitas as verificações e a \textbf{opção correta}.
 
 \subsection{History}
 Um histórico é identificado por \textbf{código}, uma referência ao \textbf{jogador}, uma referência à \textbf{questão}, a \textbf{data} que o jogador respondeu à questão, as suas \textbf{respostas} e quais \textbf{acertou}.
@@ -317,21 +323,29 @@ Para o desenvolvimento da  \emph{parte secundária} utilizou-se \emph{Django} e 
 
 \section{Django}
 
-\emph{Django} é uma \emph{framework} gratuito e de código aberto, com o intuito de facilitar e acelerar o desenvolvimento \emph{web}, escrito em Python, que utiliza o padrão \emph{model-template-view} (MTV) e o princípio \emph{don't repeat yourself} (DRY) através do aproveitamento máximo de código já feito. O \emph{web\ server}, pode ajudar os \emph{developers} a produzir de forma eficiente um FO ou BO rico em recursos, seguro e escalável.
+\emph{Django} é uma \emph{framework} gratuita e de código aberto, com o intuito de facilitar e acelerar o desenvolvimento \emph{web}, escrito em Python, que utiliza o padrão \emph{model-template-view} (MTV) e o princípio \emph{don't repeat yourself} (DRY) através do reaproveitamento de código já feito. O \emph{web\ server}, pode ajudar os \emph{developers} a produzir de forma eficiente um FO ou BO rico em recursos, seguro e escalável.
 
-O \emph{Django REST Framework} é um conjunto de ferramentas utilizado para construir \emph{APIs} (Interfaces de Programação de Aplicações) para \emph{Web}.
+O \emph{Django REST Framework} é um conjunto de ferramentas utilizadas para construir \emph{APIs} (Interfaces de Programação de Aplicações) para \emph{Web}.
 
-Apesar do \emph{Django} possibilitar o desenvolvimento do \emph{front-end} e \emph{back-end}, a utilização de uma \emph{REST API} permite criar uma \emph{parte de suporte} mais genérica, e torna possível construir uma \emph{parte frontal} para vários tipos de dispositivos no futuro. Desta forma a aplicação torna-se mais escalável. 
+Apesar do \emph{Django} possibilitar o desenvolvimento do \emph{front-end} e do \emph{back-end}, a utilização de uma \emph{REST API} permite criar uma \emph{parte de suporte} mais genérica, e torna possível a construção de uma \emph{parte frontal} para diversos dispositivos no futuro, tornando a nossa aplicação mais escalável. 
 
 \section{Objetivo}
 
 O \emph{back-end} do projeto tem como objetivo fazer a ligação entre a Base de Dados e a \emph{interface frontal}, tendo sido desenvolvido ainda uma \emph{REST API} que será "consumida" pela mesma.
 \newpage
 \section{Desenvolvimento}
-O processo de desenvolvimento começou pela construção da base de dados através do \emph{Django}, com base no esquema lógico definido. Para tal, foram construidos todos os modelos necessários para representar as várias entidades e os seus relacionamentos. A construção da base de dados foi feito com recurso à funcionalidade \emph{migrate} disponibilizada pelo \emph{Django}. O sistema de gestão de base de dados utilizado foi o \emph{MySQL}.
-Devido a algumas restrições imposta pelo \emph{Django}, foi necessário realizar algumas alterações no esquema lógico inicialmente definido.
+O processo de desenvolvimento começou pela construção da base de dados através do \emph{Django}, com base no esquema lógico definido. Para tal, foram construídos todos os modelos necessários para representar as várias entidades e os seus relacionamentos. A construção da base de dados foi feita com recurso à funcionalidade \emph{migrate} disponibilizada pelo \emph{Django}. O sistema de gestão de base de dados utilizado foi o \emph{MySQL}.
+Devido a algumas restrições imposta pelo \emph{Django}, foi necessário realizar algumas alterações no esquema lógico, inicialmente, definido.
 
-A principal função do \emph{Django} é servir de intermediário de comunicação entre a \emph{parte frontal} e a base de dados. Essa comunicação é realizada através da \emph{REST API} com o eviio de ficheiros em formato \emph{JSON}. Para tal, o \emph{Django} possui funções especificas para serializar os dados. O uso dá-se da seguinte forma, o \emph{front-end} faz uma pedido através da \emph{REST API}, de seguida este pedido é analisado pelo \emph{Django} e, caso esteja correto, os dados requeridos são copiados da base de dados, convertidos e enviados em formato \emph{JSON} para a \emph{interface frontal}. A comunicação inversa também é possível e processa-se de modo análogo.
+A principal função do \emph{Django} é servir de intermediário da comunicação entre a \emph{parte frontal} e a base de dados. Essa comunicação é realizada através da \emph{REST API} com o envio de ficheiros em formato \emph{JSON}. Para tal, o \emph{Django} possui funções específicas para serializar os dados. 
+
+A comunicação entre os constituintes desta plataforma ocorre da seguinte forma: 
+\begin{enumerate}
+    \item O \emph{ReactJs} faz uma pedido através da \emph{REST API}.
+    \item Este pedido é analisado \emph{Django} e, caso esteja correto, os dados requeridos são extraídos da base de dados, convertidos e enviados para a \emph{interface frontal} no formato \emph{JSON}.
+\end{enumerate}
+
+É de destacar que a comunicação inversa é também possível e processa-se de modo análogo.
 \newline\newline
 
 \begin{figure}[h]
@@ -1318,23 +1332,29 @@ Para o desenvolvimento do  \emph{front-end} utilizou-se \emph{React} e \emph{Tai
 
 \section{React e TailWindCSS}
 
-\emph{React.js} é uma biblioteca \emph{JavaScript} de código aberto usada para construir o \emph{front-end} para aplicativos e páginas \emph{web} de página única. Sendo usado para lidar com a camada de visualização para os aplicativos da \emph{Web} e móveis. O \emph{React} também nos permite criar componentes de interface do usuário reutilizáveis para que os desenvolvedores criem grandes aplicativos da \emph{Web} que possam alterar dados sem que seja necessário recarregar a página. O seu principal objetivo é ser rápido, escalável e simples. Este funciona apenas em interfaces de usuário no aplicativo, o que corresponde à exibição do modelo \emph{Model-View-Controller} (MVC), podendo ser usado em conjunto com outras bibliotecas ou \emph{frameworks\ JavaScript}, como \emph{Angular\ JS} em MVC.
+\emph{React.js} é uma biblioteca \emph{JavaScript} de código aberto usada para construir o \emph{front-end} de aplicativos e de páginas \emph{web} utilizando a lógica de página única. Sendo usada para lidar com a camada de visualização para as aplicações da \emph{Web} e de telemóvel. 
 
-\emph{Tailwind\ CSS} é basicamente um \emph{framework\ CSS} utilitário para construir de forma rápida interfaces de utilizador personalizadas, sendo uma estrutura \emph{CSS} altamente personalizável e de baixo nível que fornece todos os blocos de construção necessários para criar \emph{designs} sob medida, sem que seja necessária a escrita de \emph{CSS} como na abordagem tradicional.
+Para além disso, esta também nos permite criar componentes para a interface do usuário que sejam reutilizáveis para que os \emph{developers} criem grandes aplicações, por forma a facilitar a alteração dos dados sem que seja necessário o recarregar a página. O seu principal objetivo é ser rápido, escalável e simples. Este funciona apenas em interfaces de usuário no aplicativo, o que corresponde à exibição do modelo \emph{Model-View-Controller} (MVC), existindo a possibilidade de ser usado em conjunto com outras bibliotecas ou \emph{frameworks} de \emph{JavaScript}, como \emph{Angular\ JS} em MVC.
+
+\emph{Tailwind\ CSS} corresponde, basicamente, a uma \emph{framework} de \emph{CSS} fundamental para a construção rápida de interfaces de utilizador personalizadas. Sendo que uma estrutura \emph{CSS} é altamente personalizável e de baixo nível que fornece todos os blocos de construção necessários para criar \emph{designs} sob medida, sem que seja necessária a escrita de \emph{CSS} como na abordagem tradicional.
 
 \section{Objetivo}
 
 O \emph{front-end} é responsável por possibilitar a interação do utilizador com a página dentro de uma aplicação \emph{web} e cobrindo as questões da política de privacidade.
-
+\newpage
 \section{Desenvolvimento}
 
-Cenas
+O desenvolvimento do \emph{front-end} começou com o desenho dos \emph{Mockups} no \emph{Figma}, que serviram como base inicial. No entanto, ao longo deste desenvolvimento, o aspeto do \emph{web site} foi divergindo do, inicialmente, desenhado.
+
+A construção, propriamente dita, do \emph{front-end} realizou-se em \emph{ReactJS}, uma vez que alguns dos elementos do grupo já possuíam conhecimentos na utilização desta \emph{framework}. Relativamente à estilização,  utilizou-se a \emph{framework TailWindCSS}.
+
+O \emph{front-end} é a componente da plataforma com o qual o utilizador interage, sendo da sua responsabilidade receber os pedidos e comunicá-los ao \emph{back-end}. Como a esmagadora maioria dos utilizadores não apresenta conhecimentos ao nível informático, o \emph{front-end} adquire especial importância, dado que se o aspeto da plataforma não for apelativo, por melhor que seja a sua implementação ao nível lógico, esta não será valorizada pelo utilizador, e o site terá pouca adesão.
 
 \chapter{ComputationalMind}
 
 Ao longo deste semestre desenvolvemos a página do \emph{ComputationalMind} até que o produto final fosse semelhante ao que foi idealizado e apresentado nos capítulos anteriores. Em seguida, será demonstrado o funcionamento e onde se podem encontrar todas as funcionalidades implementadas.
 
-\section{Página inicial (Sem sessão iniciada)}
+\section{Página inicial}
 
 Na página inicial consideramos que o utilizador pode ser um \emph{Player} que apenas usufrui dos jogos disponibilizados na plataforma pelo \emph{Author} que é a entidade que criou o jogo.\newline\newline
 
@@ -1360,17 +1380,19 @@ Nesta secção incorporamos informação sobre o propósito da página.\newline
 
 \section{Contact}
 
-Aqui os utilizadores podem informar os \emph{developers} de possíveis \emph{bugs} que tenham encontrado ou sugerir novas funcionalidades que tornariam a plataforma mais apelativa ou comuda para quem a usa.
+Aqui os utilizadores podem informar os \emph{developers} de possíveis \emph{bugs} que tenham encontrado ou sugerir novas funcionalidades que tornariam a plataforma mais apelativa ou cómoda para quem a usa.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 10cm]{contact.png}
+    \includegraphics[width = 10cm]{contUs.png}
     \caption{Contact}
     \label{fig:cont}
 \end{figure}
 
+\newpage
+
 \section{\emph{Login} / \emph{Sign Up}}
-Após a escolha de uma das opções disponibilizadas na página inicial os utilizadores seram redirecionados para a página de \emph{Login} / \emph{Sign Up}. 
+Após a escolha de uma das opções disponibilizadas na página inicial, os utilizadores serão redirecionados para a página de \emph{Login} / \emph{Sign Up}. 
 
 Nesta página é possível um utilizador autenticar-se ou efetuar o seu registo no site. 
 
@@ -1387,7 +1409,29 @@ A página de autentificação é igual para ambos os utilizadores, a única dife
     \label{fig:log&sigUp}%
 \end{figure}
 
-\section{Escolha de jogos para \emph{Player} ou \emph{Author}}
+\section{Menu do \emph{Author}}
+O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pelo facto de existir uma secção chamada \emph{Creat New Game} onde poderá criar os diferentes tipos de jogos referidos nos capítulos anteriores.\newline\newline
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{menuAut.png}
+    \caption{Menu do \emph{Author}}
+    \label{fig:menuAut}
+\end{figure}
+
+\newpage
+
+\section{\emph{New Game Menu}}
+Neste menu oferecemos todas as ferramentas suportadas pela página para que o \emph{Author} consiga criar novo conteúdo para a mesma.\newline\newline
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{editAut.png}
+    \caption{Menu para Criação de Jogos pelo \emph{Author}}
+    \label{fig:editAut}
+\end{figure}
+
+\section{Menu de jogos para \emph{Player}}
 Em seguida, ambos os utilizadores são redirecionados para uma página onde se lista todos os jogos que estão disponíveis para jogar.\newline\newline
 
 \begin{figure}[h]
@@ -1397,32 +1441,8 @@ Em seguida, ambos os utilizadores são redirecionados para uma página onde se l
     \label{fig:pagJog}
 \end{figure}
 
-\newpage
-
-\section{Menu do \emph{Author}}
-O \emph{Author} é um utilizador especial, diferindo de um utilizador normal pelo facto de existir uma secção chamada \emph{Creat New Game} onde poderá criar os diferentes tipos de jogos referido nos capítulos anteriores.\newline\newline
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 10cm]{menuAut.png}
-    \caption{Menu do \emph{Author}}
-    \label{fig:menuAut}
-\end{figure}
-
-\section{Criação de novos Jogos}
-Nesta nova aba oferecemos todas as ferramentas suportadas pela página para que o \emph{Author} consiga criar novo conteúdo para a mesma.\newline\newline
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 10cm]{editAut.png}
-    \caption{Menu para Criação de Jogos pelo \emph{Author}}
-    \label{fig:editAut}
-\end{figure}
-
-\newpage
-
 \section{Página de Jogo}
-Aqui o \emph{Player} pode fazer a seleção ou escrever a resposta que pensa ser correta mediante a pergunta enunciada acima.
+Nesta página, o \emph{Player} pode fazer a seleção ou a escrita da resposta que pensa ser correta mediante a pergunta enunciada acima.
 
 \begin{figure}[h]
     \centering
@@ -1431,23 +1451,25 @@ Aqui o \emph{Player} pode fazer a seleção ou escrever a resposta que pensa ser
     \label{fig:jogJogo}
 \end{figure}
 
+\section{Página de \emph{Score}}
+Após submeter a sua resposta, o \emph{Player} é presenteado com a sua prestação no jogo. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 10cm]{scoreJogo.png}
+    \caption{Página de \emph{Score}}
+    \label{fig:scoreJogo}
+\end{figure}
+
 \chapter{Conclusão}
 
-Durante a realização deste trabalho constatamos que a parte fundamental para que um \emph{web site} seja implementado de forma coerente, robusta e segura assenta em algo mais que um simples \emph{design} atrativo e \emph{display} de conteúdos, existe todo um fluxo e uma rede de comunicação que se dá por trás de cada clique ou cada palavra digitada e enviada, obtendo-se uma ação causa efeito.
+Durante a realização deste trabalho constatamos que a parte fundamental para a implementação de um \emph{web site}, de forma coerente, robusta e segura, assenta em algo mais do que um simples \emph{design} atrativo e um \emph{display} de conteúdos, existindo todo um fluxo e uma rede de comunicação que se dá por trás de cada clique ou de cada palavra digitada e enviada, resultando numa relação causa-efeito.
 
-Dito isto, consideramos que, apesar de termos dado a devida atenção aos diferentes detalhes, existem ainda alguns melhoramentos que podem ser aplicados ao projeto final, que enunciamos abaixo nas secções de comentários e trabalho futuro.
+Relativamente às dificuldades sentidas, o principal desafio foi a utilização de uma linguagem de programação e de ferramentas de desenvolvimento de software completamente novas. Consequentemente, foi necessário um grande investimento da nossa parte com o intuito de nos familiarizarmos com estas e de obtermos um resultado final notável.   
 
-\section{Comentários}
+Embora tenhamos prestado a devida atenção aos diferentes detalhes, existem, ainda, possíveis melhorias a implementar. Em particular, como o projeto não se encontra totalmente finalizado, consideramos que seria útil a implementação de todas as funcionalidades, que estavam, inicialmente, planeadas e que não estão no produto final. Do mesmo modo, seria igualmente interessante o desenvolvimento de funcionalidades extra que tornassem a página \emph{web} mais apelativa para o utilizador como, por exemplo, a existência de um \emph{ranking} de pontuações adquiridas pelos jogadores nos diferentes quizes, etc.
 
-Temos de realçar que o projeto não se encontra totalmente finalizado, na medida em que algumas das funcionalidades planeadas acabaram por não ser implementadas na versão final. Desta forma, o projeto final é apenas uma “amostra” daquele que foi inicialmente idealizado estando presentes apenas as funcionalidades consideradas mais importantes.
-
-Posto isto, as dificuldades sentidas consistiram essencialmente no facto de se estar a usar uma nova linguagem de programação e ferramentas de desenvolvimento de software completamente novas, e com as quais não estávamos familiarizados.
-
---Desta forma, e apesar dos diversos obstáculos encontrados durante todo o processo, o grupo considera que concluiu o projeto com sucesso. -- Maybe not
-
-\section{Trabalho Futuro}
-
-Como sugestão para trabalhos futuros, seria útil implementar todas as funcionalidades inicialmente planeadas e que não estão no produto final, além de ser também interessante desenvolver funcionalidades extra que tornassem a página \emph{web} mais apelativa para o utilizador.
+Em suma, apesar de termos encontrado alguns obstáculos, ao longo deste processo, e de o resultado final ser apenas uma “amostra” daquele que foi inicialmente idealizado, dado que introduzimos apenas as funcionalidades mais importantes,  julgamos ter concluído o projeto com relativo sucesso, na medida em que este se tratava de um projeto ambicioso.
 
 \appendix
 \chapter{Exemplos}
