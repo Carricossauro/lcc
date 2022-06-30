@@ -194,7 +194,7 @@ export default function Edit({ cookies, id }) {
                         {error}
                     </div>
                 )}
-                <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                <div className="flex items-center px-3 h-12 w-[350px] lg:w-[800px] border-2 border-stone-200 rounded-3xl mb-6">
                     <input
                         className="outline-0 ml-3 bg-inherit w-full"
                         type="textarea"
@@ -208,28 +208,29 @@ export default function Edit({ cookies, id }) {
                 {questions.map((question, questionIndex) => {
                     return (
                         <>
-                            {questionIndex !== 0 && (
-                                <hr className="h bg-gray-900 w-[900px] mt-2 mb-5" />
-                            )}
-                            {questionIndex !== 0 && (
-                                <button
-                                    onClick={(e) =>
-                                        removeQuestion(e, questionIndex)
-                                    }
-                                >
-                                    <FontAwesomeIcon
-                                        icon={faXmark}
-                                        className="text-stone-400 cursor-pointer"
-                                    ></FontAwesomeIcon>
-                                </button>
-                            )}
+                            <div className="w-[350px] lg:w-[800px] text-3xl flex justify-between mt-6">
+                                Question {questionIndex + 1}
+                                {questions.length !== 1 && (
+                                    <button
+                                        onClick={(e) =>
+                                            removeQuestion(e, questionIndex)
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faXmark}
+                                            className="text-stone-400 cursor-pointer"
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                )}
+                            </div>
+                            <hr className="h bg-gray-900 w-[350px] lg:w-[900px] mt-2 mb-5" />
                             <div className="flex text-3xl py-2">Difficulty</div>
-                            <div className="w-[800px] flex flex-row justify-between items-center">
+                            <div className="w-[350px] lg:w-[800px] flex flex-row justify-between items-center">
                                 <button
-                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                                        question.dificulty == "E"
-                                            ? "bg-stone-200"
-                                            : ""
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 rounded-3xl mb-3 ${
+                                        question.dificulty === "E"
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) =>
                                         changeDifficulty(e, "E", questionIndex)
@@ -238,10 +239,10 @@ export default function Edit({ cookies, id }) {
                                     Easy
                                 </button>
                                 <button
-                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                                        question.dificulty == "M"
-                                            ? "bg-stone-200"
-                                            : ""
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 rounded-3xl mb-3 ${
+                                        question.dificulty === "M"
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) =>
                                         changeDifficulty(e, "M", questionIndex)
@@ -250,10 +251,10 @@ export default function Edit({ cookies, id }) {
                                     Medium
                                 </button>
                                 <button
-                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
-                                        question.dificulty == "H"
-                                            ? "bg-stone-200"
-                                            : ""
+                                    className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 rounded-3xl mb-3 ${
+                                        question.dificulty === "H"
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) =>
                                         changeDifficulty(e, "H", questionIndex)
@@ -262,7 +263,7 @@ export default function Edit({ cookies, id }) {
                                     Hard
                                 </button>
                             </div>
-                            <div className="flex justify-around w-[800px]">
+                            <div className="flex justify-around w-[350px] lg:w-[800px]">
                                 <div className="flex flex-col justify-center items-center">
                                     <div className="flex text-3xl py-2">
                                         Minimum age
@@ -297,7 +298,7 @@ export default function Edit({ cookies, id }) {
                                     case "T":
                                         return (
                                             <div
-                                                className="flex items-center px-3 w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
+                                                className="flex items-center px-3 w-[350px] lg:w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
                                                 key={`q${questionIndex}c${contentIndex}`}
                                             >
                                                 <textarea
@@ -332,9 +333,11 @@ export default function Edit({ cookies, id }) {
                                                 </button>
                                             </div>
                                         );
+                                    default:
+                                        return "";
                                 }
                             })}
-                            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+                            <div className="flex items-center px-3 h-12 w-[350px] lg:w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
                                 <button
                                     className="ml-3 text-stone-400"
                                     onClick={(e) =>
@@ -357,12 +360,12 @@ export default function Edit({ cookies, id }) {
                                 </button>
                             </div>
                             <div className="flex text-3xl py-2">Type</div>
-                            <div className="w-[800px] flex flex-row justify-between items-center">
+                            <div className="w-[350px] lg:w-[800px] flex flex-row justify-between items-center">
                                 <button
                                     className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
                                         question.type === "MC"
-                                            ? "bg-stone-200"
-                                            : ""
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) => {
                                         changeType(e, "MC", questionIndex);
@@ -373,8 +376,8 @@ export default function Edit({ cookies, id }) {
                                 <button
                                     className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
                                         question.type === "TF"
-                                            ? "bg-stone-200"
-                                            : ""
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) =>
                                         changeType(e, "TF", questionIndex)
@@ -385,8 +388,8 @@ export default function Edit({ cookies, id }) {
                                 <button
                                     className={`flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3 ${
                                         question.type === "SA"
-                                            ? "bg-stone-200"
-                                            : ""
+                                            ? "border-color5 bg-color5 text-white font-bold"
+                                            : "border-stone-100 bg-stone-100"
                                     }`}
                                     onClick={(e) =>
                                         changeType(e, "SA", questionIndex)
@@ -419,7 +422,7 @@ export default function Edit({ cookies, id }) {
                         </>
                     );
                 })}
-                <div className="w-[800px] flex justify-around mt-6">
+                <div className="w-[350px] lg:w-[800px] flex justify-around mt-6">
                     <button
                         className="px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
                         onClick={newQuestion}

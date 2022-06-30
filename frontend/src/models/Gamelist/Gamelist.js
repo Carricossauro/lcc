@@ -1,19 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { getQuestions, getQuizzes } from "./API_gamelist";
+import { getQuizzes } from "./API_gamelist";
 import { confirmType } from "../../API_index";
 
-export default function Gamelist({
-    authorRedirect,
-    author,
-    cookies,
-    removeCookies,
-}) {
+export default function Gamelist({ authorRedirect, author, cookies }) {
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [searchText, setSearchText] = useState("");
 
     const redirect = (page) => {
         window.location.href = page;
+    };
+
+    const minAge = (quiz) => {
+        let min = 0;
+        for (var questionIndex in quiz.questions) {
+            if (quiz.questions[questionIndex].minage > min)
+                min = quiz.questions[questionIndex].minage;
+        }
+        return min;
+    };
+
+    const diff = (quiz) => {
+        let total = 0;
+        let count = 0;
+
+        for (var questionIndex in quiz.questions) {
+            count++;
+            switch (quiz.questions[questionIndex].dificulty) {
+                case "E":
+                    total += 1;
+                    break;
+                case "M":
+                    total += 2;
+                    break;
+                case "H":
+                    total += 3;
+                    break;
+                default:
+                    count -= 1;
+                    break;
+            }
+        }
+
+        const average = parseInt(total / count);
+
+        if (average === 1) return "Easy";
+        else if (average === 2) return "Medium";
+        return "Hard";
     };
 
     const changeSearchText = (e) => {
@@ -140,10 +173,10 @@ export default function Gamelist({
                                             {quiz.author}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            DIFFICULTY
+                                            {diff(quiz)}
                                         </td>
                                         <td className="px-4 py-8 border-t border-b border-gray-200 text-sm text-center">
-                                            MINAGE
+                                            {minAge(quiz)}
                                         </td>
                                     </tr>
                                 );

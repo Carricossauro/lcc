@@ -39,15 +39,15 @@ export default function Stats({ results, cookies }) {
 
     return (
         <div className="mt-28 flex items-center justify-center flex-col">
-            <div className="w-[800px] flex flex-row mb-6">
+            <div className="w-[350px] lg:w-[800px] flex flex-row mb-6">
                 {quiz && (
                     <h2 className="text-5xl w-full flex justify-center">
                         {quiz.title}
                     </h2>
                 )}
             </div>
-            <div className="w-[800px] text-2xl flex justify-center">
-                You scored {results[1]}/{results[2]}!
+            <div className="w-[350px] lg:w-[800px] text-2xl flex justify-center">
+                You scored {parseInt(percent() * 100)}/100!
             </div>
             <div className="text-xl mt-2">{evaluate()}</div>
             <button

@@ -4,7 +4,7 @@ export default function GameMC({ question }) {
             {question.options.map((option, index) => {
                 return (
                     <div
-                        className={`w-[800px] flex-row flex items-center pl-3 mb-3`}
+                        className={`w-[350px] lg:w-[800px] flex-row flex items-center pl-3 mb-3`}
                         key={`option${index}`}
                     >
                         <div

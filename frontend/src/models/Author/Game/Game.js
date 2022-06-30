@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import GameTF from "./GameTF";
 import GameMC from "./GameMC";
 import GameSA from "./GameSA";
@@ -13,12 +11,14 @@ export default function Game({ question }) {
                         case "T":
                             return (
                                 <div
-                                    className="flex items-center px-3 w-[800px] min-h-[48px] text-justify rounded-3xl mb-3"
+                                    className="flex items-center px-3 w-[350px] lg:w-[800px] min-h-[48px] text-justify rounded-3xl mb-3"
                                     key={index}
                                 >
                                     {question.contents[index]["text"]}
                                 </div>
                             );
+                        default:
+                            return "";
                     }
                 })}
                 {question.type === "MC" && <GameMC question={question} />}

@@ -14,7 +14,7 @@ export default function gameTF({
     };
 
     return (
-        <div className="w-[800px] flex flex-row justify-around items-center gap-x-2">
+        <div className="w-[350px] lg:w-[800px] flex flex-row justify-around items-center gap-x-2">
             {question.options.map((option, optionIndex) => {
                 return (
                     <button

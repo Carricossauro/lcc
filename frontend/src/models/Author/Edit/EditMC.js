@@ -46,7 +46,7 @@ export default function EditMC({ setQuestions, questions, questionIndex }) {
             {questions[questionIndex].options.map((media, optionIndex) => {
                 return (
                     <div
-                        className="w-[800px] flex-row flex items-center pl-3 mb-3"
+                        className="w-[350px] lg:w-[800px] flex-row flex items-center pl-3 mb-3"
                         key={`q${questionIndex}o${optionIndex}`}
                     >
                         <button
@@ -98,7 +98,7 @@ export default function EditMC({ setQuestions, questions, questionIndex }) {
                 );
             })}
             <button
-                className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3"
+                className="flex items-center px-3 h-12 w-[350px] lg:w-[800px] border-2 border-stone-200  rounded-3xl mb-3"
                 onClick={(e) => newOption(e)}
             >
                 <div className="ml-3 text-stone-400">

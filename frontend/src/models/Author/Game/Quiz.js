@@ -24,8 +24,8 @@ export default function Quiz({ id, cookies }) {
     }, []);
 
     return (
-        <div className="mt-28 flex items-center justify-center flex-col">
-            <div className="w-[800px] flex flex-row mb-6">
+        <div className="mt-28 flex items-center justify-center flex-col mb-10">
+            <div className="w-[350px] lg:w-[800px] flex flex-row mb-6">
                 {quiz && <h2 className="text-5xl w-2/3">{quiz.title}</h2>}
                 <div className="text-[20px] flex justify-end w-full">
                     <button
@@ -42,7 +42,15 @@ export default function Quiz({ id, cookies }) {
             </div>
             {quiz &&
                 quiz.questions.map((question, index) => {
-                    return <Game question={question} />;
+                    return (
+                        <>
+                            <div className="w-[350px] lg:w-[800px] text-3xl mt-6">
+                                Question {index + 1}
+                            </div>
+                            <hr className="h bg-gray-900 w-[350px] lg:w-[900px] mt-2 mb-5" />
+                            <Game question={question} />
+                        </>
+                    );
                 })}
         </div>
     );

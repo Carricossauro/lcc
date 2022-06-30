@@ -8,7 +8,7 @@ export default function GameSA({ answers, setAnswers, questionIndex }) {
     };
     return (
         <>
-            <div className="flex items-center px-3 w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3">
+            <div className="flex items-center px-3 w-[350px] lg:w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3">
                 <textarea
                     className="outline-0 ml-3 bg-inherit w-full pt-3"
                     type="text"

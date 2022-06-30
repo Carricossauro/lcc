@@ -12,7 +12,7 @@ export default function Game({ question, answers, setAnswers, questionIndex }) {
                             case "T":
                                 return (
                                     <div
-                                        className="flex items-center px-3 w-[800px] min-h-[48px] text-justify rounded-3xl mb-3"
+                                        className="flex items-center px-3 w-[350px] lg:w-[800px] min-h-[48px] text-justify rounded-3xl mb-3"
                                         key={`q${questionIndex}c${contentIndex}`}
                                     >
                                         {
@@ -22,6 +22,8 @@ export default function Game({ question, answers, setAnswers, questionIndex }) {
                                         }
                                     </div>
                                 );
+                            default:
+                                return "";
                         }
                     })}
                     {question.type === "MC" && (

@@ -56,22 +56,29 @@ export default function Quiz({ id, cookies }) {
 
     return (
         <div className="mt-28 flex items-center justify-center flex-col">
-            <div className="w-[800px] flex flex-row mb-6">
+            <div className="w-[350px] lg:w-[800px] flex flex-row mb-6">
                 {quiz && <h2 className="text-5xl w-2/3">{quiz.title}</h2>}
             </div>
             {quiz &&
                 quiz.questions.map((question, index) => {
                     return (
-                        <Game
-                            question={question}
-                            answers={answers}
-                            setAnswers={setAnswers}
-                            questionIndex={index}
-                            key={`q${index}`}
-                        />
+                        <>
+                            {" "}
+                            <div className="w-[350px] lg:w-[800px] text-3xl mt-6">
+                                Question {index + 1}
+                            </div>
+                            <hr className="h bg-gray-900 w-[350px] lg:w-[900px] mt-2 mb-5" />
+                            <Game
+                                question={question}
+                                answers={answers}
+                                setAnswers={setAnswers}
+                                questionIndex={index}
+                                key={`q${index}`}
+                            />
+                        </>
                     );
                 })}
-            <div className="w-[800px] flex justify-end mt-6">
+            <div className="w-[350px] lg:w-[800px] flex justify-end mt-6">
                 <button
                     className="flex items-center justify-center px-3 h-12 w-1/4 border-2 border-stone-200 rounded-3xl mb-3"
                     onClick={submit}

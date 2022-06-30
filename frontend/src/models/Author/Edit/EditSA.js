@@ -40,7 +40,7 @@ export default function EditSA({ setQuestions, questions, questionIndex }) {
             {questions[questionIndex].options.map((media, optionIndex) => {
                 return (
                     <div
-                        className="flex items-center px-3 w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
+                        className="flex items-center px-3 w-[350px] lg:w-[800px] min-h-[48px] border-2 border-stone-200  rounded-3xl mb-3"
                         key={optionIndex}
                     >
                         <textarea
@@ -61,7 +61,7 @@ export default function EditSA({ setQuestions, questions, questionIndex }) {
                     </div>
                 );
             })}
-            <div className="flex items-center px-3 h-12 w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
+            <div className="flex items-center px-3 h-12 w-[350px] lg:w-[800px] border-2 border-stone-200  rounded-3xl mb-3">
                 <button
                     className="ml-3 text-stone-400"
                     onClick={(e) => newOption(e)}
