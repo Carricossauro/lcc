@@ -1,7 +1,5 @@
 # Projeto PC
 
-# Falta colocar os cristais
-
 ## Sintaxe
 
 ### Login
