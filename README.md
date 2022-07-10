@@ -1,7 +1,8 @@
 # Projeto
-[Relatório Projeto](https://www.overleaf.com/4854417272mcynrchgjxzh)
 
-[Apresentação Projeto](https://docs.google.com/presentation/d/1ZduEU3X5rE74sx6INjWHq1IGsySmt6kYzc8-Vpj5hnU/edit?usp=sharing)
+[Web site](http://computationalthinking4all.epl.di.uminho.pt:50560)
+
+[Relatório Projeto](https://www.overleaf.com/4854417272mcynrchgjxzh)
 
 [Mockups](https://www.figma.com/team_invite/redeem/rBPPwyYcJXjd2Eq8u68FtV)
 
