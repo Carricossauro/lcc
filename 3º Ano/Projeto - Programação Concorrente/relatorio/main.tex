@@ -1,0 +1,156 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[portuges]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx} 
+\usepackage{url} 
+\usepackage{enumerate} 
+\usepackage{color} 
+\usepackage{textcomp}
+\usepackage{indentfirst}
+\usepackage{array} 
+\usepackage{parskip}
+\usepackage[export]{adjustbox}
+\usepackage{xpatch}
+\usepackage{amsmath}
+\newlength{\chaptertopskip}
+\setlength{\chaptertopskip}{10pt}
+
+\usepackage{a4wide}
+\usepackage{float}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{appendix}
+\setlength{\parskip}{1em}
+\usepackage{verbatim}
+
+\usepackage[demo]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage[pdftex]{hyperref} % transformar as referÃªncias internas do seu documento em hiper-ligaÃ§Ãµes.
+
+\definecolor{saddlebrown}{rgb}{0.55, 0.27, 0.07} % para definir uma nova cor, neste caso 'saddlebrown'
+
+\usepackage{listings}  % para utilizar blocos de texto verbatim no estilo 'listings'
+%paramerizaÃ§Ã£o mais vulgar dos blocos LISTING - GENERAL
+\lstset{
+	basicstyle=\small, %o tamanho das fontes que sÃ£o usadas para o cÃ³digo
+	numbers=left, % onde colocar a numeraÃ§Ã£o da linha
+	numberstyle=\tiny, %o tamanho das fontes que sÃ£o usadas para a numeraÃ§Ã£o da linha
+	numbersep=5pt, %distancia entre a numeraÃ§Ã£o da linha e o codigo
+	breaklines=true, %define quebra automÃ¡tica de linha
+    frame=tB,  % caixa a volta do codigo
+	mathescape=true, %habilita o modo matemÃ¡tico
+	escapeinside={(*@}{@*)} % se escrever isto  aceita tudo o que esta dentro das marcas e nao altera
+}
+
+\usepackage{xspace} % deteta se a seguir a palavra tem uma palavra ou um sinal de pontuaÃ§ao se tiver uma palavra da espaÃ§o, se for um sinal de pontuaÃ§ao nao da espaÃ§o
+
+\parindent=20pt %espaÃ§o a deixar para fazer a  indentaÃ§Ã£o da primeira linha apÃ³s um parÃ¡grafo
+\parskip=10pt % espaÃ§o entre o parÃ¡grafo e o texto anterior
+
+\setlength{\oddsidemargin}{-1cm} %espaÃ§o entre o texto e a margem
+\setlength{\textwidth}{18cm} %Comprimento do texto na pagina
+\setlength{\headsep}{0cm} %espaÃ§o entre o texto e o cabeÃ§alho
+\setlength{\textheight}{23cm} %altura do texto na pagina
+\renewcommand{\baselinestretch}{1.5cm}
+
+
+\begin{document}
+\begin{figure}
+    \includegraphics[scale=0.3]{logoum.png}
+\end{figure}
+\title{\textbf{Battle Royale}\\
+       \textbf{Unidade Curricular de Programação Concorrente}\\ Licenciatura em Ciências da Computação\\Universidade do Minho
+       } %Titulo do documento
+\author{Bruno Jardim\\ (A91680) \and Inês Presa\\ (A90355)
+         \and Tiago Carriço\\ (A91695) \and Tiago Leite\\ (A91693)
+       } %autores do documento
+\date{\today} %data
+\maketitle
+\begingroup
+\renewcommand*\contentsname{Índice}
+\let\clearpage\relax
+\tableofcontents
+
+
+\endgroup
+\newpage
+
+\chapter{Introdução}
+
+	No âmbito da unidade curricular de Programação Concorrente foi proposta pelo docente Paulo Sérgio Soares Almeida a implementação de um mini-jogo denominado \textit{Battle Royale}, com o intuito de consolidar a aprendizagem dos dois paradigmas abordados na UC, consistindo numa aplicação distribuída com cliente e servidor.
+	
+	Assim, o mini-jogo deve permitir que vários utilizadores interajam utilizando uma aplicação cliente com interface gráfica, escrita em \textit{Java}, através da biblioteca \href{https://processing.org}{\textit{Processing}}, intermediados por um servidor escrito em \textit{Erlang}. O avatar de cada jogador movimenta-se num espaço 2D. Os vários avatares interagem entre si e com o ambiente que os rodeia, segundo uma simulação efetuada pelo servidor.
+    
+    Neste documento será apresentada a solução do problema, descrevendo de forma sucinta as decisões tomadas na implementação da aplicação cliente e do servidor.
+
+\chapter{Cliente}
+O cliente quando é executado instancia um objeto \textit{Board}, um objeto \textit{Mouse}, um objeto \textit{Data} e um objeto \textit{TCP} e cria dois processos, o \textit{Postman} e o \textit{Screen} que vão correr concorrentemente partilhando os \textit{Mouse}, \textit{Board} e \textit{Data}.
+
+\section{Postman}
+O \textit{Postman} possui os objetos \textit{TCP}, \textit{Mouse}, \textit{Board} e \textit{Data} e funciona como um intermediário entre o servidor e o \textit{Screen}.
+
+\section{Screen}
+O \textit{Screen} possui os objetos \textit{Mouse}, \textit{Board} e \textit{Data} e responsável por receber os \textit{inputs} do utilizador.
+
+\section{TCP}
+O \textit{TCP} é utilizado pelo \textit{Postman} para comunicar com o servidor.
+\section{Data}
+O \textit{Data} possui um \textit{ReentrantLock} e duas condições, e é utilizado para fazer a comunicação entre o \textit{Postman} e o \textit{Screen}. No \textit{Data} é também armazenada a informação do cliente (\textit{username} e \textit{password}), o estado da aplicação, o tipo de resposta enviado pelo servidor e a informação sobre a \textit{leaderBoard} que vai sendo atualizada ao longo do jogo.
+
+\section{Mouse e Board}
+A troca de informação entre a posição do rato e posição dos jogadores e cristais é realizada através do \textit{Mouse} e \textit{Board} sendo que estes dois objetos possuem os seus métodos como \textit{synchronized}.
+O \textit{Screen} lê a posição do rato e guarda no \textit{Mouse} que depois é utilizado pelo \textit{Postman} para enviar  ao servidor. O servidor envia a informação dos jogadores e dos cristais para o \textit{Postman} e este armazena esta informação no \textit{Board}.
+
+\section{Interface Gráfica}
+A interface gráfica é realizada no processo \textit{Screen} através da biblioteca de \textit{Java} \textit{Processing}.
+
+
+
+\chapter{Servidor}
+
+O servidor quando é inicializado regista um processo principal com o nome do módulo e cria um \textit{socket} de \textit{TCP} e dois processos, o \textit{acceptor} e o \textit{party}.  O servidor vai também ler o ficheiro de registos onde está armazenada a informação dos clientes já registados e guarda a informação num mapa.
+
+\section{Gerir clientes}
+O processo \textit{acceptor} utiliza o \textit{socket} de \textit{TCP} criado pelo servidor para fazer o primeiro contacto com o cliente criando um novo \textit{socket} para o efeito de comunicação com o mesmo. Por cada cliente que chega, o último \textit{acceptor} criado é responsável por criar um novo processo \textit{acceptor}. Este processo vai passar para um processo \textit{client} que recebe os pedidos do cliente e os comunica ao servidor. Caso seja feito um pedido de participação num jogo por parte do cliente, o processo \textit{client} comunica esta informação ao processo \textit{party}. Resumindo, pedidos "burocráticos" são comunicados ao servidor e pedidos de jogo são comunicados à \textit{party}.
+
+\section{Gerir \textit{parties}}
+O processo \textit{party} tem uma fila de clientes à espera que inicie um jogo. Se o comprimento da fila for 8 ou se receber um \textit{timeout} o processo passa a ser o processo \textit{game} com os jogadores na fila e envia uma mensagem ao servidor que vai criar uma nova \textit{party}. No máximo existem 5 processos \textit{party} a decorrer em simultâneo, sendo que o quinto é apenas criado, não recebendo qualquer informação até que um dos quatro restantes termine.
+
+Se o número de jogadores na fila for 3, é instanciado um processo que envia um \textit{timeout} ao fim de 10 segundos. Caso um cliente tenha desistido de jogar antes da partida iniciar, é recebida uma mensagem de desistência. Se porventura com essa desistência o número de jogadores na fila ficar inferior a 3, o processo fica á espera até consumir o \textit{timeout} que tinha sido inicializado, continuado com os jogadores que estavam na fila.
+
+O processo \textit{game} avisa o servidor e os jogadores que o jogo vai iniciar e inicializa cada jogador, isto é, posições, cores, massas iniciais e velocidades. De seguida, transforma-se no processo \textit{gameTimer}.
+
+\section{Funcionamento do jogo}
+O processo \textit{gameTimer} inicializa um \textit{timer} de \textit{tickrate} de 40 milisegundos que é o tempo que cada jogador tem para comunicar os seus movimentos. De seguida, lida com as colisões entre jogadores e entre jogadores e cristais, através da função auxiliar \texttt{handleGame}, gera novos cristais com probabilidade de 1\% a cada \textit{tick}  através da função \texttt{generateCrystals} e envia a informação dos jogadores e dos cristais a cada cliente.
+Por fim, passa para a função \texttt{gameLoop} que recebe a informação dos movimentos dos jogadores. Caso receba o \textit{timeout}, regressa para a função \texttt{gameTimer}, ou remove um determinado jogador caso receba um \textit{leave} desse jogador.
+
+\section{Gerir Física}
+Para o cálculo das colisões entre jogadores e entre jogadores e cristais, existe um módulo auxiliar denominado \textit{geometry} que utiliza a área do círculo para verificar se dois círculos se intersetam e se um dos quatro vértices de um losango se encontra dentro do círculo. 
+
+Caso dois jogadores colidam, é calculado um vetor que parte do centro de um para o centro do outro e é aplicado ao movimento de ambos os círculos em sentido oposto.
+
+
+
+
+
+
+
+
+
+\chapter{Conclusão}
+
+    Durante a realização deste trabalho aplicamos todos os conhecimentos adquiridos durante as aulas sobre programação concorrente em memória partilhada, com a abordagem clássica baseada em monitores, e a concorrência em sistemas distribuídos via troca de mensagens, com ênfase no modelo dos atores e dessa forma aprofundamos e consolidamos esses conhecimentos. 
+    
+    Consideramos que conseguimos alcançar os objetivos esperados, sendo que nos sentimos mais experientes e prontos no que toca à modelação de sistemas concorrentes e escrita de aplicações concorrentes em memória partilhada baseadas em passagem de mensagens.
+    
+    No entanto, o mau planeamento da solução levou a um aumento da complexidade superior ao desejável. O facto de não estarmos muito habituados a utilizar o Erlang também atrasou um pouco o andamento do trabalho.
+    
+    A elaboração deste projeto levou-nos também a conhecer melhor a ferramenta \texttt{Processing}, uma biblioteca de animação "low level" e Interface Gráfica construída em Java. 
+    
+    Por fim, podemos garantir que este trabalho fundamentou as nossas bases para que futuramente consigamos tirar um maior proveito do que foi lecionado durante toda esta unidade curricular. 
+
+
+\end{document}
