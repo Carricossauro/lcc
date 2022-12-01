@@ -1,0 +1,36 @@
+def trans(curr, prox, erro, limite_timer, a, b, c_stopping, c, peso, v_inicial):
+  
+  v_final = And(curr['V'] <= curr['v'] + erro, curr['V'] >= curr['v'] - erro, curr['V'] <= erro, curr['V'] >= -erro)
+  #v_final = And(curr['V'] == curr['v'], curr['v'] == 0)
+  # untimed
+  start_free =       And(curr['m'] == START,    prox['m'] == FREE,     curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], prox['timer'] == 0, curr['timer'] == 0)
+
+  # pensar em mais condiçoes
+  free_stopping =    And(curr['m'] == FREE,     prox['m'] == STOPPING, curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], curr['timer'] == limite_timer, prox['timer'] == 0, prox['V'] > 0, prox['v'] > 0)
+  stopping_blocked = And(curr['m'] == STOPPING, prox['m'] == BLOCKED,  curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], curr['V'] < curr['v'] + erro, curr['timer'] == limite_timer, prox['timer'] == 0, prox['V'] > 0, prox['v'] > 0)
+  blocked_free =     And(curr['m'] == BLOCKED,  prox['m'] == FREE,     curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], curr['timer'] == limite_timer, prox['timer'] == 0, prox['V'] > 0, prox['v'] > 0)
+
+  free_stopped =     And(curr['m'] == FREE,     prox['m'] == STOPPED,  curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], v_final)
+  stopping_stopped = And(curr['m'] == STOPPING, prox['m'] == STOPPED,  curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], v_final)
+  blocked_stopped =  And(curr['m'] == BLOCKED,  prox['m'] == STOPPED,  curr['t'] == prox['t'], curr['V'] == prox['V'], curr['v'] == prox['v'], v_final)
+
+  # timed
+  #free_free = And(curr['m'] == FREE,     prox['m'] == FREE,       curr['t'] < prox['t'], prox['timer'] - curr['timer'] == prox['t'] - curr['t'],
+  #                Or([ And((prox['V'] - curr['V']) <= ((i*c-b)*(prox['t']-curr['t'])),
+  #                        (prox['v'] - curr['v'] + a * peso) <= (c*i*(prox['t'] - curr['t'])), curr['V']-curr['v'] == i) for i in range(v_inicial + 1)]), prox['V'] > 0, prox['v'] > 0)
+  free_free         = And(curr['m'] == FREE,     prox['m'] == FREE,       curr['t'] < prox['t'], prox['timer'] - curr['timer'] == prox['t'] - curr['t'],
+                          (prox['V'] - curr['V']) <= ((v_inicial*c-b)*(prox['t']-curr['t'])), (prox['v'] - curr['v'] + a * peso) <= (c*v_inicial*(prox['t'] - curr['t'])), prox['V'] > 0, prox['v'] > 0,
+                          curr['v'] <= curr['V'], prox['v'] <= prox['V'], prox['V'] <= curr['V'], prox['v'] <= curr['v'], curr['V']-curr['v'] <= v_inicial)
+  #stopping_stopping = And(curr['m'] == STOPPING, prox['m'] == STOPPING,   curr['t'] < prox['t'], prox['timer'] - curr['timer'] == prox['t'] - curr['t'],
+  #                        Or([ And((prox['V'] - curr['V']) <= ((i*c_stopping-b)*(prox['t']-curr['t'])),
+  #                         (prox['v'] - curr['v'] + a * peso) <= (c_stopping*i*(prox['t'] - curr['t'])), curr['V']-curr['v'] == i) for i in range(v_inicial + 1)]), prox['V'] > 0, prox['v'] > 0)
+  stopping_stopping = And(curr['m'] == STOPPING, prox['m'] == STOPPING,   curr['t'] < prox['t'], prox['timer'] - curr['timer'] == prox['t'] - curr['t'],
+                          (prox['V'] - curr['V']) <= ((v_inicial*c_stopping-b)*(prox['t']-curr['t'])), (prox['v'] - curr['v'] + a * peso) <= (c_stopping*v_inicial*(prox['t'] - curr['t'])), prox['V'] > 0, prox['v'] > 0,
+                          curr['v'] <= curr['V'], prox['v'] <= prox['V'], prox['V'] <= curr['V'], prox['v'] <= curr['v'])
+              
+  blocked_blocked   = And(curr['m'] == BLOCKED,  prox['m'] == BLOCKED,    curr['t'] < prox['t'], prox['timer'] - curr['timer'] == prox['t'] - curr['t'],
+                          curr['V'] == curr['v'], (prox['V'] - curr['V']) == ((-a * peso - b) * (prox['t'] - curr['t'])), prox['V'] > 0, prox['v'] > 0, prox['V'] <= curr['V'], prox['v'] <= curr['v'])
+  
+  stopped_stopped   = And(curr['m'] == STOPPED, prox['m'] == STOPPED, prox['t'] > curr['t'], prox['V'] == curr['V'], prox['v'] == curr['v'], curr['timer'] == 0, prox['timer'] == 0)
+  
+  return Or(start_free, free_stopping, stopping_blocked, blocked_free, free_stopped, stopping_stopped, blocked_stopped, free_free, stopping_stopping, blocked_blocked, stopped_stopped)
