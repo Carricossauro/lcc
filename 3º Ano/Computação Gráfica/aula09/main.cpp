@@ -230,7 +230,10 @@ void renderScene(void) {
 	glMaterialfv(GL_FRONT, GL_SPECULAR, white);
 	glMaterialf(GL_FRONT, GL_SHININESS, 128);
 
+	glPushMatrix();
+	glScalef(0.5,0.5,0.5);
 	drawCilinder();
+	glPopMatrix();
 
 
 	glPushMatrix();
@@ -300,6 +303,7 @@ void initGL() {
 // OpenGL settings 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_RESCALE_NORMAL);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
