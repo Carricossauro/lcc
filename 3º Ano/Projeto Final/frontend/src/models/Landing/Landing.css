@@ -1,0 +1,6 @@
+.image{
+    background-image: url("https://ik.imagekit.io/q5edmtudmz/peter-lloyd-680526-unsplash_TYZn4kayG.jpg");
+}
+.shadow{
+    text-shadow: 0 20px 50px hsla(0,0%,0%,8);
+}

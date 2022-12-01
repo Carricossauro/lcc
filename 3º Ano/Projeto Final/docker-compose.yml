@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+    db:
+        container_name: computational_mind_db
+        image: mysql:8
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_PASSWORD=Adm1nas-
+            - MYSQL_USER=admin
+            - MYSQL_DATABASE=ComputationalMind
+            - MYSQL_HOST='db'
+        ports:
+            - 50566:3306
+        volumes:
+            - /var/lib/mysql
+    api:
+        container_name: computational_mind_api
+        build:
+            context: ./src
+            dockerfile: Dockerfile
+        working_dir: /code
+        environment:
+            - DB_HOST=db
+            - DB_PORT=3306
+        volumes:
+            - /code
+        ports:
+            - 50561:8000
+        depends_on:
+            - db
+    web:
+        container_name: computational_mind_web
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+            args:
+                - REACT_APP_API_URL=http://computationalthinking4all.epl.di.uminho.pt:50561
+        ports:
+            - 50560:80
+        depends_on:
+            - api
