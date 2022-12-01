@@ -1,5 +1,0 @@
-As dificuldades encontradas foram:
-	- Entender o funcionamento das funções fgets e sscanf;
-	- Entender o funcionamento dos structs e typedefs;
-
-O projeto foi desenvolvido em conjunto via Discord de forma a comunicarmos de forma mais prática devido às circunstâncias em que nos encontramos.
