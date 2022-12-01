@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="minimax_8h" kind="file" language="C++">
+    <compoundname>minimax.h</compoundname>
+    <includes refid="dados_8h" local="yes">dados.h</includes>
+    <includes refid="logica_8h" local="yes">logica.h</includes>
+    <includedby refid="interface_8c" local="yes">interface.c</includedby>
+    <includedby refid="minimax_8c" local="yes">minimax.c</includedby>
+    <incdepgraph>
+      <node id="102">
+        <label>logica.h</label>
+        <link refid="logica_8h"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+      </node>
+      <node id="101">
+        <label>listas.h</label>
+        <link refid="listas_8h"/>
+      </node>
+      <node id="100">
+        <label>dados.h</label>
+        <link refid="dados_8h"/>
+        <childnode refid="101" relation="include">
+        </childnode>
+      </node>
+      <node id="99">
+        <label>minimax.h</label>
+        <link refid="minimax_8h"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="102" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="104">
+        <label>interface.c</label>
+        <link refid="interface_8c"/>
+      </node>
+      <node id="105">
+        <label>minimax.c</label>
+        <link refid="minimax_8c"/>
+      </node>
+      <node id="103">
+        <label>minimax.h</label>
+        <link refid="minimax_8h"/>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structTree" prot="public">Tree</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="minimax_8h_1a24532c506fa8dbf48e8d188f7f991d67" prot="public" static="no">
+        <type>struct <ref refid="structTree" kindref="compound">Tree</ref> *</type>
+        <definition>typedef struct Tree* arvore</definition>
+        <argsstring></argsstring>
+        <name>arvore</name>
+        <briefdescription>
+<para>Definição da estrutura da árvore. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="minimax.h" line="20" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="minimax_8h_1a8bf0b34bd37e32823d5781688f5646e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="bot_8h_1a24532c506fa8dbf48e8d188f7f991d67" kindref="member">arvore</ref></type>
+        <definition>arvore inicializa_arvore</definition>
+        <argsstring>(ESTADO *e, COORDENADA c, int jog)</argsstring>
+        <name>inicializa_arvore</name>
+        <param>
+          <type><ref refid="structESTADO" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref></type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jog</declname>
+        </param>
+        <briefdescription>
+<para>Função que inicializa uma lista. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para o estado do jogo </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>c</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Coordenada da última jogada </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Lista das jogadas </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="minimax.h" line="28" column="1" bodyfile="bot.c" bodystart="317" bodyend="384"/>
+      </memberdef>
+      <memberdef kind="function" id="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float Minimax</definition>
+        <argsstring>(int altura, COORDENADA c, ESTADO *e, int jog)</argsstring>
+        <name>Minimax</name>
+        <param>
+          <type>int</type>
+          <declname>altura</declname>
+        </param>
+        <param>
+          <type><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref></type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type><ref refid="structESTADO" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jog</declname>
+        </param>
+        <briefdescription>
+<para>Função que implementa o algoritmo minimax. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>altura</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Comprimemto da lista </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>c</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Coordenada da última jogada </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para o estado de jogo </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Valor da jogada </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="minimax.h" line="37" column="1" bodyfile="bot.c" bodystart="386" bodyend="412"/>
+      </memberdef>
+      <memberdef kind="function" id="minimax_8h_1a9be064cca25e77be78017233c66e1ec9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float valor_jogada</definition>
+        <argsstring>(COORDENADA c, ESTADO *e, int jogador)</argsstring>
+        <name>valor_jogada</name>
+        <param>
+          <type><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref></type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type><ref refid="structESTADO" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jogador</declname>
+        </param>
+        <briefdescription>
+<para>Função que determina o valor de uma jogada. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>c</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Coordenada da última jogada </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para o estado de jogo </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogador</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Jogador 1 ou 2 </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>valor que uma jogada tem </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="minimax.h" line="46" column="1" bodyfile="bot.c" bodystart="414" bodyend="424"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Definição do estado e das funções que o manipulam </para>    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="preprocessor">#ifndef<sp/>PROJETO_LA_MINIMAX_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROJETO_LA_MINIMAX_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="dados_8h" kindref="compound">dados.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logica_8h" kindref="compound">logica.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structTree" kindref="compound">Tree</ref>{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/><ref refid="structTree_1abc891f05ffdda2289c85cf805b12ab64" kindref="member">nodo</ref>;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>*<ref refid="structTree_1a47973c3f53684bf12072870d6b5239fb" kindref="member">proximo</ref>[8];</highlight></codeline>
+<codeline lineno="20"><highlight class="normal">}*<ref refid="minimax_8h_1a24532c506fa8dbf48e8d188f7f991d67" kindref="member">arvore</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><ref refid="structTree" kindref="compound">arvore</ref><sp/><ref refid="minimax_8h_1a8bf0b34bd37e32823d5781688f5646e5" kindref="member">inicializa_arvore</ref>(<ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="minimax_8h_1a4cead19a79190663454d2f9ebada82fa" kindref="member">Minimax</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>altura,<sp/><ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1a9dfbc982d23a619e36575d8e7ec8e41c" kindref="member">jog</ref>);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="minimax_8h_1a9be064cca25e77be78017233c66e1ec9" kindref="member">valor_jogada</ref>(<ref refid="structCOORDENADA" kindref="compound">COORDENADA</ref><sp/>c,<sp/><ref refid="structESTADO" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogador);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//PROJETO_LA_MINIMAX_H</highlight></codeline>
+    </programlisting>
+    <location file="minimax.h"/>
+  </compounddef>
+</doxygen>
