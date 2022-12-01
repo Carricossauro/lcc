@@ -1,0 +1,7 @@
+espeak
+cowsay
+cmatrix
+fortune
+oneko
+rev
+figlet

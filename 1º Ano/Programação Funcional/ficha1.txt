@@ -1,0 +1,7 @@
+distancia entre dois pontos no referencial cartesiano:
+	     ____________________
+	d = V(x2-x1)² + (y1 - y2)²
+
+formula resolvente  (raizes)
+
+	x = (-b +- sqrt(b² - 4ac))/2a

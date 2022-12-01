@@ -1,0 +1,63 @@
+\hypertarget{logica_8h}{}\section{logica.\+h File Reference}
+\label{logica_8h}\index{logica.\+h@{logica.\+h}}
+{\ttfamily \#include \char`\"{}dados.\+h\char`\"{}}\newline
+Include dependency graph for logica.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{logica_8h_ac313d7e553b1e2b5f266acb9bfff8141}{jogar} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Função que recebe uma coordenada e joga quando é válida. \end{DoxyCompactList}\item 
+int \hyperlink{logica_8h_a0ac0a14f4a34c1290f81a4a17e041df6}{game\+Over} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Função que determina se o jogo foi ganho. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definição das funções que representam a jogabilidade 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{logica_8h_a0ac0a14f4a34c1290f81a4a17e041df6}\label{logica_8h_a0ac0a14f4a34c1290f81a4a17e041df6}} 
+\index{logica.\+h@{logica.\+h}!game\+Over@{game\+Over}}
+\index{game\+Over@{game\+Over}!logica.\+h@{logica.\+h}}
+\subsubsection{\texorpdfstring{game\+Over()}{gameOver()}}
+{\footnotesize\ttfamily int game\+Over (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Função que determina se o jogo foi ganho. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontado para o estado do jogo \\
+\hline
+{\em c} & Coordenada da última jogada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 -\/ Jogo não acabou ~\newline
+ 1 -\/ Vitória do jogador 1 ~\newline
+ 2 -\/ Vitória do jogador 2 
+\end{DoxyReturn}
+\mbox{\Hypertarget{logica_8h_ac313d7e553b1e2b5f266acb9bfff8141}\label{logica_8h_ac313d7e553b1e2b5f266acb9bfff8141}} 
+\index{logica.\+h@{logica.\+h}!jogar@{jogar}}
+\index{jogar@{jogar}!logica.\+h@{logica.\+h}}
+\subsubsection{\texorpdfstring{jogar()}{jogar()}}
+{\footnotesize\ttfamily int jogar (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Função que recebe uma coordenada e joga quando é válida. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Apontador para o estado do jogo \\
+\hline
+{\em c} & Coordenada da jogada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 -\/ Jogada Válida ~\newline
+ 0 -\/ Jogada Inválida 
+\end{DoxyReturn}
