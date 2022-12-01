@@ -1,0 +1,25 @@
+array a 10
+int i
+int j
+int temp
+
+enquanto (nigual (i, 10)) faz
+    a[i] <- ler
+    i <- soma (i, 1)
+fim
+
+i <- 0
+enquanto (nigual (i, 10)) faz
+    j <- soma (i,1)
+    enquanto (nigual (j, 10)) faz
+        se (maior (a[i], a[j])) entao
+            temp <- a[i]
+            a[i] <- a[j]
+            a[j] <- temp
+        fim
+        j <- soma (j,1)
+    fim
+    i <- soma (i, 1)
+fim
+
+escrevera a

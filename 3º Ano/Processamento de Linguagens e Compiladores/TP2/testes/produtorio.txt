@@ -1,0 +1,10 @@
+int n <- 5
+int res <- 1
+int x
+
+enquanto nigual (n, 0) faz
+    x <- ler
+    res <- mult (res, x)
+    n <- sub (n, 1)
+fim
+escrever res

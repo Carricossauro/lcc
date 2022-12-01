@@ -1,0 +1,16 @@
+int inf1
+int sup
+int i
+int som
+
+inf1 <- ler
+sup <- ler
+i <- inf1
+enquanto nigual (i, sup) faz
+    se igual (mod (i, 2), 1) entao
+        escrever i
+        som <- soma (som, 1)
+    fim
+    i <- soma (i, 1)
+fim
+escrever som

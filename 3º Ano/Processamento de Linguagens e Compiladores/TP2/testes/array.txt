@@ -1,0 +1,20 @@
+int n <- 10
+array a 10
+int i <- 0
+int temp
+
+escrever n
+enquanto nigual (i, n) faz
+    a[i] <- ler
+    i <- soma (i, 1)
+fim
+
+i <- 0
+enquanto nigual (i, (div (n,2))) faz
+    temp <- a[i]
+    a[i] <- a[sub (sub(n,1), i)]
+    a[sub (sub(n,1), i)] <- temp
+    i <- soma (i, 1)
+fim
+
+escrevera a

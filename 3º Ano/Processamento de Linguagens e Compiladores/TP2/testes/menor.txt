@@ -1,0 +1,14 @@
+int n
+int i
+int x
+int y
+
+n <- ler
+enquanto nigual (n, i) faz
+    y <- ler
+    se ou (menor (y, x), igual (i,0)) entao
+        x <- y
+    fim
+    i <- soma (i, 1)
+fim
+escrever x

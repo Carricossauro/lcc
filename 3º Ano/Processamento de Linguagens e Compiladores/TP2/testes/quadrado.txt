@@ -1,0 +1,18 @@
+int a
+int b
+int c
+int d
+
+a <- ler
+b <- ler
+c <- ler
+d <- ler
+se maior (a, 0) entao
+    se e (igual (a,b), e (igual (b,c), igual (c,d))) entao
+        escrever 1
+    senao
+        escrever 0
+    fim
+senao
+    escrever 2
+fim

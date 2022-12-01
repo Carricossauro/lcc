@@ -1,0 +1,29 @@
+int x
+int y
+array a 5
+matriz m 2 2
+
+escrevera x
+
+escrever x[0]
+x[0] <- ler
+x[1] <- 1
+y <- soma (x[0], x[1])
+
+escrever x[0,0]
+x[0,1] <- ler
+x[1,0] <- 1
+y <- soma (x[0,1], x[1,0])
+
+escrever a[0]
+a[0] <- ler
+a[1] <- 1
+escrevera a
+
+escrever m[0,0]
+m[0,1] <- ler
+m[1,0] <- 1
+escrevera m
+
+
+
