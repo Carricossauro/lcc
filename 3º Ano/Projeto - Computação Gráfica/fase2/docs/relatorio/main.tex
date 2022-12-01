@@ -1,0 +1,219 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[portuges]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx} 
+\usepackage{url} 
+\usepackage{enumerate} 
+\usepackage{color} 
+\usepackage{textcomp}
+\usepackage{indentfirst}
+\usepackage{array} 
+\usepackage{parskip}
+\usepackage[export]{adjustbox}
+\usepackage{xpatch}
+\newlength{\chaptertopskip}
+\setlength{\chaptertopskip}{10pt}
+
+\usepackage{a4wide}
+\usepackage{float}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{appendix}
+\setlength{\parskip}{1em}
+\usepackage{verbatim}
+
+\usepackage[demo]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage[pdftex]{hyperref} % transformar as referÃªncias internas do seu documento em hiper-ligaÃ§Ãµes.
+
+\definecolor{saddlebrown}{rgb}{0.55, 0.27, 0.07} % para definir uma nova cor, neste caso 'saddlebrown'
+
+\usepackage{listings}  % para utilizar blocos de texto verbatim no estilo 'listings'
+%paramerizaÃ§Ã£o mais vulgar dos blocos LISTING - GENERAL
+\lstset{
+	basicstyle=\small, %o tamanho das fontes que sÃ£o usadas para o cÃ³digo
+	numbers=left, % onde colocar a numeraÃ§Ã£o da linha
+	numberstyle=\tiny, %o tamanho das fontes que sÃ£o usadas para a numeraÃ§Ã£o da linha
+	numbersep=5pt, %distancia entre a numeraÃ§Ã£o da linha e o codigo
+	breaklines=true, %define quebra automÃ¡tica de linha
+    frame=tB,  % caixa a volta do codigo
+	mathescape=true, %habilita o modo matemÃ¡tico
+	escapeinside={(*@}{@*)} % se escrever isto  aceita tudo o que esta dentro das marcas e nao altera
+}
+
+\usepackage{xspace} % deteta se a seguir a palavra tem uma palavra ou um sinal de pontuaÃ§ao se tiver uma palavra da espaÃ§o, se for um sinal de pontuaÃ§ao nao da espaÃ§o
+
+\parindent=20pt %espaÃ§o a deixar para fazer a  indentaÃ§Ã£o da primeira linha apÃ³s um parÃ¡grafo
+\parskip=10pt % espaÃ§o entre o parÃ¡grafo e o texto anterior
+
+\setlength{\oddsidemargin}{-1cm} %espaÃ§o entre o texto e a margem
+\setlength{\textwidth}{18cm} %Comprimento do texto na pagina
+\setlength{\headsep}{0cm} %espaÃ§o entre o texto e o cabeÃ§alho
+\setlength{\textheight}{23cm} %altura do texto na pagina
+\renewcommand{\baselinestretch}{1.5cm}
+
+
+\begin{document}
+\begin{figure}
+    \includegraphics[scale=0.3]{logoum.png}
+\end{figure}
+\title{\textbf{Transformações Geométricas}\\
+       \textbf{Unidade Curricular de Computação Gráfica}\\ Licenciatura em Ciências da Computação\\Universidade do Minho
+       } %Titulo do documento
+\author{Bruno Jardim\\ (A91680) \and Inês Presa\\ (A90355)
+         \and Tiago Carriço\\ (A91695) \and Tiago Leite\\ (A91693)
+       } %autores do documento
+\date{\today} %data
+\maketitle
+\begingroup
+\renewcommand*\contentsname{Índice}
+\let\clearpage\relax
+\tableofcontents
+
+
+\endgroup
+\newpage
+
+\chapter{Contextualização}    
+No âmbito da unidade curricular de Computação Gráfica da Licenciatura em Ciências da Computação foi proposta o desenvolvimento em \textit{Opengl} de um motor gráfico genérico que terá como função a criação de um sistema solar. Desenvolvimento esse que deve ser composto por quatro etapas. 
+
+\section{Enunciado}
+Nesta segunda etapa foi proposto:
+
+\begin{itemize}
+    \item \textbf{Cenas hierárquicas}
+        \begin{description}
+        \item Alteração do \textit{engine} de modo a ler ficheiros XML com vários grupos dispostos hierarquicamente. Um grupo pode ser composto por várias transformações geométricas(translação, rotação e escala), onde a ordem é relevante, e opcionalmente por um ou mais modelos. 
+        \end{description}
+
+    \item \textbf{Ficheiro de configuração}
+    \begin{description}
+    \item Criação de um ficheiro de configuração XML que recrie um modelo estático do sistema solar, composto pelo sol, planetas, e luas dispostas hierarquicamente. 
+    \end{description}
+\end{itemize}
+
+
+\chapter{Apresentação das soluções}
+\section{Cenas hierárquicas}
+Para a criação de cenas hierárquicas, procedeu-se à alteração do leitor XML desenvolvido na primeira fase. Assim sendo, em oposição ao método iterativo usado anteriormente, nesta nova versão, o leitor trabalha de forma recursiva, análogamente a uma travessia em profundidade. Para tal, foi construída uma função auxiliar que recebe como argumentos o grupo a ler e um vetor com as transformações que vai herdar. Após a leitura de cada modelo, este é armazenado num vetor de modelos, que é uma estrutura composta por um vetor de pontos para desenhar a primitiva gráfica, e um vetor de transformações a aplicar antes da primitiva ser desenhada. De seguida, a função é chamada novamente recebendo como parâmetros o grupo descendente do atual e um vetor de transformações atualizado. Quando a função retorna do processo recursivo para esta etapa, o processo é repetido para o grupo "irmão" do atual. \par
+Para a execução das transformações foi criada uma classe abstracta chamada \textit{Transformation} com um método \textit{apply} e mais três outras classes, \textit{Translation}, \textit{Rotation},  e \textit{Scale}, que implementam esta classe. Desta forma, para cada primitiva é possível iterar pelo vetor que armazena as transformações e simplesmente invocar o método \textit{apply}, não sendo por isso necessário executar instruções condicionais, como por exemplo \textit{if else}.  
+
+\subsection{Demonstração do funcionamento do engine}
+
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{box.png}
+  \caption{\texttt{test\_2\_1.xml}}
+  \label{fig:box}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{construction.png}
+  \caption{\texttt{test\_2\_2.xml}}
+  \label{fig:construction}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{snowman.png}
+  \caption{\texttt{test\_2\_3.xml}}
+  \label{fig:snowman}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width = 8cm,height = 8cm]{boxes.png}
+  \caption{\texttt{test\_2\_4.xml}}
+  \label{fig:sboxes}
+\end{subfigure}
+\label{fig:plano}
+\caption{Execução dos ficheiros XML de teste}
+\end{figure}
+\textbf{Nota:} Nas imagens de teste apresentadas as esferas foram criadas com um número de \textit{stacks} e \textit{slices} superiores ao sugerido no ficheiro de configuração.
+
+
+\newpage
+\section{Ficheiro de configuração}
+No ficheiro de configuração XML colocou-se o sol, os planetas e algumas das luas e anéis que orbitam os planetas. 
+
+Uma vez que usando uma escala que representasse fielmente as distâncias e tamanhos tornaria inviável a visualização de todos os componentes do Sistema, decidiu-se implementar da seguinte forma:
+
+\begin{itemize}
+    \item \textbf{Tamanho dos objetos:} usou-se como medida de escala o diâmetro da Terra.
+    \item \textbf{Distância entre objetos:} utilizou-se a seguinte escala $10^6 \ km \rightarrow 1$ unidade.
+\end{itemize}
+
+
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{1.png}
+\caption{Vista global}
+\label{fig:demo1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{2.png}
+\caption{Sol - Terra}
+\label{fig:demo2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{3.png}
+\caption{Terra - Lua}
+\label{fig:demo3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{4.png}
+\caption{Júpiter com as luas de Galileu}
+\label{fig:demo4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{5.png}
+\caption{Saturno e as luas : Titan, Rhea e Iapetus}
+\label{fig:demo5}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{6.png}
+\caption{Úrano com as suas luas: Titania, Oberon e Umbriel}
+\label{fig:demo6}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 18cm,height = 10cm]{7.png}
+\caption{Sol - Saturno}
+\label{fig:demo7}
+\end{figure}
+
+
+\chapter{Extras}
+\section{Implementação de câmara FPS}
+
+Para ser possível viajar pelo Universo e dessa forma "visitar" os diferentes planetas, tomou-se a decisão de implementar uma \textit{câmara FPS}. Esta permite rodar a câmara com as \textit{arrowkeys} e movimentar, para a frente, trás, esquerda e direita, com as teclas \texttt{w}, \texttt{s}, \texttt{a}, \texttt{d}, respetivamente.
+
+
+Para demonstrar esta função encontra-se um vídeo em anexo.
+
+\newpage
+\chapter{Conclusão}
+A principal dificuldade enfrentada durante esta fase do trabalho foi a alteração da função que faz a leitura de ficheiros XML. A forma como idealizamos o seu funcionamento não foi muito difícil, no entanto durante a sua implementação depara-mo-nos com alguns problemas de \textit{segmentation fault}, assim como transformações que ocorriam em locais inesperados. 
+
+Um fator que também criou dificuldades foi a escolha de uma escala adequada para definir o tamanho das diferentes componentes do Sistema Solar e as distâncias entre elas. Uma vez que as escolhidas não são totalmente fiéis à realidade não temos a certeza se as decisões tomadas foram as melhores, pelo que, esta componente poderá sofrer alterações futuramente.
+
+Por último, a alteração da câmara por forma a permitir "viajar" pelo sistema solar também foi um desafio e pensamos que a mesma ainda pode ser melhorada.
+
+Contudo, apesar das dificuldades enfrentadas, podemos concluir que os objectivos foram atingidos.
+\end{document}
